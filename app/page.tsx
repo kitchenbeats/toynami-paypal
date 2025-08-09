@@ -1,51 +1,56 @@
-import { DeployButton } from "@/components/deploy-button";
-import { EnvVarWarning } from "@/components/env-var-warning";
-import { AuthButton } from "@/components/auth-button";
-import { Hero } from "@/components/hero";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { ConnectSupabaseSteps } from "@/components/tutorial/connect-supabase-steps";
-import { SignUpUserSteps } from "@/components/tutorial/sign-up-user-steps";
-import { hasEnvVars } from "@/lib/utils";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
+import { HeroBanner } from "@/components/home/hero-banner";
+import { BrandLogos } from "@/components/home/brand-logos";
+import { FeaturedProducts } from "@/components/home/featured-products";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center">
-      <div className="flex-1 w-full flex flex-col gap-20 items-center">
-        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-          <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
-            <div className="flex gap-5 items-center font-semibold">
-              <Link href={"/"}>Next.js Supabase Starter</Link>
-              <div className="flex items-center gap-2">
-                <DeployButton />
-              </div>
-            </div>
-            {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />}
+    <>
+      <SiteHeader />
+      <main className="min-h-screen">
+        <HeroBanner />
+        
+        <section className="container mx-auto px-4 py-12">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-4">Featured Collectibles</h2>
+            <p className="text-muted-foreground">Discover our exclusive selection of premium toys and collectibles</p>
           </div>
-        </nav>
-        <div className="flex-1 flex flex-col gap-20 max-w-5xl p-5">
-          <Hero />
-          <main className="flex-1 flex flex-col gap-6 px-4">
-            <h2 className="font-medium text-xl mb-4">Next steps</h2>
-            {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-          </main>
-        </div>
+          <FeaturedProducts />
+        </section>
 
-        <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-          <p>
-            Powered by{" "}
-            <a
-              href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-              target="_blank"
-              className="font-bold hover:underline"
-              rel="noreferrer"
-            >
-              Supabase
-            </a>
-          </p>
-          <ThemeSwitcher />
-        </footer>
-      </div>
-    </main>
+        <section className="bg-muted py-16">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-4">Shop by Brand</h2>
+              <p className="text-muted-foreground">Explore collections from your favorite brands</p>
+            </div>
+            <BrandLogos />
+          </div>
+        </section>
+
+        <section className="container mx-auto px-4 py-16">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-card rounded-lg p-8 text-center">
+              <h3 className="text-2xl font-bold mb-4">Exclusive Raffles</h3>
+              <p className="text-muted-foreground mb-6">Enter for a chance to win limited edition collectibles</p>
+              <Button asChild>
+                <Link href="/raffles">View Active Raffles</Link>
+              </Button>
+            </div>
+            <div className="bg-card rounded-lg p-8 text-center">
+              <h3 className="text-2xl font-bold mb-4">Loyalty Program</h3>
+              <p className="text-muted-foreground mb-6">Earn rewards and unlock exclusive access with every purchase</p>
+              <Button asChild variant="outline">
+                <Link href="/loyalty">Learn More</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+    </>
   );
 }
