@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS users (
 -- 🛍️ Catalog
 -- ======================================
 CREATE TABLE IF NOT EXISTS products (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id INTEGER PRIMARY KEY,
     slug TEXT NOT NULL,
     name TEXT NOT NULL,
     description TEXT,
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS products (
 
 CREATE TABLE IF NOT EXISTS product_variants (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
     sku TEXT NOT NULL,
     price_cents INTEGER NOT NULL,
     compare_at_price_cents INTEGER,
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS product_variants (
 
 CREATE TABLE IF NOT EXISTS product_images (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
     image_filename TEXT NOT NULL,
     alt_text TEXT,
     position INTEGER,
@@ -74,11 +74,14 @@ CREATE TABLE IF NOT EXISTS categories (
     name TEXT NOT NULL,
     description TEXT,
     parent_id UUID REFERENCES categories(id),
+    display_order INTEGER DEFAULT 0,
+    is_active BOOLEAN DEFAULT TRUE,
+    show_in_menu BOOLEAN DEFAULT TRUE,
     deleted_at TIMESTAMPTZ
 );
 
 CREATE TABLE IF NOT EXISTS product_categories (
-    product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
     category_id UUID NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
     PRIMARY KEY (product_id, category_id)
 );
@@ -175,6 +178,7 @@ CREATE TABLE IF NOT EXISTS discounts (
     description TEXT,
     type TEXT CHECK (type IN ('percentage', 'fixed')),
     amount_cents INTEGER,
+    min_purchase_cents INTEGER DEFAULT 0,  -- Minimum purchase amount required
     active BOOLEAN DEFAULT TRUE,
     max_uses INTEGER,
     used_count INTEGER DEFAULT 0,
@@ -199,7 +203,7 @@ CREATE TABLE IF NOT EXISTS wishlists (
 CREATE TABLE IF NOT EXISTS wishlist_items (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     wishlist_id UUID REFERENCES wishlists(id) ON DELETE CASCADE,
-    product_id UUID REFERENCES products(id),
+    product_id INTEGER REFERENCES products(id),
     added_at TIMESTAMPTZ DEFAULT now()
 );
 
@@ -208,9 +212,11 @@ CREATE TABLE IF NOT EXISTS wishlist_items (
 -- ======================================
 CREATE TABLE IF NOT EXISTS loyalty_tiers (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    slug TEXT NOT NULL UNIQUE,
     name TEXT NOT NULL,
     min_spend_cents BIGINT NOT NULL,
     max_spend_cents BIGINT,
+    percentage_back DECIMAL(5,4) DEFAULT 0, -- e.g., 0.03 = 3% back
     order_no INT NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
     deleted_at TIMESTAMPTZ

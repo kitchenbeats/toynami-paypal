@@ -17,37 +17,14 @@ interface AccountDashboardProps {
 export function AccountDashboard({ user }: AccountDashboardProps) {
   const [activeTab, setActiveTab] = useState('overview')
 
-  // Mock data - in production, fetch from Supabase
-  const orders = [
-    {
-      id: 'ORD-001',
-      date: '2024-03-15',
-      total: 439.98,
-      status: 'delivered',
-      items: 2,
-    },
-    {
-      id: 'ORD-002',
-      date: '2024-03-10',
-      total: 189.99,
-      status: 'shipped',
-      items: 1,
-    },
-    {
-      id: 'ORD-003',
-      date: '2024-03-05',
-      total: 79.99,
-      status: 'processing',
-      items: 1,
-    },
-  ]
-
+  // Orders and loyalty data will be implemented when order system is complete
+  const orders: any[] = []
   const loyaltyTier = {
-    name: 'Silver Collector',
-    points: 1250,
-    nextTier: 'Gold Collector',
-    pointsToNext: 750,
-    totalSpent: 709.96,
+    name: 'Not Available',
+    points: 0,
+    nextTier: 'Bronze Collector',
+    pointsToNext: 0,
+    totalSpent: 0,
   }
 
   return (
@@ -69,8 +46,8 @@ export function AccountDashboard({ user }: AccountDashboardProps) {
               <ShoppingBag className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{orders.length}</div>
-              <p className="text-xs text-muted-foreground">Lifetime purchases</p>
+              <div className="text-2xl font-bold">0</div>
+              <p className="text-xs text-muted-foreground">Order system not implemented yet</p>
             </CardContent>
           </Card>
           <Card>
@@ -79,8 +56,8 @@ export function AccountDashboard({ user }: AccountDashboardProps) {
               <CreditCard className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">${loyaltyTier.totalSpent}</div>
-              <p className="text-xs text-muted-foreground">All time</p>
+              <div className="text-2xl font-bold">$0.00</div>
+              <p className="text-xs text-muted-foreground">Order system not implemented yet</p>
             </CardContent>
           </Card>
           <Card>
@@ -89,8 +66,8 @@ export function AccountDashboard({ user }: AccountDashboardProps) {
               <Trophy className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{loyaltyTier.points}</div>
-              <p className="text-xs text-muted-foreground">{loyaltyTier.name}</p>
+              <div className="text-2xl font-bold">0</div>
+              <p className="text-xs text-muted-foreground">Order system not implemented yet</p>
             </CardContent>
           </Card>
           <Card>

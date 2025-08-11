@@ -1,0 +1,440 @@
+/* FIGMA ANNOUNCEMENTS SECTION - Direct copy from original theme */
+/* Purpose: Styles the announcements/blog section based on Figma design */
+
+.figma-announcements-section {
+  width: 100%;
+  position: relative;
+  padding: 80px 0;
+  background-color: #ffffff;
+  color: #333333;
+  font-family: var(--font-heading, system-ui, -apple-system, sans-serif);
+}
+
+.figma-announcements-parent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+}
+
+.figma-announcements {
+  align-self: stretch;
+  position: relative;
+  color: #333333;
+  text-align: center;
+}
+
+/* News Items Grid */
+.figma-large-news-item-parent {
+  align-self: stretch;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  font-size: 22px;
+}
+
+@media (min-width: 768px) {
+  .figma-large-news-item-parent {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+}
+
+/* Grid layout for announcements page with more columns */
+.figma-large-news-item-parent.announcements-grid {
+  grid-template-columns: 1fr;
+  grid-auto-rows: 1fr;
+}
+
+@media (min-width: 640px) {
+  .figma-large-news-item-parent.announcements-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .figma-large-news-item-parent.announcements-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.figma-large-news-item {
+  width: 100%;
+  position: relative;
+  background-color: #f7f7f7;
+  min-height: 390px;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+}
+
+.figma-news-image-link {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.figma-news-image-link:hover .figma-large-news-item-child img {
+  transform: scale(1.05);
+}
+
+.figma-large-news-item-child {
+  position: relative;
+  width: 100%;
+  height: 202px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.figma-large-news-item-child .responsive-img,
+.figma-large-news-item-child img,
+.figma-large-news-item-child .figma-news-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .figma-large-news-item-child {
+    height: 207px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .figma-large-news-item-child {
+    height: 300px;
+  }
+}
+
+/* Home page with 2 cards - taller images */
+.figma-large-news-item-parent:not(.announcements-grid) .figma-large-news-item-child {
+  height: 202px;
+}
+
+@media (min-width: 768px) {
+  .figma-large-news-item-parent:not(.announcements-grid) .figma-large-news-item-child {
+    height: 250px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .figma-large-news-item-parent:not(.announcements-grid) .figma-large-news-item-child {
+    height: 320px;
+  }
+}
+
+/* Content Overlay */
+.figma-frame-parent12 {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  flex: 1;
+}
+
+.figma-news-title-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #e5e5e5;
+  max-width: 539px;
+  padding: 10px 15px;
+  flex: 1;
+}
+
+.figma-news-title {
+  position: relative;
+  letter-spacing: 0.02em;
+  font-size: 22px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #333333;
+  margin: 0;
+  text-decoration: none;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .figma-news-title {
+    font-size: 18px;
+  }
+}
+
+.figma-news-title:hover {
+  color: #ff0000;
+}
+
+.figma-news-date {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 12px;
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 6px 12px;
+  z-index: 2;
+}
+
+@media (min-width: 1024px) {
+  .figma-news-date {
+    font-size: 13px;
+  }
+}
+
+.figma-frame-parent13 {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  box-sizing: border-box;
+  gap: 20px;
+  font-size: 16px;
+  margin-top: auto;
+}
+
+@media (min-width: 768px) {
+  .figma-frame-parent13 {
+    gap: 15px;
+  }
+}
+
+.figma-news-summary-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  max-width: 539px;
+  padding: 15px;
+}
+
+@media (min-width: 768px) {
+  .figma-news-summary-wrapper {
+    width: 100%;
+  }
+}
+
+.figma-news-summary {
+  flex: 1;
+  position: relative;
+  letter-spacing: 0.02em;
+  font-weight: 400;
+  color: #666666;
+  line-height: 1.5;
+  text-align: left;
+  font-size: 14px;
+}
+
+@media (min-width: 1024px) {
+  .figma-news-summary {
+    font-size: 15px;
+  }
+}
+
+.figma-news-arrow {
+  display: flex;
+  background: #ff0000;
+  align-items: center;
+  height: 54px;
+  width: 54px;
+  justify-content: center;
+}
+
+.figma-news-arrow .figma-frame-child3 {
+  width: 24px;
+  height: 24px;
+  right: -4px;
+  position: relative;
+}
+
+.figma-news-arrow .figma-frame-child3 path {
+  fill: #ffffff;
+  transition: fill 0.2s ease;
+}
+
+.figma-news-arrow:hover .figma-frame-child3 path {
+  fill: #cc0000;
+}
+
+/* View All Button */
+.figma-view-all-announcements-parent {
+  background-color: #333333;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 17px 69px;
+  gap: 10px;
+  font-size: 15px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  margin-top: 0;
+}
+
+.figma-view-all-announcements-parent:hover {
+  background-color: #ff0000;
+}
+
+.figma-view-all-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.figma-view-all-link:hover {
+  color: #fff;
+}
+
+.figma-view-all-text {
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.figma-layer-1-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.figma-layer-1-icon path {
+  fill: #fff;
+}
+
+/* Placeholder and Empty States */
+.figma-image-placeholder {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  background-color: #e5e5e5;
+  flex-shrink: 0;
+}
+
+@media (min-width: 1024px) {
+  .figma-image-placeholder {
+    height: 200px;
+  }
+}
+
+/* Home page with 2 cards - taller placeholder */
+.figma-large-news-item-parent:not(.announcements-grid) .figma-image-placeholder {
+  height: 250px;
+}
+
+@media (min-width: 1024px) {
+  .figma-large-news-item-parent:not(.announcements-grid) .figma-image-placeholder {
+    height: 300px;
+  }
+}
+
+.figma-no-announcements {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+}
+
+.figma-no-announcements .figma-no-announcements-text {
+  font-size: 18px;
+  color: #999999;
+  text-align: center;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Pagination styling for announcements page */
+.announcements-page {
+  display: flex;
+  flex-direction: column !important;
+  align-items: center;
+  width: 100%;
+}
+
+.announcements-page .pagination {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .announcements-page .pagination {
+    margin-top: 80px;
+  }
+}
+
+.announcements-page .pagination-list {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.announcements-page .pagination-item .pagination-link {
+  display: block;
+  padding: 12px 16px;
+  background: #fff;
+  border: 1px solid #dddddd;
+  color: #666666;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.announcements-page .pagination-item .pagination-link:hover {
+  background: #ff0000;
+  color: #fff;
+  border-color: #ff0000;
+}
+
+.announcements-page .pagination-item.pagination-item--current .pagination-link {
+  background: #ff0000;
+  color: #fff;
+  border-color: #ff0000;
+}
+
+.announcements-page .pagination-item.pagination-item--previous .pagination-link,
+.announcements-page .pagination-item.pagination-item--next .pagination-link {
+  padding: 12px;
+}
+
+.announcements-page .pagination-item.pagination-item--previous .pagination-link .icon svg,
+.announcements-page .pagination-item.pagination-item--next .pagination-link .icon svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .figma-announcements-section {
+    padding: 40px 20px;
+  }
+
+  .figma-large-news-item {
+    width: 100%;
+  }
+
+  .figma-view-all-announcements-parent {
+    padding: 15px 30px;
+  }
+}

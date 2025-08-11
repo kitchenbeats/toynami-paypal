@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
-import { AdminDashboard } from '@/components/admin/admin-dashboard'
+import { AdminDashboardServer } from '@/components/admin/admin-dashboard-server'
 
 export default async function AdminPage() {
   const supabase = await createClient()
@@ -36,7 +36,7 @@ export default async function AdminPage() {
         </div>
 
         <div className="container mx-auto px-4 py-8">
-          <AdminDashboard />
+          <AdminDashboardServer />
         </div>
       </main>
       <SiteFooter />

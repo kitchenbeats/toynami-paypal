@@ -1,27 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-
-const PAYPAL_API_BASE = process.env.PAYPAL_SANDBOX === 'true' 
-  ? 'https://api-m.sandbox.paypal.com'
-  : 'https://api-m.paypal.com'
-
-async function getAccessToken() {
-  const auth = Buffer.from(
-    `${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_CLIENT_SECRET}`
-  ).toString('base64')
-
-  const response = await fetch(`${PAYPAL_API_BASE}/v1/oauth2/token`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Basic ${auth}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: 'grant_type=client_credentials',
-  })
-
-  const data = await response.json()
-  return data.access_token
-}
+import { getPayPalClient } from '@/lib/paypal/client'
+import { 
+  OrderRequest,
+  CheckoutPaymentIntent,
+  AmountWithBreakdown,
+  PurchaseUnitRequest
+} from '@paypal/paypal-server-sdk'
 
 export async function POST(request: NextRequest) {
   try {
@@ -32,7 +17,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { items, shipping, tax } = await request.json()
+    const { items, shipping = 0, tax = 0 } = await request.json()
+
+    if (!items || !Array.isArray(items) || items.length === 0) {
+      return NextResponse.json({ error: 'Invalid items' }, { status: 400 })
+    }
 
     // Calculate totals
     const subtotal = items.reduce((sum: number, item: any) => 
@@ -40,59 +29,58 @@ export async function POST(request: NextRequest) {
     )
     const total = subtotal + shipping + tax
 
-    const accessToken = await getAccessToken()
-
-    const orderData = {
-      intent: 'CAPTURE',
-      purchase_units: [{
-        amount: {
-          currency_code: 'USD',
-          value: total.toFixed(2),
-          breakdown: {
-            item_total: {
-              currency_code: 'USD',
-              value: subtotal.toFixed(2),
-            },
-            shipping: {
-              currency_code: 'USD',
-              value: shipping.toFixed(2),
-            },
-            tax_total: {
-              currency_code: 'USD',
-              value: tax.toFixed(2),
-            },
-          },
+    // Create order with PayPal SDK
+    const client = getPayPalClient()
+    
+    const amountWithBreakdown: AmountWithBreakdown = {
+      currencyCode: 'USD',
+      value: total.toFixed(2),
+      breakdown: {
+        itemTotal: {
+          currencyCode: 'USD',
+          value: subtotal.toFixed(2),
         },
-        items: items.map((item: any) => ({
-          name: item.name,
-          unit_amount: {
-            currency_code: 'USD',
-            value: item.price.toFixed(2),
-          },
-          quantity: item.quantity.toString(),
-        })),
-      }],
-      application_context: {
-        return_url: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success`,
-        cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/cart`,
-        shipping_preference: 'SET_PROVIDED_ADDRESS',
-        user_action: 'PAY_NOW',
+        shipping: {
+          currencyCode: 'USD',
+          value: shipping.toFixed(2),
+        },
+        taxTotal: {
+          currencyCode: 'USD',
+          value: tax.toFixed(2),
+        },
       },
     }
 
-    const response = await fetch(`${PAYPAL_API_BASE}/v2/checkout/orders`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
+    const purchaseUnit: PurchaseUnitRequest = {
+      amount: amountWithBreakdown,
+      items: items.map((item: any) => ({
+        name: item.name,
+        unitAmount: {
+          currencyCode: 'USD',
+          value: item.price.toFixed(2),
+        },
+        quantity: item.quantity.toString(),
+      })),
+    }
+
+    const orderRequest: OrderRequest = {
+      intent: CheckoutPaymentIntent.Capture,
+      purchaseUnits: [purchaseUnit],
+      applicationContext: {
+        returnUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success`,
+        cancelUrl: `${process.env.NEXT_PUBLIC_SITE_URL}/cart`,
+        shippingPreference: 'SET_PROVIDED_ADDRESS',
+        userAction: 'PAY_NOW',
       },
-      body: JSON.stringify(orderData),
+    }
+
+    const { body: order } = await client.orders.ordersCreate({
+      body: orderRequest,
+      prefer: 'return=representation'
     })
 
-    const order = await response.json()
-
-    if (!response.ok) {
-      throw new Error(order.message || 'Failed to create PayPal order')
+    if (!order || !order.id) {
+      throw new Error('Failed to create PayPal order')
     }
 
     // Save order to database
@@ -113,7 +101,10 @@ export async function POST(request: NextRequest) {
       console.error('Failed to save order:', dbError)
     }
 
-    return NextResponse.json({ orderId: order.id })
+    return NextResponse.json({ 
+      orderId: order.id,
+      status: order.status 
+    })
   } catch (error) {
     console.error('PayPal order creation error:', error)
     return NextResponse.json(
