@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { Package, Users, ShoppingCart, TrendingUp, DollarSign, Award, Settings, Image, Tag, FileText, Palette, PlayCircle } from 'lucide-react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { ProductsList } from './products-list'
 
 interface AdminStats {
   totalRevenue: number
@@ -78,9 +79,67 @@ async function getTopProducts() {
   return products || []
 }
 
+async function getActiveProducts(page: number = 1, limit: number = 10) {
+  const supabase = await createClient()
+  const offset = (page - 1) * limit
+  
+  // Get active products with pagination
+  const { data: products, count } = await supabase
+    .from('products')
+    .select(`
+      id,
+      name,
+      slug,
+      sku,
+      base_price_cents,
+      compare_price_cents,
+      stock_level,
+      track_inventory,
+      low_stock_level,
+      is_featured,
+      is_new,
+      is_on_sale,
+      status,
+      allow_purchases,
+      created_at,
+      updated_at,
+      variants:product_variants(id, sku, price_cents, stock, is_active, option_values),
+      categories:product_categories(
+        category:categories(id, name, slug)
+      ),
+      images:product_images(
+        image_filename,
+        alt_text
+      ),
+      brand:brands(name, slug)
+    `, { count: 'exact' })
+    .eq('status', 'active')
+    .eq('is_visible', true)
+    .is('deleted_at', null)
+    .order('created_at', { ascending: false })
+    .range(offset, offset + limit - 1)
+
+  return { products: products || [], total: count || 0 }
+}
+
+async function getAllCategories() {
+  const supabase = await createClient()
+  
+  const { data: categories } = await supabase
+    .from('categories')
+    .select('id, name, slug')
+    .eq('is_active', true)
+    .is('deleted_at', null)
+    .order('name')
+
+  return categories || []
+}
+
 export async function AdminDashboardServer() {
   const stats = await getAdminStats()
   const topProducts = await getTopProducts()
+  const { products: activeProducts, total: totalProducts } = await getActiveProducts(1, 10)
+  const categories = await getAllCategories()
 
   return (
     <Tabs defaultValue="overview" className="space-y-4">
@@ -361,15 +420,19 @@ export async function AdminDashboardServer() {
       <TabsContent value="products" className="space-y-4">
         <Card>
           <CardHeader>
-            <CardTitle>Product Management</CardTitle>
-            <CardDescription>Manage your product catalog - {stats.activeProducts} active products</CardDescription>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>Product Management</CardTitle>
+                <CardDescription>Manage your product catalog</CardDescription>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-center py-8">
-              <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">Advanced product management interface coming soon</p>
-              <p className="text-sm text-muted-foreground mt-2">Use the Products link above for basic product management</p>
-            </div>
+            <ProductsList 
+              initialProducts={activeProducts} 
+              initialTotal={totalProducts} 
+              categories={categories}
+            />
           </CardContent>
         </Card>
       </TabsContent>

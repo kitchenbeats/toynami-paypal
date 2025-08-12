@@ -9,15 +9,23 @@ export interface CartItem {
   price: number // in cents
   quantity: number
   image?: string
+  weight?: number // in pounds
+  dimensions?: {
+    length: number // in inches
+    width: number  // in inches
+    height: number // in inches
+  }
+  min_purchase_quantity?: number
+  max_purchase_quantity?: number | null
 }
 
 interface CartContextType {
   items: CartItem[]
   itemCount: number
   totalPrice: number
-  addItem: (item: Omit<CartItem, 'image'>) => Promise<void>
+  addItem: (item: CartItem) => Promise<void>
   removeItem: (productId: string, variantId?: string) => void
-  updateQuantity: (productId: string, quantity: number, variantId?: string) => void
+  updateQuantity: (productId: string, quantity: number, variantId?: string) => { success: boolean; message?: string }
   clearCart: () => void
   isOpen: boolean
   setIsOpen: (open: boolean) => void
@@ -49,7 +57,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
   const totalPrice = items.reduce((sum, item) => sum + (item.price * item.quantity), 0)
 
-  const addItem = async (newItem: Omit<CartItem, 'image'>) => {
+  const addItem = async (newItem: CartItem) => {
     setItems(currentItems => {
       const existingItemIndex = currentItems.findIndex(
         item => item.productId === newItem.productId && item.variantId === newItem.variantId
@@ -58,11 +66,26 @@ export function CartProvider({ children }: { children: ReactNode }) {
       if (existingItemIndex > -1) {
         // Update quantity if item exists
         const updatedItems = [...currentItems]
-        updatedItems[existingItemIndex].quantity += newItem.quantity || 1
+        const existingItem = updatedItems[existingItemIndex]
+        const newQuantity = existingItem.quantity + (newItem.quantity || 1)
+        
+        // Check max quantity limit
+        const maxQty = existingItem.max_purchase_quantity || newItem.max_purchase_quantity
+        if (maxQty && newQuantity > maxQty) {
+          // Don't update, quantity would exceed limit
+          // Could show a toast notification here
+          return currentItems
+        }
+        
+        updatedItems[existingItemIndex].quantity = newQuantity
+        // Keep the original image if it exists
+        if (!updatedItems[existingItemIndex].image && newItem.image) {
+          updatedItems[existingItemIndex].image = newItem.image
+        }
         return updatedItems
       } else {
-        // Add new item
-        return [...currentItems, { ...newItem, image: undefined }]
+        // Add new item with image
+        return [...currentItems, newItem]
       }
     })
 
@@ -80,9 +103,39 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }
 
   const updateQuantity = (productId: string, quantity: number, variantId?: string) => {
-    if (quantity <= 0) {
+    const item = items.find(i => i.productId === productId && i.variantId === variantId)
+    
+    if (!item) {
+      return { success: false, message: 'Item not found in cart' }
+    }
+    
+    // Handle min/max validation (0 defaults to 1)
+    const minQty = item.min_purchase_quantity && item.min_purchase_quantity > 0 ? item.min_purchase_quantity : 1
+    const maxQty = item.max_purchase_quantity || null
+    
+    if (quantity < minQty) {
+      return { 
+        success: false, 
+        message: `Minimum quantity for this item is ${minQty}` 
+      }
+    }
+    
+    if (maxQty && quantity > maxQty) {
+      if (maxQty === 1) {
+        return { 
+          success: false, 
+          message: '🎯 Limited Edition: Only 1 per customer to ensure everyone gets a chance!' 
+        }
+      }
+      return { 
+        success: false, 
+        message: `🎯 Maximum ${maxQty} per customer for this exclusive item` 
+      }
+    }
+    
+    if (quantity === 0) {
       removeItem(productId, variantId)
-      return
+      return { success: true }
     }
 
     setItems(currentItems =>
@@ -92,6 +145,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
           : item
       )
     )
+    
+    return { success: true }
   }
 
   const clearCart = () => {

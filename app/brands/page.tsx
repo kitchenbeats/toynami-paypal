@@ -1,6 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import Image from 'next/image'
+import { getImageSrc } from '@/lib/utils/image-utils'
+import { IMAGE_CONFIG } from '@/lib/config/images'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -20,6 +22,7 @@ async function getBrands() {
       name,
       slug,
       logo_url,
+      banner_url_2,
       description,
       is_active
     `)
@@ -92,25 +95,33 @@ export default async function BrandsPage() {
                 <Link
                   key={brand.id}
                   href={`/brands/${brand.slug}`}
-                  className="group relative block overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
+                  className="group relative block overflow-hidden transition-all duration-300"
                 >
                   {/* Banner Container with exact 650x145 aspect ratio */}
                   <div className="relative w-full" style={{ aspectRatio: '650/145' }}>
-                    {brand.logo_url ? (
+                    {(brand.banner_url_2 || brand.logo_url) ? (
                       <Image
-                        src={brand.logo_url}
+                        src={
+                          brand.banner_url_2 
+                            ? (brand.banner_url_2.startsWith('http') 
+                                ? getImageSrc(brand.banner_url_2)
+                                : `${IMAGE_CONFIG.baseUrl}/${brand.banner_url_2}`)
+                            : (brand.logo_url.startsWith('http') 
+                                ? getImageSrc(brand.logo_url)
+                                : `${IMAGE_CONFIG.baseUrl}/${brand.logo_url}`)
+                        }
                         alt={brand.name}
                         fill
                         sizes="(max-width: 768px) 100vw, 650px"
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="object-contain group-hover:scale-105 transition-transform duration-300"
                       />
                     ) : (
-                      <div className="absolute inset-0 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center">
+                      <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: 'var(--toynami-primary-blue)' }}>
                         <div className="text-center">
-                          <h3 className="text-2xl font-bold text-gray-700 dark:text-gray-300">
+                          <h3 className="text-2xl font-bold text-white">
                             {brand.name}
                           </h3>
-                          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                          <p className="text-sm text-white/80 mt-1">
                             {productCount} {productCount === 1 ? 'Product' : 'Products'}
                           </p>
                         </div>

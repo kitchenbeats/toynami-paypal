@@ -3,7 +3,7 @@ import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { MainNavigation } from "@/components/main-navigation";
 import { UserMenu } from "@/components/user-menu";
-import { ShoppingCart } from "lucide-react";
+import { CartDropdown } from "@/components/cart-dropdown";
 
 export async function SiteHeader() {
   const supabase = await createClient();
@@ -75,13 +75,7 @@ export async function SiteHeader() {
 
             <div className="flex items-center gap-4">
               <UserMenu user={user} profile={profile} />
-              
-              <Link
-                href="/cart"
-                className="flex items-center gap-1 text-sm hover:text-primary transition-colors"
-              >
-                <ShoppingCart className="h-5 w-5" />
-              </Link>
+              <CartDropdown />
             </div>
           </div>
         </div>

@@ -8,7 +8,7 @@ export default async function AdminProductsPage() {
   // Check if user is admin
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
-    redirect('/signin')
+    redirect('/auth/login')
   }
   
   const { data: userData } = await supabase
@@ -21,31 +21,55 @@ export default async function AdminProductsPage() {
     redirect('/')
   }
   
-  // Fetch products with all necessary fields for management
-  const { data: products } = await supabase
+  // Fetch ALL products (including inactive) with comprehensive data
+  const { data: products, count } = await supabase
     .from('products')
     .select(`
       id,
       name,
       slug,
       sku,
-      status,
-      is_featured,
-      is_visible,
-      is_new,
-      sort_order,
-      price_cents,
+      base_price_cents,
+      compare_price_cents,
       stock_level,
+      track_inventory,
+      low_stock_level,
+      is_featured,
+      is_new,
+      is_on_sale,
+      is_visible,
+      status,
+      allow_purchases,
       created_at,
-      variants:product_variants(count),
-      images:product_images(count),
+      updated_at,
+      variants:product_variants(id, sku, price_cents, stock, is_active, option_values),
       categories:product_categories(
-        category:categories(name, slug)
-      )
-    `)
-    .order('sort_order', { ascending: true })
+        category:categories(id, name, slug)
+      ),
+      images:product_images(
+        image_filename,
+        alt_text,
+        is_primary
+      ),
+      brand:brands(id, name, slug)
+    `, { count: 'exact' })
+    .is('deleted_at', null)
     .order('created_at', { ascending: false })
-    .limit(100)
+    .limit(50)
+  
+  // Get all categories for filtering
+  const { data: categories } = await supabase
+    .from('categories')
+    .select('id, name, slug')
+    .is('deleted_at', null)
+    .order('name')
+  
+  // Get all brands for filtering
+  const { data: brands } = await supabase
+    .from('brands')
+    .select('id, name, slug')
+    .is('deleted_at', null)
+    .order('name')
   
   // Get last sync status
   const { data: lastSync } = await supabase
@@ -71,6 +95,9 @@ export default async function AdminProductsPage() {
         </div>
         <ProductsManager 
           initialProducts={products || []} 
+          initialTotal={count || 0}
+          categories={categories || []}
+          brands={brands || []}
           lastSync={lastSync}
         />
       </div>

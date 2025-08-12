@@ -1,9 +1,12 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { Plus, Heart } from 'lucide-react'
 import { getImageSrc } from '@/lib/utils/image-utils'
+import { createClient } from '@/lib/supabase/client'
+import { useCart } from '@/lib/hooks/use-cart'
+import { toast } from 'sonner'
 
 interface Product {
   id: string
@@ -43,6 +46,26 @@ interface FeaturedProductsProps {
 
 export function FeaturedProducts({ products }: FeaturedProductsProps) {
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set())
+  const [user, setUser] = useState<any>(null)
+  const [addingToCart, setAddingToCart] = useState<Set<string>>(new Set())
+  const supabase = createClient()
+  const { addItem } = useCart()
+  
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+    }
+    getUser()
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user || null)
+      }
+    )
+
+    return () => subscription.unsubscribe()
+  }, [supabase.auth])
   
   const handleImageError = useCallback((productId: string) => {
     setImageErrors(prev => new Set(prev).add(productId))
@@ -81,6 +104,23 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
     return 0
   }
 
+  const isPreOrder = (product: Product) => {
+    // Check preorder_release_date field
+    if (product.preorder_release_date) {
+      return true
+    }
+    // Check if product is in "Pre Orders" category
+    if (product.categories && product.categories.length > 0) {
+      const hasPreOrderCategory = product.categories.some(
+        (pc: any) => pc.category && pc.category.slug === 'pre-orders'
+      )
+      if (hasPreOrderCategory) {
+        return true
+      }
+    }
+    return false
+  }
+
   const getProductUrl = (product: Product) => {
     // Determine the best category path for the product
     if (product.categories && product.categories.length > 0) {
@@ -117,6 +157,49 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
     return primaryImage || product.images?.[0]
   }
 
+  const handleAddToCart = async (product: Product, isPreOrder: boolean) => {
+    if (isPreOrder && !user) {
+      const returnUrl = encodeURIComponent(getProductUrl(product))
+      window.location.href = `/auth/login?redirectTo=${returnUrl}`
+      return
+    }
+
+    setAddingToCart(prev => new Set(prev).add(product.id))
+    
+    try {
+      const price = getPrice(product)
+      const primaryImage = getPrimaryImage(product)
+      await addItem({
+        productId: product.id,
+        variantId: product.variants?.[0]?.id,
+        productName: product.name,
+        price: price,
+        quantity: 1,
+        image: primaryImage?.image_filename || product.image_url,
+        weight: product.weight || 1.0, // Default to 1 lb if not specified
+        dimensions: product.width && product.height && product.depth ? {
+          length: Number(product.depth) || 12,
+          width: Number(product.width) || 12,
+          height: Number(product.height) || 6
+        } : undefined,
+        min_purchase_quantity: 1,
+        max_purchase_quantity: null
+      })
+      
+      toast.success('Added to cart', {
+        description: `${product.name} added to your cart`
+      })
+    } catch (error) {
+      toast.error('Failed to add item to cart')
+    } finally {
+      setAddingToCart(prev => {
+        const newSet = new Set(prev)
+        newSet.delete(product.id)
+        return newSet
+      })
+    }
+  }
+
   // Split products into featured (first) and grid (rest)
   const [featuredProduct, ...gridProducts] = products
 
@@ -124,7 +207,7 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
     return (
       <div className="text-center py-12">
         <p style={{ color: 'white', opacity: 0.8 }}>
-          No featured products found. Please mark some products as featured in the admin panel.
+          No products available at this time.
         </p>
       </div>
     )
@@ -160,25 +243,25 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
                 }
               })()}
             </Link>
-            
-            {/* Status badge INSIDE image container */}
-            {featuredProduct.preorder_release_date ? (
-              <div className="figma-pre-order-wrapper">
-                <b className="pre-order">PRE ORDER</b>
-              </div>
-            ) : getStock(featuredProduct) > 0 ? (
-              <div className="figma-in-stock-wrapper">
-                <b className="in-stock">IN STOCK</b>
-              </div>
-            ) : (
-              <div className="figma-out-of-stock-wrapper">
-                <b className="out-of-stock">OUT OF STOCK</b>
-              </div>
-            )}
           </div>
 
           <div className="main-featured-product-content">
             <div className="productbox-container1-110-parent">
+              {/* Status badge in details section */}
+              {isPreOrder(featuredProduct) ? (
+                <div className="figma-pre-order-wrapper">
+                  <b className="pre-order">PRE-ORDER</b>
+                </div>
+              ) : getStock(featuredProduct) > 0 ? (
+                <div className="figma-in-stock-wrapper">
+                  <b className="in-stock">IN STOCK</b>
+                </div>
+              ) : (
+                <div className="figma-out-of-stock-wrapper">
+                  <b className="out-of-stock">OUT OF STOCK</b>
+                </div>
+              )}
+              
               <b className="productbox-container1">
                 <Link href={getProductUrl(featuredProduct)}>
                   {featuredProduct.name}
@@ -197,13 +280,25 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
                 <button 
                   type="button"
                   className="add-to-cart-parent"
-                  onClick={() => {
-                    // TODO: Add to cart functionality
-                    window.location.href = getProductUrl(featuredProduct)
-                  }}
+                  onClick={() => handleAddToCart(featuredProduct, isPreOrder(featuredProduct))}
+                  disabled={(!isPreOrder(featuredProduct) && getStock(featuredProduct) === 0) || addingToCart.has(featuredProduct.id)}
                 >
-                  <b className="add-to-cart">Add to Cart</b>
-                  <Plus className="open-heart-icon" />
+                  <b className="add-to-cart">
+                    {addingToCart.has(featuredProduct.id)
+                      ? "ADDING..."
+                      : isPreOrder(featuredProduct)
+                      ? user 
+                        ? "PRE-ORDER NOW"
+                        : "LOGIN TO PRE-ORDER"
+                      : getStock(featuredProduct) > 0
+                      ? "ADD TO CART"
+                      : "OUT OF STOCK"}
+                  </b>
+                  {addingToCart.has(featuredProduct.id) ? (
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current" />
+                  ) : (
+                    <Plus className="open-heart-icon" />
+                  )}
                 </button>
                 
                 <button 
@@ -227,12 +322,13 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
       {gridProducts.length > 0 && (
         <div className="figma-frame-container">
           <div className="figma-frame-div" data-columns="4">
-            {gridProducts.slice(0, 4).map((product) => {
+            {gridProducts.map((product) => {
               const price = getPrice(product)
               const stock = getStock(product)
               const image = getPrimaryImage(product)
               const hasError = imageErrors.has(product.id)
               const inStock = stock > 0
+              const productIsPreOrder = isPreOrder(product)
 
               return (
                 <div key={product.id} className="figma-small-card-wrapper">
@@ -254,10 +350,26 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
                           )}
                         </Link>
 
-                        {/* Stock status badge */}
-                        <div className={inStock ? "figma-in-stock-wrapper" : "figma-out-of-stock-wrapper"}>
-                          <b className={inStock ? "figma-in-stock" : "figma-out-of-stock"}>
-                            {inStock ? "IN STOCK" : "OUT OF STOCK"}
+                        {/* Stock/Pre-order status badge */}
+                        <div className={
+                          productIsPreOrder
+                            ? "figma-pre-order-wrapper"
+                            : inStock
+                            ? "figma-in-stock-wrapper"
+                            : "figma-out-of-stock-wrapper"
+                        }>
+                          <b className={
+                            productIsPreOrder
+                              ? "figma-pre-order"
+                              : inStock
+                              ? "figma-in-stock"
+                              : "figma-out-of-stock"
+                          }>
+                            {productIsPreOrder
+                              ? "PRE-ORDER"
+                              : inStock
+                              ? "IN STOCK"
+                              : "OUT OF STOCK"}
                           </b>
                         </div>
 
@@ -297,15 +409,25 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
                               <button
                                 type="button"
                                 className="figma-add-to-cart-btn"
-                                onClick={() => {
-                                  window.location.href = getProductUrl(product)
-                                }}
-                                disabled={!inStock}
+                                onClick={() => handleAddToCart(product, productIsPreOrder)}
+                                disabled={(!productIsPreOrder && !inStock) || addingToCart.has(product.id)}
                               >
                                 <b className="figma-add-to-cart">
-                                  {inStock ? "ADD TO CART" : "OUT OF STOCK"}
+                                  {addingToCart.has(product.id)
+                                    ? "ADDING..."
+                                    : productIsPreOrder
+                                    ? user 
+                                      ? "PRE-ORDER NOW"
+                                      : "LOGIN TO PRE-ORDER"
+                                    : inStock
+                                    ? "ADD TO CART"
+                                    : "OUT OF STOCK"}
                                 </b>
-                                <Plus className="figma-add-icon" />
+                                {addingToCart.has(product.id) ? (
+                                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current" />
+                                ) : (
+                                  <Plus className="figma-add-icon" />
+                                )}
                               </button>
                             </div>
 

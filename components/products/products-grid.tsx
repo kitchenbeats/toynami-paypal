@@ -7,6 +7,8 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight, Plus, Heart } from "lucide-react";
 import { getImageSrc } from "@/lib/utils/image-utils";
 import { createClient } from "@/lib/supabase/client";
+import { useCart } from "@/lib/hooks/use-cart";
+import { toast } from "sonner";
 
 interface Product {
   id: string;
@@ -57,7 +59,9 @@ export function ProductsGrid({
   const searchParams = useSearchParams();
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
   const [user, setUser] = useState<any>(null);
+  const [addingToCart, setAddingToCart] = useState<Set<string>>(new Set());
   const supabase = createClient();
+  const { addItem } = useCart();
 
   useEffect(() => {
     const getUser = async () => {
@@ -79,6 +83,49 @@ export function ProductsGrid({
 
   const handleImageError = (productId: string) => {
     setImageErrors((prev) => new Set(prev).add(productId));
+  };
+
+  const handleAddToCart = async (product: Product, isPreOrder: boolean) => {
+    if (isPreOrder && !user) {
+      const returnUrl = encodeURIComponent(getProductUrl(product));
+      window.location.href = `/auth/login?redirectTo=${returnUrl}`;
+      return;
+    }
+
+    setAddingToCart(prev => new Set(prev).add(product.id));
+    
+    try {
+      const price = getPrice(product);
+      const primaryImage = getPrimaryImage(product);
+      await addItem({
+        productId: product.id,
+        variantId: product.variants?.[0]?.id,
+        productName: product.name,
+        price: price,
+        quantity: 1,
+        image: primaryImage?.image_filename || product.image_url,
+        weight: product.weight || 1.0,
+        dimensions: product.width && product.height && product.depth ? {
+          length: Number(product.depth) || 12,
+          width: Number(product.width) || 12,
+          height: Number(product.height) || 6
+        } : undefined,
+        min_purchase_quantity: 1,
+        max_purchase_quantity: null
+      });
+      
+      toast.success('Added to cart', {
+        description: `${product.name} added to your cart`
+      });
+    } catch (error) {
+      toast.error('Failed to add item to cart');
+    } finally {
+      setAddingToCart(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(product.id);
+        return newSet;
+      });
+    }
   };
 
   const getPrice = (product: Product) => {
@@ -350,19 +397,13 @@ export function ProductsGrid({
                             <button
                               type="button"
                               className="figma-add-to-cart-btn"
-                              onClick={() => {
-                                if (productIsPreOrder && !user) {
-                                  // Redirect to login with return URL to product page
-                                  const returnUrl = encodeURIComponent(getProductUrl(product));
-                                  window.location.href = `/auth/login?redirectTo=${returnUrl}`;
-                                } else {
-                                  window.location.href = getProductUrl(product);
-                                }
-                              }}
-                              disabled={!productIsPreOrder && !inStock}
+                              onClick={() => handleAddToCart(product, productIsPreOrder)}
+                              disabled={(!productIsPreOrder && !inStock) || addingToCart.has(product.id)}
                             >
                               <b className="figma-add-to-cart">
-                                {productIsPreOrder
+                                {addingToCart.has(product.id)
+                                  ? "ADDING..."
+                                  : productIsPreOrder
                                   ? user 
                                     ? "PRE-ORDER NOW"
                                     : "LOGIN TO PRE-ORDER"
@@ -370,7 +411,11 @@ export function ProductsGrid({
                                   ? "ADD TO CART"
                                   : "OUT OF STOCK"}
                               </b>
-                              <Plus className="figma-add-icon" />
+                              {addingToCart.has(product.id) ? (
+                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current" />
+                              ) : (
+                                <Plus className="figma-add-icon" />
+                              )}
                             </button>
                           </div>
 

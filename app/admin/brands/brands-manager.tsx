@@ -8,14 +8,18 @@ import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Pencil, Trash2, Plus, GripVertical, Save, X } from 'lucide-react'
+import { Pencil, Trash2, Plus, GripVertical, Save, X, Image as ImageIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { BrandImageUpload } from '@/components/admin/brand-image-upload'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 interface Brand {
   id?: string
   slug: string
   name: string
   logo_url?: string
+  banner_url_1?: string
+  banner_url_2?: string
   description?: string
   featured: boolean
   display_order: number
@@ -34,6 +38,8 @@ export function BrandsManager({ initialBrands }: BrandsManagerProps) {
     slug: '',
     name: '',
     logo_url: '',
+    banner_url_1: '',
+    banner_url_2: '',
     description: '',
     featured: false,
     display_order: 0,
@@ -57,6 +63,8 @@ export function BrandsManager({ initialBrands }: BrandsManagerProps) {
       slug: '',
       name: '',
       logo_url: '',
+      banner_url_1: '',
+      banner_url_2: '',
       description: '',
       featured: false,
       display_order: brands.length,
@@ -72,6 +80,8 @@ export function BrandsManager({ initialBrands }: BrandsManagerProps) {
       slug: '',
       name: '',
       logo_url: '',
+      banner_url_1: '',
+      banner_url_2: '',
       description: '',
       featured: false,
       display_order: 0,
@@ -176,80 +186,119 @@ export function BrandsManager({ initialBrands }: BrandsManagerProps) {
           <CardHeader>
             <CardTitle>{isCreating ? 'Create New Brand' : 'Edit Brand'}</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="name">Brand Name *</Label>
-                <Input
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="e.g., Robotech"
-                />
-              </div>
-              <div>
-                <Label htmlFor="slug">URL Slug *</Label>
-                <Input
-                  id="slug"
-                  value={formData.slug}
-                  onChange={(e) => setFormData({ ...formData, slug: e.target.value.toLowerCase().replace(/\s+/g, '-') })}
-                  placeholder="e.g., robotech"
-                />
-              </div>
-            </div>
+          <CardContent>
+            <Tabs defaultValue="general" className="space-y-4">
+              <TabsList>
+                <TabsTrigger value="general">General</TabsTrigger>
+                <TabsTrigger value="images">Images</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="general" className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="name">Brand Name *</Label>
+                    <Input
+                      id="name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      placeholder="e.g., Robotech"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="slug">URL Slug *</Label>
+                    <Input
+                      id="slug"
+                      value={formData.slug}
+                      onChange={(e) => setFormData({ ...formData, slug: e.target.value.toLowerCase().replace(/\s+/g, '-') })}
+                      placeholder="e.g., robotech"
+                    />
+                  </div>
+                </div>
 
-            <div>
-              <Label htmlFor="logo_url">Logo URL</Label>
-              <Input
-                id="logo_url"
-                value={formData.logo_url || ''}
-                onChange={(e) => setFormData({ ...formData, logo_url: e.target.value })}
-                placeholder="https://example.com/logo.png"
-              />
-            </div>
+                <div>
+                  <Label htmlFor="description">Description</Label>
+                  <Textarea
+                    id="description"
+                    value={formData.description || ''}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    placeholder="Brief description of the brand..."
+                    rows={3}
+                  />
+                </div>
 
-            <div>
-              <Label htmlFor="description">Description</Label>
-              <Textarea
-                id="description"
-                value={formData.description || ''}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                placeholder="Brief description of the brand..."
-                rows={3}
-              />
-            </div>
+                <div>
+                  <Label htmlFor="search_keywords">Search Keywords</Label>
+                  <Input
+                    id="search_keywords"
+                    value={formData.search_keywords || ''}
+                    onChange={(e) => setFormData({ ...formData, search_keywords: e.target.value })}
+                    placeholder="robotech macross veritech valkyrie"
+                  />
+                </div>
 
-            <div>
-              <Label htmlFor="search_keywords">Search Keywords</Label>
-              <Input
-                id="search_keywords"
-                value={formData.search_keywords || ''}
-                onChange={(e) => setFormData({ ...formData, search_keywords: e.target.value })}
-                placeholder="robotech macross veritech valkyrie"
-              />
-            </div>
+                <div className="flex items-center space-x-6">
+                  <div className="flex items-center space-x-2">
+                    <Switch
+                      id="featured"
+                      checked={formData.featured}
+                      onCheckedChange={(checked) => setFormData({ ...formData, featured: checked })}
+                    />
+                    <Label htmlFor="featured">Featured Brand</Label>
+                  </div>
 
-            <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2">
-                <Switch
-                  id="featured"
-                  checked={formData.featured}
-                  onCheckedChange={(checked) => setFormData({ ...formData, featured: checked })}
-                />
-                <Label htmlFor="featured">Featured Brand</Label>
-              </div>
+                  <div className="flex items-center space-x-2">
+                    <Switch
+                      id="is_active"
+                      checked={formData.is_active}
+                      onCheckedChange={(checked) => setFormData({ ...formData, is_active: checked })}
+                    />
+                    <Label htmlFor="is_active">Active</Label>
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="images" className="space-y-4">
+                {editingId ? (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <BrandImageUpload
+                      brandId={editingId}
+                      imageType="logo"
+                      currentImageUrl={formData.logo_url}
+                      label="Logo"
+                      description="Brand logo image"
+                      onImageChange={(url) => setFormData({ ...formData, logo_url: url || '' })}
+                      aspectRatio="aspect-square"
+                    />
+                    
+                    <BrandImageUpload
+                      brandId={editingId}
+                      imageType="banner_1"
+                      currentImageUrl={formData.banner_url_1}
+                      label="Home Banner"
+                      description="Displayed on home page"
+                      onImageChange={(url) => setFormData({ ...formData, banner_url_1: url || '' })}
+                      aspectRatio="aspect-[16/9]"
+                    />
+                    
+                    <BrandImageUpload
+                      brandId={editingId}
+                      imageType="banner_2"
+                      currentImageUrl={formData.banner_url_2}
+                      label="Brand Page Banner"
+                      description="Displayed on brand page"
+                      onImageChange={(url) => setFormData({ ...formData, banner_url_2: url || '' })}
+                      aspectRatio="aspect-[16/9]"
+                    />
+                  </div>
+                ) : (
+                  <div className="text-center py-8 text-muted-foreground">
+                    Save the brand first to upload images
+                  </div>
+                )}
+              </TabsContent>
+            </Tabs>
 
-              <div className="flex items-center space-x-2">
-                <Switch
-                  id="is_active"
-                  checked={formData.is_active}
-                  onCheckedChange={(checked) => setFormData({ ...formData, is_active: checked })}
-                />
-                <Label htmlFor="is_active">Active</Label>
-              </div>
-            </div>
-
-            <div className="flex justify-end space-x-2">
+            <div className="flex justify-end space-x-2 pt-4">
               <Button variant="outline" onClick={handleCancel}>
                 <X className="h-4 w-4 mr-2" />
                 Cancel
@@ -273,6 +322,23 @@ export function BrandsManager({ initialBrands }: BrandsManagerProps) {
                 <div>
                   <h3 className="font-semibold">{brand.name}</h3>
                   <p className="text-sm text-gray-500">/{brand.slug}</p>
+                  <div className="flex items-center gap-2 mt-1">
+                    {brand.logo_url && (
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <ImageIcon className="h-3 w-3" /> Logo
+                      </span>
+                    )}
+                    {brand.banner_url_1 && (
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <ImageIcon className="h-3 w-3" /> Home Banner
+                      </span>
+                    )}
+                    {brand.banner_url_2 && (
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <ImageIcon className="h-3 w-3" /> Brand Banner
+                      </span>
+                    )}
+                  </div>
                 </div>
                 {brand.featured && (
                   <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">Featured</span>

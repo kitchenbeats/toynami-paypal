@@ -17,6 +17,33 @@ export async function GET(request: NextRequest) {
       token_hash,
     });
     if (!error) {
+      // Get the user data after successful verification
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (user) {
+        // Check if user exists in our users table
+        const { data: existingUser } = await supabase
+          .from('users')
+          .select('id')
+          .eq('id', user.id)
+          .single();
+        
+        // If user doesn't exist, create them
+        if (!existingUser) {
+          const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(',').map(e => e.trim()) || [];
+          const isAdmin = adminEmails.includes(user.email || '');
+          
+          await supabase
+            .from('users')
+            .insert({
+              id: user.id,
+              email: user.email,
+              full_name: user.user_metadata?.full_name || '',
+              is_admin: isAdmin
+            });
+        }
+      }
+      
       // redirect user to specified redirect URL or root of app
       redirect(next);
     } else {

@@ -55,6 +55,17 @@ export async function ProductDetailServer({ slug }: ProductDetailServerProps) {
     description: product.description,
     brand: product.brand?.name || 'Unknown Brand',
     slug: product.slug,
+    sku: product.sku,
+    // Pricing - use sale price if available, otherwise retail price, otherwise calculated price
+    retail_price_cents: product.retail_price_cents,
+    sale_price_cents: product.sale_price_cents,
+    calculated_price_cents: product.calculated_price_cents,
+    base_price_cents: product.base_price_cents,
+    compare_price_cents: product.compare_price_cents,
+    // Stock
+    stock_level: product.stock_level,
+    track_inventory: product.track_inventory,
+    // Variants
     variants: product.variants || [],
     images: (product.images || [])
       .sort((a: any, b: any) => (a.position || 0) - (b.position || 0))
@@ -71,7 +82,11 @@ export async function ProductDetailServer({ slug }: ProductDetailServerProps) {
     height: product.height,
     depth: product.depth,
     customFields: product.custom_fields,
-    minTierOrder: product.min_tier_order
+    minTierOrder: product.min_tier_order,
+    preorder_release_date: product.preorder_release_date,
+    preorder_message: product.preorder_message,
+    min_purchase_quantity: product.min_purchase_quantity || 1,
+    max_purchase_quantity: product.max_purchase_quantity || null
   }
 
   return <ProductDetailClient product={transformedProduct} />

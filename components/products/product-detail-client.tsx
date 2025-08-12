@@ -9,6 +9,9 @@ import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Card } from '@/components/ui/card'
 import { ShoppingCart, Heart, Share2, Shield, Truck, Package, Star, ChevronLeft, ChevronRight } from 'lucide-react'
+import { createClient } from '@/lib/supabase/client'
+import { useCart } from '@/lib/hooks/use-cart'
+import { toast } from 'sonner'
 
 interface ProductImage {
   filename: string
@@ -31,6 +34,14 @@ interface Product {
   description?: string
   brand: string
   slug: string
+  sku?: string
+  retail_price_cents?: number
+  sale_price_cents?: number
+  calculated_price_cents?: number
+  base_price_cents?: number
+  compare_price_cents?: number
+  stock_level?: number
+  track_inventory?: string
   variants: ProductVariant[]
   images: ProductImage[]
   categories: Array<{ name: string; slug: string }>
@@ -42,6 +53,10 @@ interface Product {
   depth?: number
   customFields?: any
   minTierOrder?: number
+  preorder_release_date?: string
+  preorder_message?: string
+  min_purchase_quantity?: number
+  max_purchase_quantity?: number | null
 }
 
 interface ProductDetailClientProps {
@@ -51,10 +66,36 @@ interface ProductDetailClientProps {
 export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const supabase = createClient()
+  const { addItem } = useCart()
   
-  const [quantity, setQuantity] = useState(1)
+  // Handle min/max purchase quantities (0 defaults to 1)
+  const minQty = product.min_purchase_quantity && product.min_purchase_quantity > 0 ? product.min_purchase_quantity : 1
+  const maxQty = product.max_purchase_quantity || null
+  
+  const [quantity, setQuantity] = useState(minQty)
   const [selectedImage, setSelectedImage] = useState(0)
   const [selectedVariant, setSelectedVariant] = useState(0)
+  const [user, setUser] = useState<any>(null)
+  const [quantityMessage, setQuantityMessage] = useState<string | null>(null)
+  const [isAddingToCart, setIsAddingToCart] = useState(false)
+  
+  // Get user authentication status
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+    }
+    getUser()
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user || null)
+      }
+    )
+
+    return () => subscription.unsubscribe()
+  }, [supabase.auth])
 
   // Initialize variant from URL parameters
   useEffect(() => {
@@ -82,15 +123,64 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
     setSelectedVariant(variantIndex)
   }
 
-  // Calculate pricing and stock from variants
+  // Calculate pricing and stock
   const activeVariants = product.variants.filter(v => v.is_active)
   const currentVariant = activeVariants[selectedVariant] || activeVariants[0]
   
-  const price = currentVariant ? currentVariant.price_cents / 100 : 0
-  const comparePrice = currentVariant?.compare_at_price_cents ? currentVariant.compare_at_price_cents / 100 : null
-  const stock = currentVariant?.stock || 0
-  const sku = currentVariant?.sku || 'N/A'
+  // Get price - prioritize: variant price > sale price > retail price > calculated price > base price
+  let price = 0
+  if (currentVariant && currentVariant.price_cents) {
+    price = currentVariant.price_cents / 100
+  } else if (product.sale_price_cents) {
+    price = product.sale_price_cents / 100
+  } else if (product.retail_price_cents) {
+    price = product.retail_price_cents / 100
+  } else if (product.calculated_price_cents) {
+    price = product.calculated_price_cents / 100
+  } else if (product.base_price_cents) {
+    price = product.base_price_cents / 100
+  }
+  
+  // Get compare price for showing savings
+  const comparePrice = product.compare_price_cents ? product.compare_price_cents / 100 : 
+                       (product.retail_price_cents && product.sale_price_cents ? product.retail_price_cents / 100 : null)
+  
+  // Get stock - check product level first, then variant
+  let stock = 0
+  let sku = product.sku || 'N/A'
+  
+  if (product.track_inventory === 'by product' && product.stock_level !== undefined) {
+    stock = product.stock_level
+  } else if (product.track_inventory === 'by variant' && currentVariant) {
+    stock = currentVariant.stock || 0
+    sku = currentVariant.sku || product.sku || 'N/A'
+  } else if (product.track_inventory === 'none') {
+    stock = 999 // Assume in stock if not tracking
+  } else if (currentVariant) {
+    stock = currentVariant.stock || 0
+  }
+  
   const inStock = stock > 0
+  
+  // Check if product is pre-order
+  const isPreOrder = () => {
+    // Check preorder_release_date field
+    if (product.preorder_release_date) {
+      return true
+    }
+    // Check if product is in "Pre Orders" category
+    if (product.categories && product.categories.length > 0) {
+      const hasPreOrderCategory = product.categories.some(
+        (category) => category.slug === 'pre-orders'
+      )
+      if (hasPreOrderCategory) {
+        return true
+      }
+    }
+    return false
+  }
+  
+  const productIsPreOrder = isPreOrder()
 
   // Image handling
   const displayImages = product.images.length > 0 
@@ -103,6 +193,42 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
   const previousImage = () => {
     setSelectedImage((prev) => (prev - 1 + displayImages.length) % displayImages.length)
+  }
+  
+  const handleAddToCart = async () => {
+    setIsAddingToCart(true)
+    
+    try {
+      await addItem({
+        productId: product.id,
+        variantId: currentVariant?.id,
+        productName: product.name,
+        price: price * 100, // Convert back to cents for cart
+        quantity: quantity,
+        image: displayImages[0]?.image_filename || product.image_url,
+        weight: product.weight || 1.0, // Default to 1 lb if not specified
+        dimensions: product.width && product.height && product.depth ? {
+          length: Number(product.depth) || 12,
+          width: Number(product.width) || 12,
+          height: Number(product.height) || 6
+        } : undefined,
+        min_purchase_quantity: minQty,
+        max_purchase_quantity: maxQty
+      })
+      
+      toast.success(`Added to cart`, {
+        description: `${quantity} × ${product.name} added to your cart`
+      })
+      
+      // Reset quantity to minimum after adding
+      setQuantity(minQty)
+    } catch (error) {
+      toast.error('Failed to add item to cart', {
+        description: 'Please try again.'
+      })
+    } finally {
+      setIsAddingToCart(false)
+    }
   }
 
   return (
@@ -158,16 +284,17 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
               <button
                 key={index}
                 onClick={() => setSelectedImage(index)}
-                className={`aspect-square bg-muted rounded-lg overflow-hidden border-2 transition-colors ${
+                className={`relative aspect-square bg-muted rounded-lg overflow-hidden border-2 transition-colors cursor-pointer ${
                   selectedImage === index ? 'border-primary' : 'border-transparent hover:border-gray-300'
                 }`}
               >
                 <Image
                   src={getImageSrc(image.filename)}
                   alt={image.alt}
-                  width={100}
-                  height={100}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(min-width: 1024px) 12vw, (min-width: 768px) 15vw, 22vw"
+                  className="object-cover"
+                  quality={90}
                   onError={(e) => {
                     const target = e.target as HTMLImageElement
                     target.style.display = 'none'
@@ -201,8 +328,8 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           </div>
 
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant={inStock ? 'default' : 'secondary'}>
-              {inStock ? `${stock} in stock` : 'Out of Stock'}
+            <Badge variant={productIsPreOrder ? 'outline' : inStock ? 'default' : 'secondary'} className={productIsPreOrder ? 'border-blue-500 text-blue-600' : ''}>
+              {productIsPreOrder ? 'Pre-Order' : inStock ? `${stock} in stock` : 'Out of Stock'}
             </Badge>
             <span className="text-sm text-muted-foreground">SKU: {sku}</span>
           </div>
@@ -233,49 +360,119 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
         {/* Quantity & Add to Cart */}
         <div className="space-y-4">
-          <div className="flex items-center gap-4">
-            <label htmlFor="quantity" className="text-sm font-medium">Quantity:</label>
-            <div className="flex items-center border rounded-md">
-              <button
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="p-2 hover:bg-gray-100 transition-colors"
-                disabled={quantity <= 1}
-              >
-                -
-              </button>
-              <input
-                id="quantity"
-                type="number"
-                min="1"
-                max={stock}
-                value={quantity}
-                onChange={(e) => setQuantity(Math.min(stock, Math.max(1, parseInt(e.target.value) || 1)))}
-                className="w-16 text-center border-none focus:outline-none"
-              />
-              <button
-                onClick={() => setQuantity(Math.min(stock, quantity + 1))}
-                className="p-2 hover:bg-gray-100 transition-colors"
-                disabled={quantity >= stock}
-              >
-                +
-              </button>
+          <div className="space-y-2">
+            <div className="flex items-center gap-4">
+              <label htmlFor="quantity" className="text-sm font-medium">Quantity:</label>
+              <div className="flex items-center border rounded-md">
+                <button
+                  onClick={() => {
+                    const newQty = Math.max(minQty, quantity - 1)
+                    setQuantity(newQty)
+                    if (maxQty === 1) {
+                      setQuantityMessage('🎯 Limited Edition: 1 per customer')
+                    } else {
+                      setQuantityMessage(null)
+                    }
+                  }}
+                  className="p-2 hover:bg-gray-100 transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+                  disabled={quantity <= minQty}
+                >
+                  -
+                </button>
+                <input
+                  id="quantity"
+                  type="number"
+                  min={minQty}
+                  max={maxQty || stock}
+                  value={quantity}
+                  onChange={(e) => {
+                    const val = parseInt(e.target.value) || minQty
+                    const maxAllowed = maxQty ? Math.min(stock, maxQty) : stock
+                    const newQty = Math.min(maxAllowed, Math.max(minQty, val))
+                    setQuantity(newQty)
+                    
+                    // Set friendly messages
+                    if (maxQty && val > maxQty) {
+                      if (maxQty === 1) {
+                        setQuantityMessage('🎯 Limited Edition: 1 per customer - ensuring everyone gets a chance!')
+                      } else {
+                        setQuantityMessage(`🎯 Limited to ${maxQty} per customer for this exclusive item`)
+                      }
+                    } else if (val < minQty) {
+                      setQuantityMessage(`Minimum order quantity is ${minQty}`)
+                    } else {
+                      setQuantityMessage(null)
+                    }
+                  }}
+                  className="w-16 text-center border-none focus:outline-none"
+                />
+                <button
+                  onClick={() => {
+                    const maxAllowed = maxQty ? Math.min(stock, maxQty) : stock
+                    const newQty = Math.min(maxAllowed, quantity + 1)
+                    setQuantity(newQty)
+                    
+                    if (maxQty && newQty >= maxQty) {
+                      if (maxQty === 1) {
+                        setQuantityMessage('🎯 Limited Edition: 1 per customer')
+                      } else {
+                        setQuantityMessage(`🎯 Maximum ${maxQty} per customer for this exclusive item`)
+                      }
+                    } else {
+                      setQuantityMessage(null)
+                    }
+                  }}
+                  className="p-2 hover:bg-gray-100 transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+                  disabled={quantity >= (maxQty ? Math.min(stock, maxQty) : stock)}
+                >
+                  +
+                </button>
+              </div>
             </div>
+            
+            {/* Friendly message for quantity limits */}
+            {quantityMessage && (
+              <p className="text-sm text-blue-600 ml-20">{quantityMessage}</p>
+            )}
+            
+            {/* Show limit info upfront for limited editions */}
+            {maxQty === 1 && !quantityMessage && (
+              <p className="text-sm text-blue-600 ml-20">🎯 Limited Edition: 1 per customer</p>
+            )}
           </div>
 
           <div className="flex gap-4">
             <Button
               size="lg"
-              className="flex-1"
-              disabled={!inStock}
-              onClick={() => console.log('Add to cart:', { productId: product.id, variantId: currentVariant?.id, quantity })}
+              className="flex-1 cursor-pointer disabled:cursor-not-allowed"
+              disabled={(!productIsPreOrder && !inStock) || isAddingToCart}
+              onClick={() => {
+                if (productIsPreOrder && !user) {
+                  // Redirect to login with return URL to product page
+                  const returnUrl = encodeURIComponent(window.location.pathname + window.location.search)
+                  window.location.href = `/auth/login?redirectTo=${returnUrl}`
+                } else {
+                  handleAddToCart()
+                }
+              }}
             >
-              <ShoppingCart className="h-4 w-4 mr-2" />
-              {inStock ? 'Add to Cart' : 'Out of Stock'}
+              {isAddingToCart ? (
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+              ) : (
+                <ShoppingCart className="h-4 w-4 mr-2" />
+              )}
+              {isAddingToCart ? 'Adding...' : productIsPreOrder
+                ? user 
+                  ? 'Pre-Order Now'
+                  : 'Login to Pre-Order'
+                : inStock 
+                ? 'Add to Cart' 
+                : 'Out of Stock'}
             </Button>
-            <Button size="lg" variant="outline" className="px-6">
+            <Button size="lg" variant="outline" className="px-6 cursor-pointer hover:bg-gray-50">
               <Heart className="h-4 w-4" />
             </Button>
-            <Button size="lg" variant="outline" className="px-6">
+            <Button size="lg" variant="outline" className="px-6 cursor-pointer hover:bg-gray-50">
               <Share2 className="h-4 w-4" />
             </Button>
           </div>
@@ -302,27 +499,43 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
         {/* Tabs */}
         <Tabs defaultValue="description" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="description">Description</TabsTrigger>
-            <TabsTrigger value="specifications">Details</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 gap-4 h-auto p-0 bg-transparent" role="tablist">
+            <TabsTrigger 
+              value="description" 
+              className="w-full py-2 text-sm border-b-2 cursor-pointer hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-600 data-[state=active]:font-semibold data-[state=inactive]:border-gray-200"
+              role="tab"
+              aria-selected="true"
+              aria-controls="description-content"
+            >
+              Description
+            </TabsTrigger>
+            <TabsTrigger 
+              value="specifications" 
+              className="w-full py-2 text-sm border-b-2 cursor-pointer hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-600 data-[state=active]:font-semibold data-[state=inactive]:border-gray-200"
+              role="tab"
+              aria-selected="false"
+              aria-controls="specifications-content"
+            >
+              Details
+            </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="description" className="space-y-4">
-            <Card className="p-6">
+          <TabsContent value="description" className="mt-4" id="description-content" role="tabpanel" aria-labelledby="description-tab">
+            <div className="p-6 bg-white border rounded-lg">
               {product.description ? (
                 <div className="prose prose-sm max-w-none">
                   {product.description.split('\n').map((paragraph, index) => (
-                    <p key={index} className="mb-3 last:mb-0">{paragraph}</p>
+                    <p key={index} className="mb-3 last:mb-0 text-gray-700">{paragraph}</p>
                   ))}
                 </div>
               ) : (
                 <p className="text-muted-foreground">No description available.</p>
               )}
-            </Card>
+            </div>
           </TabsContent>
           
-          <TabsContent value="specifications" className="space-y-4">
-            <Card className="p-6">
+          <TabsContent value="specifications" className="mt-4" id="specifications-content" role="tabpanel" aria-labelledby="specifications-tab">
+            <div className="p-6 bg-white border rounded-lg">
               <div className="grid grid-cols-1 gap-3">
                 <div className="grid grid-cols-2 gap-4 py-2 border-b last:border-b-0">
                   <span className="font-medium">SKU</span>
@@ -371,7 +584,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                   </div>
                 )}
               </div>
-            </Card>
+            </div>
           </TabsContent>
         </Tabs>
       </div>

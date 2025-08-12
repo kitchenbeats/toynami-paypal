@@ -3,7 +3,11 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["cdn11.bigcommerce.com", "toynamishop.com", "vfefvlkvauvbbkiotddi.supabase.co"],
+    domains: [
+      "cdn11.bigcommerce.com",
+      "toynamishop.com",
+      "vfefvlkvauvbbkiotddi.supabase.co",
+    ],
     remotePatterns: [
       {
         protocol: "https",
@@ -21,7 +25,13 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "www.toynamishop.com",
         port: "",
-        pathname: "/product_images/**",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.toynami.com",
+        port: "",
+        pathname: "/**",
       },
       {
         protocol: "https",

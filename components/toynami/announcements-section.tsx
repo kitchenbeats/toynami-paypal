@@ -1,9 +1,9 @@
 import { getFeaturedBlogPosts } from '@/lib/data/blog'
 import { AnnouncementsGrid } from './announcements-grid'
 
-export async function AnnouncementsSection() {
-  // Fetch featured announcements from database (limit to 4 for home page)
-  const announcements = await getFeaturedBlogPosts(4)
+export async function AnnouncementsSection({ limit = 4 }: { limit?: number } = {}) {
+  // Fetch featured announcements from database
+  const announcements = await getFeaturedBlogPosts(limit)
   
   return (
     <>

@@ -8,7 +8,7 @@ export default async function AdminBrandsPage() {
   // Check if user is admin
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
-    redirect('/signin')
+    redirect('/auth/login')
   }
   
   const { data: userData } = await supabase

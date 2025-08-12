@@ -30,16 +30,11 @@ async function getProduct(productSlug: string) {
     .eq('slug', productSlug)
     .single()
   
-  console.log('Product query response:', { product, error, slug: productSlug })
-  
   if (error) {
-    console.error('Error fetching product:', error)
-    console.error('Product slug:', productSlug)
     return null
   }
   
   if (!product) {
-    console.error('No product found with slug:', productSlug)
     return null
   }
   
@@ -148,20 +143,12 @@ async function getRelatedProducts(productId: string, categoryIds: string[]) {
 export default async function ProductPage({ params }: PageProps) {
   const { slug: categorySlug, product: productSlug } = await params
   
-  console.log('Product page params:', { categorySlug, productSlug })
-  
   // Get the product
   const product = await getProduct(productSlug)
   
-  console.log('Product returned to page:', product)
-  console.log('Product truthiness:', !!product)
-  
   if (!product) {
-    console.log('Product not found, returning 404')
     notFound()
   }
-  
-  console.log('Product found, continuing to render')
   
   // Get category info for breadcrumb
   const category = await getCategoryInfo(categorySlug)

@@ -20,7 +20,7 @@ export default function Home() {
         
         {/* FEATURED PRODUCTS SECTION */}
         <div className="section-spacing">
-          <FeaturedProductsSection />
+          <FeaturedProductsSection limit={5} />
         </div>
         
         {/* FEATURED BRANDS SECTION */}

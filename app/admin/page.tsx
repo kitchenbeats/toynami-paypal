@@ -1,7 +1,5 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { SiteHeader } from '@/components/site-header'
-import { SiteFooter } from '@/components/site-footer'
 import { AdminDashboardServer } from '@/components/admin/admin-dashboard-server'
 
 export default async function AdminPage() {
@@ -25,21 +23,17 @@ export default async function AdminPage() {
   }
 
   return (
-    <>
-      <SiteHeader />
-      <main className="min-h-screen">
-        <div className="bg-muted py-8">
-          <div className="container mx-auto px-4">
-            <h1 className="text-4xl font-bold">Admin Dashboard</h1>
-            <p className="text-muted-foreground mt-2">Manage your store</p>
-          </div>
+    <main className="min-h-screen">
+      <div className="bg-muted py-8">
+        <div className="container mx-auto px-4">
+          <h1 className="text-4xl font-bold">Admin Dashboard</h1>
+          <p className="text-muted-foreground mt-2">Manage your store</p>
         </div>
+      </div>
 
-        <div className="container mx-auto px-4 py-8">
-          <AdminDashboardServer />
-        </div>
-      </main>
-      <SiteFooter />
-    </>
+      <div className="container mx-auto px-4 py-8">
+        <AdminDashboardServer />
+      </div>
+    </main>
   )
 }

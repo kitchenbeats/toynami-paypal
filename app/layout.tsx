@@ -43,7 +43,7 @@ export default function RootLayout({
               {children}
             </main>
             <SiteFooterNew />
-            <Toaster position="top-right" richColors />
+            <Toaster position="bottom-left" richColors />
           </CartProvider>
         </ThemeProvider>
       </body>

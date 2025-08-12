@@ -172,7 +172,6 @@ export function ProductCard({ product }: ProductCardProps) {
                     onClick={(e) => {
                       e.preventDefault()
                       if (isInStock) {
-                        console.log('Add to cart:', product.id)
                         // TODO: Implement add to cart functionality
                       }
                     }}
@@ -199,7 +198,6 @@ export function ProductCard({ product }: ProductCardProps) {
                   className="figma-add-to-wishlist-parent"
                   onClick={(e) => {
                     e.preventDefault()
-                    console.log('Add to wishlist:', product.id)
                     // TODO: Implement wishlist functionality
                   }}
                 >

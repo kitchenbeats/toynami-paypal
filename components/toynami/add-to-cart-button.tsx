@@ -13,6 +13,7 @@ interface AddToCartButtonProps {
   inStock: boolean
   variantId?: string
   quantity?: number
+  image?: string
   className?: string
 }
 
@@ -23,6 +24,7 @@ export function AddToCartButton({
   inStock,
   variantId,
   quantity = 1,
+  image,
   className
 }: AddToCartButtonProps) {
   const [isAdding, setIsAdding] = useState(false)
@@ -40,7 +42,8 @@ export function AddToCartButton({
         variantId,
         productName,
         price,
-        quantity
+        quantity,
+        image
       })
       
       setJustAdded(true)

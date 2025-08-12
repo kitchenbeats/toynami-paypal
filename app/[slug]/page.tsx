@@ -31,7 +31,6 @@ interface PageProps {
 async function getCategoryInfo(slug: string) {
   const supabase = await createClient()
   
-  console.log('[slug]/page.tsx - checking slug:', slug)
   
   // Check if it's a category
   const { data: category } = await supabase
@@ -42,7 +41,6 @@ async function getCategoryInfo(slug: string) {
     .single()
   
   if (category) {
-    console.log('[slug]/page.tsx - found category:', category.name)
     return { type: 'category', data: category }
   }
   
