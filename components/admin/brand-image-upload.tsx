@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { toast } from 'sonner'
 import { Upload, Trash2, Loader2, ImageIcon } from 'lucide-react'
-import { uploadBrandImage, deleteBrandImage } from '@/app/admin/brands/actions'
+import { uploadBrandImage, deleteBrandImage } from '@/app/(admin)/admin/brands/actions'
 
 interface BrandImageUploadProps {
   brandId?: string

@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
+import { ProductOptionsSelector } from './product-options-selector'
 import { getImageSrc } from '@/lib/utils/image-utils'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -57,6 +58,8 @@ interface Product {
   preorder_message?: string
   min_purchase_quantity?: number
   max_purchase_quantity?: number | null
+  options?: any[]
+  option_pricing?: any[]
 }
 
 interface ProductDetailClientProps {
@@ -79,6 +82,9 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const [user, setUser] = useState<any>(null)
   const [quantityMessage, setQuantityMessage] = useState<string | null>(null)
   const [isAddingToCart, setIsAddingToCart] = useState(false)
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({})
+  const [optionPriceAdjustment, setOptionPriceAdjustment] = useState(0)
+  const [optionStock, setOptionStock] = useState<number | null>(null)
   
   // Get user authentication status
   useEffect(() => {
@@ -128,18 +134,21 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const currentVariant = activeVariants[selectedVariant] || activeVariants[0]
   
   // Get price - prioritize: variant price > sale price > retail price > calculated price > base price
-  let price = 0
+  let basePrice = 0
   if (currentVariant && currentVariant.price_cents) {
-    price = currentVariant.price_cents / 100
+    basePrice = currentVariant.price_cents / 100
   } else if (product.sale_price_cents) {
-    price = product.sale_price_cents / 100
+    basePrice = product.sale_price_cents / 100
   } else if (product.retail_price_cents) {
-    price = product.retail_price_cents / 100
+    basePrice = product.retail_price_cents / 100
   } else if (product.calculated_price_cents) {
-    price = product.calculated_price_cents / 100
+    basePrice = product.calculated_price_cents / 100
   } else if (product.base_price_cents) {
-    price = product.base_price_cents / 100
+    basePrice = product.base_price_cents / 100
   }
+  
+  // Add option price adjustments
+  const price = basePrice + optionPriceAdjustment
   
   // Get compare price for showing savings
   const comparePrice = product.compare_price_cents ? product.compare_price_cents / 100 : 
@@ -160,7 +169,11 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
     stock = currentVariant.stock || 0
   }
   
-  const inStock = stock > 0
+  // Check if product is in stock (considering option stock if applicable)
+  // If options exist and optionStock is set (not null), use it. Otherwise use base stock
+  const hasOptionsWithStock = product.options && product.options.length > 0 && optionStock !== null
+  const effectiveStock = hasOptionsWithStock ? optionStock : stock
+  const inStock = hasOptionsWithStock ? (optionStock > 0) : (stock > 0)
   
   // Check if product is pre-order
   const isPreOrder = () => {
@@ -182,6 +195,56 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   
   const productIsPreOrder = isPreOrder()
 
+  // Quantity handlers
+  const decreaseQuantity = useCallback(() => {
+    const newQty = Math.max(minQty, quantity - 1)
+    setQuantity(newQty)
+    if (maxQty === 1) {
+      setQuantityMessage('🎯 Limited Edition: 1 per customer')
+    } else {
+      setQuantityMessage(null)
+    }
+  }, [minQty, quantity, maxQty])
+
+  const increaseQuantity = useCallback(() => {
+    // If stock is unlimited (null from options), use a high number for calculations
+    const stockLimit = effectiveStock || 999
+    const maxAllowed = maxQty ? Math.min(stockLimit, maxQty) : stockLimit
+    const newQty = Math.min(maxAllowed, quantity + 1)
+    setQuantity(newQty)
+    
+    if (maxQty && newQty >= maxQty) {
+      if (maxQty === 1) {
+        setQuantityMessage('🎯 Limited Edition: 1 per customer')
+      } else {
+        setQuantityMessage(`🎯 Maximum ${maxQty} per customer for this exclusive item`)
+      }
+    } else {
+      setQuantityMessage(null)
+    }
+  }, [quantity, maxQty, effectiveStock])
+
+  const handleQuantityInput = useCallback((val: number) => {
+    // If stock is unlimited (null from options), use a high number for calculations
+    const stockLimit = effectiveStock || 999
+    const maxAllowed = maxQty ? Math.min(stockLimit, maxQty) : stockLimit
+    const newQty = Math.min(maxAllowed, Math.max(minQty, val))
+    setQuantity(newQty)
+    
+    // Set friendly messages
+    if (maxQty && val > maxQty) {
+      if (maxQty === 1) {
+        setQuantityMessage('🎯 Limited Edition: 1 per customer - ensuring everyone gets a chance!')
+      } else {
+        setQuantityMessage(`🎯 Limited to ${maxQty} per customer for this exclusive item`)
+      }
+    } else if (val < minQty) {
+      setQuantityMessage(`Minimum order quantity is ${minQty}`)
+    } else {
+      setQuantityMessage(null)
+    }
+  }, [minQty, maxQty, effectiveStock])
+
   // Image handling
   const displayImages = product.images.length > 0 
     ? product.images 
@@ -199,8 +262,17 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
     setIsAddingToCart(true)
     
     try {
+      // Build options string for cart display
+      const optionsString = product.options?.map(option => {
+        const selectedValueId = selectedOptions[option.id]
+        const selectedValue = option.values.find((v: any) => v.id === selectedValueId)
+        return selectedValue ? `${option.display_name}: ${selectedValue.display_name}` : ''
+      }).filter(Boolean).join(', ')
+      
       await addItem({
         productId: product.id,
+        options: optionsString,
+        selectedOptions: selectedOptions,
         variantId: currentVariant?.id,
         productName: product.name,
         price: price * 100, // Convert back to cents for cart
@@ -358,6 +430,20 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           </div>
         )}
 
+        {/* Product Options */}
+        {product.options && product.options.length > 0 && (
+          <div className="border-t pt-4">
+            <ProductOptionsSelector
+              options={product.options}
+              pricing={product.option_pricing || []}
+              onSelectionChange={useCallback((selections, priceAdjustment) => {
+                setSelectedOptions(selections)
+                setOptionPriceAdjustment(priceAdjustment)
+              }, [])}
+            />
+          </div>
+        )}
+
         {/* Quantity & Add to Cart */}
         <div className="space-y-4">
           <div className="space-y-2">
@@ -365,15 +451,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
               <label htmlFor="quantity" className="text-sm font-medium">Quantity:</label>
               <div className="flex items-center border rounded-md">
                 <button
-                  onClick={() => {
-                    const newQty = Math.max(minQty, quantity - 1)
-                    setQuantity(newQty)
-                    if (maxQty === 1) {
-                      setQuantityMessage('🎯 Limited Edition: 1 per customer')
-                    } else {
-                      setQuantityMessage(null)
-                    }
-                  }}
+                  onClick={decreaseQuantity}
                   className="p-2 hover:bg-gray-100 transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
                   disabled={quantity <= minQty}
                 >
@@ -385,45 +463,13 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                   min={minQty}
                   max={maxQty || stock}
                   value={quantity}
-                  onChange={(e) => {
-                    const val = parseInt(e.target.value) || minQty
-                    const maxAllowed = maxQty ? Math.min(stock, maxQty) : stock
-                    const newQty = Math.min(maxAllowed, Math.max(minQty, val))
-                    setQuantity(newQty)
-                    
-                    // Set friendly messages
-                    if (maxQty && val > maxQty) {
-                      if (maxQty === 1) {
-                        setQuantityMessage('🎯 Limited Edition: 1 per customer - ensuring everyone gets a chance!')
-                      } else {
-                        setQuantityMessage(`🎯 Limited to ${maxQty} per customer for this exclusive item`)
-                      }
-                    } else if (val < minQty) {
-                      setQuantityMessage(`Minimum order quantity is ${minQty}`)
-                    } else {
-                      setQuantityMessage(null)
-                    }
-                  }}
+                  onChange={(e) => handleQuantityInput(parseInt(e.target.value) || minQty)}
                   className="w-16 text-center border-none focus:outline-none"
                 />
                 <button
-                  onClick={() => {
-                    const maxAllowed = maxQty ? Math.min(stock, maxQty) : stock
-                    const newQty = Math.min(maxAllowed, quantity + 1)
-                    setQuantity(newQty)
-                    
-                    if (maxQty && newQty >= maxQty) {
-                      if (maxQty === 1) {
-                        setQuantityMessage('🎯 Limited Edition: 1 per customer')
-                      } else {
-                        setQuantityMessage(`🎯 Maximum ${maxQty} per customer for this exclusive item`)
-                      }
-                    } else {
-                      setQuantityMessage(null)
-                    }
-                  }}
+                  onClick={increaseQuantity}
                   className="p-2 hover:bg-gray-100 transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
-                  disabled={quantity >= (maxQty ? Math.min(stock, maxQty) : stock)}
+                  disabled={quantity >= (maxQty ? Math.min(effectiveStock || 999, maxQty) : (effectiveStock || 999))}
                 >
                   +
                 </button>

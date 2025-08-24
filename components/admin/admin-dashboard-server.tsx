@@ -1,10 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Badge } from '@/components/ui/badge'
-import { Package, Users, ShoppingCart, TrendingUp, DollarSign, Award, Settings, Image, Tag, FileText, Palette, PlayCircle } from 'lucide-react'
+import { Package, Users, ShoppingCart, DollarSign, Award, Truck, AlertCircle, CheckCircle, Clock, XCircle } from 'lucide-react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
-import { ProductsList } from './products-list'
 
 interface AdminStats {
   totalRevenue: number
@@ -14,6 +11,41 @@ interface AdminStats {
   activeProducts: number
   activeRaffles: number
   totalEntries: number
+  pendingOrders: number
+  shippedOrders: number
+}
+
+interface Order {
+  id: string
+  order_number: string | null
+  status: 'pending' | 'paid' | 'shipped' | 'cancelled' | 'refunded'
+  total_cents: number | null
+  email: string | null
+  created_at: string
+  user: {
+    full_name: string | null
+    email: string
+  } | null
+  paypal_order_id: string | null
+  shipstation_order_id: string | null
+  tracking_number: string | null
+  shipping_carrier: string | null
+}
+
+interface ShipmentData {
+  awaiting_shipment: number
+  shipped_today: number
+  delivered_today: number
+  exceptions: number
+  pending_labels: number
+  recent_tracking: Array<{
+    order_id: string
+    order_number: string | null
+    tracking_number: string | null
+    carrier: string | null
+    status: string | null
+    updated_at: string | null
+  }>
 }
 
 async function getAdminStats(): Promise<AdminStats> {
@@ -45,155 +77,249 @@ async function getAdminStats(): Promise<AdminStats> {
     .from('raffle_entries')
     .select('*', { count: 'exact', head: true })
 
+  // Get order stats
+  const { data: orderStats } = await supabase
+    .from('orders')
+    .select('status, total_cents')
+  
+  let totalRevenue = 0
+  let totalOrders = 0
+  let pendingOrders = 0
+  let shippedOrders = 0
+
+  if (orderStats) {
+    totalOrders = orderStats.length
+    orderStats.forEach(order => {
+      if (order.status === 'paid' || order.status === 'shipped') {
+        totalRevenue += (order.total_cents || 0)
+      }
+      if (order.status === 'pending' || order.status === 'paid') {
+        pendingOrders++
+      }
+      if (order.status === 'shipped') {
+        shippedOrders++
+      }
+    })
+  }
+
+  const avgOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0
+
   return {
-    totalRevenue: 0, // Orders not implemented yet
-    totalOrders: 0, // Orders not implemented yet  
+    totalRevenue: totalRevenue / 100, // Convert cents to dollars
+    totalOrders,
     totalCustomers: customerCount || 0,
-    avgOrderValue: 0, // Orders not implemented yet
+    avgOrderValue: avgOrderValue / 100, // Convert cents to dollars
     activeProducts: productCount || 0,
     activeRaffles: raffleCount || 0,
     totalEntries: entryCount || 0,
+    pendingOrders,
+    shippedOrders
   }
 }
 
-async function getTopProducts() {
+async function getRecentOrders(): Promise<Order[]> {
   const supabase = await createClient()
   
-  // Get top products by featured status and recent creation
-  const { data: products } = await supabase
-    .from('products')
-    .select(`
-      name,
-      variants:product_variants(price_cents, stock),
-      categories:product_categories(
-        category:categories(name)
-      )
-    `)
-    .eq('is_featured', true)
-    .eq('status', 'active')
-    .eq('is_visible', true)
-    .is('deleted_at', null)
-    .order('created_at', { ascending: false })
-    .limit(3)
-
-  return products || []
-}
-
-async function getActiveProducts(page: number = 1, limit: number = 10) {
-  const supabase = await createClient()
-  const offset = (page - 1) * limit
-  
-  // Get active products with pagination
-  const { data: products, count } = await supabase
-    .from('products')
+  const { data: orders } = await supabase
+    .from('orders')
     .select(`
       id,
-      name,
-      slug,
-      sku,
-      base_price_cents,
-      compare_price_cents,
-      stock_level,
-      track_inventory,
-      low_stock_level,
-      is_featured,
-      is_new,
-      is_on_sale,
+      order_number,
       status,
-      allow_purchases,
+      total_cents,
+      email,
       created_at,
-      updated_at,
-      variants:product_variants(id, sku, price_cents, stock, is_active, option_values),
-      categories:product_categories(
-        category:categories(id, name, slug)
-      ),
-      images:product_images(
-        image_filename,
-        alt_text
-      ),
-      brand:brands(name, slug)
-    `, { count: 'exact' })
-    .eq('status', 'active')
-    .eq('is_visible', true)
-    .is('deleted_at', null)
+      paypal_order_id,
+      shipstation_order_id,
+      tracking_number,
+      shipping_carrier,
+      users!orders_user_id_fkey (
+        full_name,
+        email
+      )
+    `)
     .order('created_at', { ascending: false })
-    .range(offset, offset + limit - 1)
+    .limit(10)
 
-  return { products: products || [], total: count || 0 }
+  if (!orders) return []
+
+  return orders.map(order => ({
+    id: order.id,
+    order_number: order.order_number,
+    status: order.status,
+    total_cents: order.total_cents,
+    email: order.email,
+    created_at: order.created_at,
+    paypal_order_id: order.paypal_order_id,
+    shipstation_order_id: order.shipstation_order_id,
+    tracking_number: order.tracking_number,
+    shipping_carrier: order.shipping_carrier,
+    user: Array.isArray(order.users) ? order.users[0] : order.users
+  }))
 }
 
-async function getAllCategories() {
+async function getShipmentData(): Promise<ShipmentData> {
   const supabase = await createClient()
   
-  const { data: categories } = await supabase
-    .from('categories')
-    .select('id, name, slug')
-    .eq('is_active', true)
-    .is('deleted_at', null)
-    .order('name')
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const todayISO = today.toISOString()
 
-  return categories || []
+  // Get orders awaiting shipment
+  const { count: awaitingShipment } = await supabase
+    .from('orders')
+    .select('*', { count: 'exact', head: true })
+    .eq('status', 'paid')
+    .is('shipstation_order_id', null)
+
+  // Get orders shipped today
+  const { count: shippedToday } = await supabase
+    .from('orders')
+    .select('*', { count: 'exact', head: true })
+    .eq('status', 'shipped')
+    .gte('updated_at', todayISO)
+
+  // Get orders delivered today
+  const { count: deliveredToday } = await supabase
+    .from('orders')
+    .select('*', { count: 'exact', head: true })
+    .not('delivered_at', 'is', null)
+    .gte('delivered_at', todayISO)
+
+  // Get recent tracking updates
+  const { data: recentTracking } = await supabase
+    .from('orders')
+    .select('id, order_number, tracking_number, shipping_carrier, shipstation_status, updated_at')
+    .not('tracking_number', 'is', null)
+    .order('updated_at', { ascending: false })
+    .limit(5)
+
+  // Get labels pending creation
+  const { count: pendingLabels } = await supabase
+    .from('orders')
+    .select('*', { count: 'exact', head: true })
+    .not('shipstation_order_id', 'is', null)
+    .is('tracking_number', null)
+    .eq('status', 'paid')
+
+  return {
+    awaiting_shipment: awaitingShipment || 0,
+    shipped_today: shippedToday || 0,
+    delivered_today: deliveredToday || 0,
+    exceptions: 0, // Would need webhook data for real exceptions
+    pending_labels: pendingLabels || 0,
+    recent_tracking: (recentTracking || []).map(order => ({
+      order_id: order.id,
+      order_number: order.order_number,
+      tracking_number: order.tracking_number,
+      carrier: order.shipping_carrier,
+      status: order.shipstation_status,
+      updated_at: order.updated_at
+    }))
+  }
+}
+
+function getStatusColor(status: string): string {
+  switch (status) {
+    case 'paid':
+      return 'text-green-600 bg-green-50'
+    case 'pending':
+      return 'text-yellow-600 bg-yellow-50'
+    case 'shipped':
+      return 'text-blue-600 bg-blue-50'
+    case 'cancelled':
+      return 'text-gray-600 bg-gray-50'
+    case 'refunded':
+      return 'text-red-600 bg-red-50'
+    default:
+      return 'text-gray-600 bg-gray-50'
+  }
+}
+
+function getStatusIcon(status: string) {
+  switch (status) {
+    case 'paid':
+      return <CheckCircle className="h-4 w-4" />
+    case 'pending':
+      return <Clock className="h-4 w-4" />
+    case 'shipped':
+      return <Truck className="h-4 w-4" />
+    case 'cancelled':
+    case 'refunded':
+      return <XCircle className="h-4 w-4" />
+    default:
+      return <AlertCircle className="h-4 w-4" />
+  }
 }
 
 export async function AdminDashboardServer() {
   const stats = await getAdminStats()
-  const topProducts = await getTopProducts()
-  const { products: activeProducts, total: totalProducts } = await getActiveProducts(1, 10)
-  const categories = await getAllCategories()
+  const recentOrders = await getRecentOrders()
+  const shipmentData = await getShipmentData()
 
   return (
-    <Tabs defaultValue="overview" className="space-y-4">
-      <TabsList className="grid w-full grid-cols-6">
-        <TabsTrigger value="overview">Overview</TabsTrigger>
-        <TabsTrigger value="content">Content</TabsTrigger>
-        <TabsTrigger value="products">Products</TabsTrigger>
-        <TabsTrigger value="orders">Orders</TabsTrigger>
-        <TabsTrigger value="customers">Customers</TabsTrigger>
-        <TabsTrigger value="settings">Settings</TabsTrigger>
-      </TabsList>
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div>
+        <h1 className="text-3xl font-bold">Dashboard</h1>
+        <p className="text-muted-foreground">Welcome to your admin dashboard</p>
+      </div>
 
-      <TabsContent value="overview" className="space-y-4">
+      {/* Stats Overview - Now Clickable */}
+      <div className="space-y-4">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-              <DollarSign className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">${stats.totalRevenue.toLocaleString()}</div>
-              <p className="text-xs text-muted-foreground">Orders not implemented yet</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Orders</CardTitle>
-              <ShoppingCart className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.totalOrders}</div>
-              <p className="text-xs text-muted-foreground">Orders not implemented yet</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Customers</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.totalCustomers}</div>
-              <p className="text-xs text-muted-foreground">Registered users</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Products</CardTitle>
-              <Package className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stats.activeProducts}</div>
-              <p className="text-xs text-muted-foreground">Live products</p>
-            </CardContent>
-          </Card>
+          <Link href="/admin/orders">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+                <DollarSign className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">${stats.totalRevenue.toLocaleString()}</div>
+                <p className="text-xs text-muted-foreground">From {stats.totalOrders} orders</p>
+              </CardContent>
+            </Card>
+          </Link>
+
+          <Link href="/admin/orders">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Orders</CardTitle>
+                <ShoppingCart className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stats.totalOrders}</div>
+                <p className="text-xs text-muted-foreground">{stats.pendingOrders} pending</p>
+              </CardContent>
+            </Card>
+          </Link>
+
+          <Link href="/admin/customers">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Customers</CardTitle>
+                <Users className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stats.totalCustomers}</div>
+                <p className="text-xs text-muted-foreground">Registered users</p>
+              </CardContent>
+            </Card>
+          </Link>
+
+          <Link href="/admin/products">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Active Products</CardTitle>
+                <Package className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stats.activeProducts}</div>
+                <p className="text-xs text-muted-foreground">Live products</p>
+              </CardContent>
+            </Card>
+          </Link>
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Active Raffles</CardTitle>
@@ -207,281 +333,158 @@ export async function AdminDashboardServer() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
+          {/* Recent Orders - Real Data */}
           <Card>
             <CardHeader>
-              <CardTitle>Recent Orders</CardTitle>
-              <CardDescription>Latest customer orders</CardDescription>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Recent Orders</CardTitle>
+                  <CardDescription>Latest customer orders</CardDescription>
+                </div>
+                <Link href="/admin/orders" className="text-sm text-blue-600 hover:underline">
+                  View all
+                </Link>
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-center py-8">
-                <ShoppingCart className="h-12 w-12 text-muted-foreground/30 mx-auto mb-4" />
-                <p className="text-muted-foreground">Order system not implemented yet</p>
-                <p className="text-sm text-muted-foreground mt-2">Orders will appear here once payment processing is complete</p>
-              </div>
+              {recentOrders.length > 0 ? (
+                <div className="space-y-3">
+                  {recentOrders.slice(0, 5).map((order) => (
+                    <div key={order.id} className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-50">
+                      <div className="flex items-center gap-3">
+                        <div className={`p-1.5 rounded-full ${getStatusColor(order.status)}`}>
+                          {getStatusIcon(order.status)}
+                        </div>
+                        <div>
+                          <p className="font-medium text-sm">
+                            {order.order_number || `Order ${order.id.slice(0, 8)}`}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {order.user?.full_name || order.email || 'Guest'}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-medium text-sm">
+                          ${((order.total_cents || 0) / 100).toFixed(2)}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {new Date(order.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <ShoppingCart className="h-12 w-12 text-muted-foreground/30 mx-auto mb-4" />
+                  <p className="text-muted-foreground">No orders yet</p>
+                  <p className="text-sm text-muted-foreground mt-2">Orders will appear here once customers start purchasing</p>
+                </div>
+              )}
             </CardContent>
           </Card>
 
+          {/* Shipping Status */}
           <Card>
             <CardHeader>
-              <CardTitle>Featured Products</CardTitle>
-              <CardDescription>Currently featured items</CardDescription>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Shipping Status</CardTitle>
+                  <CardDescription>Fulfillment overview</CardDescription>
+                </div>
+                <Link href="/admin/shipments" className="text-sm text-blue-600 hover:underline">
+                  ShipStation →
+                </Link>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {topProducts.length > 0 ? topProducts.map((product, index) => {
-                  const minPrice = product.variants && product.variants.length > 0 
-                    ? Math.min(...product.variants.map((v: any) => v.price_cents)) / 100
-                    : 0
-                  const totalStock = product.variants 
-                    ? product.variants.reduce((sum: number, v: any) => sum + (v.stock || 0), 0)
-                    : 0
-                  
-                  return (
-                    <div key={product.name} className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <span className="text-2xl font-bold text-muted-foreground">
-                          #{index + 1}
-                        </span>
-                        <div>
-                          <p className="font-medium">{product.name}</p>
-                          <p className="text-sm text-muted-foreground">{totalStock} in stock</p>
+                {/* Shipping Stats */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <p className="text-2xl font-bold text-yellow-600">{shipmentData.awaiting_shipment}</p>
+                    <p className="text-xs text-muted-foreground">Awaiting Shipment</p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-2xl font-bold text-blue-600">{shipmentData.shipped_today}</p>
+                    <p className="text-xs text-muted-foreground">Shipped Today</p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-2xl font-bold text-green-600">{shipmentData.delivered_today}</p>
+                    <p className="text-xs text-muted-foreground">Delivered Today</p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-2xl font-bold text-gray-600">{shipmentData.pending_labels}</p>
+                    <p className="text-xs text-muted-foreground">Pending Labels</p>
+                  </div>
+                </div>
+
+                {/* Recent Tracking */}
+                {shipmentData.recent_tracking.length > 0 && (
+                  <div className="pt-4 border-t">
+                    <p className="text-sm font-medium mb-2">Recent Tracking</p>
+                    <div className="space-y-2">
+                      {shipmentData.recent_tracking.slice(0, 3).map((item) => (
+                        <div key={item.order_id} className="flex items-center justify-between text-xs">
+                          <span className="text-muted-foreground">
+                            {item.order_number || item.order_id.slice(0, 8)}
+                          </span>
+                          <span className="font-mono">
+                            {item.tracking_number?.slice(-8) || 'Pending'}
+                          </span>
                         </div>
-                      </div>
-                      <p className="font-medium">${minPrice.toFixed(2)}+</p>
+                      ))}
                     </div>
-                  )
-                }) : (
-                  <div className="text-center py-4">
-                    <p className="text-muted-foreground">No featured products found</p>
                   </div>
                 )}
               </div>
             </CardContent>
           </Card>
         </div>
-      </TabsContent>
 
-      <TabsContent value="content" className="space-y-4">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <Link href="/admin/carousel">
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <PlayCircle className="h-5 w-5" />
-                      Homepage Carousel
-                    </CardTitle>
-                    <CardDescription>Manage hero slides</CardDescription>
-                  </div>
-                </div>
+        {/* System Status */}
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold">System Status</h2>
+          <div className="grid gap-4 md:grid-cols-3">
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium">PayPal Integration</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">Configure homepage carousel slides and settings</p>
+                <div className="flex items-center gap-2">
+                  <div className="h-2 w-2 bg-green-500 rounded-full animate-pulse" />
+                  <p className="text-sm">Connected</p>
+                </div>
               </CardContent>
             </Card>
-          </Link>
 
-          <Link href="/admin/products">
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <Package className="h-5 w-5" />
-                      Products
-                    </CardTitle>
-                    <CardDescription>Manage products with PayPal sync</CardDescription>
-                  </div>
-                </div>
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium">ShipStation</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">Create and manage products synced with PayPal Catalog</p>
+                <div className="flex items-center gap-2">
+                  <div className="h-2 w-2 bg-green-500 rounded-full animate-pulse" />
+                  <p className="text-sm">Active</p>
+                </div>
               </CardContent>
             </Card>
-          </Link>
 
-          <Link href="/admin/categories">
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <Palette className="h-5 w-5" />
-                      Categories
-                    </CardTitle>
-                    <CardDescription>Organize products into categories</CardDescription>
-                  </div>
-                </div>
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium">Tax Service</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">Manage product categories and hierarchy</p>
-              </CardContent>
-            </Card>
-          </Link>
-
-          <Link href="/admin/brands">
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <Tag className="h-5 w-5" />
-                      Brands
-                    </CardTitle>
-                    <CardDescription>Manage product brands</CardDescription>
-                  </div>
+                <div className="flex items-center gap-2">
+                  <div className="h-2 w-2 bg-green-500 rounded-full animate-pulse" />
+                  <p className="text-sm">TaxCloud Ready</p>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">Add and organize brands</p>
               </CardContent>
             </Card>
-          </Link>
-
-          <Link href="/admin/banners">
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <Image className="h-5 w-5" />
-                      Banners
-                    </CardTitle>
-                    <CardDescription>Manage promotional banners</CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">Configure homepage and promotional banners</p>
-              </CardContent>
-            </Card>
-          </Link>
-
-          <Link href="/admin/blog">
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <FileText className="h-5 w-5" />
-                      Blog/Announcements
-                    </CardTitle>
-                    <CardDescription>Manage blog posts</CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">Create and publish announcements</p>
-              </CardContent>
-            </Card>
-          </Link>
-
-          <Link href="/admin/customer-groups">
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <Users className="h-5 w-5" />
-                      Customer Groups
-                    </CardTitle>
-                    <CardDescription>Manage customer permissions</CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">Control product visibility by group</p>
-              </CardContent>
-            </Card>
-          </Link>
-
-          <Link href="/admin/options">
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <Settings className="h-5 w-5" />
-                      Global Options
-                    </CardTitle>
-                    <CardDescription>Manage product option types</CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">Create reusable options like Size, Color, Material</p>
-              </CardContent>
-            </Card>
-          </Link>
+          </div>
         </div>
-      </TabsContent>
-
-      <TabsContent value="products" className="space-y-4">
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle>Product Management</CardTitle>
-                <CardDescription>Manage your product catalog</CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <ProductsList 
-              initialProducts={activeProducts} 
-              initialTotal={totalProducts} 
-              categories={categories}
-            />
-          </CardContent>
-        </Card>
-      </TabsContent>
-
-      <TabsContent value="orders" className="space-y-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Order Management</CardTitle>
-            <CardDescription>View and manage customer orders</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-center py-8">
-              <ShoppingCart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">Order management system coming soon</p>
-              <p className="text-sm text-muted-foreground mt-2">Orders will be managed here once PayPal integration is complete</p>
-            </div>
-          </CardContent>
-        </Card>
-      </TabsContent>
-
-      <TabsContent value="customers" className="space-y-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Customer Management</CardTitle>
-            <CardDescription>View and manage customer accounts - {stats.totalCustomers} registered</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-center py-8">
-              <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">Customer management interface coming soon</p>
-            </div>
-          </CardContent>
-        </Card>
-      </TabsContent>
-
-      <TabsContent value="settings" className="space-y-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Store Settings</CardTitle>
-            <CardDescription>Configure your store settings</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="text-center py-8">
-              <Settings className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">Settings interface coming soon</p>
-            </div>
-          </CardContent>
-        </Card>
-      </TabsContent>
-    </Tabs>
+      </div>
+    </div>
   )
 }

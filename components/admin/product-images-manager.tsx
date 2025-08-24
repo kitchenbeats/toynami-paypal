@@ -36,7 +36,7 @@ import {
   updateImagePosition,
   updateImageAltText,
   setImageAsPrimary
-} from '@/app/admin/products/[id]/actions'
+} from '@/app/(admin)/admin/products/[id]/actions'
 
 interface ProductImage {
   id: string

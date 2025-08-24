@@ -31,90 +31,120 @@ pnpm run migrate-images
 - **Framework**: Next.js 15 with App Router and Turbopack
 - **Database**: Supabase (PostgreSQL with RLS)
 - **Authentication**: Supabase Auth with SSR cookie-based sessions
-- **Styling**: Tailwind CSS with shadcn/ui components
-- **Payments**: PayPal integration (checkout-server-sdk and react-paypal-js)
+- **Styling**: Tailwind CSS v4 with shadcn/ui components
+- **Payments**: PayPal integration (paypal-server-sdk and react-paypal-js)
+- **Shipping**: ShipStation V1 (order management) and V2 (shipping rates)
+- **Tax**: TaxCloud integration for SST compliance
+- **Email**: Mailchimp integration for marketing and transactional emails
 - **Language**: TypeScript
 
-### Project Structure
+### Application Routes Structure
 
-#### Core Application (`/app`)
+The app uses Next.js App Router with route groups:
 
-The app uses Next.js App Router with the following key routes:
+#### Shop Routes (`/app/(shop)`)
+- **Homepage** (`/`): Main landing page with carousel, featured products
+- **Product Catalog** (`/[slug]/[product]`): Category and product detail pages
+- **Brands** (`/brands/*`): Brand listing and individual brand pages
+- **Shopping Flow** (`/cart`, `/checkout`): Cart management and checkout
+- **Announcements** (`/announcements/*`): News and updates
 
-- **Authentication** (`/auth/*`): Login, signup, password recovery flows
-- **Admin Panel** (`/admin/*`): Product management, banners, blog, brands, categories, customer groups, global options
-- **E-commerce** (`/products/*`, `/cart`): Product catalog with detail pages, shopping cart
-- **User Account** (`/account`): Customer dashboard
-- **Protected Routes** (`/(protected)/*`): Authenticated-only areas
+#### Admin Routes (`/app/(admin)`)
+- **Dashboard** (`/admin`): Analytics and overview
+- **Product Management** (`/admin/products/*`): CRUD operations, image management
+- **Content Management**: Banners, blog, carousel, pages
+- **Commerce Settings**: Brands, categories, options, promotions, coupons
+- **Order Management** (`/admin/orders/*`, `/admin/shipments/*`): Order processing, ShipStation sync
+- **Customer Management** (`/admin/customers`, `/admin/customer-groups`): User management, tier system
+- **Integrations**: ShipStation, tax settings, email campaigns
+- **Documentation** (`/admin/docs`): Built-in admin help
 
-#### Data Layer (`/lib`)
+### API Routes (`/app/api`)
+
+- **PayPal** (`/paypal/*`): Order creation, capture, product sync
+- **Shipping** (`/shipping/*`): Rate calculation, address validation, carrier services
+- **ShipStation** (`/shipstation/*`, `/webhooks/shipstation`): Store management, order sync, tracking webhooks
+- **Tax** (`/tax/*`): TaxCloud SST-compliant tax calculation
+- **Admin** (`/admin/*`): Order management, ShipStation sync operations
+- **Coupons** (`/coupons/*`): Coupon validation and application
+- **Webhooks** (`/webhooks/*`): External service integrations
+
+### Data Layer (`/lib`)
 
 - **Supabase Clients**: Server (`server.ts`), Client (`client.ts`), and Middleware (`middleware.ts`) implementations
-- **Data Access** (`/lib/data/*`): Type-safe database queries for products, brands, categories, banners, blog posts, customer groups
-- **Hooks** (`/lib/hooks/*`): React hooks including cart management (`use-cart.tsx`)
+- **Data Access** (`/lib/data/*`): Type-safe database queries for all entities
+- **Hooks** (`/lib/hooks/*`): React hooks including cart management
+- **ShipStation** (`/lib/shipstation/*`): V1 client for orders, V2 client for shipping rates
+- **Mailchimp** (`/lib/mailchimp/*`): Client and event tracking
 - **Utilities** (`/lib/utils/*`): Image processing and general utilities
-
-#### Components (`/components`)
-
-- **UI Components** (`/ui/*`): Reusable shadcn/ui components (buttons, cards, forms, etc.)
-- **Feature Components**: Product grids, filters, detail views, cart management
-- **Admin Components**: Dashboard and management interfaces
-- **Toynami-specific**: Custom e-commerce components (hero carousel, featured products, wishlist)
 
 ### Database Schema
 
-The Supabase database includes:
+The Supabase database includes comprehensive e-commerce tables with RLS policies:
 
 - **Core Commerce**: Products, variants, categories, brands with soft-delete support
-- **Dynamic Content**: Banners, blog posts, announcements
+- **Dynamic Content**: Banners (with page targeting), blog posts, announcements, carousel slides, pages, menus
 - **Customer System**: User profiles, customer groups with tier-based access
-- **Order Management**: Shopping carts, orders, payment tracking
-- **PayPal Sync**: Product synchronization with PayPal catalog
-- **Global Options**: Configurable product options system
+- **Order Management**: Shopping carts, orders, payment tracking, shipping details
+- **Integrations**: PayPal sync, ShipStation tracking, Mailchimp events
+- **Promotions**: Coupons system, discount rules
+- **Settings**: Global configuration, tax settings
 
-Key migrations in `/supabase/migrations/`:
+### Key Integrations
 
-- Initial schema with RLS policies
-- Dynamic content system
-- Customer groups and loyalty tiers
-- PayPal integration tables
-- Global product options
-- Featured flags for products/categories
+#### PayPal Integration
+- Server-side SDK implementation
+- Product catalog synchronization
+- Order creation and capture flows
+- Client-side PayPal buttons with react-paypal-js
+
+#### ShipStation Integration
+- **V1 API**: Order creation, status updates, store management
+- **V2 API**: Real-time shipping rate calculation
+- **Webhooks**: Tracking updates, delivery notifications
+- **Admin Dashboard**: Manual sync, label creation
+
+#### TaxCloud Integration
+- SST-compliant tax calculation for 24 states
+- Admin-configurable settings
+- Tax exemption support
+- Origin-based calculation
+
+#### Mailchimp Integration
+- Customer list synchronization
+- Order event tracking
+- Campaign management
+- Transactional email support
 
 ### Authentication & Security
 
 - Supabase Auth with cookie-based sessions for SSR
-- Middleware protection for authenticated routes (`/account`, `/admin`, `/profile`, `/orders`, `/wishlist`)
-- Row Level Security (RLS) policies on all database tables
-- Admin role checking via `is_admin` flag on users table
-
-### PayPal Integration
-
-- Server-side API routes in `/app/api/paypal/*`
-- Product catalog sync endpoint (`/api/paypal/products/sync`)
-- Order creation and capture flows
-- Client-side PayPal provider wrapper
+- Middleware protection for authenticated routes
+- Row Level Security (RLS) on all database tables
+- Admin role checking via `is_admin` flag
 
 ### Environment Configuration
 
-Required environment variables:
+Required environment variables (see `.env.example`):
 
-- `NEXT_PUBLIC_SUPABASE_URL`: Supabase project URL
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Supabase anonymous key
-- `NEXT_PUBLIC_PAYPAL_CLIENT_ID`: PayPal client ID
-- `PAYPAL_CLIENT_SECRET`: PayPal secret (server-side only)
-- `PAYPAL_SANDBOX`: PayPal environment flag
-- `NEXT_PUBLIC_SITE_URL`: Site URL for callbacks
-- check env.local or env.example
+- **Supabase**: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- **PayPal**: `NEXT_PUBLIC_PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET`, `PAYPAL_SANDBOX`
+- **ShipStation**: V1 and V2 API keys, warehouse address
+- **TaxCloud**: API credentials (can be configured in admin panel)
+- **Site**: `NEXT_PUBLIC_SITE_URL`
 
 ### Image Handling
 
-- Supports supabase sources (Supabase bucket storage)
-- Configured remote patterns in `next.config.ts`
+- Supabase bucket storage for uploads
+- Legacy image migration support
+- Configured remote patterns in `next.config.ts` for CDN access
 
-### Important RULES!
+### Important Development Rules
 
-- Use proper TS, and never use any
-- Never use mock or fake data in the UI or APIs.
-- Write production ready code, no gaps, no errors, following best practices.
-- Security is important, but let the NExtJs handle what it handles, and we do the rest, including using zod.
+- Use proper TypeScript typing, never use `any`
+- Never use mock or fake data in production code
+- Follow existing code patterns and conventions
+- Use Zod for runtime validation
+- Always prefer editing existing files over creating new ones
+- Never create documentation files unless explicitly requested
+- Check existing components before creating new ones

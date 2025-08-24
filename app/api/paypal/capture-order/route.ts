@@ -183,8 +183,17 @@ export async function POST(request: NextRequest) {
 
         const shipStationData = await shipStationResponse.json()
         
-        if (shipStationData.shipmentId) {
-          // Update order with ShipStation shipment ID
+        if (shipStationData.success) {
+          // Update order with ShipStation order ID (V1 API)
+          await supabase
+            .from('orders')
+            .update({
+              shipstation_order_id: shipStationData.shipStationOrderId,
+              shipstation_shipment_id: shipStationData.shipStationOrderNumber // Store order number as reference
+            })
+            .eq('id', order.id)
+        } else if (shipStationData.shipmentId) {
+          // Legacy V2 shipment ID (fallback)
           await supabase
             .from('orders')
             .update({

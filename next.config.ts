@@ -11,9 +11,9 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cdn11.bigcommerce.com",
+        hostname: "images.unsplash.com",
         port: "",
-        pathname: "/s-el8tinzl5q/**",
+        pathname: "/**",
       },
       {
         protocol: "http",

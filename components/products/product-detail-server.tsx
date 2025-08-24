@@ -30,7 +30,31 @@ async function getProduct(slug: string) {
       categories:product_categories(
         category:categories(name, slug)
       ),
-      brand:brands!brand_id(name, slug)
+      brand:brands!brand_id(name, slug),
+      option_assignments:product_option_assignments(
+        is_required,
+        display_order,
+        option_type:global_option_types(
+          id,
+          name,
+          display_name,
+          input_type,
+          values:global_option_values(
+            id,
+            value,
+            display_name,
+            hex_color,
+            sku_suffix,
+            is_default
+          )
+        )
+      ),
+      option_pricing:product_option_pricing(
+        option_value_id,
+        price_adjustment_cents,
+        stock_override,
+        is_available
+      )
     `)
     .eq('slug', slug)
     .eq('status', 'active')
@@ -86,7 +110,17 @@ export async function ProductDetailServer({ slug }: ProductDetailServerProps) {
     preorder_release_date: product.preorder_release_date,
     preorder_message: product.preorder_message,
     min_purchase_quantity: product.min_purchase_quantity || 1,
-    max_purchase_quantity: product.max_purchase_quantity || null
+    max_purchase_quantity: product.max_purchase_quantity || null,
+    // Options
+    options: product.option_assignments?.map((assignment: any) => ({
+      id: assignment.option_type?.id,
+      name: assignment.option_type?.name,
+      display_name: assignment.option_type?.display_name,
+      input_type: assignment.option_type?.input_type,
+      is_required: assignment.is_required,
+      values: assignment.option_type?.values || []
+    })) || [],
+    option_pricing: product.option_pricing || []
   }
 
   return <ProductDetailClient product={transformedProduct} />
