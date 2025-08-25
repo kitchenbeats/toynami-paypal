@@ -26,6 +26,9 @@ importers:
       '@mailchimp/mailchimp_marketing':
         specifier: ^3.0.80
         version: 3.0.80
+      '@mailchimp/mailchimp_transactional':
+        specifier: ^1.0.59
+        version: 1.0.59
       '@paypal/paypal-server-sdk':
         specifier: ^1.1.0
         version: 1.1.0
@@ -501,6 +504,10 @@ packages:
 
   '@mailchimp/mailchimp_marketing@3.0.80':
     resolution: {integrity: sha512-Cgz0xPb+1DUjmrl5whAsmqfAChBko+Wf4/PLQE4RvwfPlcq2agfHr1QFiXEhZ8e+GQwQ3hZQn9iLGXwIXwxUCg==}
+    engines: {node: '>=10.0.0'}
+
+  '@mailchimp/mailchimp_transactional@1.0.59':
+    resolution: {integrity: sha512-jjTMZ78rxpYCKqO4888lSA+XMWzQ3Xcn+V+06aZJi8JDIeiY+VWNR7f2Ntyt389uN63W2TMDUu0I4Si1li7Z6g==}
     engines: {node: '>=10.0.0'}
 
   '@napi-rs/wasm-runtime@0.2.12':
@@ -3727,6 +3734,12 @@ snapshots:
       superagent: 3.8.1
     transitivePeerDependencies:
       - supports-color
+
+  '@mailchimp/mailchimp_transactional@1.0.59':
+    dependencies:
+      axios: 1.11.0
+    transitivePeerDependencies:
+      - debug
 
   '@napi-rs/wasm-runtime@0.2.12':
     dependencies:
