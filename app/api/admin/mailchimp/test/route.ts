@@ -57,19 +57,20 @@ export async function POST(request: NextRequest) {
         memberCount: listInfo.stats.member_count
       }
     })
-  } catch (error: any) {
+  } catch (error) {
     console.error('Mailchimp test error:', error)
     
     // Parse Mailchimp error
-    if (error.response) {
-      const errorBody = error.response.body
+    if (error && typeof error === 'object' && 'response' in error) {
+      const errorWithResponse = error as { response: { body: { detail?: string; title?: string } }; status?: number }
+      const errorBody = errorWithResponse.response.body
       return NextResponse.json({ 
         error: errorBody.detail || errorBody.title || 'Mailchimp API error' 
-      }, { status: error.status || 500 })
+      }, { status: errorWithResponse.status || 500 })
     }
     
     return NextResponse.json({ 
-      error: error.message || 'Failed to test connection' 
+      error: (error as Error).message || 'Failed to test connection' 
     }, { status: 500 })
   }
 }

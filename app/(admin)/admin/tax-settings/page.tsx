@@ -190,6 +190,7 @@ export default function TaxSettingsPage() {
         toast.error(result.error || 'Test failed')
       }
     } catch (error) {
+      console.error('Failed to test tax configuration:', error)
       toast.error('Failed to test tax configuration')
     } finally {
       setTesting(false)
@@ -241,7 +242,7 @@ export default function TaxSettingsPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold">Tax Settings</h1>
         <p className="text-muted-foreground mt-2">
-          Configure sales tax calculation using TaxCloud's FREE API
+          Configure sales tax calculation using TaxCloud&apos;s FREE API
         </p>
         
         {/* Cost Breakdown */}
@@ -250,10 +251,10 @@ export default function TaxSettingsPage() {
           <AlertTitle className="text-green-800">TaxCloud Pricing Breakdown</AlertTitle>
           <AlertDescription className="text-green-700">
             <div className="mt-2 space-y-1">
-              <p>✓ <strong>Tax Calculations via API:</strong> FREE forever (what you're using)</p>
+              <p>✓ <strong>Tax Calculations via API:</strong> FREE forever (what you&apos;re using)</p>
               <p>✓ <strong>No credit card required</strong> for API access</p>
               <p className="text-xs mt-2 text-gray-600">
-                Optional services you're NOT using: Tax filing ($10-50/mo), Exemption certificates ($5/mo)
+                Optional services you&apos;re NOT using: Tax filing ($10-50/mo), Exemption certificates ($5/mo)
               </p>
             </div>
           </AlertDescription>
@@ -307,7 +308,7 @@ export default function TaxSettingsPage() {
             <CardDescription>
               <div className="space-y-2">
                 <p>
-                  <span className="font-semibold text-green-600">✓ Tax calculations are 100% FREE</span> through TaxCloud's API
+                  <span className="font-semibold text-green-600">✓ Tax calculations are 100% FREE</span> through TaxCloud&apos;s API
                 </p>
                 <p className="text-sm">
                   Sign up at{' '}
@@ -504,9 +505,9 @@ TAXCLOUD_USPS_USER_ID=optional_usps_id`}
                 <AlertDescription>
                   <div className="space-y-1">
                     <p><strong>Important:</strong> Only select states where you have nexus (physical presence or meet economic thresholds).</p>
-                    <p className="text-xs">• <strong className="text-green-600">SST states marked (SST)</strong> = Free filing if you use TaxCloud's filing service</p>
+                    <p className="text-xs">• <strong className="text-green-600">SST states marked (SST)</strong> = Free filing if you use TaxCloud&apos;s filing service</p>
                     <p className="text-xs">• <strong>All states</strong> = Free tax calculations via API</p>
-                    <p className="text-xs">• You're only using the free calculation API, not their filing service</p>
+                    <p className="text-xs">• You&apos;re only using the free calculation API, not their filing service</p>
                   </div>
                 </AlertDescription>
               </Alert>

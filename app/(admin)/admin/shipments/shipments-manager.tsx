@@ -10,41 +10,82 @@ import { toast } from 'sonner'
 import { CreateLabelDialog } from '@/components/admin/create-label-dialog'
 import { 
   RefreshCw, 
-  Package, 
-  Truck, 
-  CheckCircle,
-  Clock,
-  XCircle,
+   
+   
+  
+  
+  
   Printer,
-  TestTube,
-  Ship
+  TestTube
 } from 'lucide-react'
 
+interface Order {
+  id: string;
+  orderNumber: string;
+  orderDate: string;
+  orderStatus: string;
+  shipTo: { name: string; city: string; state: string };
+  orderTotal: number;
+  items?: Array<{ name: string; quantity: number }>;
+}
+
+interface Warehouse {
+  warehouseId: string;
+  warehouseName: string;
+  isDefault: boolean;
+}
+
+interface Tag {
+  tagId: number;
+  name: string;
+  color: string;
+}
+
+interface Carrier {
+  code: string;
+  name: string;
+  accountNumber?: string;
+  requiresFundedAccount: boolean;
+  balance?: number;
+}
+
+interface Store {
+  storeId: number;
+  storeName: string;
+  marketplaceId: number;
+  marketplaceName: string;
+  accountName?: string;
+  createDate: string;
+  modifyDate: string;
+  storeStatus: string;
+  active: boolean;
+  refreshDate?: string;
+  lastRefreshAttempt?: string;
+  autoRefresh: boolean;
+}
+
 interface ShipmentsManagerProps {
-  initialOrders: any[]
+  initialOrders: Order[]
   totalCount: number
-  warehouses: any[]
-  tags: any[]
-  carriers: any[]
-  stores: any[]
+  warehouses: Warehouse[]
+  tags: Tag[]
+  carriers: Carrier[]
+  stores: Store[]
 }
 
 export function ShipmentsManager({
   initialOrders,
   totalCount,
   warehouses,
-  tags,
   carriers,
   stores
 }: ShipmentsManagerProps) {
   const router = useRouter()
-  const [orders, setOrders] = useState(initialOrders)
-  const [loading, setLoading] = useState(false)
+  const [orders] = useState(initialOrders)
   const [refreshing, setRefreshing] = useState(false)
   const [creatingTest, setCreatingTest] = useState(false)
-  const [selectedOrders, setSelectedOrders] = useState<string[]>([])
   const [labelDialogOpen, setLabelDialogOpen] = useState(false)
-  const [selectedOrderForLabel, setSelectedOrderForLabel] = useState<any>(null)
+  const [selectedOrderForLabel, setSelectedOrderForLabel] = useState<Order | null>(null)
 
   // Refresh from ShipStation
   const refreshOrders = async () => {
@@ -53,6 +94,7 @@ export function ShipmentsManager({
       router.refresh()
       toast.success('Shipments refreshed from ShipStation')
     } catch (error) {
+      console.error('Failed to refresh shipments:', error)
       toast.error('Failed to refresh shipments')
     } finally {
       setRefreshing(false)
@@ -76,6 +118,7 @@ export function ShipmentsManager({
       toast.success('Test order created in ShipStation!')
       setTimeout(() => router.refresh(), 1000) // Refresh after a second
     } catch (error) {
+      console.error('Failed to create test order:', error)
       toast.error(error instanceof Error ? error.message : 'Failed to create test order')
     } finally {
       setCreatingTest(false)
@@ -286,7 +329,7 @@ export function ShipmentsManager({
           <CardContent>
             {warehouses.length > 0 ? (
               <ul className="text-sm space-y-1">
-                {warehouses.map((w: any, index: number) => (
+                {warehouses.map((w, index) => (
                   <li key={w.warehouseId || `warehouse-${index}`}>{w.warehouseName}</li>
                 ))}
               </ul>
@@ -303,7 +346,7 @@ export function ShipmentsManager({
           <CardContent>
             {carriers.length > 0 ? (
               <ul className="text-sm space-y-1">
-                {carriers.slice(0, 5).map((c: any, index: number) => (
+                {carriers.slice(0, 5).map((c, index) => (
                   <li key={`${c.code}-${index}`}>{c.name}</li>
                 ))}
               </ul>
@@ -320,7 +363,7 @@ export function ShipmentsManager({
           <CardContent>
             {stores.length > 0 ? (
               <ul className="text-sm space-y-1">
-                {stores.map((s: any, index: number) => (
+                {stores.map((s, index) => (
                   <li key={s.storeId || `store-${index}`} className={s.storeId == process.env.NEXT_PUBLIC_SHIPSTATION_STORE_ID ? 'font-bold' : ''}>
                     {s.storeName} ({s.marketplaceName})
                   </li>

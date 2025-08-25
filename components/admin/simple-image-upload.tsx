@@ -71,7 +71,7 @@ export function SimpleImageUpload({
       const fileName = `${folder}/${timestamp}-${Math.random().toString(36).substring(7)}.${fileExt}`
 
       // Upload to Supabase storage
-      const { data, error } = await supabase.storage
+      const { error } = await supabase.storage
         .from('products')
         .upload(fileName, file, {
           cacheControl: '3600',

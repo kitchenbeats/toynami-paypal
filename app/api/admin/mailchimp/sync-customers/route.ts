@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { mailchimpClient } from '@/lib/mailchimp/client'
 
-export async function POST(request: NextRequest) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function POST(_request: NextRequest) {
   try {
     // Check admin auth
     const supabase = await createClient()
@@ -84,10 +85,10 @@ export async function POST(request: NextRequest) {
       success: true,
       count: customers.length
     })
-  } catch (error: any) {
+  } catch (error) {
     console.error('Customer sync error:', error)
     return NextResponse.json({ 
-      error: error.message || 'Failed to sync customers' 
+      error: (error as Error).message || 'Failed to sync customers' 
     }, { status: 500 })
   }
 }

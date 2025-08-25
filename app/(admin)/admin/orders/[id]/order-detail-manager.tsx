@@ -1,20 +1,20 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Separator } from '@/components/ui/separator'
 import { 
   ArrowLeft,
   Package, 
   Truck, 
   User, 
-  MapPin, 
+   
   DollarSign,
-  Calendar,
+  
   Clock,
   CheckCircle,
   XCircle,
@@ -22,7 +22,7 @@ import {
   RefreshCw,
   Printer,
   Tag,
-  Edit,
+  
   Ship,
   FileText,
   History,
@@ -31,20 +31,90 @@ import {
 import { format } from 'date-fns'
 import { toast } from 'sonner'
 
+interface OrderItem {
+  id: string
+  product_id: string
+  variant_id?: string
+  quantity: number
+  price_cents: number
+  name: string
+  sku?: string
+  image_url?: string
+}
+
+interface Order {
+  id: string
+  order_number: string
+  status: string
+  customer_email?: string
+  customer_name?: string
+  total_cents: number
+  subtotal_cents: number
+  shipping_cents: number
+  tax_cents: number
+  created_at: string
+  updated_at: string
+  shipping_address?: Record<string, unknown>
+  billing_address?: Record<string, unknown>
+  order_items?: OrderItem[]
+  shipstation_sync_logs?: Array<Record<string, unknown>>
+  paypal_order_id?: string
+  payment_status?: string
+}
+
+interface ShipStationOrder {
+  orderId?: number
+  orderNumber?: string
+  orderStatus?: string
+  orderDate?: string
+  createDate?: string
+  modifyDate?: string
+  warehouseId?: number
+  shipTo?: Record<string, unknown>
+  billTo?: Record<string, unknown>
+  items?: Array<Record<string, unknown>>
+  tagIds?: number[]
+}
+
+interface ShipStationShipment {
+  shipmentId: number
+  orderId: number
+  trackingNumber?: string
+  carrierCode?: string
+  serviceCode?: string
+  shipDate?: string
+  shipmentCost?: number
+  voided?: boolean
+}
+
+interface Carrier {
+  code: string
+  name: string
+}
+
+interface Warehouse {
+  warehouseId: number
+  warehouseName: string
+}
+
+interface Tag {
+  tagId: number
+  name: string
+  color?: string
+}
+
 interface OrderDetailManagerProps {
-  order: any
-  shipstationOrder: any
-  shipstationShipments: any[]
-  carriers: any[]
-  warehouses: any[]
-  tags: any[]
+  order: Order
+  shipstationOrder: ShipStationOrder | null
+  shipstationShipments?: ShipStationShipment[]
+  carriers?: Carrier[]
+  warehouses: Warehouse[]
+  tags: Tag[]
 }
 
 export function OrderDetailManager({
   order,
   shipstationOrder,
-  shipstationShipments,
-  carriers,
   warehouses,
   tags
 }: OrderDetailManagerProps) {
@@ -62,7 +132,7 @@ export function OrderDetailManager({
 
   // Get status badge
   const getStatusBadge = (status: string) => {
-    const statusConfig: Record<string, { color: string, icon: any }> = {
+    const statusConfig: Record<string, { color: string, icon: React.ComponentType }> = {
       pending: { color: 'secondary', icon: Clock },
       paid: { color: 'blue', icon: DollarSign },
       shipped: { color: 'green', icon: Truck },
@@ -76,7 +146,7 @@ export function OrderDetailManager({
     const Icon = config.icon
 
     return (
-      <Badge variant={config.color as any} className="flex items-center gap-1">
+      <Badge variant={config.color as "default" | "secondary" | "destructive" | "outline"} className="flex items-center gap-1">
         <Icon className="h-3 w-3" />
         {status}
       </Badge>
@@ -96,8 +166,8 @@ export function OrderDetailManager({
       toast.success('Order synced with ShipStation')
       router.refresh()
     } catch (error) {
+      console.error('Failed to sync with ShipStation:', error)
       toast.error('Failed to sync with ShipStation')
-      console.error(error)
     } finally {
       setSyncing(false)
     }
@@ -168,7 +238,7 @@ export function OrderDetailManager({
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {order.order_items?.map((item: any) => (
+                {order.order_items?.map((item: OrderItem) => (
                   <div key={item.id} className="flex items-center justify-between py-2">
                     <div className="flex-1">
                       <p className="font-medium">
@@ -304,7 +374,7 @@ export function OrderDetailManager({
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  {order.shipstation_sync_logs.map((log: any) => (
+                  {order.shipstation_sync_logs?.map((log: Record<string, unknown>) => (
                     <div key={log.id} className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
                         {log.success ? (
@@ -396,7 +466,7 @@ export function OrderDetailManager({
                 {shipstationOrder.warehouseId && (
                   <div className="flex justify-between text-sm">
                     <span>Warehouse</span>
-                    <span>{warehouses.find((w: any) => w.warehouseId === shipstationOrder.warehouseId)?.warehouseName || shipstationOrder.warehouseId}</span>
+                    <span>{warehouses.find((w: Warehouse) => w.warehouseId === shipstationOrder.warehouseId)?.warehouseName || shipstationOrder.warehouseId}</span>
                   </div>
                 )}
                 {shipstationOrder.tagIds && shipstationOrder.tagIds.length > 0 && (
@@ -404,7 +474,7 @@ export function OrderDetailManager({
                     <span>Tags</span>
                     <div className="flex gap-1">
                       {shipstationOrder.tagIds.map((tagId: number) => {
-                        const tag = tags.find((t: any) => t.tagId === tagId)
+                        const tag = tags.find((t: Tag) => t.tagId === tagId)
                         return tag ? (
                           <Badge key={tagId} variant="outline" className="text-xs">
                             {tag.name}

@@ -3,26 +3,17 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import {
-  LayoutDashboard,
+import { LayoutDashboard,
   Package,
-  ShoppingCart,
-  Truck,
+  ShoppingCart, 
   Users,
-  Tag,
-  Folders,
-  Image,
-  FileText,
-  Megaphone,
+  FileText, 
   Settings,
-  TrendingUp,
-  Gift,
-  Palette,
+  TrendingUp, 
   Menu,
   X,
   ChevronDown,
-  BookOpen
-} from 'lucide-react'
+  BookOpen } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 
@@ -57,6 +48,7 @@ const navigation = [
     name: 'Content',
     icon: FileText,
     children: [
+      { name: 'Media Library', href: '/admin/media' },
       { name: 'Banners', href: '/admin/banners' },
       { name: 'Blog & Announcements', href: '/admin/blog' },
       { name: 'Carousel Slides', href: '/admin/carousel' },
@@ -112,7 +104,7 @@ export function AdminNav() {
     return pathname.startsWith(href)
   }
 
-  const isSectionActive = (children: any[]) => {
+  const isSectionActive = (children: Array<{ href: string }>) => {
     return children.some(child => isActive(child.href))
   }
 

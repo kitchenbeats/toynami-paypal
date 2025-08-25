@@ -12,9 +12,7 @@ import {
   getCarouselSlides, 
   getCarouselSettings,
   updateCarouselSlides,
-  updateCarouselSettings,
-  type CarouselSlide,
-  type CarouselSettings
+  updateCarouselSettings
 } from '@/lib/data/carousel'
 
 interface SlideForm {
@@ -30,7 +28,6 @@ interface SlideForm {
 export default function CarouselAdminPage() {
   const router = useRouter()
   const [slides, setSlides] = useState<SlideForm[]>([])
-  const [settings, setSettings] = useState<CarouselSettings | null>(null)
   const [swapInterval, setSwapInterval] = useState(5)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -231,7 +228,7 @@ export default function CarouselAdminPage() {
 
         {slides.length === 0 ? (
           <div className="bg-gray-50 rounded-lg p-8 text-center text-gray-500">
-            No slides yet. Click "Add Slide" to create your first slide.
+            No slides yet. Click &quot;Add Slide&quot; to create your first slide.
           </div>
         ) : (
           <div className="space-y-4">

@@ -1,26 +1,87 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import { getPayPalClient } from '@/lib/paypal/client'
+import {} from '@/lib/paypal/client'
+import { z } from 'zod'
+import { apiHandler, validateRequest } from '@/lib/api/utils'
 
-export async function POST(request: NextRequest) {
-  try {
-    const { 
-      items, 
-      shipping, 
-      tax, 
-      total, 
-      billing, 
-      shippingAddress, 
-      couponCode,
-      subtotal 
-    } = await request.json()
+// Get PayPal API base URL based on environment
+const getPayPalBaseUrl = () => {
+  const isSandbox = process.env.PAYPAL_SANDBOX === 'true'
+  return isSandbox 
+    ? 'https://api-m.sandbox.paypal.com'
+    : 'https://api-m.paypal.com'
+}
 
-    if (!items || !Array.isArray(items) || items.length === 0) {
-      return NextResponse.json({ error: 'Invalid items' }, { status: 400 })
-    }
+// Define the schema for PayPal order creation
+const paypalItemSchema = z.object({
+  product_id: z.string().optional(),
+  name: z.string(),
+  sku: z.string().optional(),
+  unit_amount: z.object({
+    currency_code: z.string().default('USD'),
+    value: z.string(),
+  }),
+  quantity: z.string(),
+})
+
+type PayPalItem = z.infer<typeof paypalItemSchema>
+
+const createPayPalOrderSchema = z.object({
+  items: z.array(paypalItemSchema).min(1, 'At least one item is required'),
+  shipping: z.string().optional(),
+  tax: z.string().optional(),
+  total: z.string(),
+  billing: z.object({
+    name: z.object({
+      given_name: z.string(),
+      surname: z.string(),
+    }).optional(),
+    email_address: z.string().email().optional(),
+    phone: z.object({
+      phone_type: z.string().optional(),
+      phone_number: z.object({
+        national_number: z.string(),
+      }),
+    }).optional(),
+    address: z.object({
+      address_line_1: z.string(),
+      address_line_2: z.string().optional(),
+      admin_area_2: z.string(),
+      admin_area_1: z.string(),
+      postal_code: z.string(),
+      country_code: z.string().default('US'),
+    }).optional(),
+  }).optional(),
+  shippingAddress: z.object({
+    address_line_1: z.string(),
+    address_line_2: z.string().optional(),
+    admin_area_2: z.string(),
+    admin_area_1: z.string(),
+    postal_code: z.string(),
+    country_code: z.string().default('US'),
+  }).optional(),
+  couponCode: z.string().optional(),
+  subtotal: z.string().optional(),
+})
+
+export const POST = apiHandler(async (request: NextRequest) => {
+  // Validate request body
+  const { data: input, error } = await validateRequest(request, createPayPalOrderSchema)
+  if (error) return error
+
+  const { 
+    items, 
+    shipping, 
+    tax, 
+    total, 
+    billing, 
+    shippingAddress, 
+    couponCode,
+    subtotal 
+  } = input
 
     // Get PayPal client
-    const client = getPayPalClient()
+    // const client =()
     
     // Get authenticated user if available
     const supabase = await createClient()
@@ -32,16 +93,29 @@ export async function POST(request: NextRequest) {
     let finalTotal = total
     
     if (couponCode) {
-      const productIds = items.map((item: any) => item.product_id).filter(Boolean)
+      const productIds = items.map((item: PayPalItem) => item.product_id).filter(Boolean)
       const subtotalCents = Math.round(parseFloat(subtotal || '0') * 100)
       
-      // Validate coupon
+      // Extract category IDs from products
+      let categoryIds: string[] = []
+      if (productIds.length > 0) {
+        const { data: productCategories } = await supabase
+          .from('product_categories')
+          .select('category_id')
+          .in('product_id', productIds)
+        
+        if (productCategories) {
+          categoryIds = [...new Set(productCategories.map(pc => pc.category_id))]
+        }
+      }
+      
+      // Validate coupon with proper category information
       const { data: couponValidation, error: couponError } = await supabase.rpc('validate_coupon_usage', {
         p_coupon_code: couponCode,
         p_user_id: user?.id || null,
         p_order_total_cents: subtotalCents,
         p_product_ids: productIds,
-        p_category_ids: [] // TODO: Extract from items if needed
+        p_category_ids: categoryIds
       })
       
       if (couponError || !couponValidation?.[0]?.is_valid) {
@@ -61,7 +135,7 @@ export async function POST(request: NextRequest) {
     }
     
     // Prepare order items (including discount as negative line item if applicable)
-    const orderItems = [...items.map((item: any) => ({
+    const orderItems = [...items.map((item: PayPalItem) => ({
       name: item.name,
       unit_amount: {
         currency_code: 'USD',
@@ -83,7 +157,7 @@ export async function POST(request: NextRequest) {
     }
     
     // Calculate item total including discount
-    const itemTotal = items.reduce((sum: number, item: any) => 
+    const itemTotal = items.reduce((sum: number, item: PayPalItem) => 
       sum + (parseFloat(item.unit_amount.value) * item.quantity), 0
     ) - (discountAmountCents / 100)
     
@@ -138,7 +212,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create order via PayPal API
-    const response = await fetch('https://api-m.sandbox.paypal.com/v2/checkout/orders', {
+    const response = await fetch(`${getPayPalBaseUrl()}/v2/checkout/orders`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -163,7 +237,7 @@ export async function POST(request: NextRequest) {
         status: 'pending',
         paypal_order_id: order.id,
         total_cents: Math.round(parseFloat(finalTotal) * 100),
-        subtotal_cents: Math.round(items.reduce((sum: number, item: any) => 
+        subtotal_cents: Math.round(items.reduce((sum: number, item: PayPalItem) => 
           sum + (parseFloat(item.unit_amount.value) * item.quantity * 100), 0
         )),
         shipping_cents: Math.round(parseFloat(shipping) * 100),
@@ -228,14 +302,7 @@ export async function POST(request: NextRequest) {
       status: order.status,
       links: order.links
     })
-  } catch (error) {
-    console.error('PayPal order creation error:', error)
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to create order' },
-      { status: 500 }
-    )
-  }
-}
+})
 
 // Helper function to get PayPal access token
 async function getAccessToken() {
@@ -243,7 +310,7 @@ async function getAccessToken() {
     `${process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID}:${process.env.PAYPAL_CLIENT_SECRET}`
   ).toString('base64')
 
-  const response = await fetch('https://api-m.sandbox.paypal.com/v1/oauth2/token', {
+  const response = await fetch(`${getPayPalBaseUrl()}/v1/oauth2/token`, {
     method: 'POST',
     headers: {
       'Authorization': `Basic ${auth}`,

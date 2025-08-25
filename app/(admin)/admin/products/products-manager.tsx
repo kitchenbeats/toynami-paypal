@@ -6,7 +6,6 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
 import {
   ChevronLeft,
   ChevronRight,
@@ -41,6 +40,36 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 
+interface ProductVariant {
+  id: string;
+  price_cents: number;
+  stock: number;
+  is_active: boolean;
+  sku?: string;
+}
+
+interface ProductCategory {
+  id: string;
+  category: {
+    id: string;
+    name: string;
+    slug: string;
+  };
+}
+
+interface ProductImage {
+  id: string;
+  image_filename: string;
+  alt_text?: string;
+  is_primary: boolean;
+}
+
+interface Brand {
+  id: string;
+  name: string;
+  slug: string;
+}
+
 interface Product {
   id: number;
   name: string;
@@ -59,18 +88,24 @@ interface Product {
   allow_purchases: boolean;
   created_at: string;
   updated_at: string;
-  variants: any[];
-  categories: any[];
-  images: any[];
-  brand: any;
+  variants: ProductVariant[];
+  categories: ProductCategory[];
+  images: ProductImage[];
+  brand: Brand | null;
+}
+
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
 }
 
 interface ProductsManagerProps {
   initialProducts: Product[];
   initialTotal: number;
-  categories: any[];
-  brands: any[];
-  lastSync: any;
+  categories: Category[];
+  brands: Brand[];
+  lastSync?: string | null;
 }
 
 export function ProductsManager({
@@ -78,7 +113,6 @@ export function ProductsManager({
   initialTotal,
   categories,
   brands,
-  lastSync,
 }: ProductsManagerProps) {
   const [products, setProducts] = useState(initialProducts);
   const [total, setTotal] = useState(initialTotal);
@@ -152,11 +186,6 @@ export function ProductsManager({
         categories:product_categories(
           category:categories(id, name, slug)
         ),
-        images:product_images(
-          image_filename,
-          alt_text,
-          is_primary
-        ),
         brand:brands(id, name, slug)
       `,
         { count: "exact" }
@@ -195,8 +224,52 @@ export function ProductsManager({
 
     const { data, count } = await query;
 
-    if (data) {
-      setProducts(data);
+    // Fetch images for products via media_usage
+    let productsWithImages = data || [];
+    if (productsWithImages.length > 0) {
+      const productIds = productsWithImages.map(p => p.id.toString());
+      
+      const { data: mediaUsageData } = await supabase
+        .from('media_usage')
+        .select(`
+          entity_id,
+          field_name,
+          media:media_library (
+            id,
+            file_url,
+            alt_text
+          )
+        `)
+        .eq('entity_type', 'product')
+        .in('entity_id', productIds)
+        .order('field_name');
+      
+      // Group images by product
+      const imagesByProduct: Record<string, any[]> = {};
+      (mediaUsageData || []).forEach(usage => {
+        if (!usage.media) return;
+        
+        const productId = usage.entity_id;
+        if (!imagesByProduct[productId]) {
+          imagesByProduct[productId] = [];
+        }
+        
+        imagesByProduct[productId].push({
+          image_filename: usage.media.file_url,
+          alt_text: usage.media.alt_text,
+          is_primary: usage.field_name === 'primary_image'
+        });
+      });
+      
+      // Attach images to products
+      productsWithImages = productsWithImages.map(product => ({
+        ...product,
+        images: imagesByProduct[product.id] || []
+      }));
+    }
+
+    if (productsWithImages) {
+      setProducts(productsWithImages);
       setTotal(count || 0);
     }
 
@@ -541,7 +614,7 @@ export function ProductsManager({
                   product.variants && product.variants.length > 0;
                 const minPrice = hasVariants
                   ? Math.min(
-                      ...product.variants.map((v: any) => v.price_cents)
+                      ...product.variants.map((v) => v.price_cents)
                     ) / 100
                   : product.base_price_cents
                   ? product.base_price_cents / 100
@@ -565,11 +638,11 @@ export function ProductsManager({
                   hasVariants
                 ) {
                   const totalStock = product.variants.reduce(
-                    (sum: number, v: any) => sum + (v.stock || 0),
+                    (sum: number, v) => sum + (v.stock || 0),
                     0
                   );
                   const activeVariants = product.variants.filter(
-                    (v: any) => v.is_active
+                    (v) => v.is_active
                   );
                   const lowStock = product.low_stock_level || 5;
 
@@ -602,7 +675,7 @@ export function ProductsManager({
                   // Fallback
                   const totalStock = hasVariants
                     ? product.variants.reduce(
-                        (sum: number, v: any) => sum + (v.stock || 0),
+                        (sum: number, v) => sum + (v.stock || 0),
                         0
                       )
                     : product.stock_level || 0;
@@ -700,7 +773,7 @@ export function ProductsManager({
                                     <>
                                       {product.categories
                                         .slice(0, 1)
-                                        .map((pc: any) => (
+                                        .map((pc) => (
                                           <span
                                             key={pc.category.id}
                                             className="text-xs"
@@ -729,7 +802,7 @@ export function ProductsManager({
                               <DropdownMenuSeparator />
                               {categories.map((category) => {
                                 const isChecked = product.categories?.some(
-                                  (pc: any) => pc.category.id === category.id
+                                  (pc) => pc.category.id === category.id
                                 );
                                 return (
                                   <DropdownMenuCheckboxItem
@@ -738,7 +811,7 @@ export function ProductsManager({
                                     onCheckedChange={(checked) => {
                                       const currentCategoryIds =
                                         product.categories?.map(
-                                          (pc: any) => pc.category.id
+                                          (pc) => pc.category.id
                                         ) || [];
 
                                       const newCategoryIds = checked
@@ -785,7 +858,7 @@ export function ProductsManager({
                               <span className="text-xs text-muted-foreground block">
                                 {(() => {
                                   const prices = product.variants.map(
-                                    (v: any) => v.price_cents / 100
+                                    (v) => v.price_cents / 100
                                   );
                                   const maxPrice = Math.max(...prices);
                                   return minPrice !== maxPrice
@@ -919,7 +992,7 @@ export function ProductsManager({
                                 </tr>
                               </thead>
                               <tbody>
-                                {product.variants.map((variant: any) => (
+                                {product.variants.map((variant) => (
                                   <tr key={variant.id} className="text-sm">
                                     <td className="py-1">
                                       {variant.sku || "N/A"}

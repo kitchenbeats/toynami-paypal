@@ -1,6 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET(request: NextRequest) {
+interface Service {
+  carrier_id: string
+  carrier_name: string
+  service_code: string
+  service_name: string
+  domestic?: boolean
+  international?: boolean
+}
+
+interface V1Service {
+  carrierCode: string
+  code: string
+  name: string
+  domestic?: boolean
+  international?: boolean
+}
+
+// interface CarrierWithServices {
+//   carrier_id: string
+//   carrier_name: string
+//   services?: Service[]
+// }
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function GET(_request: NextRequest) {
   const apiKey = process.env.SHIPSTATION_API_KEY
   
   if (!apiKey) {
@@ -34,7 +58,7 @@ export async function GET(request: NextRequest) {
       const v2Data = await v2Response.json()
       
       // Get services for each carrier
-      const services: any[] = []
+      const services:Service[] = []
       
       if (v2Data.carriers) {
         for (const carrier of v2Data.carriers) {
@@ -64,7 +88,7 @@ export async function GET(request: NextRequest) {
         carriers: v2Data.carriers || [],
         services_by_carrier: services,
         all_service_codes: services.flatMap(c => 
-          c.services.map((s: any) => ({
+          c.services.map((s:Service) => ({
             carrier: c.carrier_name,
             service_code: s.service_code,
             service_name: s.service_name || s.name
@@ -77,14 +101,14 @@ export async function GET(request: NextRequest) {
     const carriersData = await carriersResponse.json()
     
     // Get services for each carrier
-    const services: any[] = []
+    const services:Service[] = []
     
     for (const carrier of carriersData) {
       if (carrier.services) {
         services.push({
           carrier_code: carrier.code,
           carrier_name: carrier.name,
-          services: carrier.services.map((s: any) => ({
+          services: carrier.services.map((s: V1Service) => ({
             service_code: s.code,
             service_name: s.name
           }))
@@ -97,7 +121,7 @@ export async function GET(request: NextRequest) {
       api_version: 'v1',
       carriers: carriersData,
       all_service_codes: services.flatMap(c => 
-        c.services.map((s: any) => ({
+        c.services.map((s:Service) => ({
           carrier: c.carrier_name,
           service_code: s.service_code,
           service_name: s.service_name

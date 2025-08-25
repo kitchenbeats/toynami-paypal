@@ -13,8 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
 import { 
-  Pencil, Trash2, Plus, Save, X, Image, Type, Palette, 
-  Eye, EyeOff, Copy, ExternalLink, Info
+  Pencil, Trash2, Plus, Copy, ExternalLink, Info
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { SimpleImageUpload } from '@/components/admin/simple-image-upload'
@@ -57,7 +56,7 @@ interface BannersManagerProps {
   initialBanners: Banner[]
 }
 
-const POSITIONS = ['upper', 'middle', 'lower'] as const
+const POSITIONS = ['upper', 'middle', 'lower', 'hero'] as const
 const SLOTS_PER_POSITION = 6
 
 export function BannersManagerImproved({ initialBanners }: BannersManagerProps) {
@@ -65,7 +64,7 @@ export function BannersManagerImproved({ initialBanners }: BannersManagerProps) 
   const [editingBanner, setEditingBanner] = useState<Banner | null>(null)
   const [isCreating, setIsCreating] = useState(false)
   const [showDialog, setShowDialog] = useState(false)
-  const [selectedPosition, setSelectedPosition] = useState<typeof POSITIONS[number]>('upper')
+  const [selectedPosition] = useState<typeof POSITIONS[number]>('upper')
   const [viewMode, setViewMode] = useState<'table' | 'grid'>('table')
   
   const router = useRouter()
@@ -305,7 +304,7 @@ export function BannersManagerImproved({ initialBanners }: BannersManagerProps) 
                 {banners.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
-                      No banners created yet. Click "Create Banner" to get started.
+                      No banners created yet. Click &quot;Create Banner&quot; to get started.
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -380,7 +379,7 @@ export function BannersManagerImproved({ initialBanners }: BannersManagerProps) 
         </Card>
       ) : (
         /* Grid View */
-        <Tabs value={selectedPosition} onValueChange={(v) => setSelectedPosition(v as typeof POSITIONS[number])}>
+        <Tabs defaultValue={selectedPosition} urlSync={false}>
           <TabsList>
             {POSITIONS.map(pos => (
               <TabsTrigger key={pos} value={pos} className="capitalize">

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -8,12 +8,12 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { 
-  Plus, Ticket, Percent, Calendar, Users, 
-  Copy, Eye, BarChart3, Hash, Edit, Trash2, 
-  Search, Filter, ChevronLeft, ChevronRight
+  Plus, Ticket, Percent, Users, 
+  BarChart3, Edit, Trash2, 
+  Search, ChevronLeft, ChevronRight
 } from 'lucide-react'
 
 interface Coupon {
@@ -49,12 +49,7 @@ export function CouponsManager() {
     conversionRate: 0
   })
 
-  // Load coupons data
-  useEffect(() => {
-    fetchCoupons()
-  }, [currentPage, searchTerm, statusFilter])
-
-  const fetchCoupons = async () => {
+  const fetchCoupons = useCallback(async () => {
     try {
       setLoading(true)
       const params = new URLSearchParams({
@@ -87,7 +82,12 @@ export function CouponsManager() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [currentPage, searchTerm, statusFilter])
+
+  // Load coupons data
+  useEffect(() => {
+    fetchCoupons()
+  }, [currentPage, searchTerm, statusFilter, fetchCoupons])
 
   const handleCreateCoupon = () => {
     setEditingCoupon(null)

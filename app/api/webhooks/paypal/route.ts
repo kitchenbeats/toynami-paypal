@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/server'
-import crypto from 'crypto'
+import type { SupabaseClient } from '@supabase/supabase-js'
+
+interface PayPalWebhookPayload {
+  event_type: string
+  resource: Record<string, unknown>
+  id?: string
+  create_time?: string
+  resource_type?: string
+  summary?: string
+}
 
 // PayPal webhook verification and event processing
 export async function POST(request: NextRequest) {
@@ -110,7 +119,7 @@ export async function POST(request: NextRequest) {
 }
 
 // Process different types of PayPal webhook events
-async function processWebhookEvent(payload: any, supabase: any) {
+async function processWebhookEvent(payload: PayPalWebhookPayload, supabase: SupabaseClient) {
   const eventType = payload.event_type
   const resource = payload.resource
 
@@ -148,7 +157,7 @@ async function processWebhookEvent(payload: any, supabase: any) {
 }
 
 // Handle completed orders/payments
-async function handleOrderCompleted(resource: any, supabase: any) {
+async function handleOrderCompleted(resource: Record<string, unknown>, supabase: SupabaseClient) {
   const orderId = resource.id || resource.supplementary_data?.related_ids?.order_id
   
   if (!orderId) {
@@ -189,7 +198,7 @@ async function handleOrderCompleted(resource: any, supabase: any) {
 }
 
 // Handle cancelled orders
-async function handleOrderCancelled(resource: any, supabase: any) {
+async function handleOrderCancelled(resource: Record<string, unknown>, supabase: SupabaseClient) {
   const orderId = resource.id || resource.supplementary_data?.related_ids?.order_id
   
   if (!orderId) {
@@ -247,7 +256,7 @@ async function handleOrderCancelled(resource: any, supabase: any) {
 }
 
 // Handle approved orders (before completion)
-async function handleOrderApproved(resource: any, supabase: any) {
+async function handleOrderApproved(resource: Record<string, unknown>, supabase: SupabaseClient) {
   const orderId = resource.id
   
   const { error } = await supabase
@@ -268,7 +277,7 @@ async function handleOrderApproved(resource: any, supabase: any) {
 }
 
 // Handle payment refunds
-async function handlePaymentRefunded(resource: any, supabase: any) {
+async function handlePaymentRefunded(resource: Record<string, unknown>, supabase: SupabaseClient) {
   const captureId = resource.id
   
   // Find order by capture ID
@@ -301,7 +310,7 @@ async function handlePaymentRefunded(resource: any, supabase: any) {
 }
 
 // Handle subscription events
-async function handleSubscriptionEvent(resource: any, eventType: string, supabase: any) {
+async function handleSubscriptionEvent(resource: Record<string, unknown>, eventType: string, supabase: SupabaseClient) {
   const subscriptionId = resource.id
   const status = eventType.split('.').pop()?.toLowerCase()
 
@@ -321,7 +330,8 @@ async function handleSubscriptionEvent(resource: any, eventType: string, supabas
 }
 
 // Update coupon analytics
-async function updateCouponAnalytics(couponId: string, supabase: any) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function updateCouponAnalytics(couponId: string, _supabase: SupabaseClient) {
   // This is handled by the database view, but we could add additional analytics here
   // For example, tracking conversion rates, popular coupons, etc.
   console.log(`Coupon analytics updated for coupon ${couponId}`)
@@ -345,13 +355,28 @@ async function verifyPayPalWebhookSignature({
   transmissionTime?: string | null
   webhookId?: string
 }) {
+  // Basic validation - ensure required parameters are present
+  if (!signature || !certId || !transmissionId || !transmissionTime || !webhookId) {
+    console.warn('Missing required webhook signature parameters')
+    return false
+  }
+
+  // Log the signature verification attempt for debugging
+  console.log('PayPal webhook signature verification:', {
+    certId: certId.substring(0, 8) + '...',
+    authAlgo,
+    transmissionId: transmissionId.substring(0, 8) + '...',
+    hasSignature: !!signature,
+    hasBody: !!body
+  })
+
   // In production, implement proper PayPal signature verification
   // This would involve:
-  // 1. Getting the PayPal certificate using the cert ID
-  // 2. Creating the expected signature using the webhook ID, transmission time, etc.
-  // 3. Comparing with the provided signature
+  // 1. Fetching the PayPal certificate using the cert ID
+  // 2. Creating the expected signature using the webhook ID, transmission time, body, etc.
+  // 3. Comparing with the provided signature using the specified algorithm
   
-  // For now, return true to allow processing
-  // TODO: Implement proper signature verification for production
+  // For now, if we have all required parameters, consider it valid
+  // TODO: Implement cryptographic signature verification for production
   return true
 }

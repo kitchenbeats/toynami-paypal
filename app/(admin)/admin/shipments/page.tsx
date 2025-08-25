@@ -24,13 +24,48 @@ export default async function ShipmentsPage() {
   }
 
   // Fetch orders from ShipStation API
-  let shipstationOrders: any[] = []
+  let shipstationOrders: Array<{
+    id: string
+    orderNumber: string
+    orderDate: string
+    orderStatus: string
+    shipTo: { name: string; city: string; state: string }
+    orderTotal: number
+    items?: Array<{ name: string; quantity: number }>
+  }> = []
   let totalCount = 0
   let shipstationConnected = false
-  let warehouses: any[] = []
-  let tags: any[] = []
-  let carriers: any[] = []
-  let stores: any[] = []
+  let warehouses: Array<{
+    warehouseId: string
+    warehouseName: string
+    isDefault: boolean
+  }> = []
+  let tags: Array<{
+    tagId: number
+    name: string
+    color: string
+  }> = []
+  let carriers: Array<{
+    code: string
+    name: string
+    accountNumber?: string
+    requiresFundedAccount: boolean
+    balance?: number
+  }> = []
+  let stores: Array<{
+    storeId: number
+    storeName: string
+    marketplaceId: number
+    marketplaceName: string
+    accountName?: string
+    createDate: string
+    modifyDate: string
+    storeStatus: string
+    active: boolean
+    refreshDate?: string
+    lastRefreshAttempt?: string
+    autoRefresh: boolean
+  }> = []
   
   try {
     const client = getShipStationV1Client()
@@ -71,6 +106,7 @@ export default async function ShipmentsPage() {
       stores = storesRes.data || []
     }
   } catch (error) {
+      console.error('Error in catch block:', error)
     console.log('ShipStation not configured or unavailable:', error)
   }
 

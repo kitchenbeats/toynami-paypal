@@ -11,7 +11,7 @@ export function EmptyCart() {
       
       <h2 className="text-2xl font-bold mb-2">Your cart is empty</h2>
       <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-        Looks like you haven't added any collectibles to your cart yet. 
+        Looks like you haven&apos;t added any collectibles to your cart yet. 
         Start exploring our exclusive collection!
       </p>
       

@@ -9,7 +9,6 @@ import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { WysiwygEditor } from '@/components/ui/wysiwyg-editor'
 import { 
   Pencil, Trash2, Plus, Save, X, FileText, 
@@ -165,9 +164,9 @@ export function PagesManager({ initialPages }: PagesManagerProps) {
       
       handleCancel()
       router.refresh()
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error saving page:', error)
-      if (error.message?.includes('duplicate key')) {
+      if (error instanceof Error && error.message?.includes('duplicate key')) {
         toast.error('A page with this slug already exists')
       } else {
         toast.error('Failed to save page')

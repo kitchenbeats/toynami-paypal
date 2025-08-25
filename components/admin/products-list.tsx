@@ -24,6 +24,42 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 
+interface ProductVariant {
+  id: string;
+  price_cents: number;
+  stock: number;
+  is_active: boolean;
+  sku?: string;
+}
+
+interface ProductCategory {
+  id: string;
+  category: {
+    id: string;
+    name: string;
+    slug: string;
+  };
+}
+
+interface ProductImage {
+  id: string;
+  image_filename: string;
+  alt_text?: string;
+  is_primary: boolean;
+}
+
+interface Brand {
+  id: string;
+  name: string;
+  slug: string;
+}
+
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+}
+
 interface Product {
   id: number;
   name: string;
@@ -41,16 +77,16 @@ interface Product {
   allow_purchases: boolean;
   created_at: string;
   updated_at: string;
-  variants: any[];
-  categories: any[];
-  images: any[];
-  brand: any;
+  variants: ProductVariant[];
+  categories: ProductCategory[];
+  images: ProductImage[];
+  brand: Brand | null;
 }
 
 interface ProductsListProps {
   initialProducts: Product[];
   initialTotal: number;
-  categories: any[];
+  categories: Category[];
 }
 
 export function ProductsList({
@@ -121,10 +157,6 @@ export function ProductsList({
         categories:product_categories(
           category:categories(id, name, slug)
         ),
-        images:product_images(
-          image_filename,
-          alt_text
-        ),
         brand:brands(name, slug)
       `,
         { count: "exact" }
@@ -144,8 +176,46 @@ export function ProductsList({
 
     const { data, count } = await query;
 
-    if (data) {
-      setProducts(data);
+    // Fetch images for products via media_usage
+    let productsWithImages = data || [];
+    if (productsWithImages.length > 0) {
+      const productIds = productsWithImages.map(p => p.id.toString());
+      
+      const { data: mediaUsageData } = await supabase
+        .from('media_usage')
+        .select(`
+          entity_id,
+          field_name,
+          media:media_library (
+            id,
+            file_url,
+            alt_text
+          )
+        `)
+        .eq('entity_type', 'product')
+        .in('entity_id', productIds)
+        .eq('field_name', 'primary_image'); // Only get primary images for list view
+      
+      // Create a map of images by product ID
+      const imagesByProduct: Record<string, any> = {};
+      (mediaUsageData || []).forEach(usage => {
+        if (usage.media) {
+          imagesByProduct[usage.entity_id] = {
+            image_filename: usage.media.file_url,
+            alt_text: usage.media.alt_text
+          };
+        }
+      });
+      
+      // Attach images to products
+      productsWithImages = productsWithImages.map(product => ({
+        ...product,
+        images: imagesByProduct[product.id] ? [imagesByProduct[product.id]] : []
+      }));
+    }
+
+    if (productsWithImages) {
+      setProducts(productsWithImages);
       setTotal(count || 0);
     }
 
@@ -318,7 +388,7 @@ export function ProductsList({
                   product.variants && product.variants.length > 0;
                 const minPrice = hasVariants
                   ? Math.min(
-                      ...product.variants.map((v: any) => v.price_cents)
+                      ...product.variants.map((v) => v.price_cents)
                     ) / 100
                   : product.base_price_cents
                   ? product.base_price_cents / 100
@@ -342,11 +412,11 @@ export function ProductsList({
                   hasVariants
                 ) {
                   const totalStock = product.variants.reduce(
-                    (sum: number, v: any) => sum + (v.stock || 0),
+                    (sum: number, v) => sum + (v.stock || 0),
                     0
                   );
                   const activeVariants = product.variants.filter(
-                    (v: any) => v.is_active
+                    (v) => v.is_active
                   );
                   const lowStock = product.low_stock_level || 5;
 
@@ -379,7 +449,7 @@ export function ProductsList({
                   // Fallback for legacy data
                   const totalStock = hasVariants
                     ? product.variants.reduce(
-                        (sum: number, v: any) => sum + (v.stock || 0),
+                        (sum: number, v) => sum + (v.stock || 0),
                         0
                       )
                     : product.stock_level || 0;
@@ -479,7 +549,7 @@ export function ProductsList({
                                     <>
                                       {product.categories
                                         .slice(0, 1)
-                                        .map((pc: any) => (
+                                        .map((pc) => (
                                           <span
                                             key={pc.category.id}
                                             className="text-xs"
@@ -508,7 +578,7 @@ export function ProductsList({
                               <DropdownMenuSeparator />
                               {categories.map((category) => {
                                 const isChecked = product.categories?.some(
-                                  (pc: any) => pc.category.id === category.id
+                                  (pc) => pc.category.id === category.id
                                 );
                                 return (
                                   <DropdownMenuCheckboxItem
@@ -517,7 +587,7 @@ export function ProductsList({
                                     onCheckedChange={(checked) => {
                                       const currentCategoryIds =
                                         product.categories?.map(
-                                          (pc: any) => pc.category.id
+                                          (pc) => pc.category.id
                                         ) || [];
 
                                       const newCategoryIds = checked
@@ -564,7 +634,7 @@ export function ProductsList({
                               <span className="text-xs text-muted-foreground block">
                                 {(() => {
                                   const prices = product.variants.map(
-                                    (v: any) => v.price_cents / 100
+                                    (v) => v.price_cents / 100
                                   );
                                   const maxPrice = Math.max(...prices);
                                   return minPrice !== maxPrice
@@ -649,7 +719,7 @@ export function ProductsList({
                                 </tr>
                               </thead>
                               <tbody>
-                                {product.variants.map((variant: any) => (
+                                {product.variants.map((variant) => (
                                   <tr key={variant.id} className="text-sm">
                                     <td className="py-1">
                                       {variant.sku || "N/A"}

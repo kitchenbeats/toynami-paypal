@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
-import { Calendar, DollarSign, Package, Percent, Truck, Users, Gift } from 'lucide-react'
+import { DollarSign, Package, Percent, Truck, Users, Gift } from 'lucide-react'
 
 interface Promotion {
   id?: string
@@ -28,7 +28,7 @@ interface Promotion {
   is_active: boolean
   starts_at?: string
   expires_at?: string
-  rules?: any
+  rules?: Record<string, unknown>
   applicable_product_ids?: number[]
   applicable_category_ids?: string[]
   customer_group_ids?: string[]
@@ -128,24 +128,25 @@ export function PromotionFormDialog({ open, onOpenChange, promotion, onSave }: P
     }
   }
 
-  const getPromotionIcon = (type: string) => {
-    switch (type) {
-      case 'percentage_off':
-        return <Percent className="h-4 w-4" />
-      case 'fixed_amount_off':
-        return <DollarSign className="h-4 w-4" />
-      case 'bogo':
-        return <Gift className="h-4 w-4" />
-      case 'bundle':
-        return <Package className="h-4 w-4" />
-      case 'tiered':
-        return <Users className="h-4 w-4" />
-      case 'free_shipping':
-        return <Truck className="h-4 w-4" />
-      default:
-        return null
-    }
-  }
+  // Function to get promotion icons - available for future use
+  // const getPromotionIcon = (type: string) => {
+  //   switch (type) {
+  //     case 'percentage_off':
+  //       return <Percent className="h-4 w-4" />
+  //     case 'fixed_amount_off':
+  //       return <DollarSign className="h-4 w-4" />
+  //     case 'bogo':
+  //       return <Gift className="h-4 w-4" />
+  //     case 'bundle':
+  //       return <Package className="h-4 w-4" />
+  //     case 'tiered':
+  //       return <Users className="h-4 w-4" />
+  //     case 'free_shipping':
+  //       return <Truck className="h-4 w-4" />
+  //     default:
+  //       return null
+  //   }
+  // }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -182,7 +183,7 @@ export function PromotionFormDialog({ open, onOpenChange, promotion, onSave }: P
                   <Label htmlFor="type">Promotion Type *</Label>
                   <Select 
                     value={formData.type} 
-                    onValueChange={(value: any) => setFormData({ ...formData, type: value })}
+                    onValueChange={(value) => setFormData({ ...formData, type: value })}
                   >
                     <SelectTrigger id="type">
                       <SelectValue />

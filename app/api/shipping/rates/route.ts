@@ -1,38 +1,48 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { z } from 'zod'
+import { apiHandler, validateRequest } from '@/lib/api/utils'
 
-export interface ShippingRateRequest {
-  items: Array<{
-    productId: string
-    productName: string
-    quantity: number
-    weight?: number // in pounds
-    dimensions?: {
-      length: number
-      width: number
-      height: number
-    }
-  }>
-  shippingAddress: {
-    name?: string
-    address: string
-    city: string
-    state: string
-    zipCode: string
-    country?: string
-  }
+interface FormattedRate {
+  id: string
+  carrier: string
+  service: string
+  serviceCode: string
+  packageCode?: string
+  amount: number
+  currency: string
+  deliveryDays: string | null
+  trackingAvailable: boolean
 }
 
-export async function POST(request: NextRequest) {
-  try {
-    const body: ShippingRateRequest = await request.json()
-    
-    if (!body.items || !Array.isArray(body.items) || body.items.length === 0) {
-      return NextResponse.json({ error: 'Items are required' }, { status: 400 })
-    }
-    
-    if (!body.shippingAddress) {
-      return NextResponse.json({ error: 'Shipping address is required' }, { status: 400 })
-    }
+// Define validation schema
+const shippingRateSchema = z.object({
+  items: z.array(z.object({
+    productId: z.string(),
+    productName: z.string(),
+    quantity: z.number().int().positive(),
+    weight: z.number().positive().optional(), // in pounds
+    dimensions: z.object({
+      length: z.number().positive(),
+      width: z.number().positive(),
+      height: z.number().positive(),
+    }).optional(),
+  })).min(1, 'At least one item is required'),
+  shippingAddress: z.object({
+    name: z.string().optional(),
+    address: z.string().min(1),
+    city: z.string().min(1),
+    state: z.string().min(2).max(2),
+    zipCode: z.string().min(5),
+    country: z.string().default('US'),
+  }),
+})
+
+export type ShippingRateRequest = z.infer<typeof shippingRateSchema>
+
+export const POST = apiHandler(async (request: NextRequest) => {
+  // Validate request body
+  const { data: body, error } = await validateRequest(request, shippingRateSchema)
+  if (error) return error
 
     // Get V1 API credentials
     const v1ApiKey = process.env.SHIPSTATION_API_KEY_V1
@@ -154,8 +164,8 @@ export async function POST(request: NextRequest) {
 
     // Filter to only wanted services and format rates for frontend
     const formattedRates = allRates
-      .filter((rate: any) => wantedServices.includes(rate.serviceCode))
-      .map((rate: any) => {
+      .filter((rate) => wantedServices.includes(rate.serviceCode))
+      .map((rate) => {
       // V1 uses shipmentCost + otherCost for total
       const amount = (rate.shipmentCost || 0) + (rate.otherCost || 0)
       
@@ -178,7 +188,7 @@ export async function POST(request: NextRequest) {
     const sortedRates = validRates.sort((a, b) => a.amount - b.amount)
 
     // Deduplicate rates - keep only the cheapest for each carrier/service combo
-    const deduplicatedRates = new Map<string, any>()
+    const deduplicatedRates = new Map<string, FormattedRate>()
     
     sortedRates.forEach(rate => {
       const key = `${rate.carrier}-${rate.service}`
@@ -206,26 +216,4 @@ export async function POST(request: NextRequest) {
       totalWeight,
       packageCount: 1
     })
-
-  } catch (error) {
-    let errorMessage = 'Unknown error'
-    
-    if (error instanceof Error) {
-      errorMessage = error.message
-      
-      if (errorMessage.includes('401') || errorMessage.includes('unauthorized')) {
-        errorMessage = 'ShipStation API credentials are invalid. Please check SHIPSTATION_API_KEY_V1 and SHIPSTATION_API_SECRET_V1.'
-      } else if (errorMessage.includes('fetch')) {
-        errorMessage = 'Unable to connect to ShipStation API. Please check your internet connection.'
-      }
-    }
-    
-    return NextResponse.json(
-      { 
-        error: errorMessage,
-        message: errorMessage
-      },
-      { status: 500 }
-    )
-  }
-}
+})

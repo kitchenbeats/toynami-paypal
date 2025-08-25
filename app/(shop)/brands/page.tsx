@@ -12,7 +12,6 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 import { Metadata } from 'next'
-import { StructuredData } from '@/components/seo/structured-data'
 
 export const metadata: Metadata = {
   title: 'Brand Directory - Premium Collectible Brands',

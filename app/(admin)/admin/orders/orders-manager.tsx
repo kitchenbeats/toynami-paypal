@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -8,7 +8,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
+  SelectValue
 } from '@/components/ui/select'
 import {
   Table,
@@ -16,14 +16,14 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
+  TableRow
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Card, CardContent,  CardHeader, CardTitle } from '@/components/ui/card'
 import { 
   Search, 
-  RefreshCw, 
+   
   Package, 
   Truck, 
   Clock, 
@@ -32,34 +32,39 @@ import {
   AlertCircle,
   Download,
   Upload,
-  Settings,
-  Plus,
+  
+  
   Eye,
-  Edit,
-  Trash2,
+  
+  
   Tag,
-  Calendar,
+  
   DollarSign,
-  User,
-  MapPin,
-  Printer,
-  TestTube
+  
+  
+  Printer
 } from 'lucide-react'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
-import { Alert, AlertDescription } from '@/components/ui/alert'
+// import { Alert, AlertDescription } from '@/components/ui/alert'
 import { format } from 'date-fns'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
+interface Order {
+  id: string;
+  created_at: string;
+  customer_name: string;
+  customer_email: string;
+  total_cents: number;
+  status: string;
+  payment_status: string;
+  shipstation_order_status?: string;
+  shipstation_order_id?: string;
+  shipping_carrier?: string;
+  tracking_number?: string;
+}
+
 interface OrdersManagerProps {
-  initialOrders: any[]
+  initialOrders: Order[]
   totalCount: number
 }
 
@@ -68,7 +73,7 @@ export function OrdersManager({
   totalCount
 }: OrdersManagerProps) {
   const router = useRouter()
-  const [orders, setOrders] = useState(initialOrders)
+  const [orders] = useState(initialOrders)
   const [loading, setLoading] = useState(false)
   const [selectedOrders, setSelectedOrders] = useState<string[]>([])
   const [searchTerm, setSearchTerm] = useState('')
@@ -79,7 +84,7 @@ export function OrdersManager({
 
   // Order status colors and icons
   const getStatusBadge = (status: string, shipstationStatus?: string) => {
-    const statusConfig: Record<string, { color: string, icon: any }> = {
+    const statusConfig: Record<string, { color: string, icon: React.ComponentType }> = {
       pending: { color: 'secondary', icon: Clock },
       paid: { color: 'blue', icon: DollarSign },
       shipped: { color: 'green', icon: Truck },
@@ -94,7 +99,7 @@ export function OrdersManager({
 
     return (
       <div className="flex items-center gap-2">
-        <Badge variant={config.color as any} className="flex items-center gap-1">
+        <Badge variant={config.color as "default" | "secondary" | "destructive" | "outline"} className="flex items-center gap-1">
           <Icon className="h-3 w-3" />
           {status}
         </Badge>
@@ -160,8 +165,8 @@ export function OrdersManager({
       setSelectedOrders([])
       router.refresh()
     } catch (error) {
+      console.error('Bulk action failed:', error)
       toast.error('Bulk action failed')
-      console.error(error)
     } finally {
       setLoading(false)
     }

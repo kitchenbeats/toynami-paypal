@@ -5,12 +5,11 @@ import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Switch } from '@/components/ui/switch'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { 
-  Plus, Save, X, Trash2, GripVertical, 
+  Plus, Save, Trash2, 
   Check, Pencil, Copy
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -38,7 +37,7 @@ interface Props {
 }
 
 export function SimpleOptionsManager({ initialOptions }: Props) {
-  const [options, setOptions] = useState<OptionType[]>(initialOptions)
+  const [options] = useState<OptionType[]>(initialOptions)
   const [editingOption, setEditingOption] = useState<OptionType | null>(null)
   const [isCreating, setIsCreating] = useState(false)
   
@@ -85,7 +84,7 @@ export function SimpleOptionsManager({ initialOptions }: Props) {
     })
   }
 
-  const updateValue = (index: number, field: keyof OptionValue, value: any) => {
+  const updateValue = (index: number, field: keyof OptionValue, value: string | boolean | number) => {
     if (!editingOption) return
     
     const newValues = [...editingOption.values]
@@ -325,7 +324,7 @@ export function SimpleOptionsManager({ initialOptions }: Props) {
               <Label>Type</Label>
               <Select
                 value={editingOption.type}
-                onValueChange={(value: any) => setEditingOption({
+                onValueChange={(value) => setEditingOption({
                   ...editingOption,
                   type: value
                 })}

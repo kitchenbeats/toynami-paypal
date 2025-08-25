@@ -66,7 +66,7 @@ export function PromotionsManager() {
     }
   }
 
-  const handleSavePromotion = async (promotionData: any) => {
+  const handleSavePromotion = async (promotionData: Partial<Promotion>) => {
     try {
       const url = editingPromotion 
         ? `/api/admin/promotions/${editingPromotion.id}`

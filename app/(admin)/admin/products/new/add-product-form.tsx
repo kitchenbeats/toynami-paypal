@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
 import { WysiwygEditor } from '@/components/ui/wysiwyg-editor'
-import { Save, ArrowLeft, Package } from 'lucide-react'
+import { Save, ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
@@ -122,9 +122,9 @@ export function AddProductForm({ categories, brands }: AddProductFormProps) {
 
       if (productError) throw productError
 
-      // Add category associations
-      if (formData.category_ids.length > 0) {
-        const categoryAssociations = formData.category_ids.map(categoryId => ({
+      // Add category associations  
+      if (category_ids.length > 0) {
+        const categoryAssociations = category_ids.map(categoryId => ({
           product_id: product.id,
           category_id: categoryId
         }))
@@ -138,9 +138,9 @@ export function AddProductForm({ categories, brands }: AddProductFormProps) {
 
       toast.success('Product created successfully!')
       router.push(`/admin/products/${product.id}`)
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error creating product:', error)
-      if (error.message?.includes('duplicate key')) {
+      if ((error as Error).message?.includes('duplicate key')) {
         toast.error('A product with this slug already exists')
       } else {
         toast.error('Failed to create product')

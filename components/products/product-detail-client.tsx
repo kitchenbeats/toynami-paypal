@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import type { User } from '@supabase/supabase-js'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { ProductOptionsSelector } from './product-options-selector'
@@ -8,16 +9,25 @@ import { getImageSrc } from '@/lib/utils/image-utils'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Card } from '@/components/ui/card'
-import { ShoppingCart, Heart, Share2, Shield, Truck, Package, Star, ChevronLeft, ChevronRight } from 'lucide-react'
+import {} from '@/components/ui/card'
+import { ShoppingCart, Heart, Share2, Shield, Truck, Package,  ChevronLeft, ChevronRight } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useCart } from '@/lib/hooks/use-cart'
 import { toast } from 'sonner'
 
 interface ProductImage {
-  filename: string
-  alt: string
-  isPrimary: boolean
+  id: string
+  media_id?: string
+  image_filename?: string // legacy field
+  alt_text?: string
+  is_primary: boolean
+  position?: number
+  media?: {
+    id: string
+    file_url: string
+    title?: string
+    alt_text?: string
+  }
 }
 
 interface ProductVariant {
@@ -52,14 +62,34 @@ interface Product {
   width?: number
   height?: number
   depth?: number
-  customFields?: any
+  customFields?: Record<string, unknown>
   minTierOrder?: number
   preorder_release_date?: string
   preorder_message?: string
   min_purchase_quantity?: number
   max_purchase_quantity?: number | null
-  options?: any[]
-  option_pricing?: any[]
+  options?: Array<{
+    id: string
+    name: string
+    display_name: string
+    input_type: string
+    is_required: boolean
+    values: Array<{
+      id: string
+      option_id: string
+      value: string
+      display_value?: string
+      hex_color?: string
+      sku_suffix: string
+      is_default: boolean
+    }>
+  }>
+  option_pricing?: Array<{
+    option_value_id: string
+    price_adjustment_cents: number
+    stock_override?: number
+    is_available: boolean
+  }>
 }
 
 interface ProductDetailClientProps {
@@ -79,12 +109,18 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const [quantity, setQuantity] = useState(minQty)
   const [selectedImage, setSelectedImage] = useState(0)
   const [selectedVariant, setSelectedVariant] = useState(0)
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [quantityMessage, setQuantityMessage] = useState<string | null>(null)
   const [isAddingToCart, setIsAddingToCart] = useState(false)
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({})
   const [optionPriceAdjustment, setOptionPriceAdjustment] = useState(0)
-  const [optionStock, setOptionStock] = useState<number | null>(null)
+  const [optionStock] = useState<number | null>(null)
+  
+  // Handle option selection changes
+  const handleOptionSelectionChange = useCallback((selections: Record<string, string>, priceAdjustment: number) => {
+    setSelectedOptions(selections)
+    setOptionPriceAdjustment(priceAdjustment)
+  }, [])
   
   // Get user authentication status
   useEffect(() => {
@@ -246,7 +282,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   }, [minQty, maxQty, effectiveStock])
 
   // Image handling
-  const displayImages = product.images.length > 0 
+  const displayImages = product.images && product.images.length > 0 
     ? product.images 
     : []
 
@@ -265,7 +301,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
       // Build options string for cart display
       const optionsString = product.options?.map(option => {
         const selectedValueId = selectedOptions[option.id]
-        const selectedValue = option.values.find((v: any) => v.id === selectedValueId)
+        const selectedValue = option.values.find((v) => v.id === selectedValueId)
         return selectedValue ? `${option.display_name}: ${selectedValue.display_name}` : ''
       }).filter(Boolean).join(', ')
       
@@ -277,7 +313,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         productName: product.name,
         price: price * 100, // Convert back to cents for cart
         quantity: quantity,
-        image: displayImages[0]?.image_filename || product.image_url,
+        image: displayImages[0]?.media?.file_url || displayImages[0]?.image_filename || product.image_url,
         weight: product.weight || 1.0, // Default to 1 lb if not specified
         dimensions: product.width && product.height && product.depth ? {
           length: Number(product.depth) || 12,
@@ -295,6 +331,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
       // Reset quantity to minimum after adding
       setQuantity(minQty)
     } catch (error) {
+        console.error('Error in catch block:', error)
       toast.error('Failed to add item to cart', {
         description: 'Please try again.'
       })
@@ -311,8 +348,8 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         <div className="relative aspect-square bg-muted rounded-lg overflow-hidden group">
           {displayImages.length > 0 && displayImages[selectedImage] ? (
             <Image
-              src={getImageSrc(displayImages[selectedImage].filename)}
-              alt={displayImages[selectedImage].alt}
+              src={getImageSrc(displayImages[selectedImage].media?.file_url || displayImages[selectedImage].image_filename)}
+              alt={displayImages[selectedImage].alt_text || displayImages[selectedImage].media?.alt_text || product.name}
               fill
               sizes="(min-width: 1024px) 50vw, (min-width: 768px) 60vw, 100vw"
               className="object-cover"
@@ -361,8 +398,8 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 }`}
               >
                 <Image
-                  src={getImageSrc(image.filename)}
-                  alt={image.alt}
+                  src={getImageSrc(image.media?.file_url || image.image_filename)}
+                  alt={image.alt_text || image.media?.alt_text || product.name}
                   fill
                   sizes="(min-width: 1024px) 12vw, (min-width: 768px) 15vw, 22vw"
                   className="object-cover"
@@ -436,10 +473,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
             <ProductOptionsSelector
               options={product.options}
               pricing={product.option_pricing || []}
-              onSelectionChange={useCallback((selections, priceAdjustment) => {
-                setSelectedOptions(selections)
-                setOptionPriceAdjustment(priceAdjustment)
-              }, [])}
+              onSelectionChange={handleOptionSelectionChange}
             />
           </div>
         )}

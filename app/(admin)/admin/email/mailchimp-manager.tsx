@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -10,9 +10,9 @@ import { Switch } from '@/components/ui/switch'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { 
-  Mail, Settings, Users, ShoppingCart, Package, 
+  Mail, Users, ShoppingCart, Package, 
   RefreshCw, CheckCircle, XCircle, AlertCircle,
-  Zap, ExternalLink, Activity, Link2
+  Zap, ExternalLink, Activity
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { createClient } from '@/lib/supabase/client'
@@ -59,17 +59,55 @@ export function MailchimpManager({ initialSettings, stats }: Props) {
   const [connectionStatus, setConnectionStatus] = useState<{
     connected: boolean
     message?: string
-    data?: any
+    data?: unknown
   } | null>(null)
   
   const supabase = createClient()
+
+  const testConnection = useCallback(async () => {
+    setTesting(true)
+    setConnectionStatus(null)
+    
+    try {
+      const response = await fetch('/api/admin/mailchimp/test', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(settings)
+      })
+      
+      const result = await response.json()
+      
+      if (result.success) {
+        setConnectionStatus({
+          connected: true,
+          message: 'Connection successful!',
+          data: result.data
+        })
+        toast.success('Connected to Mailchimp successfully')
+      } else {
+        setConnectionStatus({
+          connected: false,
+          message: result.error || 'Connection failed'
+        })
+        toast.error(result.error || 'Connection failed')
+      }
+    } catch {
+      setConnectionStatus({
+        connected: false,
+        message: 'Failed to test connection'
+      })
+      toast.error('Failed to test connection')
+    } finally {
+      setTesting(false)
+    }
+  }, [settings])
 
   // Test connection when component mounts if configured
   useEffect(() => {
     if (settings.api_key && settings.is_active) {
       testConnection()
     }
-  }, [])
+  }, [settings.api_key, settings.is_active, testConnection])
 
   const saveSettings = async () => {
     setLoading(true)
@@ -109,43 +147,6 @@ export function MailchimpManager({ initialSettings, stats }: Props) {
     }
   }
 
-  const testConnection = async () => {
-    setTesting(true)
-    setConnectionStatus(null)
-    
-    try {
-      const response = await fetch('/api/admin/mailchimp/test', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(settings)
-      })
-      
-      const result = await response.json()
-      
-      if (result.success) {
-        setConnectionStatus({
-          connected: true,
-          message: 'Connection successful!',
-          data: result.data
-        })
-        toast.success('Connected to Mailchimp successfully')
-      } else {
-        setConnectionStatus({
-          connected: false,
-          message: result.error || 'Connection failed'
-        })
-        toast.error(result.error || 'Connection failed')
-      }
-    } catch (error) {
-      setConnectionStatus({
-        connected: false,
-        message: 'Failed to test connection'
-      })
-      toast.error('Failed to test connection')
-    } finally {
-      setTesting(false)
-    }
-  }
 
   const syncAllCustomers = async () => {
     if (!confirm('This will sync all customers to Mailchimp. Continue?')) return
@@ -163,7 +164,7 @@ export function MailchimpManager({ initialSettings, stats }: Props) {
       } else {
         toast.error(result.error || 'Sync failed')
       }
-    } catch (error) {
+    } catch {
       toast.error('Failed to sync customers')
     } finally {
       setSyncing(false)
@@ -186,7 +187,7 @@ export function MailchimpManager({ initialSettings, stats }: Props) {
       } else {
         toast.error(result.error || 'Sync failed')
       }
-    } catch (error) {
+    } catch {
       toast.error('Failed to sync products')
     } finally {
       setSyncing(false)

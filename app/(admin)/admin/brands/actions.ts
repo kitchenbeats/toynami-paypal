@@ -55,7 +55,7 @@ export async function uploadBrandImage(
   const buffer = Buffer.from(arrayBuffer)
   
   // Upload to storage
-  const { error: uploadError, data } = await supabase.storage
+  const { error: uploadError } = await supabase.storage
     .from('products')
     .upload(filePath, buffer, {
       contentType: fileData.type,

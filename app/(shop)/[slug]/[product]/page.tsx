@@ -2,16 +2,9 @@ import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { ProductDetailServer } from '@/components/products/product-detail-server'
 import { RelatedProducts } from '@/components/products/related-products'
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb'
 import { Metadata } from 'next'
 import { StructuredData } from '@/components/seo/structured-data'
+import { generateProductSEO, generateMetadata as generateSEOMetadata } from '@/lib/seo/utils'
 
 interface PageProps {
   params: Promise<{
@@ -23,10 +16,6 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug: categorySlug, product: productSlug } = await params
   const supabase = await createClient()
-
-  const defaultUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000"
 
   // Get comprehensive product data for SEO
   const { data: product } = await supabase
@@ -47,16 +36,36 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       is_featured,
       is_new,
       tags,
-      video_url,
-      preorder_release_date,
-      preorder_message,
-      brand:brands(id, name, slug),
-      images:product_images(image_filename, alt_text, is_primary, position),
-      variants:product_variants(id, price_cents, stock, is_active, sku, option_values),
+      brand:brands(name, slug),
       categories:product_categories(category:categories(name, slug))
     `)
     .eq('slug', productSlug)
     .single()
+
+  // Get images via media_usage
+  if (product) {
+    const { data: mediaUsageData } = await supabase
+      .from('media_usage')
+      .select(`
+        field_name,
+        media:media_library (
+          id,
+          file_url,
+          alt_text,
+          title
+        )
+      `)
+      .eq('entity_type', 'product')
+      .eq('entity_id', product.id.toString())
+      .order('field_name')
+
+    // Transform media usage data to images array
+    product.images = (mediaUsageData || []).map(usage => ({
+      image_filename: usage.media?.file_url || '',
+      alt_text: usage.media?.alt_text || '',
+      is_primary: usage.field_name === 'primary_image'
+    }))
+  }
 
   if (!product) {
     return {
@@ -65,88 +74,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
   }
 
-  // Get primary image
-  const primaryImage = product.images?.find(img => img.is_primary) || product.images?.[0]
-  const imageUrl = primaryImage?.image_filename 
-    ? `${defaultUrl}/images/products/${primaryImage.image_filename}`
-    : '/opengraph-image.png'
-
-  // Build SEO content
-  const brandName = product.brand?.name || ''
-  const baseTitle = product.meta_title || `${product.name}${brandName ? ` - ${brandName}` : ''}`
-  const title = `${baseTitle} - Collectibles & Toys`
+  // Use our SEO utility for consistent metadata generation
+  const seoData = generateProductSEO(product)
+  seoData.url = `/${categorySlug}/${productSlug}`
   
-  const description = product.meta_description || 
-    `${product.description ? product.description.substring(0, 140) : `Shop ${product.name}${brandName ? ` from ${brandName}` : ''} at Toynami Store.`} Premium collectible${product.is_on_sale ? ' on sale' : ''}${product.is_new ? ', new release' : ''}.`
-
-  // Build keywords from multiple sources
-  const keywords: string[] = []
-  if (product.meta_keywords) keywords.push(...product.meta_keywords.split(',').map((k: string) => k.trim()))
-  if (product.search_keywords) keywords.push(...product.search_keywords.split(',').map((k: string) => k.trim()))
-  if (product.tags) keywords.push(...product.tags)
-  if (brandName) keywords.push(brandName.toLowerCase())
-  
-  // Add category names
-  const categoryNames = product.categories?.map(pc => pc.category.name.toLowerCase()) || []
-  keywords.push(...categoryNames)
-  
-  // Add product-specific keywords
-  keywords.push(product.name.toLowerCase(), 'collectible', 'toy', 'figure')
-  if (product.sku) keywords.push(product.sku.toLowerCase())
-
-  // Price information
-  const price = product.base_price_cents / 100
-  const comparePrice = product.compare_price_cents ? product.compare_price_cents / 100 : null
-  const availability = product.stock_level > 0 ? 'in stock' : 'out of stock'
-
-  const productUrl = `${defaultUrl}/${categorySlug}/${productSlug}`
-
-  // Build rich product metadata
-  return {
-    title,
-    description,
-    keywords: [...new Set(keywords)], // Remove duplicates
-    openGraph: {
-      title: baseTitle,
-      description,
-      type: 'website',
-      url: productUrl,
-      siteName: 'Toynami Store',
-      images: [{
-        url: imageUrl,
-        width: 1200,
-        height: 1200,
-        alt: primaryImage?.alt_text || product.name
-      }]
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: baseTitle,
-      description,
-      images: [imageUrl]
-    },
-    alternates: {
-      canonical: productUrl
-    },
-    other: {
-      // Rich product metadata
-      'product:price:amount': price.toString(),
-      'product:price:currency': 'USD',
-      'product:availability': availability,
-      'product:brand': brandName,
-      'product:category': categoryNames.join(', '),
-      'product:sku': product.sku || '',
-      'product:condition': 'new',
-      ...(comparePrice && { 'product:price:compare': comparePrice.toString() }),
-      ...(product.is_on_sale && { 'product:sale': 'true' }),
-      ...(product.is_featured && { 'product:featured': 'true' }),
-      ...(product.is_new && { 'product:new': 'true' }),
-      ...(product.preorder_release_date && { 
-        'product:preorder': 'true',
-        'product:release_date': product.preorder_release_date 
-      })
-    }
-  }
+  return generateSEOMetadata(seoData)
 }
 
 async function getProduct(productSlug: string) {
@@ -156,7 +88,6 @@ async function getProduct(productSlug: string) {
     .from('products')
     .select(`
       *,
-      images:product_images(*),
       option_assignments:product_option_assignments(
         is_required,
         display_order,
@@ -193,6 +124,31 @@ async function getProduct(productSlug: string) {
     return null
   }
   
+  // Get images via media_usage
+  const { data: mediaUsageData } = await supabase
+    .from('media_usage')
+    .select(`
+      field_name,
+      media:media_library (
+        id,
+        file_url,
+        alt_text,
+        title
+      )
+    `)
+    .eq('entity_type', 'product')
+    .eq('entity_id', product.id.toString())
+    .order('field_name')
+
+  // Transform media usage data to images array
+  product.images = (mediaUsageData || []).map(usage => ({
+    id: usage.media?.id,
+    image_filename: usage.media?.file_url || '',
+    alt_text: usage.media?.alt_text || '',
+    is_primary: usage.field_name === 'primary_image',
+    media: usage.media
+  }))
+  
   return product
 }
 
@@ -208,20 +164,59 @@ async function getCategoryInfo(categorySlug: string) {
   return category
 }
 
-async function getRelatedProducts(productId: string, categoryIds: string[]) {
+async function getRelatedProducts(productId: string, categoryId?: string, brandId?: string) {
   const supabase = await createClient()
   
-  // Get products from the same categories
-  const { data: relatedProductIds } = await supabase
-    .from('product_categories')
-    .select('product_id')
-    .in('category_id', categoryIds)
-    .neq('product_id', productId)
-    .limit(20)
+  let relatedProducts = []
   
-  if (!relatedProductIds || relatedProductIds.length === 0) {
-    // Fallback to newest products
-    const { data: products } = await supabase
+  // First try same category
+  if (categoryId) {
+    const { data: categoryProductIds } = await supabase
+      .from('product_categories')
+      .select('product_id')
+      .eq('category_id', categoryId)
+      .neq('product_id', productId)
+    
+    if (categoryProductIds && categoryProductIds.length > 0) {
+      const productIds = categoryProductIds.map(p => p.product_id)
+      
+      const { data: products } = await supabase
+        .from('products')
+        .select(`
+          id,
+          name,
+          slug,
+          base_price_cents,
+          stock_level,
+          track_inventory,
+          brand:brands!brand_id(name, slug),
+          variants:product_variants(
+            id,
+            price_cents,
+            stock,
+            is_active
+          ),
+          categories:product_categories(
+            category:categories(slug, name)
+          )
+        `)
+        .in('id', productIds)
+        .eq('is_visible', true)
+        .eq('allow_purchases', true)
+        .eq('status', 'active')
+        .is('deleted_at', null)
+        .gt('stock_level', 0)
+        .limit(4)
+      
+      relatedProducts = products || []
+    }
+  }
+  
+  // If less than 4, try same brand
+  if (relatedProducts.length < 4 && brandId) {
+    const excludeIds = [productId, ...relatedProducts.map(p => p.id)]
+    
+    const { data: brandProducts } = await supabase
       .from('products')
       .select(`
         id,
@@ -230,14 +225,7 @@ async function getRelatedProducts(productId: string, categoryIds: string[]) {
         base_price_cents,
         stock_level,
         track_inventory,
-        preorder_release_date,
-        preorder_message,
         brand:brands!brand_id(name, slug),
-        images:product_images(
-          image_filename,
-          alt_text,
-          is_primary
-        ),
         variants:product_variants(
           id,
           price_cents,
@@ -248,51 +236,111 @@ async function getRelatedProducts(productId: string, categoryIds: string[]) {
           category:categories(slug, name)
         )
       `)
+      .eq('brand_id', brandId)
+      .not('id', 'in', `(${excludeIds.join(',')})`)
       .eq('is_visible', true)
       .eq('allow_purchases', true)
-      .neq('id', productId)
-      .order('created_at', { ascending: false })
-      .limit(8)
+      .eq('status', 'active')
+      .is('deleted_at', null)
+      .gt('stock_level', 0)
+      .limit(4 - relatedProducts.length)
     
-    return products || []
+    if (brandProducts) {
+      relatedProducts = [...relatedProducts, ...brandProducts]
+    }
   }
   
-  const productIds = relatedProductIds.map(p => p.product_id)
-  
-  const { data: products } = await supabase
-    .from('products')
-    .select(`
-      id,
-      name,
-      slug,
-      base_price_cents,
-      stock_level,
-      track_inventory,
-      preorder_release_date,
-      preorder_message,
-      brand:brands!brand_id(name, slug),
-      images:product_images(
-        image_filename,
-        alt_text,
-        is_primary,
-        position
-      ),
-      variants:product_variants(
+  // If still less than 4, get any in-stock products
+  if (relatedProducts.length < 4) {
+    const excludeIds = [productId, ...relatedProducts.map(p => p.id)]
+    
+    const { data: otherProducts } = await supabase
+      .from('products')
+      .select(`
         id,
-        price_cents,
-        stock,
-        is_active
-      ),
-      categories:product_categories(
-        category:categories(slug, name)
+        name,
+        slug,
+        base_price_cents,
+        stock_level,
+        track_inventory,
+        brand:brands!brand_id(name, slug),
+        variants:product_variants(
+          id,
+          price_cents,
+          stock,
+          is_active
+        ),
+        categories:product_categories(
+          category:categories(slug, name)
+        )
+      `)
+      .not('id', 'in', `(${excludeIds.join(',')})`)
+      .eq('is_visible', true)
+      .eq('allow_purchases', true)
+      .eq('status', 'active')
+      .is('deleted_at', null)
+      .gt('stock_level', 0)
+      .order('created_at', { ascending: false })
+      .limit(4 - relatedProducts.length)
+    
+    if (otherProducts) {
+      relatedProducts = [...relatedProducts, ...otherProducts]
+    }
+  }
+  
+  if (!relatedProducts || relatedProducts.length === 0) {
+    return []
+  }
+  
+  // Fetch images for related products via media_usage
+  const productIds = relatedProducts.map(p => p.id.toString())
+  
+  const { data: mediaUsageData } = await supabase
+    .from('media_usage')
+    .select(`
+      entity_id,
+      field_name,
+      media:media_library (
+        id,
+        file_url,
+        alt_text
       )
     `)
-    .in('id', productIds)
-    .eq('is_visible', true)
-    .eq('allow_purchases', true)
-    .limit(8)
+    .eq('entity_type', 'product')
+    .in('entity_id', productIds)
+    .order('field_name')
   
-  return products || []
+  // Attach images to products
+  const imagesByProduct: Record<string, any[]> = {}
+  ;(mediaUsageData || []).forEach(usage => {
+    if (usage.media) {
+      const productId = usage.entity_id
+      if (!imagesByProduct[productId]) {
+        imagesByProduct[productId] = []
+      }
+      imagesByProduct[productId].push({
+        image_filename: usage.media.file_url,
+        alt_text: usage.media.alt_text,
+        is_primary: usage.field_name === 'primary_image'
+      })
+    }
+  })
+  
+  // Sort images so primary is first
+  Object.keys(imagesByProduct).forEach(productId => {
+    imagesByProduct[productId].sort((a, b) => {
+      if (a.is_primary) return -1
+      if (b.is_primary) return 1
+      return 0
+    })
+  })
+  
+  const productsWithImages = relatedProducts.map(product => ({
+    ...product,
+    images: imagesByProduct[product.id] || []
+  }))
+  
+  return productsWithImages
 }
 
 export default async function ProductPage({ params }: PageProps) {
@@ -308,8 +356,16 @@ export default async function ProductPage({ params }: PageProps) {
   // Get category info for breadcrumb
   const category = await getCategoryInfo(categorySlug)
   
-  // Get related products - skip for now since we don't have categories loaded
-  const relatedProducts: any[] = []
+  // Get category ID and brand ID for related products
+  const categoryId = category?.id
+  const brandId = product.brand_id
+  
+  // Get related products
+  const relatedProducts = await getRelatedProducts(
+    product.id.toString(), 
+    categoryId?.toString(), 
+    brandId?.toString()
+  )
   
   const defaultUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`

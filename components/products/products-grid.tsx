@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import type { User } from '@supabase/supabase-js';
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -58,7 +59,7 @@ export function ProductsGrid({
   const router = useRouter();
   const searchParams = useSearchParams();
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [addingToCart, setAddingToCart] = useState<Set<string>>(new Set());
   const supabase = createClient();
   const { addItem } = useCart();
@@ -118,6 +119,7 @@ export function ProductsGrid({
         description: `${product.name} added to your cart`
       });
     } catch (error) {
+      console.error('Failed to add item to cart:', error);
       toast.error('Failed to add item to cart');
     } finally {
       setAddingToCart(prev => {
@@ -173,7 +175,7 @@ export function ProductsGrid({
     // Check if product is in "Pre Orders" category
     if (product.categories && product.categories.length > 0) {
       const hasPreOrderCategory = product.categories.some(
-        (pc: any) => pc.category && pc.category.slug === 'pre-orders'
+        (pc) => pc.category && pc.category.slug === 'pre-orders'
       );
       if (hasPreOrderCategory) {
         return true;
@@ -190,7 +192,7 @@ export function ProductsGrid({
       
       for (const special of specialCategories) {
         const hasSpecial = product.categories.some(
-          (pc: any) => pc.category && pc.category.slug === special
+          (pc) => pc.category && pc.category.slug === special
         );
         if (hasSpecial) {
           return `/${special}/${product.slug}`;

@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS media_library (
   -- Organization
   folder TEXT DEFAULT 'uncategorized', -- Virtual folders for organization
   tags TEXT[], -- Array of tags for searching
+  sort_order INTEGER DEFAULT 0, -- For ordering items within context
   
   -- Usage tracking
   usage_count INTEGER DEFAULT 0, -- Track how many times it's used
@@ -39,17 +40,8 @@ CREATE TABLE IF NOT EXISTS media_library (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW(),
   
-  -- Search
-  search_vector tsvector GENERATED ALWAYS AS (
-    to_tsvector('english', 
-      COALESCE(title, '') || ' ' || 
-      COALESCE(alt_text, '') || ' ' || 
-      COALESCE(caption, '') || ' ' || 
-      COALESCE(description, '') || ' ' ||
-      COALESCE(original_name, '') || ' ' ||
-      COALESCE(array_to_string(tags, ' '), '')
-    )
-  ) STORED
+  -- Search vector (will be updated via trigger)
+  search_vector tsvector
 );
 
 -- Indexes for performance
@@ -224,6 +216,28 @@ BEGIN
   ORDER BY m.created_at DESC;
 END;
 $$ LANGUAGE plpgsql;
+
+-- Function to update search vector
+CREATE OR REPLACE FUNCTION update_media_search_vector()
+RETURNS trigger AS $$
+BEGIN
+  NEW.search_vector := to_tsvector('english',
+    COALESCE(NEW.title, '') || ' ' || 
+    COALESCE(NEW.alt_text, '') || ' ' || 
+    COALESCE(NEW.caption, '') || ' ' || 
+    COALESCE(NEW.description, '') || ' ' ||
+    COALESCE(NEW.original_name, '') || ' ' ||
+    COALESCE(array_to_string(NEW.tags, ' '), '')
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger to update search vector
+CREATE TRIGGER update_media_search_vector_trigger
+  BEFORE INSERT OR UPDATE ON media_library
+  FOR EACH ROW
+  EXECUTE FUNCTION update_media_search_vector();
 
 -- Trigger to update updated_at
 CREATE TRIGGER update_media_library_updated_at

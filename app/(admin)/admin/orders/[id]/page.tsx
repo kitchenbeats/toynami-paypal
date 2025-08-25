@@ -4,12 +4,13 @@ import { OrderDetailManager } from './order-detail-manager'
 import { getShipStationV1Client } from '@/lib/shipstation/v1-client'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default async function OrderDetailPage({ params }: PageProps) {
+  const resolvedParams = await params
   const supabase = await createClient()
   
   // Check admin access
@@ -62,7 +63,7 @@ export default async function OrderDetailPage({ params }: PageProps) {
         created_at
       )
     `)
-    .eq('id', params.id)
+    .eq('id', resolvedParams.id)
     .single()
 
   if (!order) {

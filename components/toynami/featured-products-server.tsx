@@ -2,6 +2,101 @@ import { createClient } from '@/lib/supabase/server'
 import { FeaturedProducts } from './featured-products'
 import { Search } from 'lucide-react'
 
+interface ProductImage {
+  image_filename: string
+  alt_text?: string
+  is_primary: boolean
+}
+
+interface Product {
+  id: string
+  name: string
+  slug: string
+  base_price_cents?: number
+  stock_level?: number
+  track_inventory?: string
+  preorder_release_date?: string
+  preorder_message?: string
+  sort_order?: number
+  categories?: Array<{
+    category?: {
+      slug: string
+      name: string
+    }
+  }>
+  variants?: Array<{
+    id: string
+    price_cents: number
+    stock: number
+    is_active: boolean
+  }>
+  brands?: {
+    name: string
+    slug: string
+  }
+  images?: ProductImage[]
+}
+
+interface MediaUsage {
+  entity_id: string
+  field_name: string
+  media?: {
+    id: string
+    file_url: string
+    alt_text?: string
+    title?: string
+  }
+}
+
+async function attachImagesToProducts(products: Product[]): Promise<Product[]> {
+  if (!products || products.length === 0) return products
+  
+  const supabase = await createClient()
+  const productIds = products.map(p => p.id.toString())
+  
+  // Get images via media_usage
+  const { data: mediaUsageData } = await supabase
+    .from('media_usage')
+    .select(`
+      entity_id,
+      field_name,
+      media:media_library (
+        id,
+        file_url,
+        alt_text,
+        title
+      )
+    `)
+    .eq('entity_type', 'product')
+    .in('entity_id', productIds)
+    .order('field_name')
+  
+  // Group images by product
+  const imagesByProduct: Record<string, ProductImage[]> = {}
+  
+  const typedMediaUsageData = mediaUsageData as MediaUsage[] | null
+  ;(typedMediaUsageData || []).forEach(usage => {
+    if (!usage.media) return
+    
+    const productId = usage.entity_id
+    if (!imagesByProduct[productId]) {
+      imagesByProduct[productId] = []
+    }
+    
+    imagesByProduct[productId].push({
+      image_filename: usage.media.file_url,
+      alt_text: usage.media.alt_text,
+      is_primary: usage.field_name === 'primary_image'
+    })
+  })
+  
+  // Attach images to products
+  return products.map(product => ({
+    ...product,
+    images: imagesByProduct[product.id] || []
+  }))
+}
+
 async function getFeaturedProducts(brandId?: string, limit: number = 13, page: number = 1) {
   const supabase = await createClient()
   const offset = (page - 1) * limit
@@ -27,11 +122,6 @@ async function getFeaturedProducts(brandId?: string, limit: number = 13, page: n
         stock,
         is_active
       ),
-      images:product_images(
-        image_filename,
-        alt_text,
-        is_primary
-      ),
       brands(name, slug)
     `)
   
@@ -41,7 +131,7 @@ async function getFeaturedProducts(brandId?: string, limit: number = 13, page: n
   }
   
   // First try to get featured products
-  let { data: featuredProducts } = await query
+  const { data: featuredProducts } = await query
     .eq('is_featured', true)
     .eq('status', 'active')
     .eq('is_visible', true)
@@ -56,7 +146,8 @@ async function getFeaturedProducts(brandId?: string, limit: number = 13, page: n
   
   // For home page, return only first 5 featured products
   if (limit === 5) {
-    return featuredProducts?.slice(0, 5) || []
+    const productsToReturn = featuredProducts?.slice(0, 5) || []
+    return await attachImagesToProducts(productsToReturn)
   }
   
   // For brand pages, fill with latest products if not enough featured
@@ -83,11 +174,6 @@ async function getFeaturedProducts(brandId?: string, limit: number = 13, page: n
           price_cents,
           stock,
           is_active
-        ),
-        images:product_images(
-          image_filename,
-          alt_text,
-          is_primary
         ),
         brands(name, slug)
       `)
@@ -116,7 +202,8 @@ async function getFeaturedProducts(brandId?: string, limit: number = 13, page: n
   }
   
   // Apply pagination for the final result
-  return products.slice(offset, offset + limit)
+  const paginatedProducts = products.slice(offset, offset + limit)
+  return await attachImagesToProducts(paginatedProducts)
 }
 
 export async function FeaturedProductsSection({ 

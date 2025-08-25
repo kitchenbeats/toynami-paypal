@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useTransition } from 'react'
+import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -40,13 +40,13 @@ import {
   Trash2, 
   Plus, 
   GripVertical, 
-  Save, 
-  X, 
+  // Save, 
+  // X, 
   Loader2,
   Search,
   ChevronLeft,
   ChevronRight,
-  Upload,
+  // Upload,
   ExternalLink,
   Star,
   Eye,
@@ -54,7 +54,9 @@ import {
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-import type { Brand, BrandFormData, TablePagination } from '@/lib/types/admin'
+import type { Brand, BrandFormData } from '@/lib/types/admin'
+import { MediaSelector } from '@/components/ui/media-selector'
+import { MediaItem } from '@/lib/types/media'
 
 interface EnhancedBrandsManagerProps {
   initialBrands: Brand[]
@@ -86,7 +88,7 @@ export function EnhancedBrandsManager({
     display_order: 0,
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
-  const [isPending, startTransition] = useTransition()
+  // Transition state removed - not currently used
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const supabase = createClient()
@@ -208,9 +210,9 @@ export function EnhancedBrandsManager({
       }
       
       router.refresh()
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error saving brand:', error)
-      toast.error(error.message || 'Failed to save brand')
+      toast.error(error instanceof Error ? error.message : 'Failed to save brand')
     } finally {
       setIsLoading(false)
     }
@@ -244,9 +246,9 @@ export function EnhancedBrandsManager({
       toast.success('Brand deleted successfully')
       setIsDeleteDialogOpen(false)
       router.refresh()
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error deleting brand:', error)
-      toast.error(error.message || 'Failed to delete brand')
+      toast.error(error instanceof Error ? error.message : 'Failed to delete brand')
     } finally {
       setIsLoading(false)
     }
@@ -266,7 +268,7 @@ export function EnhancedBrandsManager({
         b.id === brand.id ? { ...b, is_featured: !b.is_featured } : b
       ))
       toast.success(`Brand ${brand.is_featured ? 'unfeatured' : 'featured'}`)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error toggling featured:', error)
       toast.error('Failed to update featured status')
     }
@@ -286,7 +288,7 @@ export function EnhancedBrandsManager({
         b.id === brand.id ? { ...b, is_visible: !b.is_visible } : b
       ))
       toast.success(`Brand ${brand.is_visible ? 'hidden' : 'shown'}`)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error toggling visibility:', error)
       toast.error('Failed to update visibility')
     }
@@ -537,16 +539,22 @@ export function EnhancedBrandsManager({
               />
             </div>
             
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div>
-                <Label htmlFor="logo_url">Logo URL</Label>
-                <Input
-                  id="logo_url"
+                <label className="text-sm font-medium">Brand Logo</label>
+                <MediaSelector
                   value={formData.logo_url}
-                  onChange={(e) => setFormData({ ...formData, logo_url: e.target.value })}
-                  placeholder="https://..."
+                  onChange={(media: MediaItem | null) => {
+                    setFormData({ ...formData, logo_url: media?.file_url || '' })
+                  }}
+                  mimeTypeFilter="image/"
+                  folderFilter="brands"
+                  buttonText="Select Brand Logo"
+                  buttonVariant="outline"
+                  className="w-full"
                 />
               </div>
+              
               <div>
                 <Label htmlFor="website_url">Website URL</Label>
                 <Input
@@ -666,16 +674,22 @@ export function EnhancedBrandsManager({
               />
             </div>
             
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div>
-                <Label htmlFor="edit-logo_url">Logo URL</Label>
-                <Input
-                  id="edit-logo_url"
+                <label className="text-sm font-medium">Brand Logo</label>
+                <MediaSelector
                   value={formData.logo_url}
-                  onChange={(e) => setFormData({ ...formData, logo_url: e.target.value })}
-                  placeholder="https://..."
+                  onChange={(media: MediaItem | null) => {
+                    setFormData({ ...formData, logo_url: media?.file_url || '' })
+                  }}
+                  mimeTypeFilter="image/"
+                  folderFilter="brands"
+                  buttonText="Select Brand Logo"
+                  buttonVariant="outline"
+                  className="w-full"
                 />
               </div>
+              
               <div>
                 <Label htmlFor="edit-website_url">Website URL</Label>
                 <Input
@@ -747,7 +761,7 @@ export function EnhancedBrandsManager({
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete the brand "{selectedBrand?.name}". 
+              This will permanently delete the brand &quot;{selectedBrand?.name}&quot;. 
               This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>

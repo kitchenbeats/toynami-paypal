@@ -2,7 +2,6 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
-import { revalidatePath } from 'next/cache'
 
 export async function uploadBlogImage(
   imageType: 'featured_image' | 'thumbnail_url',
@@ -44,7 +43,7 @@ export async function uploadBlogImage(
   const buffer = Buffer.from(arrayBuffer)
   
   // Upload to storage
-  const { error: uploadError, data } = await supabase.storage
+  const { error: uploadError } = await supabase.storage
     .from('products')
     .upload(filePath, buffer, {
       contentType: fileData.type,

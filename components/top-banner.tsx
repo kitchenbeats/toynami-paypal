@@ -17,7 +17,7 @@ export async function TopBanner() {
   }
 
   // Get banner image URL
-  const getBannerImageUrl = (banner: any) => {
+  const getBannerImageUrl = (banner: { image_url?: string }) => {
     if (!banner.image_url) return null
     
     // If it's already a full URL, return as is
@@ -105,8 +105,21 @@ export async function TopBanner() {
   )
 }
 
+interface Banner {
+  id: string;
+  title?: string;
+  description?: string;
+  text_alignment?: string;
+  text_color?: string;
+  background_color?: string;
+  button_text?: string;
+  button_link?: string;
+  button_style?: string;
+  image_url?: string;
+}
+
 interface BannerWithImageProps {
-  banner: any
+  banner: Banner
   imageUrl: string
   textAlignment: string
 }

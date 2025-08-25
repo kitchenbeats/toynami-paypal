@@ -1,20 +1,72 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { z } from 'zod'
+import { apiHandler, validateRequest } from '@/lib/api/utils'
 
-export async function POST(request: NextRequest) {
-  try {
-    const { orderID, userId, items, billing, shippingAddress, shippingRate } = await request.json()
+// Get PayPal API base URL based on environment
+const getPayPalBaseUrl = () => {
+  const isSandbox = process.env.PAYPAL_SANDBOX === 'true'
+  return isSandbox 
+    ? 'https://api-m.sandbox.paypal.com'
+    : 'https://api-m.paypal.com'
+}
 
-    if (!orderID) {
-      return NextResponse.json({ error: 'Order ID is required' }, { status: 400 })
-    }
+// Validation schema for order capture
+const captureOrderSchema = z.object({
+  orderID: z.string().min(1, 'Order ID is required'),
+  userId: z.string().optional(),
+  items: z.array(z.object({
+    productId: z.string(),
+    productName: z.string(),
+    quantity: z.number().int().positive(),
+    price: z.number().positive(),
+    variantId: z.string().optional(),
+  })).optional(),
+  billing: z.object({
+    firstName: z.string(),
+    lastName: z.string(),
+    email: z.string().email(),
+    phone: z.string().optional(),
+    address: z.string().optional(),
+    city: z.string().optional(),
+    state: z.string().optional(),
+    zipCode: z.string().optional(),
+    country: z.string().optional(),
+  }).optional(),
+  shippingAddress: z.object({
+    recipient_name: z.string(),
+    line1: z.string(),
+    line2: z.string().optional(),
+    city: z.string(),
+    state: z.string(),
+    postal_code: z.string(),
+    country_code: z.string(),
+    address: z.string().optional(),
+    zipCode: z.string().optional(),
+    country: z.string().optional(),
+  }).optional(),
+  shippingRate: z.object({
+    carrier: z.string(),
+    service: z.string(),
+    rate: z.number(),
+    amount: z.number().optional(),
+    serviceCode: z.string().optional(),
+  }).optional(),
+})
+
+export const POST = apiHandler(async (request: NextRequest) => {
+  // Validate request body
+  const { data: input, error } = await validateRequest(request, captureOrderSchema)
+  if (error) return error
+
+  const { orderID, userId, items, billing, shippingAddress, shippingRate } = input
 
     // Get PayPal access token
     const accessToken = await getAccessToken()
 
     // Capture the order
     const response = await fetch(
-      `https://api-m.${process.env.PAYPAL_SANDBOX === 'true' ? 'sandbox' : ''}paypal.com/v2/checkout/orders/${orderID}/capture`,
+      `${getPayPalBaseUrl()}/v2/checkout/orders/${orderID}/capture`,
       {
         method: 'POST',
         headers: {
@@ -52,17 +104,21 @@ export async function POST(request: NextRequest) {
     const captureDetails = captureData.purchase_units[0].payments.captures[0]
     const payerInfo = captureData.payer || {}
     
-    // Create the order in our database
-    const { data: order, error: orderError } = await supabase
-      .from('orders')
-      .insert({
+    // Start a transaction-like approach for order creation
+    // Track what needs to be rolled back on failure
+    
+    try {
+      // Create the order in our database
+      const { data: order, error: orderError } = await supabase
+        .from('orders')
+        .insert({
         user_id: dbUserId,
         paypal_order_id: orderID,
         paypal_capture_id: captureDetails.id,
         status: 'paid',
         payment_status: captureData.status,
         total_cents: Math.round(parseFloat(captureDetails.amount.value) * 100),
-        subtotal_cents: items ? Math.round(items.reduce((sum: number, item: any) => 
+        subtotal_cents: items ? Math.round(items.reduce((sum: number, item) => 
           sum + (item.price * item.quantity), 0
         )) : 0,
         shipping_cents: shippingRate ? Math.round(shippingRate.amount * 100) : 0,
@@ -102,14 +158,19 @@ export async function POST(request: NextRequest) {
       .select()
       .single()
 
-    if (orderError) {
-      console.error('Database error:', orderError)
-      // Don't fail - payment was successful, we can reconcile later
-    }
+      if (orderError) {
+        throw new Error(`Failed to create order: ${orderError.message}`)
+      }
+      
+      if (!order) {
+        throw new Error('Order creation returned no data')
+      }
+      
+      orderId = order.id
 
     // Save order items if we have them
     if (order && items && items.length > 0) {
-      const orderItems = items.map((item: any) => ({
+      const orderItems = items.map((item) => ({
         order_id: order.id,
         product_id: item.productId,
         variant_id: item.variantId || null,
@@ -133,7 +194,7 @@ export async function POST(request: NextRequest) {
           await supabase.rpc('decrease_product_stock', {
             p_product_id: item.productId,
             p_quantity: item.quantity
-          }).catch(err => console.error('Stock update failed:', err))
+          }).catch((err: unknown) => console.error('Stock update failed:', err))
         }
       }
     }
@@ -229,7 +290,7 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     )
   }
-}
+})
 
 // Helper function to get PayPal access token
 async function getAccessToken() {
@@ -238,7 +299,7 @@ async function getAccessToken() {
   ).toString('base64')
 
   const response = await fetch(
-    `https://api-m.${process.env.PAYPAL_SANDBOX === 'true' ? 'sandbox' : ''}paypal.com/v1/oauth2/token`,
+    `${getPayPalBaseUrl()}/v1/oauth2/token`,
     {
       method: 'POST',
       headers: {

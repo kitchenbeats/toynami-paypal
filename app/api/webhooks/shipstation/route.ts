@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import { headers } from 'next/headers'
+import { SupabaseClient } from '@supabase/supabase-js'
+import {} from 'next/'
 
 /**
  * ShipStation Webhook Handler
@@ -16,7 +17,7 @@ import { headers } from 'next/headers'
  */
 
 interface ShipStationWebhookPayload {
-  resource_url: string
+  _resource_url: string
   resource_type: string
   event_type?: string
   order_id?: number
@@ -39,9 +40,7 @@ export async function POST(request: NextRequest) {
 
     // Extract key information from payload
     const {
-      resource_url,
       resource_type,
-      event_type,
       order_id,
       order_number,
       tracking_number,
@@ -132,7 +131,7 @@ export async function POST(request: NextRequest) {
  * Handle ship notification (order was shipped)
  */
 async function handleShipNotification(
-  supabase: any, 
+  supabase: SupabaseClient, 
   orderId: number, 
   data: {
     tracking_number?: string
@@ -142,7 +141,7 @@ async function handleShipNotification(
     status: string
   }
 ) {
-  const updates: any = {
+  const updates: Record<string, unknown> = {
     status: 'shipped',
     shipped_at: data.ship_date ? new Date(data.ship_date).toISOString() : new Date().toISOString()
   }
@@ -179,7 +178,7 @@ async function handleShipNotification(
  * Handle delivery notification (order was delivered)
  */
 async function handleDeliveryNotification(
-  supabase: any, 
+  supabase: SupabaseClient, 
   orderId: number, 
   data: {
     tracking_number?: string
@@ -187,7 +186,7 @@ async function handleDeliveryNotification(
     status: string
   }
 ) {
-  const updates: any = {
+  const updates: Record<string, unknown> = {
     status: 'delivered',
     delivered_at: data.delivery_date ? new Date(data.delivery_date).toISOString() : new Date().toISOString()
   }
@@ -216,7 +215,7 @@ async function handleDeliveryNotification(
  * Handle general order updates
  */
 async function handleOrderUpdate(
-  supabase: any, 
+  supabase: SupabaseClient, 
   orderId: number, 
   data: {
     status?: string
@@ -225,7 +224,7 @@ async function handleOrderUpdate(
     service_code?: string
   }
 ) {
-  const updates: any = {}
+  const updates: Record<string, unknown> = {}
 
   // Map ShipStation status to our internal status
   if (data.status) {

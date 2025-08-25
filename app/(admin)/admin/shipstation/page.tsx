@@ -26,7 +26,13 @@ export default async function ShipStationSettingsPage() {
   const currentStoreId = process.env.SHIPSTATION_STORE_ID || null
 
   // Try to fetch stores from ShipStation
-  let stores: any[] = []
+  let stores: Array<{
+    storeId: number
+    storeName: string
+    marketplaceName: string
+    active: boolean
+    createDate: string
+  }> = []
   let connected = false
   
   try {
@@ -38,6 +44,7 @@ export default async function ShipStationSettingsPage() {
       stores = response.data || []
     }
   } catch (error) {
+      console.error('Failed to create:', error)
     console.log('ShipStation not connected:', error)
   }
 

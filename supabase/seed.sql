@@ -4,13 +4,2129 @@
 -- ======================================
 
 -- Clear existing data
+TRUNCATE TABLE media_usage CASCADE;
+TRUNCATE TABLE media_library CASCADE;
 TRUNCATE TABLE product_categories CASCADE;
-TRUNCATE TABLE product_images CASCADE;
 TRUNCATE TABLE product_variants CASCADE;
 TRUNCATE TABLE products CASCADE;
 TRUNCATE TABLE brands CASCADE;
 TRUNCATE TABLE categories CASCADE;
 TRUNCATE TABLE settings CASCADE;
+
+-- ======================================
+-- 📸 Media Library
+-- ======================================
+-- Brand Logos
+INSERT INTO media_library (id, filename, original_name, file_path, file_url, folder, title, alt_text, mime_type, file_extension, tags) VALUES 
+('11111111-1111-1111-1111-111111111111', 'acid-rain-logo.png', 'acid-rain-logo.png', 'brand_images/logos/acid-rain-logo.png', 'brand_images/logos/acid-rain-logo.png', 'brands', 'Acid Rain Logo', 'Acid Rain World brand logo', 'image/png', 'png', ARRAY['brand', 'logo', 'acid-rain']),
+('22222222-2222-2222-2222-222222222222', 'emily-the-strange-logo.png', 'emily-the-strange-logo.png', 'brand_images/logos/emily-the-strange-logo.png', 'brand_images/logos/emily-the-strange-logo.png', 'brands', 'Emily the Strange Logo', 'Emily the Strange brand logo', 'image/png', 'png', ARRAY['brand', 'logo', 'emily']),
+('33333333-3333-3333-3333-333333333333', 'macross-logo.png', 'macross-logo.png', 'brand_images/logos/macross-logo.png', 'brand_images/logos/macross-logo.png', 'brands', 'Macross Logo', 'Macross brand logo', 'image/png', 'png', ARRAY['brand', 'logo', 'macross']),
+('44444444-4444-4444-4444-444444444444', 'naruto-shippuden-logo.png', 'naruto-shippuden-logo.png', 'brand_images/logos/naruto-shippuden-logo.png', 'brand_images/logos/naruto-shippuden-logo.png', 'brands', 'Naruto Logo', 'Naruto Shippuden brand logo', 'image/png', 'png', ARRAY['brand', 'logo', 'naruto']),
+('55555555-5555-5555-5555-555555555555', 'robotech-logo.webp', 'robotech-logo.webp', 'brand_images/logos/robotech-logo.webp', 'brand_images/logos/robotech-logo.webp', 'brands', 'Robotech Logo', 'Robotech brand logo', 'image/webp', 'webp', ARRAY['brand', 'logo', 'robotech']),
+('66666666-6666-6666-6666-666666666666', 'voltron-logo.png', 'voltron-logo.png', 'brand_images/logos/voltron-logo.png', 'brand_images/logos/voltron-logo.png', 'brands', 'Voltron Logo', 'Voltron brand logo', 'image/png', 'png', ARRAY['brand', 'logo', 'voltron']);
+
+-- Brand Banners
+INSERT INTO media_library (id, filename, original_name, file_path, file_url, folder, title, alt_text, mime_type, file_extension, tags) VALUES 
+('a1111111-1111-1111-1111-111111111112', 'acid-rain-world-home-banner.jpg', 'acid-rain-world-home-banner.jpg', 'brand_images/banners/acid-rain-world-home-banner.jpg', 'brand_images/banners/acid-rain-world-home-banner.jpg', 'banners', 'Acid Rain World Home Banner', 'Acid Rain World collection banner', 'image/jpeg', 'jpg', ARRAY['brand', 'banner', 'acid-rain', 'home']),
+('a2222222-2222-2222-2222-222222222223', 'acid-rain-world-banner.jpg', 'acid-rain-world-banner.jpg', 'brand_images/banners/acid-rain-world-banner.jpg', 'brand_images/banners/acid-rain-world-banner.jpg', 'banners', 'Acid Rain World Banner', 'Acid Rain World brand page banner', 'image/jpeg', 'jpg', ARRAY['brand', 'banner', 'acid-rain']),
+('a3333333-3333-3333-3333-333333333334', 'emily-the-strange-home-banner.jpg', 'emily-the-strange-home-banner.jpg', 'brand_images/banners/emily-the-strange-home-banner.jpg', 'brand_images/banners/emily-the-strange-home-banner.jpg', 'banners', 'Emily the Strange Home Banner', 'Emily the Strange collection banner', 'image/jpeg', 'jpg', ARRAY['brand', 'banner', 'emily', 'home']),
+('a4444444-4444-4444-4444-444444444445', 'emily-the-strange-banner.jpg', 'emily-the-strange-banner.jpg', 'brand_images/banners/emily-the-strange-banner.jpg', 'brand_images/banners/emily-the-strange-banner.jpg', 'banners', 'Emily the Strange Banner', 'Emily the Strange brand page banner', 'image/jpeg', 'jpg', ARRAY['brand', 'banner', 'emily']),
+('a5555555-5555-5555-5555-555555555556', 'miyos-mystic-musings-home-banner.jpg', 'miyos-mystic-musings-home-banner.jpg', 'brand_images/banners/miyos-mystic-musings-home-banner.jpg', 'brand_images/banners/miyos-mystic-musings-home-banner.jpg', 'banners', 'Miyos Mystic Musings Home Banner', 'Miyos Mystic Musings collection banner', 'image/jpeg', 'jpg', ARRAY['brand', 'banner', 'miyo', 'home']),
+('a6666666-6666-6666-6666-666666666667', 'miyos-mystic-musings-banner.jpg', 'miyos-mystic-musings-banner.jpg', 'brand_images/banners/miyos-mystic-musings-banner.jpg', 'brand_images/banners/miyos-mystic-musings-banner.jpg', 'banners', 'Miyos Mystic Musings Banner', 'Miyos Mystic Musings brand page banner', 'image/jpeg', 'jpg', ARRAY['brand', 'banner', 'miyo']),
+('a7777777-7777-7777-7777-777777777778', 'naruto-home-banner.jpg', 'naruto-home-banner.jpg', 'brand_images/banners/naruto-home-banner.jpg', 'brand_images/banners/naruto-home-banner.jpg', 'banners', 'Naruto Home Banner', 'Naruto collection banner', 'image/jpeg', 'jpg', ARRAY['brand', 'banner', 'naruto', 'home']),
+('a8888888-8888-8888-8888-888888888889', 'naruto-banner.jpg', 'naruto-banner.jpg', 'brand_images/banners/naruto-banner.jpg', 'brand_images/banners/naruto-banner.jpg', 'banners', 'Naruto Banner', 'Naruto brand page banner', 'image/jpeg', 'jpg', ARRAY['brand', 'banner', 'naruto']),
+('a9999999-9999-9999-9999-999999999990', 'robotech-home-banner.jpg', 'robotech-home-banner.jpg', 'brand_images/banners/robotech-home-banner.jpg', 'brand_images/banners/robotech-home-banner.jpg', 'banners', 'Robotech Home Banner', 'Robotech collection banner', 'image/jpeg', 'jpg', ARRAY['brand', 'banner', 'robotech', 'home']),
+('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaab', 'robotech-banner.jpg', 'robotech-banner.jpg', 'brand_images/banners/robotech-banner.jpg', 'brand_images/banners/robotech-banner.jpg', 'banners', 'Robotech Banner', 'Robotech brand page banner', 'image/jpeg', 'jpg', ARRAY['brand', 'banner', 'robotech']),
+('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaac', 'voltron-home-banner.jpg', 'voltron-home-banner.jpg', 'brand_images/banners/voltron-home-banner.jpg', 'brand_images/banners/voltron-home-banner.jpg', 'banners', 'Voltron Home Banner', 'Voltron collection banner', 'image/jpeg', 'jpg', ARRAY['brand', 'banner', 'voltron', 'home']),
+('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaad', 'voltron-banner.jpg', 'voltron-banner.jpg', 'brand_images/banners/voltron-banner.jpg', 'brand_images/banners/voltron-banner.jpg', 'banners', 'Voltron Banner', 'Voltron brand page banner', 'image/jpeg', 'jpg', ARRAY['brand', 'banner', 'voltron']);
+
+-- Product Images (all 1,040 images from product_images table)
+INSERT INTO media_library (id, filename, original_name, file_path, file_url, folder, title, alt_text, mime_type, file_extension, tags, sort_order, created_at, updated_at) VALUES 
+('bb3c900c-0f5a-46c0-81cb-8daa8b857cf9', 'hypnotoad_01_121012__91095__49166.jpg', 'hypnotoad_01_121012__91095__49166.jpg', 'product_images/hypnotoad_01_121012__91095__49166.jpg', 'https://www.toynamishop.com/product_images/h/789/hypnotoad_01_121012__91095__49166.jpg', 'products', 'Futurama Hypnotoad Plush', 'Futurama Hypnotoad Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('278feb70-a8e0-4efb-b35d-fc68384eaca5', 'risk_img_5909__10260__45072.jpg', 'risk_img_5909__10260__45072.jpg', 'product_images/risk_img_5909__10260__45072.jpg', 'https://www.toynamishop.com/product_images/g/187/risk_img_5909__10260__45072.jpg', 'products', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('22dce933-3f7b-4547-96c3-b3306b326715', 'risk_img_5914__47946__77428.jpg', 'risk_img_5914__47946__77428.jpg', 'product_images/risk_img_5914__47946__77428.jpg', 'https://www.toynamishop.com/product_images/i/999/risk_img_5914__47946__77428.jpg', 'products', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('a5cf1548-1acf-42f6-b65f-b5ffbf3ecad2', 'risk_img_5911__84199__30181.jpg', 'risk_img_5911__84199__30181.jpg', 'product_images/risk_img_5911__84199__30181.jpg', 'https://www.toynamishop.com/product_images/w/198/risk_img_5911__84199__30181.jpg', 'products', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('346c39de-7fbd-4208-ae59-2cc774617260', 'risk_img_5916__74682__97238.jpg', 'risk_img_5916__74682__97238.jpg', 'product_images/risk_img_5916__74682__97238.jpg', 'https://www.toynamishop.com/product_images/j/988/risk_img_5916__74682__97238.jpg', 'products', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('6f05c7c8-f5fd-4628-af47-c49a0217c2fb', 'risk_img_5931__12022__08787.jpg', 'risk_img_5931__12022__08787.jpg', 'product_images/risk_img_5931__12022__08787.jpg', 'https://www.toynamishop.com/product_images/c/369/risk_img_5931__12022__08787.jpg', 'products', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('b3b441b0-311b-403a-831b-811e3f3fb8eb', 'risk_img_5932__65407__61537.jpg', 'risk_img_5932__65407__61537.jpg', 'product_images/risk_img_5932__65407__61537.jpg', 'https://www.toynamishop.com/product_images/x/220/risk_img_5932__65407__61537.jpg', 'products', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('e423c299-575b-42fb-ab75-d857976e3381', 'risk_img_5933__75841__16493.jpg', 'risk_img_5933__75841__16493.jpg', 'product_images/risk_img_5933__75841__16493.jpg', 'https://www.toynamishop.com/product_images/u/158/risk_img_5933__75841__16493.jpg', 'products', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('821eea78-95de-42ee-9dc0-efa75b200d0b', 'the_canmans_risk_oleum2__31361__11427.jpg', 'the_canmans_risk_oleum2__31361__11427.jpg', 'product_images/the_canmans_risk_oleum2__31361__11427.jpg', 'https://www.toynamishop.com/product_images/v/028/the_canmans_risk_oleum2__31361__11427.jpg', 'products', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('ecb91e97-2d45-4363-842b-69832626960d', 'skelanimal_dc_deluxe_plush_04__20381__85634.jpg', 'skelanimal_dc_deluxe_plush_04__20381__85634.jpg', 'product_images/skelanimal_dc_deluxe_plush_04__20381__85634.jpg', 'https://www.toynamishop.com/product_images/h/204/skelanimal_dc_deluxe_plush_04__20381__85634.jpg', 'products', 'Skelanimals DC Robin Pen 10" Deluxe Plush', 'Skelanimals DC Robin Pen 10" Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('d387fef0-4ab0-4966-90ce-5c3b5d17af65', 'skelanimal_dc_deluxe_plush_05__89376__64879.jpg', 'skelanimal_dc_deluxe_plush_05__89376__64879.jpg', 'product_images/skelanimal_dc_deluxe_plush_05__89376__64879.jpg', 'https://www.toynamishop.com/product_images/b/277/skelanimal_dc_deluxe_plush_05__89376__64879.jpg', 'products', 'Skelanimals DC Robin Pen 10" Deluxe Plush', 'Skelanimals DC Robin Pen 10" Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('02c1017a-5c7b-45db-ac1d-278c7b06cfe9', 'Skelanimals_backpack_diego_deluxe_encore__90498__52621.jpg', 'Skelanimals_backpack_diego_deluxe_encore__90498__52621.jpg', 'product_images/Skelanimals_backpack_diego_deluxe_encore__90498__52621.jpg', 'https://www.toynamishop.com/product_images/l/055/Skelanimals_backpack_diego_deluxe_encore__90498__52621.jpg', 'products', 'Skelanimals Deluxe Backpack Diego (Bat)', 'Skelanimals Deluxe Backpack Diego (Bat)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('fcaad9fa-9fa7-4a19-802b-7081cf016c04', 'DSC_0352__44102__61584.jpg', 'DSC_0352__44102__61584.jpg', 'product_images/DSC_0352__44102__61584.jpg', 'https://www.toynamishop.com/product_images/k/223/DSC_0352__44102__61584.jpg', 'products', 'B2Five K6 Jungle Stronghold ST2K', 'B2Five K6 Jungle Stronghold ST2K', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('9306b4dc-8d3a-4ca6-be5b-17e8ba68a12c', 'DSC_0359__00393__28674.jpg', 'DSC_0359__00393__28674.jpg', 'product_images/DSC_0359__00393__28674.jpg', 'https://www.toynamishop.com/product_images/s/786/DSC_0359__00393__28674.jpg', 'products', 'B2Five K6 Jungle Stronghold ST2K', 'B2Five K6 Jungle Stronghold ST2K', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('2758e2e6-832f-456a-824d-5ee954381c61', 'DSC_0371__86838__77529.jpg', 'DSC_0371__86838__77529.jpg', 'product_images/DSC_0371__86838__77529.jpg', 'https://www.toynamishop.com/product_images/d/139/DSC_0371__86838__77529.jpg', 'products', 'B2Five K6 Jungle Stronghold ST2K', 'B2Five K6 Jungle Stronghold ST2K', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('0005abfa-143d-4a43-89a8-a0caa4131f35', 'DSC_0403__89600__01229.jpg', 'DSC_0403__89600__01229.jpg', 'product_images/DSC_0403__89600__01229.jpg', 'https://www.toynamishop.com/product_images/k/220/DSC_0403__89600__01229.jpg', 'products', 'B2Five K6 Jungle Stronghold ST2K', 'B2Five K6 Jungle Stronghold ST2K', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('6be54c7e-fd3c-4768-8915-14370dbcf9d0', 'DSC_0407__39949__83372.jpg', 'DSC_0407__39949__83372.jpg', 'product_images/DSC_0407__39949__83372.jpg', 'https://www.toynamishop.com/product_images/i/398/DSC_0407__39949__83372.jpg', 'products', 'B2Five K6 Jungle Stronghold ST2K', 'B2Five K6 Jungle Stronghold ST2K', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('f4436078-6d60-40c1-b62f-88cacd82bc11', 'DSC_0401__13181__77929.jpg', 'DSC_0401__13181__77929.jpg', 'product_images/DSC_0401__13181__77929.jpg', 'https://www.toynamishop.com/product_images/l/067/DSC_0401__13181__77929.jpg', 'products', 'B2Five K6 Jungle Stronghold ST2K', 'B2Five K6 Jungle Stronghold ST2K', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('4e0a83b4-074c-4cac-bc7b-0e4950379df3', 'sol_009__78175__71832.jpg', 'sol_009__78175__71832.jpg', 'product_images/sol_009__78175__71832.jpg', 'https://www.toynamishop.com/product_images/x/305/sol_009__78175__71832.jpg', 'products', 'Acid Rain Sol Commander [Re-run] 2017', 'Acid Rain Sol Commander [Re-run] 2017', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('9198176b-f8a6-4806-849d-6ac012906c71', 'sol_010__36518__43797.jpg', 'sol_010__36518__43797.jpg', 'product_images/sol_010__36518__43797.jpg', 'https://www.toynamishop.com/product_images/l/908/sol_010__36518__43797.jpg', 'products', 'Acid Rain Sol Commander [Re-run] 2017', 'Acid Rain Sol Commander [Re-run] 2017', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('0092c0a1-e487-4146-957a-3383f4c32997', 'sol_012__64185__99412.jpg', 'sol_012__64185__99412.jpg', 'product_images/sol_012__64185__99412.jpg', 'https://www.toynamishop.com/product_images/d/906/sol_012__64185__99412.jpg', 'products', 'Acid Rain Sol Commander [Re-run] 2017', 'Acid Rain Sol Commander [Re-run] 2017', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('98e70c22-7088-4437-92fe-e33d74a803de', 'sol_011__08160__30985.jpg', 'sol_011__08160__30985.jpg', 'product_images/sol_011__08160__30985.jpg', 'https://www.toynamishop.com/product_images/f/563/sol_011__08160__30985.jpg', 'products', 'Acid Rain Sol Commander [Re-run] 2017', 'Acid Rain Sol Commander [Re-run] 2017', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('a9fa8da1-289b-440a-8268-06d5b9d0aa41', 'stronghold_m_001__26351__39440.jpg', 'stronghold_m_001__26351__39440.jpg', 'product_images/stronghold_m_001__26351__39440.jpg', 'https://www.toynamishop.com/product_images/w/673/stronghold_m_001__26351__39440.jpg', 'products', 'Acid Rain Stronghold (Marine)', 'Acid Rain Stronghold (Marine)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('9b926d04-a98f-4141-a89a-b8e4e9d4f1a0', 'stronghold_m_002__13047__20801.jpg', 'stronghold_m_002__13047__20801.jpg', 'product_images/stronghold_m_002__13047__20801.jpg', 'https://www.toynamishop.com/product_images/x/168/stronghold_m_002__13047__20801.jpg', 'products', 'Acid Rain Stronghold (Marine)', 'Acid Rain Stronghold (Marine)', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('3acc83f1-e9d2-4cce-b439-9ea35049cae6', 'stronghold_m_006__18375__84784.jpg', 'stronghold_m_006__18375__84784.jpg', 'product_images/stronghold_m_006__18375__84784.jpg', 'https://www.toynamishop.com/product_images/q/734/stronghold_m_006__18375__84784.jpg', 'products', 'Acid Rain Stronghold (Marine)', 'Acid Rain Stronghold (Marine)', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('bf057125-0058-4398-b488-16d5fef73c5e', 'stronghold_m_005__75735__87247.jpg', 'stronghold_m_005__75735__87247.jpg', 'product_images/stronghold_m_005__75735__87247.jpg', 'https://www.toynamishop.com/product_images/h/866/stronghold_m_005__75735__87247.jpg', 'products', 'Acid Rain Stronghold (Marine)', 'Acid Rain Stronghold (Marine)', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('296eea6c-00f8-4d98-a6b6-c83763dd4d84', 'stronghold_m_007__45237__30161.jpg', 'stronghold_m_007__45237__30161.jpg', 'product_images/stronghold_m_007__45237__30161.jpg', 'https://www.toynamishop.com/product_images/b/776/stronghold_m_007__45237__30161.jpg', 'products', 'Acid Rain Stronghold (Marine)', 'Acid Rain Stronghold (Marine)', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('d4dc4f61-6eb4-4911-9392-b2cc9544f3f2', 'stronghold_m_003__90822__87311.jpg', 'stronghold_m_003__90822__87311.jpg', 'product_images/stronghold_m_003__90822__87311.jpg', 'https://www.toynamishop.com/product_images/n/092/stronghold_m_003__90822__87311.jpg', 'products', 'Acid Rain Stronghold (Marine)', 'Acid Rain Stronghold (Marine)', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('92ff86dd-8093-4726-a97b-16d9cd37b402', 'itachi-4-inch_01__41623__15852.jpg', 'itachi-4-inch_01__41623__15852.jpg', 'product_images/itachi-4-inch_01__41623__15852.jpg', 'https://www.toynamishop.com/product_images/z/084/itachi-4-inch_01__41623__15852.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Itachi', 'Naruto Shippuden Poseable Action Figure - Itachi', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('d92c0d7e-752a-4a66-9ccd-699eede9f890', 'itachi-4-inch_06__07556__42972.jpg', 'itachi-4-inch_06__07556__42972.jpg', 'product_images/itachi-4-inch_06__07556__42972.jpg', 'https://www.toynamishop.com/product_images/i/611/itachi-4-inch_06__07556__42972.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Itachi', 'Naruto Shippuden Poseable Action Figure - Itachi', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('b33263f4-abf7-4c87-a68b-2499a15fa245', 'itachi-4-inch_02__67233__10622.jpg', 'itachi-4-inch_02__67233__10622.jpg', 'product_images/itachi-4-inch_02__67233__10622.jpg', 'https://www.toynamishop.com/product_images/t/597/itachi-4-inch_02__67233__10622.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Itachi', 'Naruto Shippuden Poseable Action Figure - Itachi', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('05b0e8dc-7d8d-47fc-a099-41e88ffe9d50', 'shippuden_4-inch-figures_series1_0061__94574__84455.jpg', 'shippuden_4-inch-figures_series1_0061__94574__84455.jpg', 'product_images/shippuden_4-inch-figures_series1_0061__94574__84455.jpg', 'https://www.toynamishop.com/product_images/t/621/shippuden_4-inch-figures_series1_0061__94574__84455.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Itachi', 'Naruto Shippuden Poseable Action Figure - Itachi', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('a2f32ce4-1385-4af3-a83a-78ad5149afaa', 'shippuden_4-inch-figures_series1_0054__73157__76876.jpg', 'shippuden_4-inch-figures_series1_0054__73157__76876.jpg', 'product_images/shippuden_4-inch-figures_series1_0054__73157__76876.jpg', 'https://www.toynamishop.com/product_images/v/905/shippuden_4-inch-figures_series1_0054__73157__76876.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Itachi', 'Naruto Shippuden Poseable Action Figure - Itachi', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('a7ac53f5-ef16-4382-af58-317a90392570', 'shippuden_4-inch-figures_series1_0058__69969__34242.jpg', 'shippuden_4-inch-figures_series1_0058__69969__34242.jpg', 'product_images/shippuden_4-inch-figures_series1_0058__69969__34242.jpg', 'https://www.toynamishop.com/product_images/r/597/shippuden_4-inch-figures_series1_0058__69969__34242.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Itachi', 'Naruto Shippuden Poseable Action Figure - Itachi', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('0d2011a0-065d-4576-a0d7-cb8a5dbb4461', 'micronian_roy_fokker_battloid_01__11920__52794.jpg', 'micronian_roy_fokker_battloid_01__11920__52794.jpg', 'product_images/micronian_roy_fokker_battloid_01__11920__52794.jpg', 'https://www.toynamishop.com/product_images/y/856/micronian_roy_fokker_battloid_01__11920__52794.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - ROY FOKKER VOLUME 3', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - ROY FOKKER VOLUME 3', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('6b785b93-b44f-45bd-8cf7-0679aa42afe2', 'micronian_roy_fokker_guardian_01__78472__20330.jpg', 'micronian_roy_fokker_guardian_01__78472__20330.jpg', 'product_images/micronian_roy_fokker_guardian_01__78472__20330.jpg', 'https://www.toynamishop.com/product_images/q/743/micronian_roy_fokker_guardian_01__78472__20330.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - ROY FOKKER VOLUME 3', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - ROY FOKKER VOLUME 3', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('62692d2c-7a45-4410-b311-27bb932bca5d', 'micronian_roy_fokker_fighter_01__71122__74908.jpg', 'micronian_roy_fokker_fighter_01__71122__74908.jpg', 'product_images/micronian_roy_fokker_fighter_01__71122__74908.jpg', 'https://www.toynamishop.com/product_images/r/099/micronian_roy_fokker_fighter_01__71122__74908.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - ROY FOKKER VOLUME 3', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - ROY FOKKER VOLUME 3', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('ace5fb6c-e46f-44d9-b135-b27a5ca2bf35', 'ROBOTECH_MICRONIAN-PILOTS_VOL3_ROY-FOKKER__76780__79975.jpg', 'ROBOTECH_MICRONIAN-PILOTS_VOL3_ROY-FOKKER__76780__79975.jpg', 'product_images/ROBOTECH_MICRONIAN-PILOTS_VOL3_ROY-FOKKER__76780__79975.jpg', 'https://www.toynamishop.com/product_images/c/237/ROBOTECH_MICRONIAN-PILOTS_VOL3_ROY-FOKKER__76780__79975.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - ROY FOKKER VOLUME 3', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - ROY FOKKER VOLUME 3', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('1d603dff-a827-412e-8b2b-533c27930de6', 'Robotech_SD-Figurines_Series-2.0_01__05216__31727.jpg', 'Robotech_SD-Figurines_Series-2.0_01__05216__31727.jpg', 'product_images/Robotech_SD-Figurines_Series-2.0_01__05216__31727.jpg', 'https://www.toynamishop.com/product_images/w/382/Robotech_SD-Figurines_Series-2.0_01__05216__31727.jpg', 'products', 'Robotech New Generation Super Deformed Blind Box Figurines', 'Robotech New Generation Super Deformed Blind Box Figurines', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('ce4e0473-0cdb-4016-9499-9d013527698c', 'Robotech_SD_Figurines__84006__27364.jpg', 'Robotech_SD_Figurines__84006__27364.jpg', 'product_images/Robotech_SD_Figurines__84006__27364.jpg', 'https://www.toynamishop.com/product_images/g/835/Robotech_SD_Figurines__84006__27364.jpg', 'products', 'Robotech New Generation Super Deformed Blind Box Figurines', 'Robotech New Generation Super Deformed Blind Box Figurines', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('364b2aea-326d-41dd-9ca9-e1e1baff4622', 'IMG_5143__56905__08699.jpg', 'IMG_5143__56905__08699.jpg', 'product_images/IMG_5143__56905__08699.jpg', 'https://www.toynamishop.com/product_images/w/698/IMG_5143__56905__08699.jpg', 'products', 'Robotech New Generation Super Deformed Blind Box Figurines', 'Robotech New Generation Super Deformed Blind Box Figurines', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('4bfc7981-eb5d-4e37-bd3a-6eef8bd259fa', 'Bleach_series_2_Renji_1__25439__50275.jpg', 'Bleach_series_2_Renji_1__25439__50275.jpg', 'product_images/Bleach_series_2_Renji_1__25439__50275.jpg', 'https://www.toynamishop.com/product_images/q/526/Bleach_series_2_Renji_1__25439__50275.jpg', 'products', 'Deluxe 6" PVC Statue: Renji', 'Deluxe 6" PVC Statue: Renji', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('11bb36fb-39f5-48a1-91a6-903a60f164e9', 'Bleach_series_2_Renji_2__79770__05193.jpg', 'Bleach_series_2_Renji_2__79770__05193.jpg', 'product_images/Bleach_series_2_Renji_2__79770__05193.jpg', 'https://www.toynamishop.com/product_images/d/644/Bleach_series_2_Renji_2__79770__05193.jpg', 'products', 'Deluxe 6" PVC Statue: Renji', 'Deluxe 6" PVC Statue: Renji', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('ec07bf20-d273-465b-97de-5ddf46a631cd', 'BLEACH_collection-2_renji-and-toshiro__52394__67731.jpg', 'BLEACH_collection-2_renji-and-toshiro__52394__67731.jpg', 'product_images/BLEACH_collection-2_renji-and-toshiro__52394__67731.jpg', 'https://www.toynamishop.com/product_images/t/146/BLEACH_collection-2_renji-and-toshiro__52394__67731.jpg', 'products', 'Deluxe 6" PVC Statue: Renji', 'Deluxe 6" PVC Statue: Renji', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('66d4e893-7d3b-4b5f-8ae2-5fb1365f1ffb', 'product_239__72856__59437.jpg', 'product_239__72856__59437.jpg', 'product_images/product_239__72856__59437.jpg', 'https://www.toynamishop.com/product_images/i/948/product_239__72856__59437.jpg', 'products', 'Tulipop Vinyl Keychain - Gloomy', 'Tulipop Vinyl Keychain - Gloomy', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('d6d078ca-5635-41f5-87c2-a6e52a4383a3', 'unspecified3__46604__60071.jpg', 'unspecified3__46604__60071.jpg', 'product_images/unspecified3__46604__60071.jpg', 'https://www.toynamishop.com/product_images/q/579/unspecified3__46604__60071.jpg', 'products', 'Tulipop Vinyl Keychain - Gloomy', 'Tulipop Vinyl Keychain - Gloomy', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('3befb799-ed88-4d68-98d0-fc649a62938e', 'macross_milia_vf-1J_valkyrie__24720__03700.jpg', 'macross_milia_vf-1J_valkyrie__24720__03700.jpg', 'product_images/macross_milia_vf-1J_valkyrie__24720__03700.jpg', 'https://www.toynamishop.com/product_images/g/850/macross_milia_vf-1J_valkyrie__24720__03700.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1J Milia Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1J Milia Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('683f32c7-b5a9-41b1-b3b4-e15630750805', 'vf-1j_miriya_battroid_01__41707__84438.jpg', 'vf-1j_miriya_battroid_01__41707__84438.jpg', 'product_images/vf-1j_miriya_battroid_01__41707__84438.jpg', 'https://www.toynamishop.com/product_images/n/187/vf-1j_miriya_battroid_01__41707__84438.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1J Milia Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1J Milia Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('7839f800-f044-4c9c-9120-245e010e56e7', 'vf-1j_miriya_gerwalk_01__38441__14990.jpg', 'vf-1j_miriya_gerwalk_01__38441__14990.jpg', 'product_images/vf-1j_miriya_gerwalk_01__38441__14990.jpg', 'https://www.toynamishop.com/product_images/u/881/vf-1j_miriya_gerwalk_01__38441__14990.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1J Milia Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1J Milia Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('d15c4a98-0315-46bd-88fd-e87c161575e2', 'vf-1j_miriya_valkyrie_01__44905__83493.jpg', 'vf-1j_miriya_valkyrie_01__44905__83493.jpg', 'product_images/vf-1j_miriya_valkyrie_01__44905__83493.jpg', 'https://www.toynamishop.com/product_images/c/495/vf-1j_miriya_valkyrie_01__44905__83493.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1J Milia Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1J Milia Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('fee09bdf-bedc-41bc-9b0f-11814a76b53e', 'vf-1j_miriya_battroid_02__02096__03225.jpg', 'vf-1j_miriya_battroid_02__02096__03225.jpg', 'product_images/vf-1j_miriya_battroid_02__02096__03225.jpg', 'https://www.toynamishop.com/product_images/o/032/vf-1j_miriya_battroid_02__02096__03225.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1J Milia Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1J Milia Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('36a93a88-234d-445f-bc75-f78711a5aa01', 'robotech_T-Shirts_2022-04__40184__61697.jpg', 'robotech_T-Shirts_2022-04__40184__61697.jpg', 'product_images/robotech_T-Shirts_2022-04__40184__61697.jpg', 'https://www.toynamishop.com/product_images/z/764/robotech_T-Shirts_2022-04__40184__61697.jpg', 'products', 'Robotech VF-1S Skull Leader Shirt', 'Robotech VF-1S Skull Leader Shirt', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('7cb257af-46a7-4b6e-acbc-23ff0b63d247', 'Screenshot_62__61127__20264.png', 'Screenshot_62__61127__20264.png', 'product_images/Screenshot_62__61127__20264.png', 'https://www.toynamishop.com/product_images/a/478/Screenshot_62__61127__20264.png', 'products', 'Robotech VF-1S Skull Leader Shirt', 'Robotech VF-1S Skull Leader Shirt', 'image/png', 'png', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('331acaf2-0e4b-4c4a-a6f1-b2b22ecce8ba', 'Screenshot_63__68468__55352.png', 'Screenshot_63__68468__55352.png', 'product_images/Screenshot_63__68468__55352.png', 'https://www.toynamishop.com/product_images/p/738/Screenshot_63__68468__55352.png', 'products', 'Robotech VF-1S Skull Leader Shirt', 'Robotech VF-1S Skull Leader Shirt', 'image/png', 'png', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('80d0e490-1177-4f36-9d7c-62e81f7df9f9', '281861301_171313945331846_5214368172004617510_n__79874__52546.jpg', '281861301_171313945331846_5214368172004617510_n__79874__52546.jpg', 'product_images/281861301_171313945331846_5214368172004617510_n__79874__52546.jpg', 'https://www.toynamishop.com/product_images/i/293/281861301_171313945331846_5214368172004617510_n__79874__52546.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K07C Monster Child', 'Toys Alliance MILLINILLIONS MI-K07C Monster Child', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('53b0660b-ab5f-42e7-a37d-e80cc18ca037', '283112887_171313925331848_2990295889090771686_n__59092__59403.jpg', '283112887_171313925331848_2990295889090771686_n__59092__59403.jpg', 'product_images/283112887_171313925331848_2990295889090771686_n__59092__59403.jpg', 'https://www.toynamishop.com/product_images/b/213/283112887_171313925331848_2990295889090771686_n__59092__59403.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K07C Monster Child', 'Toys Alliance MILLINILLIONS MI-K07C Monster Child', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('4ac93f7d-883e-41f1-9cf0-c124a08fc77c', '283291822_171313955331845_962294454815982383_n__92448__51970.jpg', '283291822_171313955331845_962294454815982383_n__92448__51970.jpg', 'product_images/283291822_171313955331845_962294454815982383_n__92448__51970.jpg', 'https://www.toynamishop.com/product_images/t/492/283291822_171313955331845_962294454815982383_n__92448__51970.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K07C Monster Child', 'Toys Alliance MILLINILLIONS MI-K07C Monster Child', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('77fa0e92-ff41-4b05-99a1-0fdd6351048c', 'futurama_plush_s2_kiff__13894__54861.jpg', 'futurama_plush_s2_kiff__13894__54861.jpg', 'product_images/futurama_plush_s2_kiff__13894__54861.jpg', 'https://www.toynamishop.com/product_images/g/278/futurama_plush_s2_kiff__13894__54861.jpg', 'products', 'Futurama Kif Kroker Plush', 'Futurama Kif Kroker Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('2b9a646e-e697-45bb-b49d-d7fd9869ff5b', 'marcy_backpack__17433__64519.jpg', 'marcy_backpack__17433__64519.jpg', 'product_images/marcy_backpack__17433__64519.jpg', 'https://www.toynamishop.com/product_images/l/045/marcy_backpack__17433__64519.jpg', 'products', 'Skelanimals Deluxe Backpack Marcy (Monkey)', 'Skelanimals Deluxe Backpack Marcy (Monkey)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('716140ff-9028-494f-8f04-1d437838aa92', 'marcy_backpack02__61506__78122.jpg', 'marcy_backpack02__61506__78122.jpg', 'product_images/marcy_backpack02__61506__78122.jpg', 'https://www.toynamishop.com/product_images/v/257/marcy_backpack02__61506__78122.jpg', 'products', 'Skelanimals Deluxe Backpack Marcy (Monkey)', 'Skelanimals Deluxe Backpack Marcy (Monkey)', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('fb11acd6-7ade-4a75-81ef-4c1d7ed29643', 'naruto_six_paths_bust_01__42049__39641.jpg', 'naruto_six_paths_bust_01__42049__39641.jpg', 'product_images/naruto_six_paths_bust_01__42049__39641.jpg', 'https://www.toynamishop.com/product_images/g/571/naruto_six_paths_bust_01__42049__39641.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust', 'Naruto Six Paths Sage Mode 1:1 Bust', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('6e67fb6d-8ec9-4baf-87e2-9224a9bdd94f', 'naruto_six_paths_bust_07__00758__74162.jpg', 'naruto_six_paths_bust_07__00758__74162.jpg', 'product_images/naruto_six_paths_bust_07__00758__74162.jpg', 'https://www.toynamishop.com/product_images/h/819/naruto_six_paths_bust_07__00758__74162.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust', 'Naruto Six Paths Sage Mode 1:1 Bust', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('95ae54ff-3680-4e88-b0c7-bd3311d971b0', 'naruto_six_paths_bust_09__04793__16955.jpg', 'naruto_six_paths_bust_09__04793__16955.jpg', 'product_images/naruto_six_paths_bust_09__04793__16955.jpg', 'https://www.toynamishop.com/product_images/e/177/naruto_six_paths_bust_09__04793__16955.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust', 'Naruto Six Paths Sage Mode 1:1 Bust', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('b66fbc55-d13c-4688-aa42-7e42423ad9e7', 'naruto_six_paths_bust_05__98423__94231.jpg', 'naruto_six_paths_bust_05__98423__94231.jpg', 'product_images/naruto_six_paths_bust_05__98423__94231.jpg', 'https://www.toynamishop.com/product_images/u/123/naruto_six_paths_bust_05__98423__94231.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust', 'Naruto Six Paths Sage Mode 1:1 Bust', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('32b75896-834e-4f54-802c-1503c2b1ddb9', 'naruto_six_paths_bust_08__82699__25209.jpg', 'naruto_six_paths_bust_08__82699__25209.jpg', 'product_images/naruto_six_paths_bust_08__82699__25209.jpg', 'https://www.toynamishop.com/product_images/a/089/naruto_six_paths_bust_08__82699__25209.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust', 'Naruto Six Paths Sage Mode 1:1 Bust', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('fc22d5bb-9617-4266-b4d0-93e13cd2b3bf', 'naruto_six_paths_bust_04__15890__82175.jpg', 'naruto_six_paths_bust_04__15890__82175.jpg', 'product_images/naruto_six_paths_bust_04__15890__82175.jpg', 'https://www.toynamishop.com/product_images/n/253/naruto_six_paths_bust_04__15890__82175.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust', 'Naruto Six Paths Sage Mode 1:1 Bust', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('42ac2196-f672-438e-b3b8-8e5b3ab7e137', 'naruto_six_paths_bust_02__37884__55767.jpg', 'naruto_six_paths_bust_02__37884__55767.jpg', 'product_images/naruto_six_paths_bust_02__37884__55767.jpg', 'https://www.toynamishop.com/product_images/t/019/naruto_six_paths_bust_02__37884__55767.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust', 'Naruto Six Paths Sage Mode 1:1 Bust', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('147cb807-a425-46a7-bc9e-b0aed086c976', 'naruto_six_paths_bust_06__49614__00284.jpg', 'naruto_six_paths_bust_06__49614__00284.jpg', 'product_images/naruto_six_paths_bust_06__49614__00284.jpg', 'https://www.toynamishop.com/product_images/o/148/naruto_six_paths_bust_06__49614__00284.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust', 'Naruto Six Paths Sage Mode 1:1 Bust', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('0e2ffb1d-d252-48e2-ab0a-a5e739749cc3', 'naruto_six_paths_bust_03__13629__31495.jpg', 'naruto_six_paths_bust_03__13629__31495.jpg', 'product_images/naruto_six_paths_bust_03__13629__31495.jpg', 'https://www.toynamishop.com/product_images/c/232/naruto_six_paths_bust_03__13629__31495.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust', 'Naruto Six Paths Sage Mode 1:1 Bust', 'image/jpeg', 'jpg', ARRAY['product'], 10, '2025-08-24 03:34:39.225191+00', NOW()),
+('5de02983-987d-48f8-9c96-34c91f7874d1', 'naruto_six_paths_bust_02_pq__21095__72335.jpg', 'naruto_six_paths_bust_02_pq__21095__72335.jpg', 'product_images/naruto_six_paths_bust_02_pq__21095__72335.jpg', 'https://www.toynamishop.com/product_images/h/321/naruto_six_paths_bust_02_pq__21095__72335.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust', 'Naruto Six Paths Sage Mode 1:1 Bust', 'image/jpeg', 'jpg', ARRAY['product'], 11, '2025-08-24 03:34:39.225191+00', NOW()),
+('0f56f94a-f418-4bcf-8743-87bd318b8530', 'unkl_DC_COMICS_UniPo_all__48587__84416.jpg', 'unkl_DC_COMICS_UniPo_all__48587__84416.jpg', 'product_images/unkl_DC_COMICS_UniPo_all__48587__84416.jpg', 'https://www.toynamishop.com/product_images/w/997/unkl_DC_COMICS_UniPo_all__48587__84416.jpg', 'products', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('ac907c72-45c8-4025-ba9e-30220fc9c2df', 'unkl_dccomics_unipo_theflash__18997__11125.jpg', 'unkl_dccomics_unipo_theflash__18997__11125.jpg', 'product_images/unkl_dccomics_unipo_theflash__18997__11125.jpg', 'https://www.toynamishop.com/product_images/d/492/unkl_dccomics_unipo_theflash__18997__11125.jpg', 'products', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('4ed37cea-1932-4f96-96e4-310ff0f70648', 'unkl_dccomics_unipo_superman__06690__21181.jpg', 'unkl_dccomics_unipo_superman__06690__21181.jpg', 'product_images/unkl_dccomics_unipo_superman__06690__21181.jpg', 'https://www.toynamishop.com/product_images/a/924/unkl_dccomics_unipo_superman__06690__21181.jpg', 'products', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('b6d936e8-0d91-4ff6-9cf3-77e6534a515f', 'unkl_dccomics_unipo_harleyquinn__44670__04911.jpg', 'unkl_dccomics_unipo_harleyquinn__44670__04911.jpg', 'product_images/unkl_dccomics_unipo_harleyquinn__44670__04911.jpg', 'https://www.toynamishop.com/product_images/g/762/unkl_dccomics_unipo_harleyquinn__44670__04911.jpg', 'products', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('90934af9-c9d9-416f-9c09-7c3ef0aa4b69', 'unkl_dccomics_unipo_joker__84632__59759.jpg', 'unkl_dccomics_unipo_joker__84632__59759.jpg', 'product_images/unkl_dccomics_unipo_joker__84632__59759.jpg', 'https://www.toynamishop.com/product_images/y/006/unkl_dccomics_unipo_joker__84632__59759.jpg', 'products', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('5873b042-48ea-4a90-bd43-971023afd3d7', 'unkl_dccomics_unipo_batman__93842__52319.jpg', 'unkl_dccomics_unipo_batman__93842__52319.jpg', 'product_images/unkl_dccomics_unipo_batman__93842__52319.jpg', 'https://www.toynamishop.com/product_images/h/364/unkl_dccomics_unipo_batman__93842__52319.jpg', 'products', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('950f7bc5-81c9-4857-97f2-6e8ee38c99d8', 'unkl_dccomics_unipo_mrfreeze__25005__74299.jpg', 'unkl_dccomics_unipo_mrfreeze__25005__74299.jpg', 'product_images/unkl_dccomics_unipo_mrfreeze__25005__74299.jpg', 'https://www.toynamishop.com/product_images/b/906/unkl_dccomics_unipo_mrfreeze__25005__74299.jpg', 'products', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('16bf3d50-3e79-4a72-ac29-edea9671b5f5', 'unkl_DC_COMICS_UniPo_pq__52640__01556.jpg', 'unkl_DC_COMICS_UniPo_pq__52640__01556.jpg', 'product_images/unkl_DC_COMICS_UniPo_pq__52640__01556.jpg', 'https://www.toynamishop.com/product_images/d/444/unkl_DC_COMICS_UniPo_pq__52640__01556.jpg', 'products', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('efcf8fd9-abf2-48f3-b351-8c1fb66bbfa7', 'product_242__55816__14726.jpg', 'product_242__55816__14726.jpg', 'product_images/product_242__55816__14726.jpg', 'https://www.toynamishop.com/product_images/c/748/product_242__55816__14726.jpg', 'products', 'Tulipop Vinyl Keychain - Miss Maddy', 'Tulipop Vinyl Keychain - Miss Maddy', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('7ce8fe99-daac-4088-8912-6305a7bc50cc', 'product_241__95795__35363.jpg', 'product_241__95795__35363.jpg', 'product_images/product_241__95795__35363.jpg', 'https://www.toynamishop.com/product_images/j/817/product_241__95795__35363.jpg', 'products', 'Tulipop Vinyl Keychain - Miss Maddy', 'Tulipop Vinyl Keychain - Miss Maddy', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('f00028bf-f1e9-4063-961b-8210ca4649b3', 'unspecified4__71253__87727.jpg', 'unspecified4__71253__87727.jpg', 'product_images/unspecified4__71253__87727.jpg', 'https://www.toynamishop.com/product_images/k/439/unspecified4__71253__87727.jpg', 'products', 'Tulipop Vinyl Keychain - Miss Maddy', 'Tulipop Vinyl Keychain - Miss Maddy', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('5a90ffef-0b34-4d82-ab5d-b5db40b15668', 'futurama_plush_s2_morbo__96521__94154.jpg', 'futurama_plush_s2_morbo__96521__94154.jpg', 'product_images/futurama_plush_s2_morbo__96521__94154.jpg', 'https://www.toynamishop.com/product_images/r/546/futurama_plush_s2_morbo__96521__94154.jpg', 'products', 'Futurama Morbo Plush', 'Futurama Morbo Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('747e4ed4-3b7b-4468-a8e3-8859309fe729', 'mythic-minis_little-embers__83569__07475.jpg', 'mythic-minis_little-embers__83569__07475.jpg', 'product_images/mythic-minis_little-embers__83569__07475.jpg', 'https://www.toynamishop.com/product_images/t/987/mythic-minis_little-embers__83569__07475.jpg', 'products', 'Little Embers Blind Box Figurine', 'Little Embers Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('8e6d95dc-5aae-4390-bd3e-c9236666684b', 'little_ember_blind_box__11836__79439.jpg', 'little_ember_blind_box__11836__79439.jpg', 'product_images/little_ember_blind_box__11836__79439.jpg', 'https://www.toynamishop.com/product_images/a/014/little_ember_blind_box__11836__79439.jpg', 'products', 'Little Embers Blind Box Figurine', 'Little Embers Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('63cb830b-c649-42d1-83ea-0fab3a2e7e07', 'little_embers__s1_display_tray__10557__89312.jpg', 'little_embers__s1_display_tray__10557__89312.jpg', 'product_images/little_embers__s1_display_tray__10557__89312.jpg', 'https://www.toynamishop.com/product_images/o/211/little_embers__s1_display_tray__10557__89312.jpg', 'products', 'Little Embers Blind Box Figurine', 'Little Embers Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('ed11ff4e-2e6f-4dd4-95d4-f34af711e555', 'micronian_max_sterling_battloid_01__18693__59299.jpg', 'micronian_max_sterling_battloid_01__18693__59299.jpg', 'product_images/micronian_max_sterling_battloid_01__18693__59299.jpg', 'https://www.toynamishop.com/product_images/i/966/micronian_max_sterling_battloid_01__18693__59299.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MAX STERLING VOLUME4', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MAX STERLING VOLUME4', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('f16b3c47-57ac-4ee4-b3e2-aff2f67c26e9', 'micronian_max_sterling_fighter_01__11307__59710.jpg', 'micronian_max_sterling_fighter_01__11307__59710.jpg', 'product_images/micronian_max_sterling_fighter_01__11307__59710.jpg', 'https://www.toynamishop.com/product_images/e/154/micronian_max_sterling_fighter_01__11307__59710.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MAX STERLING VOLUME4', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MAX STERLING VOLUME4', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('69940b47-66e9-4db8-8e05-703d138c42de', 'micronian_max_sterling_guardian_01__58630__42390.jpg', 'micronian_max_sterling_guardian_01__58630__42390.jpg', 'product_images/micronian_max_sterling_guardian_01__58630__42390.jpg', 'https://www.toynamishop.com/product_images/o/116/micronian_max_sterling_guardian_01__58630__42390.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MAX STERLING VOLUME4', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MAX STERLING VOLUME4', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('d5c3c947-a4db-441f-8fb6-828cdeb76fb9', 'ROBOTECH_MICRONIAN-PILOTS_VOL4_MAX-STERLING__96044__52716.jpg', 'ROBOTECH_MICRONIAN-PILOTS_VOL4_MAX-STERLING__96044__52716.jpg', 'product_images/ROBOTECH_MICRONIAN-PILOTS_VOL4_MAX-STERLING__96044__52716.jpg', 'https://www.toynamishop.com/product_images/n/797/ROBOTECH_MICRONIAN-PILOTS_VOL4_MAX-STERLING__96044__52716.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MAX STERLING VOLUME4', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MAX STERLING VOLUME4', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('901df516-adb2-4ed7-b5a6-45afa02cb12d', 'IMG_0015_whitebackground__63368__80897.jpg', 'IMG_0015_whitebackground__63368__80897.jpg', 'product_images/IMG_0015_whitebackground__63368__80897.jpg', 'https://www.toynamishop.com/product_images/h/142/IMG_0015_whitebackground__63368__80897.jpg', 'products', 'Acid Rain Sand Infantry', 'Acid Rain Sand Infantry', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('ec8c79c5-b124-42a7-9269-8fd773eed175', 'IMG_0016__74844__75530.JPG', 'IMG_0016__74844__75530.JPG', 'product_images/IMG_0016__74844__75530.JPG', 'https://www.toynamishop.com/product_images/e/728/IMG_0016__74844__75530.JPG', 'products', 'Acid Rain Sand Infantry', 'Acid Rain Sand Infantry', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('e75d68f4-84aa-40fb-a9cf-d041ce3a196a', 'IMG_0017__03896__78011.JPG', 'IMG_0017__03896__78011.JPG', 'product_images/IMG_0017__03896__78011.JPG', 'https://www.toynamishop.com/product_images/w/657/IMG_0017__03896__78011.JPG', 'products', 'Acid Rain Sand Infantry', 'Acid Rain Sand Infantry', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('1408bb1d-7a92-4367-a30d-64771d09c026', 'IMG_0021__85878__48534.JPG', 'IMG_0021__85878__48534.JPG', 'product_images/IMG_0021__85878__48534.JPG', 'https://www.toynamishop.com/product_images/b/350/IMG_0021__85878__48534.JPG', 'products', 'Acid Rain Sand Infantry', 'Acid Rain Sand Infantry', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('760ee98d-2b49-4894-b0f1-9f13ba438951', 'robotech_T-Shirts_2022-03__16671__04129.jpg', 'robotech_T-Shirts_2022-03__16671__04129.jpg', 'product_images/robotech_T-Shirts_2022-03__16671__04129.jpg', 'https://www.toynamishop.com/product_images/a/619/robotech_T-Shirts_2022-03__16671__04129.jpg', 'products', 'Robotech VF-1J Rick Hunter Shirt', 'Robotech VF-1J Rick Hunter Shirt', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('4a844f4c-a87b-4f48-bb9f-5749c5e56fdc', 'Screenshot_62__83102__97132.png', 'Screenshot_62__83102__97132.png', 'product_images/Screenshot_62__83102__97132.png', 'https://www.toynamishop.com/product_images/y/382/Screenshot_62__83102__97132.png', 'products', 'Robotech VF-1J Rick Hunter Shirt', 'Robotech VF-1J Rick Hunter Shirt', 'image/png', 'png', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('a1fa8eca-27fc-4bf4-8332-824b545ed151', 'Screenshot_63__95660__36142.png', 'Screenshot_63__95660__36142.png', 'product_images/Screenshot_63__95660__36142.png', 'https://www.toynamishop.com/product_images/s/406/Screenshot_63__95660__36142.png', 'products', 'Robotech VF-1J Rick Hunter Shirt', 'Robotech VF-1J Rick Hunter Shirt', 'image/png', 'png', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('b9382dd7-3fe8-4814-9611-224f7d061e48', 'robotech-1-100_VF-1D-Trainer-exclusive__11203__26745.jpg', 'robotech-1-100_VF-1D-Trainer-exclusive__11203__26745.jpg', 'product_images/robotech-1-100_VF-1D-Trainer-exclusive__11203__26745.jpg', 'https://www.toynamishop.com/product_images/o/806/robotech-1-100_VF-1D-Trainer-exclusive__11203__26745.jpg', 'products', 'Comic Con 2016 Exclusive: Robotech VF-1D (VT-102)', 'Comic Con 2016 Exclusive: Robotech VF-1D (VT-102)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('6ea12df2-87b2-4b8c-a239-086bd21ffeec', 'DSC_0119__40170__97010.jpg', 'DSC_0119__40170__97010.jpg', 'product_images/DSC_0119__40170__97010.jpg', 'https://www.toynamishop.com/product_images/a/323/DSC_0119__40170__97010.jpg', 'products', 'B2Five 88th Sand Deluxe', 'B2Five 88th Sand Deluxe', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('c621424f-52fe-427b-8ec1-f9e9b35735c7', 'DSC_0115__86700__85618.jpg', 'DSC_0115__86700__85618.jpg', 'product_images/DSC_0115__86700__85618.jpg', 'https://www.toynamishop.com/product_images/y/649/DSC_0115__86700__85618.jpg', 'products', 'B2Five 88th Sand Deluxe', 'B2Five 88th Sand Deluxe', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('3e82c55c-b4a8-4dd1-b6b8-2abda0b1892b', 'DSC_0156__92584__58810.jpg', 'DSC_0156__92584__58810.jpg', 'product_images/DSC_0156__92584__58810.jpg', 'https://www.toynamishop.com/product_images/b/066/DSC_0156__92584__58810.jpg', 'products', 'B2Five 88th Sand Deluxe', 'B2Five 88th Sand Deluxe', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('165281ff-cba6-496e-b05e-995b18a8464b', 'hypnotoad_MG_5316__02473__73807.jpg', 'hypnotoad_MG_5316__02473__73807.jpg', 'product_images/hypnotoad_MG_5316__02473__73807.jpg', 'https://www.toynamishop.com/product_images/t/785/hypnotoad_MG_5316__02473__73807.jpg', 'products', 'Futurama Hypnotoad Coin Bank', 'Futurama Hypnotoad Coin Bank', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('182eb933-d003-4ace-840d-5ce586a35438', 'hypnotoad_MG_5313__23802__32542.jpg', 'hypnotoad_MG_5313__23802__32542.jpg', 'product_images/hypnotoad_MG_5313__23802__32542.jpg', 'https://www.toynamishop.com/product_images/b/884/hypnotoad_MG_5313__23802__32542.jpg', 'products', 'Futurama Hypnotoad Coin Bank', 'Futurama Hypnotoad Coin Bank', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('e858ed2b-627b-4211-abf8-5778848688db', 'hypnotoad_coin_bank_pq__27968__76606.jpg', 'hypnotoad_coin_bank_pq__27968__76606.jpg', 'product_images/hypnotoad_coin_bank_pq__27968__76606.jpg', 'https://www.toynamishop.com/product_images/a/757/hypnotoad_coin_bank_pq__27968__76606.jpg', 'products', 'Futurama Hypnotoad Coin Bank', 'Futurama Hypnotoad Coin Bank', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('3ecce5fa-7558-4664-a6bb-f1abe1d85a8b', 'pain-4-inch__02__57188__44868.jpg', 'pain-4-inch__02__57188__44868.jpg', 'product_images/pain-4-inch__02__57188__44868.jpg', 'https://www.toynamishop.com/product_images/o/317/pain-4-inch__02__57188__44868.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Pain', 'Naruto Shippuden Poseable Action Figure - Pain', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('2c23383f-a92a-4468-92cb-a1f85fa8d714', 'pain-4-inch__03__53395__56716.jpg', 'pain-4-inch__03__53395__56716.jpg', 'product_images/pain-4-inch__03__53395__56716.jpg', 'https://www.toynamishop.com/product_images/d/476/pain-4-inch__03__53395__56716.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Pain', 'Naruto Shippuden Poseable Action Figure - Pain', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('170be4d7-5f8e-4707-bdd7-3a2c52b1bc56', 'pain_4inch_01__45800__07516.jpg', 'pain_4inch_01__45800__07516.jpg', 'product_images/pain_4inch_01__45800__07516.jpg', 'https://www.toynamishop.com/product_images/k/941/pain_4inch_01__45800__07516.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Pain', 'Naruto Shippuden Poseable Action Figure - Pain', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('fd733f5b-e38e-4c8c-8f40-502942dc85e4', 'pain_4inch_04__21824__24369.jpg', 'pain_4inch_04__21824__24369.jpg', 'product_images/pain_4inch_04__21824__24369.jpg', 'https://www.toynamishop.com/product_images/p/066/pain_4inch_04__21824__24369.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Pain', 'Naruto Shippuden Poseable Action Figure - Pain', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('31d9d360-fcf7-4a95-bbc4-2ab4f964dd5a', 'pain_4inch_05__21986__49979.jpg', 'pain_4inch_05__21986__49979.jpg', 'product_images/pain_4inch_05__21986__49979.jpg', 'https://www.toynamishop.com/product_images/r/628/pain_4inch_05__21986__49979.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Pain', 'Naruto Shippuden Poseable Action Figure - Pain', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('8f5dcc87-3f31-4ee6-b240-69298fc1b8a0', '281923824_171313761998531_1033459954187083704_n__73062__29728.jpg', '281923824_171313761998531_1033459954187083704_n__73062__29728.jpg', 'product_images/281923824_171313761998531_1033459954187083704_n__73062__29728.jpg', 'https://www.toynamishop.com/product_images/p/505/281923824_171313761998531_1033459954187083704_n__73062__29728.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K08 Lightning', 'Toys Alliance MILLINILLIONS MI-K08 Lightning', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('c92c6cd7-4cbd-4980-a30d-32b3918277dc', '282236708_171313771998530_5466034254031672446_n__13752__49075.jpg', '282236708_171313771998530_5466034254031672446_n__13752__49075.jpg', 'product_images/282236708_171313771998530_5466034254031672446_n__13752__49075.jpg', 'https://www.toynamishop.com/product_images/s/033/282236708_171313771998530_5466034254031672446_n__13752__49075.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K08 Lightning', 'Toys Alliance MILLINILLIONS MI-K08 Lightning', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('01fafa72-9519-43a8-accd-1dba17355424', '283765273_171313801998527_1739465539036996834_n__40751__81229.jpg', '283765273_171313801998527_1739465539036996834_n__40751__81229.jpg', 'product_images/283765273_171313801998527_1739465539036996834_n__40751__81229.jpg', 'https://www.toynamishop.com/product_images/a/532/283765273_171313801998527_1739465539036996834_n__40751__81229.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K08 Lightning', 'Toys Alliance MILLINILLIONS MI-K08 Lightning', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('05b02a4b-5844-4f2d-b78a-8cce0d3fe2eb', 'NEW_2018_shippuden_4-inch-figures_series1__62849__44867.jpg', 'NEW_2018_shippuden_4-inch-figures_series1__62849__44867.jpg', 'product_images/NEW_2018_shippuden_4-inch-figures_series1__62849__44867.jpg', 'https://www.toynamishop.com/product_images/t/586/NEW_2018_shippuden_4-inch-figures_series1__62849__44867.jpg', 'products', 'Naruto Shippuden Poseable Action Figures (Set of 3)', 'Naruto Shippuden Poseable Action Figures (Set of 3)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('0f44b9e0-e81f-4302-b8e7-bfe58a7453a3', 'shippuden_4-inch-figures_series1_set_of_3__07281__25691.jpg', 'shippuden_4-inch-figures_series1_set_of_3__07281__25691.jpg', 'product_images/shippuden_4-inch-figures_series1_set_of_3__07281__25691.jpg', 'https://www.toynamishop.com/product_images/k/294/shippuden_4-inch-figures_series1_set_of_3__07281__25691.jpg', 'products', 'Naruto Shippuden Poseable Action Figures (Set of 3)', 'Naruto Shippuden Poseable Action Figures (Set of 3)', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('6ec7fec8-a48f-4e68-9037-ba218f158f2e', 'naruto-4-inch__08__51173__76077.jpg', 'naruto-4-inch__08__51173__76077.jpg', 'product_images/naruto-4-inch__08__51173__76077.jpg', 'https://www.toynamishop.com/product_images/v/383/naruto-4-inch__08__51173__76077.jpg', 'products', 'Naruto Shippuden Poseable Action Figures (Set of 3)', 'Naruto Shippuden Poseable Action Figures (Set of 3)', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('3861f082-833b-4d97-aae8-53acd8af6571', 'itachi-4-inch_01__55814__31610.jpg', 'itachi-4-inch_01__55814__31610.jpg', 'product_images/itachi-4-inch_01__55814__31610.jpg', 'https://www.toynamishop.com/product_images/l/385/itachi-4-inch_01__55814__31610.jpg', 'products', 'Naruto Shippuden Poseable Action Figures (Set of 3)', 'Naruto Shippuden Poseable Action Figures (Set of 3)', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('c5d18a78-00ff-4b26-b6fe-29e76125fa30', 'kakashi-4-inch_03__52173__38683.jpg', 'kakashi-4-inch_03__52173__38683.jpg', 'product_images/kakashi-4-inch_03__52173__38683.jpg', 'https://www.toynamishop.com/product_images/e/111/kakashi-4-inch_03__52173__38683.jpg', 'products', 'Naruto Shippuden Poseable Action Figures (Set of 3)', 'Naruto Shippuden Poseable Action Figures (Set of 3)', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('5f8ba450-28b3-406d-8ccf-be621f1b233d', 'stronghold_s_007__62418__10135.jpg', 'stronghold_s_007__62418__10135.jpg', 'product_images/stronghold_s_007__62418__10135.jpg', 'https://www.toynamishop.com/product_images/z/404/stronghold_s_007__62418__10135.jpg', 'products', 'Acid Rain Stronghold (Sand)', 'Acid Rain Stronghold (Sand)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('4bce8900-65fb-43e8-a211-6bfcb395a8b9', 'stronghold_s_008__32665__81057.jpg', 'stronghold_s_008__32665__81057.jpg', 'product_images/stronghold_s_008__32665__81057.jpg', 'https://www.toynamishop.com/product_images/o/288/stronghold_s_008__32665__81057.jpg', 'products', 'Acid Rain Stronghold (Sand)', 'Acid Rain Stronghold (Sand)', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('872139d9-7053-4561-9544-b005c3c4ccf7', 'stronghold_s_001__20432__36327.jpg', 'stronghold_s_001__20432__36327.jpg', 'product_images/stronghold_s_001__20432__36327.jpg', 'https://www.toynamishop.com/product_images/c/433/stronghold_s_001__20432__36327.jpg', 'products', 'Acid Rain Stronghold (Sand)', 'Acid Rain Stronghold (Sand)', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('db8675c2-19fe-4c82-871e-96a696e030ac', 'stronghold_s_003__32839__79918.jpg', 'stronghold_s_003__32839__79918.jpg', 'product_images/stronghold_s_003__32839__79918.jpg', 'https://www.toynamishop.com/product_images/k/665/stronghold_s_003__32839__79918.jpg', 'products', 'Acid Rain Stronghold (Sand)', 'Acid Rain Stronghold (Sand)', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('fdd9199b-34d0-472a-bcbd-3a4705dbae51', 'stronghold_s_004__08746__14478.jpg', 'stronghold_s_004__08746__14478.jpg', 'product_images/stronghold_s_004__08746__14478.jpg', 'https://www.toynamishop.com/product_images/y/199/stronghold_s_004__08746__14478.jpg', 'products', 'Acid Rain Stronghold (Sand)', 'Acid Rain Stronghold (Sand)', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('2ddb3a2b-f341-440f-99b4-7de5a70652fa', 'supersonic_x_hellokitty_clip-on__17502__86197.jpg', 'supersonic_x_hellokitty_clip-on__17502__86197.jpg', 'product_images/supersonic_x_hellokitty_clip-on__17502__86197.jpg', 'https://www.toynamishop.com/product_images/t/256/supersonic_x_hellokitty_clip-on__17502__86197.jpg', 'products', 'Comic Con 2016 Exclusive: Gold Sonic x Hello Kitty Clip On Plush', 'Comic Con 2016 Exclusive: Gold Sonic x Hello Kitty Clip On Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('b007e9a5-ee33-40a9-a449-310c3e898676', 'macross_standard_valkyrie__41901__42588.jpg', 'macross_standard_valkyrie__41901__42588.jpg', 'product_images/macross_standard_valkyrie__41901__42588.jpg', 'https://www.toynamishop.com/product_images/m/048/macross_standard_valkyrie__41901__42588.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1A Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1A Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('cc949ab9-3409-46bc-9697-2986ed9870bd', 'vf-1a_batroid_01__52325__65900.jpg', 'vf-1a_batroid_01__52325__65900.jpg', 'product_images/vf-1a_batroid_01__52325__65900.jpg', 'https://www.toynamishop.com/product_images/r/742/vf-1a_batroid_01__52325__65900.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1A Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1A Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('1224fa95-ed59-4be7-a885-5db33a1e873a', 'vf-1a_gerwalk_01__92466__58174.jpg', 'vf-1a_gerwalk_01__92466__58174.jpg', 'product_images/vf-1a_gerwalk_01__92466__58174.jpg', 'https://www.toynamishop.com/product_images/a/709/vf-1a_gerwalk_01__92466__58174.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1A Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1A Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('93abacf7-f086-43d4-a58e-1130d42c3f77', 'vf-1a_fighter_01__61468__56799.jpg', 'vf-1a_fighter_01__61468__56799.jpg', 'product_images/vf-1a_fighter_01__61468__56799.jpg', 'https://www.toynamishop.com/product_images/r/989/vf-1a_fighter_01__61468__56799.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1A Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1A Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('ff785982-c7ef-493f-bcd0-15c2318ab7ad', 'vf-1a_batroid_02__16879__67188.jpg', 'vf-1a_batroid_02__16879__67188.jpg', 'product_images/vf-1a_batroid_02__16879__67188.jpg', 'https://www.toynamishop.com/product_images/g/816/vf-1a_batroid_02__16879__67188.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1A Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1A Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('69736792-3129-4d5a-9114-ad83246a7a45', 'blanka_hellokitty_plush01__23123__48653.jpg', 'blanka_hellokitty_plush01__23123__48653.jpg', 'product_images/blanka_hellokitty_plush01__23123__48653.jpg', 'https://www.toynamishop.com/product_images/t/200/blanka_hellokitty_plush01__23123__48653.jpg', 'products', 'COMIKAZE 2013 Exclusive: Hello Kitty Blanka Plush', 'COMIKAZE 2013 Exclusive: Hello Kitty Blanka Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('83a810a5-77e0-4965-b4fb-cd48b842648d', 'blanka_hellokitty_plush02__97021__36870.jpg', 'blanka_hellokitty_plush02__97021__36870.jpg', 'product_images/blanka_hellokitty_plush02__97021__36870.jpg', 'https://www.toynamishop.com/product_images/j/838/blanka_hellokitty_plush02__97021__36870.jpg', 'products', 'COMIKAZE 2013 Exclusive: Hello Kitty Blanka Plush', 'COMIKAZE 2013 Exclusive: Hello Kitty Blanka Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('922c3214-21eb-4084-a634-e8b84937eb23', 'blanka_hellokitty_plush03__46552__48895.jpg', 'blanka_hellokitty_plush03__46552__48895.jpg', 'product_images/blanka_hellokitty_plush03__46552__48895.jpg', 'https://www.toynamishop.com/product_images/b/603/blanka_hellokitty_plush03__46552__48895.jpg', 'products', 'COMIKAZE 2013 Exclusive: Hello Kitty Blanka Plush', 'COMIKAZE 2013 Exclusive: Hello Kitty Blanka Plush', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('9b818b6e-75a8-41dc-9768-adcf933e1117', 'street_fighter_x_sanrio_blanka_plush__54517__27346.jpg', 'street_fighter_x_sanrio_blanka_plush__54517__27346.jpg', 'product_images/street_fighter_x_sanrio_blanka_plush__54517__27346.jpg', 'https://www.toynamishop.com/product_images/q/681/street_fighter_x_sanrio_blanka_plush__54517__27346.jpg', 'products', 'COMIKAZE 2013 Exclusive: Hello Kitty Blanka Plush', 'COMIKAZE 2013 Exclusive: Hello Kitty Blanka Plush', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('a39109c0-cc91-431f-ac3a-ad2c20bda2eb', 'product_238__12654__93576.jpg', 'product_238__12654__93576.jpg', 'product_images/product_238__12654__93576.jpg', 'https://www.toynamishop.com/product_images/b/951/product_238__12654__93576.jpg', 'products', 'Tulipop Vinyl Keychain - Fred', 'Tulipop Vinyl Keychain - Fred', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('92110b54-2a00-4bcf-adca-36b9f1635299', 'product_237__41310__27508.jpg', 'product_237__41310__27508.jpg', 'product_images/product_237__41310__27508.jpg', 'https://www.toynamishop.com/product_images/f/706/product_237__41310__27508.jpg', 'products', 'Tulipop Vinyl Keychain - Fred', 'Tulipop Vinyl Keychain - Fred', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('afc0cc08-aec0-4871-a020-cdac01bf7af0', 'little-nessies_iridescent-edition_01__15196__81322.jpg', 'little-nessies_iridescent-edition_01__15196__81322.jpg', 'product_images/little-nessies_iridescent-edition_01__15196__81322.jpg', 'https://www.toynamishop.com/product_images/p/043/little-nessies_iridescent-edition_01__15196__81322.jpg', 'products', 'Little Nessies Limited Edition Iridescent Figurines Set-Convention Exclusive!', 'Little Nessies Limited Edition Iridescent Figurines Set-Convention Exclusive!', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('5f7a8919-8811-42a7-b976-31a4d0b4b4de', 'little_embers_plush_flames_01__48166__04673.jpg', 'little_embers_plush_flames_01__48166__04673.jpg', 'product_images/little_embers_plush_flames_01__48166__04673.jpg', 'https://www.toynamishop.com/product_images/b/846/little_embers_plush_flames_01__48166__04673.jpg', 'products', 'Little Embers Plush', 'Little Embers Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('2428c652-5110-4a31-9b16-895e71fff187', 'little_embers_plush_soot_01__64099__18321.jpg', 'little_embers_plush_soot_01__64099__18321.jpg', 'product_images/little_embers_plush_soot_01__64099__18321.jpg', 'https://www.toynamishop.com/product_images/p/170/little_embers_plush_soot_01__64099__18321.jpg', 'products', 'Little Embers Plush', 'Little Embers Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('af6ea4b3-2143-4bb0-b6f2-2e9060b26c08', 'little_embers_plush_cinder_01__62851__97017.jpg', 'little_embers_plush_cinder_01__62851__97017.jpg', 'product_images/little_embers_plush_cinder_01__62851__97017.jpg', 'https://www.toynamishop.com/product_images/j/290/little_embers_plush_cinder_01__62851__97017.jpg', 'products', 'Little Embers Plush', 'Little Embers Plush', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('9bb856f9-0585-45c1-aca3-46b8daa499e3', 'little_embers_plush_sparks_01__38381__85309.jpg', 'little_embers_plush_sparks_01__38381__85309.jpg', 'product_images/little_embers_plush_sparks_01__38381__85309.jpg', 'https://www.toynamishop.com/product_images/d/327/little_embers_plush_sparks_01__38381__85309.jpg', 'products', 'Little Embers Plush', 'Little Embers Plush', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('05751e4e-6210-42ab-8d19-9626500a3389', 'little_embers_plush_ash_01__21886__81123.jpg', 'little_embers_plush_ash_01__21886__81123.jpg', 'product_images/little_embers_plush_ash_01__21886__81123.jpg', 'https://www.toynamishop.com/product_images/o/101/little_embers_plush_ash_01__21886__81123.jpg', 'products', 'Little Embers Plush', 'Little Embers Plush', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('80158d94-27d7-4b97-bd54-a80dbe5fdde7', 'skelanimals_dcheroes_girls-of-gotham-city_05__38695__59895.jpg', 'skelanimals_dcheroes_girls-of-gotham-city_05__38695__59895.jpg', 'product_images/skelanimals_dcheroes_girls-of-gotham-city_05__38695__59895.jpg', 'https://www.toynamishop.com/product_images/h/795/skelanimals_dcheroes_girls-of-gotham-city_05__38695__59895.jpg', 'products', 'Skelanimals / DC Heroes Harley Quinn Plush', 'Skelanimals / DC Heroes Harley Quinn Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('e3cdef88-4a42-4da1-bdfa-d01bf7390abf', 'skelanimals_dcheroes_girls-of-gotham-city_06__27430__10010.jpg', 'skelanimals_dcheroes_girls-of-gotham-city_06__27430__10010.jpg', 'product_images/skelanimals_dcheroes_girls-of-gotham-city_06__27430__10010.jpg', 'https://www.toynamishop.com/product_images/z/626/skelanimals_dcheroes_girls-of-gotham-city_06__27430__10010.jpg', 'products', 'Skelanimals / DC Heroes Harley Quinn Plush', 'Skelanimals / DC Heroes Harley Quinn Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('cd6e76cd-cd92-483e-84b7-abd49d11c512', 'skelanimals_dc_gogc_plush__14296__36538.jpg', 'skelanimals_dc_gogc_plush__14296__36538.jpg', 'product_images/skelanimals_dc_gogc_plush__14296__36538.jpg', 'https://www.toynamishop.com/product_images/s/682/skelanimals_dc_gogc_plush__14296__36538.jpg', 'products', 'Skelanimals / DC Heroes Harley Quinn Plush', 'Skelanimals / DC Heroes Harley Quinn Plush', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('6503a941-3dff-4999-bf62-bb9563f1df9a', 'RebornTrooper_white_backdrop__76988__21971.jpg', 'RebornTrooper_white_backdrop__76988__21971.jpg', 'product_images/RebornTrooper_white_backdrop__76988__21971.jpg', 'https://www.toynamishop.com/product_images/o/180/RebornTrooper_white_backdrop__76988__21971.jpg', 'products', 'Acid Rain Reborn Trooper', 'Acid Rain Reborn Trooper', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('25a56da3-d7c1-4308-8992-6bd0e4ee6bce', 'pose_02__54268__07757.JPG', 'pose_02__54268__07757.JPG', 'product_images/pose_02__54268__07757.JPG', 'https://www.toynamishop.com/product_images/o/810/pose_02__54268__07757.JPG', 'products', 'Acid Rain Reborn Trooper', 'Acid Rain Reborn Trooper', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('9c861d2b-9497-4d93-8cb9-6d3688a9ad30', 'pose_03__68503__70350.JPG', 'pose_03__68503__70350.JPG', 'product_images/pose_03__68503__70350.JPG', 'https://www.toynamishop.com/product_images/v/117/pose_03__68503__70350.JPG', 'products', 'Acid Rain Reborn Trooper', 'Acid Rain Reborn Trooper', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('8dd9eaf4-bca1-4db6-867a-c4b55a3a0265', 'micronian_miriya_battloid_01__09134__20510.jpg', 'micronian_miriya_battloid_01__09134__20510.jpg', 'product_images/micronian_miriya_battloid_01__09134__20510.jpg', 'https://www.toynamishop.com/product_images/d/139/micronian_miriya_battloid_01__09134__20510.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MIRIYA STERLING VOLUME 5', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MIRIYA STERLING VOLUME 5', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('607a7310-22d0-42da-8925-8cbae7a85e22', 'micronian_miriya_fighter_01__86515__08549.jpg', 'micronian_miriya_fighter_01__86515__08549.jpg', 'product_images/micronian_miriya_fighter_01__86515__08549.jpg', 'https://www.toynamishop.com/product_images/e/885/micronian_miriya_fighter_01__86515__08549.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MIRIYA STERLING VOLUME 5', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MIRIYA STERLING VOLUME 5', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('4040a3f9-3bfd-4b13-80b3-4e4d7a7e375b', 'micronian_miriya_guardian_01__79796__08068.jpg', 'micronian_miriya_guardian_01__79796__08068.jpg', 'product_images/micronian_miriya_guardian_01__79796__08068.jpg', 'https://www.toynamishop.com/product_images/p/742/micronian_miriya_guardian_01__79796__08068.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MIRIYA STERLING VOLUME 5', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MIRIYA STERLING VOLUME 5', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('e9eda057-3a4f-4aba-91fd-7d0c98b7fff0', 'ROBOTECH_MICRONIAN-PILOTS_VOL5_MIRIYA__54717__33982.jpg', 'ROBOTECH_MICRONIAN-PILOTS_VOL5_MIRIYA__54717__33982.jpg', 'product_images/ROBOTECH_MICRONIAN-PILOTS_VOL5_MIRIYA__54717__33982.jpg', 'https://www.toynamishop.com/product_images/d/623/ROBOTECH_MICRONIAN-PILOTS_VOL5_MIRIYA__54717__33982.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MIRIYA STERLING VOLUME 5', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MIRIYA STERLING VOLUME 5', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('8abe057a-4f45-4af2-b594-72c0511bb32f', 'futurama_hats_nibbler001__92957__09020.jpg', 'futurama_hats_nibbler001__92957__09020.jpg', 'product_images/futurama_hats_nibbler001__92957__09020.jpg', 'https://www.toynamishop.com/product_images/j/997/futurama_hats_nibbler001__92957__09020.jpg', 'products', 'Futurama Nibbler Knit Hat', 'Futurama Nibbler Knit Hat', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('3958ee54-dfc2-4974-bcbb-b4df6e90adc3', 'futurama_hats_nibbler002__88507__04673.jpg', 'futurama_hats_nibbler002__88507__04673.jpg', 'product_images/futurama_hats_nibbler002__88507__04673.jpg', 'https://www.toynamishop.com/product_images/p/405/futurama_hats_nibbler002__88507__04673.jpg', 'products', 'Futurama Nibbler Knit Hat', 'Futurama Nibbler Knit Hat', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('6fe89802-2dda-4f55-a2ec-8d21aca72687', 'n3S-t_JU__61902__23044.jpg', 'n3S-t_JU__61902__23044.jpg', 'product_images/n3S-t_JU__61902__23044.jpg', 'https://www.toynamishop.com/product_images/r/272/n3S-t_JU__61902__23044.jpg', 'products', 'B2Five Robotech Mospeada Transformable Cyclone - Rand', 'B2Five Robotech Mospeada Transformable Cyclone - Rand', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('75d75921-d90b-4be9-b5ba-a50f1c835c12', 'hFfak6XI__16064__76292.jpg', 'hFfak6XI__16064__76292.jpg', 'product_images/hFfak6XI__16064__76292.jpg', 'https://www.toynamishop.com/product_images/x/962/hFfak6XI__16064__76292.jpg', 'products', 'B2Five Robotech Mospeada Transformable Cyclone - Rand', 'B2Five Robotech Mospeada Transformable Cyclone - Rand', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('366c27b3-212d-43e9-a59b-7e0358ff5db4', 'KEPJEcjA__88577__03453.jpg', 'KEPJEcjA__88577__03453.jpg', 'product_images/KEPJEcjA__88577__03453.jpg', 'https://www.toynamishop.com/product_images/w/525/KEPJEcjA__88577__03453.jpg', 'products', 'B2Five Robotech Mospeada Transformable Cyclone - Rand', 'B2Five Robotech Mospeada Transformable Cyclone - Rand', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('d507bff9-7e54-4c74-85fe-aa3996e4b9cc', 'ER9xKMe8__13370__95370.jpg', 'ER9xKMe8__13370__95370.jpg', 'product_images/ER9xKMe8__13370__95370.jpg', 'https://www.toynamishop.com/product_images/s/098/ER9xKMe8__13370__95370.jpg', 'products', 'B2Five Robotech Mospeada Transformable Cyclone - Rand', 'B2Five Robotech Mospeada Transformable Cyclone - Rand', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('8e66614a-baf3-49aa-9cab-123fcb168d2f', 'DSC_0589__98898__50121.JPG', 'DSC_0589__98898__50121.JPG', 'product_images/DSC_0589__98898__50121.JPG', 'https://www.toynamishop.com/product_images/e/125/DSC_0589__98898__50121.JPG', 'products', 'B2Five Marine Sieger Stronghold ST2M', 'B2Five Marine Sieger Stronghold ST2M', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('4b8d2857-233b-4c2c-9c14-0ef758f0519d', 'DSC_0584__37742__26193.JPG', 'DSC_0584__37742__26193.JPG', 'product_images/DSC_0584__37742__26193.JPG', 'https://www.toynamishop.com/product_images/g/335/DSC_0584__37742__26193.JPG', 'products', 'B2Five Marine Sieger Stronghold ST2M', 'B2Five Marine Sieger Stronghold ST2M', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('d7e5ecf6-530d-4e34-b587-fabb3af4a26d', 'DSC_0594__88318__18621.JPG', 'DSC_0594__88318__18621.JPG', 'product_images/DSC_0594__88318__18621.JPG', 'https://www.toynamishop.com/product_images/j/086/DSC_0594__88318__18621.JPG', 'products', 'B2Five Marine Sieger Stronghold ST2M', 'B2Five Marine Sieger Stronghold ST2M', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('92870de3-c4e8-45a8-88eb-803fa9bf874a', 'DSC_0599__19575__85539.JPG', 'DSC_0599__19575__85539.JPG', 'product_images/DSC_0599__19575__85539.JPG', 'https://www.toynamishop.com/product_images/j/143/DSC_0599__19575__85539.JPG', 'products', 'B2Five Marine Sieger Stronghold ST2M', 'B2Five Marine Sieger Stronghold ST2M', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('352ca767-c2f4-4912-874f-767215d22735', 'DSC_0580__21988__95015.JPG', 'DSC_0580__21988__95015.JPG', 'product_images/DSC_0580__21988__95015.JPG', 'https://www.toynamishop.com/product_images/y/373/DSC_0580__21988__95015.JPG', 'products', 'B2Five Marine Sieger Stronghold ST2M', 'B2Five Marine Sieger Stronghold ST2M', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('b8d75be8-21bd-4135-b748-e2c1599fe36a', 'macross-battlepod_vinyl01__18441__32194.jpg', 'macross-battlepod_vinyl01__18441__32194.jpg', 'product_images/macross-battlepod_vinyl01__18441__32194.jpg', 'https://www.toynamishop.com/product_images/d/941/macross-battlepod_vinyl01__18441__32194.jpg', 'products', 'Macross Zentradi (Regault) Tactical Battlepod Vinyl Figure', 'Macross Zentradi (Regault) Tactical Battlepod Vinyl Figure', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('f98d4cf3-e18d-4d1c-9329-16b6d8f4ed04', 'macross_battlepod02__26797__03676.jpg', 'macross_battlepod02__26797__03676.jpg', 'product_images/macross_battlepod02__26797__03676.jpg', 'https://www.toynamishop.com/product_images/p/418/macross_battlepod02__26797__03676.jpg', 'products', 'Macross Zentradi (Regault) Tactical Battlepod Vinyl Figure', 'Macross Zentradi (Regault) Tactical Battlepod Vinyl Figure', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('247f80de-5b94-47d2-b189-058e2b0b0d45', 'IMG_4112__22292__13696.jpg', 'IMG_4112__22292__13696.jpg', 'product_images/IMG_4112__22292__13696.jpg', 'https://www.toynamishop.com/product_images/r/940/IMG_4112__22292__13696.jpg', 'products', 'Macross Zentradi (Regault) Tactical Battlepod Vinyl Figure', 'Macross Zentradi (Regault) Tactical Battlepod Vinyl Figure', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('b77e538a-2873-40a3-8960-29e12e0892df', 'IMG_4111__93841__35433.jpg', 'IMG_4111__93841__35433.jpg', 'product_images/IMG_4111__93841__35433.jpg', 'https://www.toynamishop.com/product_images/v/991/IMG_4111__93841__35433.jpg', 'products', 'Macross Zentradi (Regault) Tactical Battlepod Vinyl Figure', 'Macross Zentradi (Regault) Tactical Battlepod Vinyl Figure', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('f6d2107a-624c-46e2-a85b-566b169e51bc', 'acid_rain_sdcc2015_exclusive__28588__16164.jpg', 'acid_rain_sdcc2015_exclusive__28588__16164.jpg', 'product_images/acid_rain_sdcc2015_exclusive__28588__16164.jpg', 'https://www.toynamishop.com/product_images/a/967/acid_rain_sdcc2015_exclusive__28588__16164.jpg', 'products', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('8a41c40d-5b70-4941-8272-9ba949440c03', 'IMG_0004__12612__58566.JPG', 'IMG_0004__12612__58566.JPG', 'product_images/IMG_0004__12612__58566.JPG', 'https://www.toynamishop.com/product_images/q/790/IMG_0004__12612__58566.JPG', 'products', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('08620b09-3a50-4338-845d-21f6a9b10444', 'IMG_0008__59259__93703.JPG', 'IMG_0008__59259__93703.JPG', 'product_images/IMG_0008__59259__93703.JPG', 'https://www.toynamishop.com/product_images/s/607/IMG_0008__59259__93703.JPG', 'products', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('68a7aacc-612b-46f3-a84c-f37d235ade0d', 'IMG_0007__63150__14948.JPG', 'IMG_0007__63150__14948.JPG', 'product_images/IMG_0007__63150__14948.JPG', 'https://www.toynamishop.com/product_images/x/363/IMG_0007__63150__14948.JPG', 'products', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('555e21f3-cc39-4277-83ae-9b326f1348a0', 'IMG_0013__14907__39268.JPG', 'IMG_0013__14907__39268.JPG', 'product_images/IMG_0013__14907__39268.JPG', 'https://www.toynamishop.com/product_images/p/603/IMG_0013__14907__39268.JPG', 'products', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('469378c0-3413-45d7-b2df-c112363b2c68', 'IMG_0015__47570__87963.JPG', 'IMG_0015__47570__87963.JPG', 'product_images/IMG_0015__47570__87963.JPG', 'https://www.toynamishop.com/product_images/p/071/IMG_0015__47570__87963.JPG', 'products', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('0ac083c5-dff3-4d2c-83fe-e80b901bf13b', 'IMG_0016__54223__82627.JPG', 'IMG_0016__54223__82627.JPG', 'product_images/IMG_0016__54223__82627.JPG', 'https://www.toynamishop.com/product_images/t/094/IMG_0016__54223__82627.JPG', 'products', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('bdc161be-1ab2-4e2c-9f72-2cba52cc507d', 'IMG_0017__20028__51424.JPG', 'IMG_0017__20028__51424.JPG', 'product_images/IMG_0017__20028__51424.JPG', 'https://www.toynamishop.com/product_images/c/179/IMG_0017__20028__51424.JPG', 'products', 'Acid Rain AMM Prospector', 'Acid Rain AMM Prospector', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('c42f8b16-ccf9-4e73-97ac-d8ed2aa23d50', 'IMG_0002__05155__70646.JPG', 'IMG_0002__05155__70646.JPG', 'product_images/IMG_0002__05155__70646.JPG', 'https://www.toynamishop.com/product_images/m/246/IMG_0002__05155__70646.JPG', 'products', 'Acid Rain AMM Prospector', 'Acid Rain AMM Prospector', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('54b8e8d5-763c-4251-bbb1-9eb77e9f4e9c', 'IMG_0001__84270__27435.JPG', 'IMG_0001__84270__27435.JPG', 'product_images/IMG_0001__84270__27435.JPG', 'https://www.toynamishop.com/product_images/d/849/IMG_0001__84270__27435.JPG', 'products', 'Acid Rain AMM Prospector', 'Acid Rain AMM Prospector', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('c58e7233-0b7d-4459-bf2e-ac3895b16b34', 'IMG_0009__80433__96958.JPG', 'IMG_0009__80433__96958.JPG', 'product_images/IMG_0009__80433__96958.JPG', 'https://www.toynamishop.com/product_images/g/951/IMG_0009__80433__96958.JPG', 'products', 'Acid Rain AMM Prospector', 'Acid Rain AMM Prospector', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('f01529f6-44e0-464f-ad1f-bf849e3da650', 'IMG_0010__84783__76526.JPG', 'IMG_0010__84783__76526.JPG', 'product_images/IMG_0010__84783__76526.JPG', 'https://www.toynamishop.com/product_images/o/009/IMG_0010__84783__76526.JPG', 'products', 'Acid Rain AMM Prospector', 'Acid Rain AMM Prospector', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('840065a5-f13b-446f-a692-4ed1b1ca9b34', 'IMG_0014__59361__88736.JPG', 'IMG_0014__59361__88736.JPG', 'product_images/IMG_0014__59361__88736.JPG', 'https://www.toynamishop.com/product_images/g/479/IMG_0014__59361__88736.JPG', 'products', 'Acid Rain AMM Prospector', 'Acid Rain AMM Prospector', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('6984b031-3d82-4003-b1db-0feb7f228c3d', 'IMG_0016__01417__94520.JPG', 'IMG_0016__01417__94520.JPG', 'product_images/IMG_0016__01417__94520.JPG', 'https://www.toynamishop.com/product_images/a/629/IMG_0016__01417__94520.JPG', 'products', 'Acid Rain AMM Prospector', 'Acid Rain AMM Prospector', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('91df357b-59b7-42f0-bc63-20a7c58851b2', 'robotech_action-figures_02__45660__73240.jpg', 'robotech_action-figures_02__45660__73240.jpg', 'product_images/robotech_action-figures_02__45660__73240.jpg', 'https://www.toynamishop.com/product_images/z/950/robotech_action-figures_02__45660__73240.jpg', 'products', 'Robotech Poseable Action Figures (Set of 5)', 'Robotech Poseable Action Figures (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('4100fc87-44a4-4e58-8d33-f8c27ce4317e', 'robotech_action-figures_01__74125__29268.jpg', 'robotech_action-figures_01__74125__29268.jpg', 'product_images/robotech_action-figures_01__74125__29268.jpg', 'https://www.toynamishop.com/product_images/f/326/robotech_action-figures_01__74125__29268.jpg', 'products', 'Robotech Poseable Action Figures (Set of 5)', 'Robotech Poseable Action Figures (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('1b9adb14-31d3-40cd-b342-6936e2e5437c', 'robotech_action_figures_Rick-Hunter_02__26132__95415.jpg', 'robotech_action_figures_Rick-Hunter_02__26132__95415.jpg', 'product_images/robotech_action_figures_Rick-Hunter_02__26132__95415.jpg', 'https://www.toynamishop.com/product_images/m/153/robotech_action_figures_Rick-Hunter_02__26132__95415.jpg', 'products', 'Robotech Poseable Action Figures (Set of 5)', 'Robotech Poseable Action Figures (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('cabc4ca5-1f42-49bf-bc89-86bafc0a26a8', 'robotech_action_figures_roy_fokker_01__78059__66880.jpg', 'robotech_action_figures_roy_fokker_01__78059__66880.jpg', 'product_images/robotech_action_figures_roy_fokker_01__78059__66880.jpg', 'https://www.toynamishop.com/product_images/u/530/robotech_action_figures_roy_fokker_01__78059__66880.jpg', 'products', 'Robotech Poseable Action Figures (Set of 5)', 'Robotech Poseable Action Figures (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('825de86f-beab-4870-be48-3d8218996d7a', 'robotech_action_figures_miriya__95300__30660.jpg', 'robotech_action_figures_miriya__95300__30660.jpg', 'product_images/robotech_action_figures_miriya__95300__30660.jpg', 'https://www.toynamishop.com/product_images/o/343/robotech_action_figures_miriya__95300__30660.jpg', 'products', 'Robotech Poseable Action Figures (Set of 5)', 'Robotech Poseable Action Figures (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('7a28de6a-7439-4e75-8ebc-f78556dbc682', 'robotech_action_figures_max_sterling__56394__23056.jpg', 'robotech_action_figures_max_sterling__56394__23056.jpg', 'product_images/robotech_action_figures_max_sterling__56394__23056.jpg', 'https://www.toynamishop.com/product_images/e/758/robotech_action_figures_max_sterling__56394__23056.jpg', 'products', 'Robotech Poseable Action Figures (Set of 5)', 'Robotech Poseable Action Figures (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('d3f6ac2d-0dc4-4aee-9f84-9c73ada2c377', 'robotech_action_figures_minmei_01__39177__09264.jpg', 'robotech_action_figures_minmei_01__39177__09264.jpg', 'product_images/robotech_action_figures_minmei_01__39177__09264.jpg', 'https://www.toynamishop.com/product_images/o/485/robotech_action_figures_minmei_01__39177__09264.jpg', 'products', 'Robotech Poseable Action Figures (Set of 5)', 'Robotech Poseable Action Figures (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('1d4c27bf-00d4-4fe0-8138-a2b0d70b8411', 'futurama_destructor_gender_bender_exclusive__57552__23935.jpg', 'futurama_destructor_gender_bender_exclusive__57552__23935.jpg', 'product_images/futurama_destructor_gender_bender_exclusive__57552__23935.jpg', 'https://www.toynamishop.com/product_images/f/153/futurama_destructor_gender_bender_exclusive__57552__23935.jpg', 'products', 'SDCC 2013 Exclusive: Futurama Destructor Gender Bender Box Set', 'SDCC 2013 Exclusive: Futurama Destructor Gender Bender Box Set', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('feb1a0c3-f947-4da5-8af8-ca48e868487c', 'futurama_destructor_gender_bender_exclusive_genderbender__06843__54804.jpg', 'futurama_destructor_gender_bender_exclusive_genderbender__06843__54804.jpg', 'product_images/futurama_destructor_gender_bender_exclusive_genderbender__06843__54804.jpg', 'https://www.toynamishop.com/product_images/e/824/futurama_destructor_gender_bender_exclusive_genderbender__06843__54804.jpg', 'products', 'SDCC 2013 Exclusive: Futurama Destructor Gender Bender Box Set', 'SDCC 2013 Exclusive: Futurama Destructor Gender Bender Box Set', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('75d9864f-cbfb-46e7-93d3-42795b25be0b', 'futurama_destructor_gender_bender_exclusive_destructor__65973__84963.jpg', 'futurama_destructor_gender_bender_exclusive_destructor__65973__84963.jpg', 'product_images/futurama_destructor_gender_bender_exclusive_destructor__65973__84963.jpg', 'https://www.toynamishop.com/product_images/y/672/futurama_destructor_gender_bender_exclusive_destructor__65973__84963.jpg', 'products', 'SDCC 2013 Exclusive: Futurama Destructor Gender Bender Box Set', 'SDCC 2013 Exclusive: Futurama Destructor Gender Bender Box Set', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('0403b6c0-f934-4bd5-965f-1387271b3133', 'futurama_destructor_gender_bender_box__74215__15825.jpg', 'futurama_destructor_gender_bender_box__74215__15825.jpg', 'product_images/futurama_destructor_gender_bender_box__74215__15825.jpg', 'https://www.toynamishop.com/product_images/q/762/futurama_destructor_gender_bender_box__74215__15825.jpg', 'products', 'SDCC 2013 Exclusive: Futurama Destructor Gender Bender Box Set', 'SDCC 2013 Exclusive: Futurama Destructor Gender Bender Box Set', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('86117b05-58b7-4a42-bcf1-3a5dee2b0417', 'futurama_destructor_gender_bender_box_set_01__42974__90182.jpg', 'futurama_destructor_gender_bender_box_set_01__42974__90182.jpg', 'product_images/futurama_destructor_gender_bender_box_set_01__42974__90182.jpg', 'https://www.toynamishop.com/product_images/l/014/futurama_destructor_gender_bender_box_set_01__42974__90182.jpg', 'products', 'SDCC 2013 Exclusive: Futurama Destructor Gender Bender Box Set', 'SDCC 2013 Exclusive: Futurama Destructor Gender Bender Box Set', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('882d375d-a7da-4161-afc4-c257181a47f3', 'gaara_4inch_01__12882__35965.jpg', 'gaara_4inch_01__12882__35965.jpg', 'product_images/gaara_4inch_01__12882__35965.jpg', 'https://www.toynamishop.com/product_images/l/239/gaara_4inch_01__12882__35965.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Gaara', 'Naruto Shippuden Poseable Action Figure - Gaara', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('43c9b614-2adb-4aad-b2ff-6c73a84046ff', 'gaara_4-inch_02__78410__73553.jpg', 'gaara_4-inch_02__78410__73553.jpg', 'product_images/gaara_4-inch_02__78410__73553.jpg', 'https://www.toynamishop.com/product_images/x/228/gaara_4-inch_02__78410__73553.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Gaara', 'Naruto Shippuden Poseable Action Figure - Gaara', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('4b6d7880-5cde-4ac8-a232-0a9f4ea1de1e', 'gaara_4inch_03__06631__78532.jpg', 'gaara_4inch_03__06631__78532.jpg', 'product_images/gaara_4inch_03__06631__78532.jpg', 'https://www.toynamishop.com/product_images/l/881/gaara_4inch_03__06631__78532.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Gaara', 'Naruto Shippuden Poseable Action Figure - Gaara', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('6867e3aa-1c60-4fc9-b0d1-350f0e3914f6', 'gaara_4inch_04__91383__90635.jpg', 'gaara_4inch_04__91383__90635.jpg', 'product_images/gaara_4inch_04__91383__90635.jpg', 'https://www.toynamishop.com/product_images/v/377/gaara_4inch_04__91383__90635.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Gaara', 'Naruto Shippuden Poseable Action Figure - Gaara', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('ffcb2518-2e96-4a00-b64e-e040e7454aba', 'gaara_4inch_05__06796__89742.jpg', 'gaara_4inch_05__06796__89742.jpg', 'product_images/gaara_4inch_05__06796__89742.jpg', 'https://www.toynamishop.com/product_images/p/702/gaara_4inch_05__06796__89742.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Gaara', 'Naruto Shippuden Poseable Action Figure - Gaara', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('337aab12-b033-4317-91c7-2d5089484953', 'speeder_mk2_004__63680__76689.jpg', 'speeder_mk2_004__63680__76689.jpg', 'product_images/speeder_mk2_004__63680__76689.jpg', 'https://www.toynamishop.com/product_images/s/839/speeder_mk2_004__63680__76689.jpg', 'products', 'Acid Rain Speeder MK.II (Sand)', 'Acid Rain Speeder MK.II (Sand)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('c0e1a9be-be98-4bd8-bd01-5c9909b16315', 'speeder_mk2_002__02017__72945.jpg', 'speeder_mk2_002__02017__72945.jpg', 'product_images/speeder_mk2_002__02017__72945.jpg', 'https://www.toynamishop.com/product_images/l/577/speeder_mk2_002__02017__72945.jpg', 'products', 'Acid Rain Speeder MK.II (Sand)', 'Acid Rain Speeder MK.II (Sand)', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('b394a177-0ea3-4388-bb32-b13535a4cf9a', 'speeder_mk2_003__33228__57514.jpg', 'speeder_mk2_003__33228__57514.jpg', 'product_images/speeder_mk2_003__33228__57514.jpg', 'https://www.toynamishop.com/product_images/z/331/speeder_mk2_003__33228__57514.jpg', 'products', 'Acid Rain Speeder MK.II (Sand)', 'Acid Rain Speeder MK.II (Sand)', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('6450e35a-6b44-4ac2-88cd-940609145824', 'speeder_mk2_006__67146__63225.jpg', 'speeder_mk2_006__67146__63225.jpg', 'product_images/speeder_mk2_006__67146__63225.jpg', 'https://www.toynamishop.com/product_images/i/429/speeder_mk2_006__67146__63225.jpg', 'products', 'Acid Rain Speeder MK.II (Sand)', 'Acid Rain Speeder MK.II (Sand)', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('b66a2c3d-562f-4e81-a7b3-3413352a8bcd', 'speeder_mk2_007__88675__33068.jpg', 'speeder_mk2_007__88675__33068.jpg', 'product_images/speeder_mk2_007__88675__33068.jpg', 'https://www.toynamishop.com/product_images/j/302/speeder_mk2_007__88675__33068.jpg', 'products', 'Acid Rain Speeder MK.II (Sand)', 'Acid Rain Speeder MK.II (Sand)', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('cae80e18-89f0-4ab8-992b-f7c893d63410', 'speeder_mk2_009__69478__85515.jpg', 'speeder_mk2_009__69478__85515.jpg', 'product_images/speeder_mk2_009__69478__85515.jpg', 'https://www.toynamishop.com/product_images/z/105/speeder_mk2_009__69478__85515.jpg', 'products', 'Acid Rain Speeder MK.II (Sand)', 'Acid Rain Speeder MK.II (Sand)', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('7a206698-ad2b-4590-b070-870f469da8e3', 'speeder_mk2_012__65865__30832.jpg', 'speeder_mk2_012__65865__30832.jpg', 'product_images/speeder_mk2_012__65865__30832.jpg', 'https://www.toynamishop.com/product_images/v/753/speeder_mk2_012__65865__30832.jpg', 'products', 'Acid Rain Speeder MK.II (Sand)', 'Acid Rain Speeder MK.II (Sand)', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('9a6937d2-db8f-4f5c-9eda-2aeac801c570', 'speeder_mk2_010__81642__55159.jpg', 'speeder_mk2_010__81642__55159.jpg', 'product_images/speeder_mk2_010__81642__55159.jpg', 'https://www.toynamishop.com/product_images/u/531/speeder_mk2_010__81642__55159.jpg', 'products', 'Acid Rain Speeder MK.II (Sand)', 'Acid Rain Speeder MK.II (Sand)', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('34a14817-63a3-4ade-a6cd-ab9cf5fe65d9', 'skelanimal_vinyl_series2_marcy__37908__64643.jpg', 'skelanimal_vinyl_series2_marcy__37908__64643.jpg', 'product_images/skelanimal_vinyl_series2_marcy__37908__64643.jpg', 'https://www.toynamishop.com/product_images/v/450/skelanimal_vinyl_series2_marcy__37908__64643.jpg', 'products', 'Skelanimals Marcy the Monkey Vinyl Figure', 'Skelanimals Marcy the Monkey Vinyl Figure', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('06604db2-ba9f-4fe6-aee2-528d79995d04', 'macross_vintage_collection__69141__51319.jpg', 'macross_vintage_collection__69141__51319.jpg', 'product_images/macross_vintage_collection__69141__51319.jpg', 'https://www.toynamishop.com/product_images/b/407/macross_vintage_collection__69141__51319.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('35418044-dab5-445a-a1b7-28c7f4940e32', 'macross_hikaru_valkyrie__73769__50142.jpg', 'macross_hikaru_valkyrie__73769__50142.jpg', 'product_images/macross_hikaru_valkyrie__73769__50142.jpg', 'https://www.toynamishop.com/product_images/o/930/macross_hikaru_valkyrie__73769__50142.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('5d79e8c5-1777-47e5-aff9-aa62a54f31f4', 'macross_roy-focker_valkyrie__62223__21959.jpg', 'macross_roy-focker_valkyrie__62223__21959.jpg', 'product_images/macross_roy-focker_valkyrie__62223__21959.jpg', 'https://www.toynamishop.com/product_images/p/402/macross_roy-focker_valkyrie__62223__21959.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('680cc818-ff9b-483b-b04b-ac445fbfd30f', 'macross_max_vf-1j_valkyrie__58992__13610.jpg', 'macross_max_vf-1j_valkyrie__58992__13610.jpg', 'product_images/macross_max_vf-1j_valkyrie__58992__13610.jpg', 'https://www.toynamishop.com/product_images/u/822/macross_max_vf-1j_valkyrie__58992__13610.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('a6878dc6-4c69-41fc-a313-37f6e5ad2a1f', 'macross_milia_vf-1J_valkyrie__56529__43288.jpg', 'macross_milia_vf-1J_valkyrie__56529__43288.jpg', 'product_images/macross_milia_vf-1J_valkyrie__56529__43288.jpg', 'https://www.toynamishop.com/product_images/t/073/macross_milia_vf-1J_valkyrie__56529__43288.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('5de9e666-8ad4-4353-a5eb-fd2d36c2fb02', 'macross_standard_valkyrie__02200__93548.jpg', 'macross_standard_valkyrie__02200__93548.jpg', 'product_images/macross_standard_valkyrie__02200__93548.jpg', 'https://www.toynamishop.com/product_images/q/831/macross_standard_valkyrie__02200__93548.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('aa3d08a9-dc4c-474a-858c-7c298eff4f5a', 'skelanimals_dcheroes_girls-of-gotham-city_01__31115__94272.jpg', 'skelanimals_dcheroes_girls-of-gotham-city_01__31115__94272.jpg', 'product_images/skelanimals_dcheroes_girls-of-gotham-city_01__31115__94272.jpg', 'https://www.toynamishop.com/product_images/j/692/skelanimals_dcheroes_girls-of-gotham-city_01__31115__94272.jpg', 'products', 'Skelanimals / DC Heroes Poison Ivy Plush', 'Skelanimals / DC Heroes Poison Ivy Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('a18c1494-28bf-4515-ad3c-197995455c4e', 'skelanimals_dcheroes_girls-of-gotham-city_02__93115__68226.jpg', 'skelanimals_dcheroes_girls-of-gotham-city_02__93115__68226.jpg', 'product_images/skelanimals_dcheroes_girls-of-gotham-city_02__93115__68226.jpg', 'https://www.toynamishop.com/product_images/z/299/skelanimals_dcheroes_girls-of-gotham-city_02__93115__68226.jpg', 'products', 'Skelanimals / DC Heroes Poison Ivy Plush', 'Skelanimals / DC Heroes Poison Ivy Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('496bce8b-c29b-419a-b63e-d10fa0dc5d52', 'skelanimals_dc_gogc_plush__18336__91937.jpg', 'skelanimals_dc_gogc_plush__18336__91937.jpg', 'product_images/skelanimals_dc_gogc_plush__18336__91937.jpg', 'https://www.toynamishop.com/product_images/l/797/skelanimals_dc_gogc_plush__18336__91937.jpg', 'products', 'Skelanimals / DC Heroes Poison Ivy Plush', 'Skelanimals / DC Heroes Poison Ivy Plush', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('4bf44b97-bcb6-4d24-bf05-f05b245ca3f6', 'macross_shogun-warriors_VF-1J_01__39122__34230.jpg', 'macross_shogun-warriors_VF-1J_01__39122__34230.jpg', 'product_images/macross_shogun-warriors_VF-1J_01__39122__34230.jpg', 'https://www.toynamishop.com/product_images/h/777/macross_shogun-warriors_VF-1J_01__39122__34230.jpg', 'products', 'Macross Hikaru Ichijyos Shogun Warrior VF-1J', 'Macross Hikaru Ichijyos Shogun Warrior VF-1J', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('83066ccd-6d91-4055-85e6-3d6e44c4604b', 'macross_shogun-warriors_VF-1J_02__91885__18268.jpg', 'macross_shogun-warriors_VF-1J_02__91885__18268.jpg', 'product_images/macross_shogun-warriors_VF-1J_02__91885__18268.jpg', 'https://www.toynamishop.com/product_images/g/982/macross_shogun-warriors_VF-1J_02__91885__18268.jpg', 'products', 'Macross Hikaru Ichijyos Shogun Warrior VF-1J', 'Macross Hikaru Ichijyos Shogun Warrior VF-1J', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('426746e6-528e-4ee9-a32d-e38ff0460c57', 'macross_shogun-warriors_VF-1J_03__43835__02276.jpg', 'macross_shogun-warriors_VF-1J_03__43835__02276.jpg', 'product_images/macross_shogun-warriors_VF-1J_03__43835__02276.jpg', 'https://www.toynamishop.com/product_images/q/357/macross_shogun-warriors_VF-1J_03__43835__02276.jpg', 'products', 'Macross Hikaru Ichijyos Shogun Warrior VF-1J', 'Macross Hikaru Ichijyos Shogun Warrior VF-1J', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('25953a49-83ae-4711-8427-6861e6def1bb', 'macross_shogun-warriors_VF-1J_04__07233__40600.jpg', 'macross_shogun-warriors_VF-1J_04__07233__40600.jpg', 'product_images/macross_shogun-warriors_VF-1J_04__07233__40600.jpg', 'https://www.toynamishop.com/product_images/j/219/macross_shogun-warriors_VF-1J_04__07233__40600.jpg', 'products', 'Macross Hikaru Ichijyos Shogun Warrior VF-1J', 'Macross Hikaru Ichijyos Shogun Warrior VF-1J', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('2375a830-5aa9-4a97-b37f-57d200a1ca72', 'robotech-1-100_VF-1D-Trainer_super-veritech-armor_01__71570__78626.jpg', 'robotech-1-100_VF-1D-Trainer_super-veritech-armor_01__71570__78626.jpg', 'product_images/robotech-1-100_VF-1D-Trainer_super-veritech-armor_01__71570__78626.jpg', 'https://www.toynamishop.com/product_images/w/983/robotech-1-100_VF-1D-Trainer_super-veritech-armor_01__71570__78626.jpg', 'products', 'Robotech 1/100 Scale Transformable VF-1D Super Veritech', 'Robotech 1/100 Scale Transformable VF-1D Super Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('aa97ee01-af53-4aeb-85e2-a5aefcaeed3b', 'robotech-1-100_VF-1D-Trainer_super-veritech-armor_04__49462__55218.jpg', 'robotech-1-100_VF-1D-Trainer_super-veritech-armor_04__49462__55218.jpg', 'product_images/robotech-1-100_VF-1D-Trainer_super-veritech-armor_04__49462__55218.jpg', 'https://www.toynamishop.com/product_images/w/353/robotech-1-100_VF-1D-Trainer_super-veritech-armor_04__49462__55218.jpg', 'products', 'Robotech 1/100 Scale Transformable VF-1D Super Veritech', 'Robotech 1/100 Scale Transformable VF-1D Super Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('5157ac0a-3ca6-4089-8cd1-4b1e2ea63818', 'robotech-1-100_VF-1D-Trainer_super-veritech-armor_05__72065__96263.jpg', 'robotech-1-100_VF-1D-Trainer_super-veritech-armor_05__72065__96263.jpg', 'product_images/robotech-1-100_VF-1D-Trainer_super-veritech-armor_05__72065__96263.jpg', 'https://www.toynamishop.com/product_images/t/277/robotech-1-100_VF-1D-Trainer_super-veritech-armor_05__72065__96263.jpg', 'products', 'Robotech 1/100 Scale Transformable VF-1D Super Veritech', 'Robotech 1/100 Scale Transformable VF-1D Super Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('9b32888f-9c6e-4cb7-853e-460d24191f2b', 'robotech-1-100_VF-1D-Trainer_super-veritech-armor-2__49643__55477.jpg', 'robotech-1-100_VF-1D-Trainer_super-veritech-armor-2__49643__55477.jpg', 'product_images/robotech-1-100_VF-1D-Trainer_super-veritech-armor-2__49643__55477.jpg', 'https://www.toynamishop.com/product_images/l/692/robotech-1-100_VF-1D-Trainer_super-veritech-armor-2__49643__55477.jpg', 'products', 'Robotech 1/100 Scale Transformable VF-1D Super Veritech', 'Robotech 1/100 Scale Transformable VF-1D Super Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('f9a5e9b6-b9b7-4718-8215-6895ee4385b0', 'Angel_of_Death_BW_version_Toynamishop__28473__14668.jpg', 'Angel_of_Death_BW_version_Toynamishop__28473__14668.jpg', 'product_images/Angel_of_Death_BW_version_Toynamishop__28473__14668.jpg', 'https://www.toynamishop.com/product_images/n/900/Angel_of_Death_BW_version_Toynamishop__28473__14668.jpg', 'products', 'Angel of Death (B&W version)', 'Angel of Death (B&W version)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('a5dfcfad-f031-40ae-adc7-250f637cc97c', 'little-foots_collection__89752__30780.jpg', 'little-foots_collection__89752__30780.jpg', 'product_images/little-foots_collection__89752__30780.jpg', 'https://www.toynamishop.com/product_images/s/144/little-foots_collection__89752__30780.jpg', 'products', 'Little Foots Blind Box Figurine', 'Little Foots Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('47e4d303-18ea-4cc6-b8e2-884120e7d3f6', 'little_foots_05__40580__01526.jpg', 'little_foots_05__40580__01526.jpg', 'product_images/little_foots_05__40580__01526.jpg', 'https://www.toynamishop.com/product_images/a/997/little_foots_05__40580__01526.jpg', 'products', 'Little Foots Blind Box Figurine', 'Little Foots Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('24e614d6-e015-4dad-bdfd-db43d12229df', 'little_foots_09__59635__30750.jpg', 'little_foots_09__59635__30750.jpg', 'product_images/little_foots_09__59635__30750.jpg', 'https://www.toynamishop.com/product_images/m/615/little_foots_09__59635__30750.jpg', 'products', 'Little Foots Blind Box Figurine', 'Little Foots Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('acada6c4-af93-400b-9d55-2bd0661c3d5e', 'little_foots_16__99727__14258.jpg', 'little_foots_16__99727__14258.jpg', 'product_images/little_foots_16__99727__14258.jpg', 'https://www.toynamishop.com/product_images/c/992/little_foots_16__99727__14258.jpg', 'products', 'Little Foots Blind Box Figurine', 'Little Foots Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('0388ee58-51c4-4de7-89fb-4176c32f7021', 'little_foots_01__75756__84357.jpg', 'little_foots_01__75756__84357.jpg', 'product_images/little_foots_01__75756__84357.jpg', 'https://www.toynamishop.com/product_images/z/145/little_foots_01__75756__84357.jpg', 'products', 'Little Foots Blind Box Figurine', 'Little Foots Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('ab96d12e-98fe-4d5e-a509-03d21325d91e', 'CYeXrKN8__51048__91196.jpg', 'CYeXrKN8__51048__91196.jpg', 'product_images/CYeXrKN8__51048__91196.jpg', 'https://www.toynamishop.com/product_images/m/750/CYeXrKN8__51048__91196.jpg', 'products', 'B2Five Robotech Mospeada Transformable Cyclone - Scott Bernard', 'B2Five Robotech Mospeada Transformable Cyclone - Scott Bernard', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('fcafd225-e8ad-4957-bc3d-286be00a5b4f', 'm3CBymV4__36477__34519.jpg', 'm3CBymV4__36477__34519.jpg', 'product_images/m3CBymV4__36477__34519.jpg', 'https://www.toynamishop.com/product_images/s/390/m3CBymV4__36477__34519.jpg', 'products', 'B2Five Robotech Mospeada Transformable Cyclone - Scott Bernard', 'B2Five Robotech Mospeada Transformable Cyclone - Scott Bernard', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('5b9c1ce5-2953-4fe4-9a9b-8c6d18b7d3cd', '7o34H_rc__42888__11504.jpg', '7o34H_rc__42888__11504.jpg', 'product_images/7o34H_rc__42888__11504.jpg', 'https://www.toynamishop.com/product_images/x/806/7o34H_rc__42888__11504.jpg', 'products', 'B2Five Robotech Mospeada Transformable Cyclone - Scott Bernard', 'B2Five Robotech Mospeada Transformable Cyclone - Scott Bernard', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('a9a16584-9375-49ee-8493-30b45e54ea7f', 'C_gIZGkk__24386__61985.jpg', 'C_gIZGkk__24386__61985.jpg', 'product_images/C_gIZGkk__24386__61985.jpg', 'https://www.toynamishop.com/product_images/b/938/C_gIZGkk__24386__61985.jpg', 'products', 'B2Five Robotech Mospeada Transformable Cyclone - Scott Bernard', 'B2Five Robotech Mospeada Transformable Cyclone - Scott Bernard', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('03539b3c-5394-4982-ab54-a7ea15ebd39a', 'skelanimal_vinyl_series2_diego__60373__65479.jpg', 'skelanimal_vinyl_series2_diego__60373__65479.jpg', 'product_images/skelanimal_vinyl_series2_diego__60373__65479.jpg', 'https://www.toynamishop.com/product_images/w/595/skelanimal_vinyl_series2_diego__60373__65479.jpg', 'products', 'Skelanimals Diego the Bat Vinyl Figure', 'Skelanimals Diego the Bat Vinyl Figure', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('1aa9319c-8354-44c8-9610-a414cab81744', 'skelanimal_blind-box_pack-2016__00854__18303.jpg', 'skelanimal_blind-box_pack-2016__00854__18303.jpg', 'product_images/skelanimal_blind-box_pack-2016__00854__18303.jpg', 'https://www.toynamishop.com/product_images/r/772/skelanimal_blind-box_pack-2016__00854__18303.jpg', 'products', 'Skelanimals Blind Box Series 3 Figurine', 'Skelanimals Blind Box Series 3 Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('518dc6ef-7968-4671-ab7c-07e3e087adb2', 'skelanimal_blind-box_pack-20162__58404__40869.jpg', 'skelanimal_blind-box_pack-20162__58404__40869.jpg', 'product_images/skelanimal_blind-box_pack-20162__58404__40869.jpg', 'https://www.toynamishop.com/product_images/i/728/skelanimal_blind-box_pack-20162__58404__40869.jpg', 'products', 'Skelanimals Blind Box Series 3 Figurine', 'Skelanimals Blind Box Series 3 Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('b07b5eb7-10ab-4d74-b956-c8d079038472', 'Angel_of_Death_2_Toynamishop__93803__20674.jpg', 'Angel_of_Death_2_Toynamishop__93803__20674.jpg', 'product_images/Angel_of_Death_2_Toynamishop__93803__20674.jpg', 'https://www.toynamishop.com/product_images/y/277/Angel_of_Death_2_Toynamishop__93803__20674.jpg', 'products', 'Angel of Death (Color version)', 'Angel of Death (Color version)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('0b8d88e5-8e7f-4c34-a27a-5f8114a4ef9c', 'DSC_0554__01061__24710.JPG', 'DSC_0554__01061__24710.JPG', 'product_images/DSC_0554__01061__24710.JPG', 'https://www.toynamishop.com/product_images/p/022/DSC_0554__01061__24710.JPG', 'products', 'B2Five 88th Sand Laurel LA4S4', 'B2Five 88th Sand Laurel LA4S4', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('1a7290da-822c-4075-8a34-34af18dc567b', 'DSC_0546__62882__32372.JPG', 'DSC_0546__62882__32372.JPG', 'product_images/DSC_0546__62882__32372.JPG', 'https://www.toynamishop.com/product_images/a/683/DSC_0546__62882__32372.JPG', 'products', 'B2Five 88th Sand Laurel LA4S4', 'B2Five 88th Sand Laurel LA4S4', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('f48010d8-114b-4ba8-beb4-87217567fa45', 'DSC_0527__06569__63320.JPG', 'DSC_0527__06569__63320.JPG', 'product_images/DSC_0527__06569__63320.JPG', 'https://www.toynamishop.com/product_images/b/852/DSC_0527__06569__63320.JPG', 'products', 'B2Five 88th Sand Laurel LA4S4', 'B2Five 88th Sand Laurel LA4S4', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('936af9d3-9b74-4f5e-86c1-7bae6242fb28', 'DSC_0540__16125__25874.JPG', 'DSC_0540__16125__25874.JPG', 'product_images/DSC_0540__16125__25874.JPG', 'https://www.toynamishop.com/product_images/s/615/DSC_0540__16125__25874.JPG', 'products', 'B2Five 88th Sand Laurel LA4S4', 'B2Five 88th Sand Laurel LA4S4', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('87d86310-c872-442e-8b7a-be0e9b578411', 'DSC_0559__38319__17119.JPG', 'DSC_0559__38319__17119.JPG', 'product_images/DSC_0559__38319__17119.JPG', 'https://www.toynamishop.com/product_images/z/795/DSC_0559__38319__17119.JPG', 'products', 'B2Five 88th Sand Laurel LA4S4', 'B2Five 88th Sand Laurel LA4S4', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('00f5b243-e71d-4cde-a8dd-7c7f9c96d18b', 'skelanimals_dcheroes_girls-of-gotham-city_03__97381__26804.jpg', 'skelanimals_dcheroes_girls-of-gotham-city_03__97381__26804.jpg', 'product_images/skelanimals_dcheroes_girls-of-gotham-city_03__97381__26804.jpg', 'https://www.toynamishop.com/product_images/u/614/skelanimals_dcheroes_girls-of-gotham-city_03__97381__26804.jpg', 'products', 'Skelanimals / DC Heroes Batgirl Plush', 'Skelanimals / DC Heroes Batgirl Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('11942d14-af12-484d-9b85-61fd715e9c14', 'skelanimals_dcheroes_girls-of-gotham-city_04__58787__65115.jpg', 'skelanimals_dcheroes_girls-of-gotham-city_04__58787__65115.jpg', 'product_images/skelanimals_dcheroes_girls-of-gotham-city_04__58787__65115.jpg', 'https://www.toynamishop.com/product_images/a/187/skelanimals_dcheroes_girls-of-gotham-city_04__58787__65115.jpg', 'products', 'Skelanimals / DC Heroes Batgirl Plush', 'Skelanimals / DC Heroes Batgirl Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('3d342a61-46ce-48b1-a3c8-bf06ca2632d6', 'skelanimals_dc_gogc_plush__21341__89334.jpg', 'skelanimals_dc_gogc_plush__21341__89334.jpg', 'product_images/skelanimals_dc_gogc_plush__21341__89334.jpg', 'https://www.toynamishop.com/product_images/w/045/skelanimals_dc_gogc_plush__21341__89334.jpg', 'products', 'Skelanimals / DC Heroes Batgirl Plush', 'Skelanimals / DC Heroes Batgirl Plush', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('a3cf7ff3-1f0f-45d8-bfa3-56c77e6b91fe', 'dc_skelanimals_vinyl_figurines_all1__89276__71221.jpg', 'dc_skelanimals_vinyl_figurines_all1__89276__71221.jpg', 'product_images/dc_skelanimals_vinyl_figurines_all1__89276__71221.jpg', 'https://www.toynamishop.com/product_images/r/613/dc_skelanimals_vinyl_figurines_all1__89276__71221.jpg', 'products', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('af034c13-e2d9-461a-9158-7d6381a4af60', 'skelanimal_dc_heroes_3_inch_vinyl_harleyquinn__03988__16364.jpg', 'skelanimal_dc_heroes_3_inch_vinyl_harleyquinn__03988__16364.jpg', 'product_images/skelanimal_dc_heroes_3_inch_vinyl_harleyquinn__03988__16364.jpg', 'https://www.toynamishop.com/product_images/g/098/skelanimal_dc_heroes_3_inch_vinyl_harleyquinn__03988__16364.jpg', 'products', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('5dee782b-347c-4c93-9c21-02b1240b4205', 'skelanimal_dc_heroes_3_inch_vinyl_batman__93048__71169.jpg', 'skelanimal_dc_heroes_3_inch_vinyl_batman__93048__71169.jpg', 'product_images/skelanimal_dc_heroes_3_inch_vinyl_batman__93048__71169.jpg', 'https://www.toynamishop.com/product_images/i/125/skelanimal_dc_heroes_3_inch_vinyl_batman__93048__71169.jpg', 'products', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('71ee918c-537e-4c69-97b8-dd596da92a6f', 'skelanimal_dc_heroes_3_inch_vinyl_wonderwoman__34812__95379.jpg', 'skelanimal_dc_heroes_3_inch_vinyl_wonderwoman__34812__95379.jpg', 'product_images/skelanimal_dc_heroes_3_inch_vinyl_wonderwoman__34812__95379.jpg', 'https://www.toynamishop.com/product_images/r/802/skelanimal_dc_heroes_3_inch_vinyl_wonderwoman__34812__95379.jpg', 'products', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('4fbc3294-c359-420b-9e4a-59c2532216d5', 'skelanimal_dc_heroes_3_inch_vinyl_robin__94555__63944.jpg', 'skelanimal_dc_heroes_3_inch_vinyl_robin__94555__63944.jpg', 'product_images/skelanimal_dc_heroes_3_inch_vinyl_robin__94555__63944.jpg', 'https://www.toynamishop.com/product_images/v/972/skelanimal_dc_heroes_3_inch_vinyl_robin__94555__63944.jpg', 'products', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('867735d5-6101-44b2-afa9-704165532046', 'skelanimal_dc_heroes_3_inch_vinyl_superman__78692__40451.jpg', 'skelanimal_dc_heroes_3_inch_vinyl_superman__78692__40451.jpg', 'product_images/skelanimal_dc_heroes_3_inch_vinyl_superman__78692__40451.jpg', 'https://www.toynamishop.com/product_images/h/117/skelanimal_dc_heroes_3_inch_vinyl_superman__78692__40451.jpg', 'products', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('4ecbe2ec-cfeb-4d08-81ab-fa45be2ea18c', 'dc_skelanimals_vinyl_figurines_all__21938__78681.jpg', 'dc_skelanimals_vinyl_figurines_all__21938__78681.jpg', 'product_images/dc_skelanimals_vinyl_figurines_all__21938__78681.jpg', 'https://www.toynamishop.com/product_images/d/657/dc_skelanimals_vinyl_figurines_all__21938__78681.jpg', 'products', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('565d2c51-0776-4553-8a2d-79d802e62e78', 'skelanimal_dc_heroes_3_inch_vinyl_assortment__13076__42055.jpg', 'skelanimal_dc_heroes_3_inch_vinyl_assortment__13076__42055.jpg', 'product_images/skelanimal_dc_heroes_3_inch_vinyl_assortment__13076__42055.jpg', 'https://www.toynamishop.com/product_images/q/915/skelanimal_dc_heroes_3_inch_vinyl_assortment__13076__42055.jpg', 'products', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('68e6c5ab-cdc5-42b0-ad7b-ff325f775717', 'robotech-x-eepmon_12-1280x960__24166__62376.jpg', 'robotech-x-eepmon_12-1280x960__24166__62376.jpg', 'product_images/robotech-x-eepmon_12-1280x960__24166__62376.jpg', 'https://www.toynamishop.com/product_images/m/411/robotech-x-eepmon_12-1280x960__24166__62376.jpg', 'products', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('123a0d8b-d876-42fd-a89f-cca293e6a4dc', 'Aviator_Flight_Jacket__71370__88657.jpg', 'Aviator_Flight_Jacket__71370__88657.jpg', 'product_images/Aviator_Flight_Jacket__71370__88657.jpg', 'https://www.toynamishop.com/product_images/z/738/Aviator_Flight_Jacket__71370__88657.jpg', 'products', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('b40386a9-f23c-446a-b3cd-2b3b64c8295d', 'robotech-x-eepmon_11-1280x960__37980__82286.jpg', 'robotech-x-eepmon_11-1280x960__37980__82286.jpg', 'product_images/robotech-x-eepmon_11-1280x960__37980__82286.jpg', 'https://www.toynamishop.com/product_images/z/244/robotech-x-eepmon_11-1280x960__37980__82286.jpg', 'products', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('c8834135-4b04-402a-b0c1-9c5e26b45315', 'robotech-x-eepmon_2-1280x960__90629__14893.jpg', 'robotech-x-eepmon_2-1280x960__90629__14893.jpg', 'product_images/robotech-x-eepmon_2-1280x960__90629__14893.jpg', 'https://www.toynamishop.com/product_images/z/604/robotech-x-eepmon_2-1280x960__90629__14893.jpg', 'products', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('8e0a8fb5-ac42-42bd-ac0d-8a9c953161a0', 'robotech-x-eepmon_8-1280x960__05817__00629.jpg', 'robotech-x-eepmon_8-1280x960__05817__00629.jpg', 'product_images/robotech-x-eepmon_8-1280x960__05817__00629.jpg', 'https://www.toynamishop.com/product_images/t/378/robotech-x-eepmon_8-1280x960__05817__00629.jpg', 'products', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('e09cbb5f-b2f8-4062-be8c-3bcba2f229e5', 'robotech-x-eepmon_10-1280x960__69199__33038.jpg', 'robotech-x-eepmon_10-1280x960__69199__33038.jpg', 'product_images/robotech-x-eepmon_10-1280x960__69199__33038.jpg', 'https://www.toynamishop.com/product_images/b/553/robotech-x-eepmon_10-1280x960__69199__33038.jpg', 'products', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('c57c5ad0-ae2f-4632-892d-7fe18d31e7fd', 'robotech-x-eepmon_3-1280x960__05143__42567.jpg', 'robotech-x-eepmon_3-1280x960__05143__42567.jpg', 'product_images/robotech-x-eepmon_3-1280x960__05143__42567.jpg', 'https://www.toynamishop.com/product_images/f/617/robotech-x-eepmon_3-1280x960__05143__42567.jpg', 'products', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('51aeaf76-6d6e-4dfe-9863-175ab70272a5', 'robotech-x-eepmon_13-1280x960__50361__67190.jpg', 'robotech-x-eepmon_13-1280x960__50361__67190.jpg', 'product_images/robotech-x-eepmon_13-1280x960__50361__67190.jpg', 'https://www.toynamishop.com/product_images/n/545/robotech-x-eepmon_13-1280x960__50361__67190.jpg', 'products', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('a8ed44f1-42c0-4927-9a99-e897fb57bb89', 'robotech_1_100_30th_anniversary_series_2_vf_1j_GBP_1_shadow_heavy_armor__80387__57153.jpg', 'robotech_1_100_30th_anniversary_series_2_vf_1j_GBP_1_shadow_heavy_armor__80387__57153.jpg', 'product_images/robotech_1_100_30th_anniversary_series_2_vf_1j_GBP_1_shadow_heavy_armor__80387__57153.jpg', 'https://www.toynamishop.com/product_images/c/949/robotech_1_100_30th_anniversary_series_2_vf_1j_GBP_1_shadow_heavy_armor__80387__57153.jpg', 'products', 'Comic Con 2015 Exclusive: Robotech GBP-1 - Stealth Fighter - Heavy Armor', 'Comic Con 2015 Exclusive: Robotech GBP-1 - Stealth Fighter - Heavy Armor', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('246a12af-b840-4c5e-9115-4b9987ac4a73', 'badtz_maru_ryu_plush01__73607__44480.jpg', 'badtz_maru_ryu_plush01__73607__44480.jpg', 'product_images/badtz_maru_ryu_plush01__73607__44480.jpg', 'https://www.toynamishop.com/product_images/t/440/badtz_maru_ryu_plush01__73607__44480.jpg', 'products', 'SDCC 2013 Exclusive: Badtz Maru Ryu Plush', 'SDCC 2013 Exclusive: Badtz Maru Ryu Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('c1225f25-94ab-4426-a747-1cdaa2d344a7', 'badtz_maru_ryu_plush03__32030__02584.jpg', 'badtz_maru_ryu_plush03__32030__02584.jpg', 'product_images/badtz_maru_ryu_plush03__32030__02584.jpg', 'https://www.toynamishop.com/product_images/s/396/badtz_maru_ryu_plush03__32030__02584.jpg', 'products', 'SDCC 2013 Exclusive: Badtz Maru Ryu Plush', 'SDCC 2013 Exclusive: Badtz Maru Ryu Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('7f585e9d-15a9-44fe-87a4-30113561641b', 'badtz_maru_ryu_plush02__56015__21364.jpg', 'badtz_maru_ryu_plush02__56015__21364.jpg', 'product_images/badtz_maru_ryu_plush02__56015__21364.jpg', 'https://www.toynamishop.com/product_images/r/838/badtz_maru_ryu_plush02__56015__21364.jpg', 'products', 'SDCC 2013 Exclusive: Badtz Maru Ryu Plush', 'SDCC 2013 Exclusive: Badtz Maru Ryu Plush', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('13f51c17-fbb5-48b6-ae53-2d2ae044d73b', 'street_fighter_x_sanrio_badtzmaru_ryu_plush__63586__03358.jpg', 'street_fighter_x_sanrio_badtzmaru_ryu_plush__63586__03358.jpg', 'product_images/street_fighter_x_sanrio_badtzmaru_ryu_plush__63586__03358.jpg', 'https://www.toynamishop.com/product_images/e/883/street_fighter_x_sanrio_badtzmaru_ryu_plush__63586__03358.jpg', 'products', 'SDCC 2013 Exclusive: Badtz Maru Ryu Plush', 'SDCC 2013 Exclusive: Badtz Maru Ryu Plush', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('cbb990b0-3115-4901-91e3-99dbf862347a', 'sasuke_4inch_03__26202__29908.jpg', 'sasuke_4inch_03__26202__29908.jpg', 'product_images/sasuke_4inch_03__26202__29908.jpg', 'https://www.toynamishop.com/product_images/i/338/sasuke_4inch_03__26202__29908.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Sasuke', 'Naruto Shippuden Poseable Action Figure - Sasuke', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('6369397d-983c-4058-8b6f-90f246093ba7', 'sasuke_4inch_02__86833__65501.jpg', 'sasuke_4inch_02__86833__65501.jpg', 'product_images/sasuke_4inch_02__86833__65501.jpg', 'https://www.toynamishop.com/product_images/x/147/sasuke_4inch_02__86833__65501.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Sasuke', 'Naruto Shippuden Poseable Action Figure - Sasuke', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('f53b8159-0e15-4017-98a1-4df153230e0b', 'sasuke_4inch_01__53299__62812.jpg', 'sasuke_4inch_01__53299__62812.jpg', 'product_images/sasuke_4inch_01__53299__62812.jpg', 'https://www.toynamishop.com/product_images/x/027/sasuke_4inch_01__53299__62812.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Sasuke', 'Naruto Shippuden Poseable Action Figure - Sasuke', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('c0800033-30bc-438e-9890-71fbde1f5ee9', 'sasuke_4inch_04__92654__32676.jpg', 'sasuke_4inch_04__92654__32676.jpg', 'product_images/sasuke_4inch_04__92654__32676.jpg', 'https://www.toynamishop.com/product_images/v/611/sasuke_4inch_04__92654__32676.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Sasuke', 'Naruto Shippuden Poseable Action Figure - Sasuke', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('9625c60a-5eab-49ad-bcca-fc29bb067761', 'sasuke_4inch_05__30268__18315.jpg', 'sasuke_4inch_05__30268__18315.jpg', 'product_images/sasuke_4inch_05__30268__18315.jpg', 'https://www.toynamishop.com/product_images/i/125/sasuke_4inch_05__30268__18315.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Sasuke', 'Naruto Shippuden Poseable Action Figure - Sasuke', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('c32cb3c0-bc61-4ca9-b614-dc22de4ca32a', 'emily-Bendy_excluosive_01__94129__75733.jpg', 'emily-Bendy_excluosive_01__94129__75733.jpg', 'product_images/emily-Bendy_excluosive_01__94129__75733.jpg', 'https://www.toynamishop.com/product_images/v/583/emily-Bendy_excluosive_01__94129__75733.jpg', 'products', 'Emily the Strange 6" Bendy Figure Convention Exclusive', 'Emily the Strange 6" Bendy Figure Convention Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('5441571d-ac80-4f93-a6ee-c7925d4f42cc', '1-100-scale_super-veritech__rick-hunter_battloid__05459__75924.jpg', '1-100-scale_super-veritech__rick-hunter_battloid__05459__75924.jpg', 'product_images/1-100-scale_super-veritech__rick-hunter_battloid__05459__75924.jpg', 'https://www.toynamishop.com/product_images/w/001/1-100-scale_super-veritech__rick-hunter_battloid__05459__75924.jpg', 'products', 'Robotech 1/100 Rick Hunter VF-1J Super Veritech', 'Robotech 1/100 Rick Hunter VF-1J Super Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('9824aba5-633a-4d8b-8e25-e6ee5ac962af', '1-100-scale_super-veritech__rick-hunter_guardian__89462__35006.jpg', '1-100-scale_super-veritech__rick-hunter_guardian__89462__35006.jpg', 'product_images/1-100-scale_super-veritech__rick-hunter_guardian__89462__35006.jpg', 'https://www.toynamishop.com/product_images/x/046/1-100-scale_super-veritech__rick-hunter_guardian__89462__35006.jpg', 'products', 'Robotech 1/100 Rick Hunter VF-1J Super Veritech', 'Robotech 1/100 Rick Hunter VF-1J Super Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('277d359f-5428-433b-a84a-017d2869b6e1', '1-100-scale_super-veritech__rick-hunter_fighter__75957__58975.jpg', '1-100-scale_super-veritech__rick-hunter_fighter__75957__58975.jpg', 'product_images/1-100-scale_super-veritech__rick-hunter_fighter__75957__58975.jpg', 'https://www.toynamishop.com/product_images/l/609/1-100-scale_super-veritech__rick-hunter_fighter__75957__58975.jpg', 'products', 'Robotech 1/100 Rick Hunter VF-1J Super Veritech', 'Robotech 1/100 Rick Hunter VF-1J Super Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('78762da7-19e2-4820-a8e1-fa8aa4d0e968', 'robotech_1-100_VF-1J_rick_hunter_super_veritech_armor__83382__69739.jpg', 'robotech_1-100_VF-1J_rick_hunter_super_veritech_armor__83382__69739.jpg', 'product_images/robotech_1-100_VF-1J_rick_hunter_super_veritech_armor__83382__69739.jpg', 'https://www.toynamishop.com/product_images/y/504/robotech_1-100_VF-1J_rick_hunter_super_veritech_armor__83382__69739.jpg', 'products', 'Robotech 1/100 Rick Hunter VF-1J Super Veritech', 'Robotech 1/100 Rick Hunter VF-1J Super Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('c3c1da1c-9a9d-48d2-8bed-03274a5f76ae', 'Godzilla_plush_01__42645__52730.jpg', 'Godzilla_plush_01__42645__52730.jpg', 'product_images/Godzilla_plush_01__42645__52730.jpg', 'https://www.toynamishop.com/product_images/r/666/Godzilla_plush_01__42645__52730.jpg', 'products', 'Godzilla 1989 - Limited Edition Plush', 'Godzilla 1989 - Limited Edition Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('f4e4810f-9ed5-4e7a-9a8f-667d83e18a02', 'Godzilla_plush_05__64391__74646.jpg', 'Godzilla_plush_05__64391__74646.jpg', 'product_images/Godzilla_plush_05__64391__74646.jpg', 'https://www.toynamishop.com/product_images/t/099/Godzilla_plush_05__64391__74646.jpg', 'products', 'Godzilla 1989 - Limited Edition Plush', 'Godzilla 1989 - Limited Edition Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('2f1bcb82-ee5a-4368-9a0b-b62ef219fa76', 'Godzilla_plush_02__18396__26602.jpg', 'Godzilla_plush_02__18396__26602.jpg', 'product_images/Godzilla_plush_02__18396__26602.jpg', 'https://www.toynamishop.com/product_images/l/482/Godzilla_plush_02__18396__26602.jpg', 'products', 'Godzilla 1989 - Limited Edition Plush', 'Godzilla 1989 - Limited Edition Plush', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('5288369f-8933-4c56-b439-66e56df6778e', 'Godzilla_plush_03__04586__49369.jpg', 'Godzilla_plush_03__04586__49369.jpg', 'product_images/Godzilla_plush_03__04586__49369.jpg', 'https://www.toynamishop.com/product_images/c/343/Godzilla_plush_03__04586__49369.jpg', 'products', 'Godzilla 1989 - Limited Edition Plush', 'Godzilla 1989 - Limited Edition Plush', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('ba160eff-7a11-4b8f-b44c-a1a00b19c6d6', 'naruto_sage-mode_pvc-statue_2__43077__35058.jpg', 'naruto_sage-mode_pvc-statue_2__43077__35058.jpg', 'product_images/naruto_sage-mode_pvc-statue_2__43077__35058.jpg', 'https://www.toynamishop.com/product_images/k/338/naruto_sage-mode_pvc-statue_2__43077__35058.jpg', 'products', '6" Sage Mode Naruto with Scroll Exclusive', '6" Sage Mode Naruto with Scroll Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('0579d0bc-ece8-45d9-a204-5dac7512908c', 'naruto_sage-mode_pvc-statue__17408__63899.jpg', 'naruto_sage-mode_pvc-statue__17408__63899.jpg', 'product_images/naruto_sage-mode_pvc-statue__17408__63899.jpg', 'https://www.toynamishop.com/product_images/s/954/naruto_sage-mode_pvc-statue__17408__63899.jpg', 'products', '6" Sage Mode Naruto with Scroll Exclusive', '6" Sage Mode Naruto with Scroll Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('af742771-d356-434c-9887-44ac413a23d0', 'HvWIhifw__22822__78616.jpg', 'HvWIhifw__22822__78616.jpg', 'product_images/HvWIhifw__22822__78616.jpg', 'https://www.toynamishop.com/product_images/p/649/HvWIhifw__22822__78616.jpg', 'products', 'B2Five Robotech Mospeada Transformable Cyclone - Lance Belmont', 'B2Five Robotech Mospeada Transformable Cyclone - Lance Belmont', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('49a22035-704a-4e32-bfac-bd1de8e617a9', '7qu76EBM__20424__23972.jpg', '7qu76EBM__20424__23972.jpg', 'product_images/7qu76EBM__20424__23972.jpg', 'https://www.toynamishop.com/product_images/l/396/7qu76EBM__20424__23972.jpg', 'products', 'B2Five Robotech Mospeada Transformable Cyclone - Lance Belmont', 'B2Five Robotech Mospeada Transformable Cyclone - Lance Belmont', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('ca6c143d-6e79-4954-8eb1-948354081adc', 'C-AHv7zg__03663__28315.jpg', 'C-AHv7zg__03663__28315.jpg', 'product_images/C-AHv7zg__03663__28315.jpg', 'https://www.toynamishop.com/product_images/b/760/C-AHv7zg__03663__28315.jpg', 'products', 'B2Five Robotech Mospeada Transformable Cyclone - Lance Belmont', 'B2Five Robotech Mospeada Transformable Cyclone - Lance Belmont', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('dc8d8910-3e7f-48ff-a55f-bd3455f5541b', 'FGzbSLPg__66392__26871.jpg', 'FGzbSLPg__66392__26871.jpg', 'product_images/FGzbSLPg__66392__26871.jpg', 'https://www.toynamishop.com/product_images/o/250/FGzbSLPg__66392__26871.jpg', 'products', 'B2Five Robotech Mospeada Transformable Cyclone - Lance Belmont', 'B2Five Robotech Mospeada Transformable Cyclone - Lance Belmont', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('8c46d46d-8bcd-4c23-a17c-b363ca0a4f85', 'TCDTLxgQ__51762__49605.png', 'TCDTLxgQ__51762__49605.png', 'product_images/TCDTLxgQ__51762__49605.png', 'https://www.toynamishop.com/product_images/j/859/TCDTLxgQ__51762__49605.png', 'products', 'Little Burnt Embers Special Edition Figurines Set - 2022 CONVENTION EXCLUSIVE', 'Little Burnt Embers Special Edition Figurines Set - 2022 CONVENTION EXCLUSIVE', 'image/png', 'png', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('3475a1cf-81d3-49b8-95c1-9b8c2b56ac3e', 'IMG_0692__52096__01051.jpg', 'IMG_0692__52096__01051.jpg', 'product_images/IMG_0692__52096__01051.jpg', 'https://www.toynamishop.com/product_images/l/136/IMG_0692__52096__01051.jpg', 'products', 'Little Burnt Embers Special Edition Figurines Set - 2022 CONVENTION EXCLUSIVE', 'Little Burnt Embers Special Edition Figurines Set - 2022 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('705b55d0-e80a-42f3-b170-f3f5eecf0a01', 'Robotech_action_Figures_series2_0000_group__66651__51728.jpg', 'Robotech_action_Figures_series2_0000_group__66651__51728.jpg', 'product_images/Robotech_action_Figures_series2_0000_group__66651__51728.jpg', 'https://www.toynamishop.com/product_images/d/127/Robotech_action_Figures_series2_0000_group__66651__51728.jpg', 'products', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('eb57b9e9-1cee-47e5-a595-bd48e6b1da8f', 'Robotech_action_Figures_series2_0000s_0001_rick__92847__72850.jpg', 'Robotech_action_Figures_series2_0000s_0001_rick__92847__72850.jpg', 'product_images/Robotech_action_Figures_series2_0000s_0001_rick__92847__72850.jpg', 'https://www.toynamishop.com/product_images/w/053/Robotech_action_Figures_series2_0000s_0001_rick__92847__72850.jpg', 'products', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('154b70d8-ca82-4d91-90c1-6c5233dc520f', 'Robotech_action_Figures_series2_0005_rick-hunter__package_front__03314__86843.jpg', 'Robotech_action_Figures_series2_0005_rick-hunter__package_front__03314__86843.jpg', 'product_images/Robotech_action_Figures_series2_0005_rick-hunter__package_front__03314__86843.jpg', 'https://www.toynamishop.com/product_images/d/315/Robotech_action_Figures_series2_0005_rick-hunter__package_front__03314__86843.jpg', 'products', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('545500e4-e589-4872-a7d4-2d668d425514', 'Robotech_action_Figures_series2_0000s_0003_lisa__19227__94474.jpg', 'Robotech_action_Figures_series2_0000s_0003_lisa__19227__94474.jpg', 'product_images/Robotech_action_Figures_series2_0000s_0003_lisa__19227__94474.jpg', 'https://www.toynamishop.com/product_images/a/359/Robotech_action_Figures_series2_0000s_0003_lisa__19227__94474.jpg', 'products', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('474269bc-1c23-4c6f-9406-a7b3af49b3be', 'Robotech_action_Figures_series2_0004_lisa-hayes__package_front__55085__86843.jpg', 'Robotech_action_Figures_series2_0004_lisa-hayes__package_front__55085__86843.jpg', 'product_images/Robotech_action_Figures_series2_0004_lisa-hayes__package_front__55085__86843.jpg', 'https://www.toynamishop.com/product_images/i/425/Robotech_action_Figures_series2_0004_lisa-hayes__package_front__55085__86843.jpg', 'products', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('2280279d-bf15-4ba3-af4b-009c78a5d48c', 'Robotech_action_Figures_series2_0000s_0000_captain__71034__01390.jpg', 'Robotech_action_Figures_series2_0000s_0000_captain__71034__01390.jpg', 'product_images/Robotech_action_Figures_series2_0000s_0000_captain__71034__01390.jpg', 'https://www.toynamishop.com/product_images/c/123/Robotech_action_Figures_series2_0000s_0000_captain__71034__01390.jpg', 'products', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('c65f0789-8689-4ed6-b375-a365a65542af', 'Robotech_action_Figures_series2_0002_captain-gloval__package_front__25686__48102.jpg', 'Robotech_action_Figures_series2_0002_captain-gloval__package_front__25686__48102.jpg', 'product_images/Robotech_action_Figures_series2_0002_captain-gloval__package_front__25686__48102.jpg', 'https://www.toynamishop.com/product_images/u/627/Robotech_action_Figures_series2_0002_captain-gloval__package_front__25686__48102.jpg', 'products', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('973d6a43-dedc-4bc3-9b39-df361eda1829', 'Robotech_action_Figures_series2_0000s_0002_claudia__48297__12239.jpg', 'Robotech_action_Figures_series2_0000s_0002_claudia__48297__12239.jpg', 'product_images/Robotech_action_Figures_series2_0000s_0002_claudia__48297__12239.jpg', 'https://www.toynamishop.com/product_images/n/791/Robotech_action_Figures_series2_0000s_0002_claudia__48297__12239.jpg', 'products', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('bba135a7-f013-47f4-b180-69c7bd0880a0', 'Robotech_action_Figures_series2_0003_claudia-grant__package_front__02955__87851.jpg', 'Robotech_action_Figures_series2_0003_claudia-grant__package_front__02955__87851.jpg', 'product_images/Robotech_action_Figures_series2_0003_claudia-grant__package_front__02955__87851.jpg', 'https://www.toynamishop.com/product_images/b/398/Robotech_action_Figures_series2_0003_claudia-grant__package_front__02955__87851.jpg', 'products', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 10, '2025-08-24 03:34:39.225191+00', NOW()),
+('cd93ed61-2674-4ee6-b3c8-d8a72cdb3e7e', 'Robotech_action_Figures_series2_0000s_0004_ben__09265__89239.jpg', 'Robotech_action_Figures_series2_0000s_0004_ben__09265__89239.jpg', 'product_images/Robotech_action_Figures_series2_0000s_0004_ben__09265__89239.jpg', 'https://www.toynamishop.com/product_images/r/271/Robotech_action_Figures_series2_0000s_0004_ben__09265__89239.jpg', 'products', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 11, '2025-08-24 03:34:39.225191+00', NOW()),
+('3eb67291-a3b5-496e-98f1-b758ba1e0250', 'Robotech_action_Figures_series2_0001_ben-dixon__package_front__29585__51323.jpg', 'Robotech_action_Figures_series2_0001_ben-dixon__package_front__29585__51323.jpg', 'product_images/Robotech_action_Figures_series2_0001_ben-dixon__package_front__29585__51323.jpg', 'https://www.toynamishop.com/product_images/u/815/Robotech_action_Figures_series2_0001_ben-dixon__package_front__29585__51323.jpg', 'products', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'Robotech Poseable Action Figures Series 2 (Set of 5)', 'image/jpeg', 'jpg', ARRAY['product'], 12, '2025-08-24 03:34:39.225191+00', NOW()),
+('1b2302ab-3656-45fe-8cbd-421675b209a3', '1080x1080_Embers_kyanite_plush_2024__21536__74293.jpg', '1080x1080_Embers_kyanite_plush_2024__21536__74293.jpg', 'product_images/1080x1080_Embers_kyanite_plush_2024__21536__74293.jpg', 'https://www.toynamishop.com/product_images/r/585/1080x1080_Embers_kyanite_plush_2024__21536__74293.jpg', 'products', 'Kyanite Plush', 'Kyanite Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('6d69dae9-1cf2-4338-8426-ae86da4db3ab', 'bloody_bunny_plush01__21530__60827.jpg', 'bloody_bunny_plush01__21530__60827.jpg', 'product_images/bloody_bunny_plush01__21530__60827.jpg', 'https://www.toynamishop.com/product_images/c/197/bloody_bunny_plush01__21530__60827.jpg', 'products', 'Bloody Bunny 7-inch Mini Plush', 'Bloody Bunny 7-inch Mini Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('2b3ee9a4-705d-4b67-8743-4d3f54b774ec', 'bloody_bunny_plush_pq__37101__49901.jpg', 'bloody_bunny_plush_pq__37101__49901.jpg', 'product_images/bloody_bunny_plush_pq__37101__49901.jpg', 'https://www.toynamishop.com/product_images/o/822/bloody_bunny_plush_pq__37101__49901.jpg', 'products', 'Bloody Bunny 7-inch Mini Plush', 'Bloody Bunny 7-inch Mini Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('7d2a5f77-3f43-4e78-bd52-0ae3c48f7749', 'CC2016_bonita-6-inch-plush__72438__59579.jpg', 'CC2016_bonita-6-inch-plush__72438__59579.jpg', 'product_images/CC2016_bonita-6-inch-plush__72438__59579.jpg', 'https://www.toynamishop.com/product_images/r/090/CC2016_bonita-6-inch-plush__72438__59579.jpg', 'products', 'Comic Con 2016 Exclusive: Skelanimals Bonita Plush', 'Comic Con 2016 Exclusive: Skelanimals Bonita Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('1b3eafa6-889f-4b08-a984-5cfceb80f012', '20190331_170218__90595__02019.jpg', '20190331_170218__90595__02019.jpg', 'product_images/20190331_170218__90595__02019.jpg', 'https://www.toynamishop.com/product_images/p/032/20190331_170218__90595__02019.jpg', 'products', 'Acid Rain Sofi', 'Acid Rain Sofi', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('1a464bb8-e59b-471a-bb0c-c8101e493d6a', '20190331_165329__23884__58845.jpg', '20190331_165329__23884__58845.jpg', 'product_images/20190331_165329__23884__58845.jpg', 'https://www.toynamishop.com/product_images/o/113/20190331_165329__23884__58845.jpg', 'products', 'Acid Rain Sofi', 'Acid Rain Sofi', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('b3b99f41-7d97-4797-9c93-c09a88b4cc72', '20190331_165633__84159__88366.jpg', '20190331_165633__84159__88366.jpg', 'product_images/20190331_165633__84159__88366.jpg', 'https://www.toynamishop.com/product_images/q/083/20190331_165633__84159__88366.jpg', 'products', 'Acid Rain Sofi', 'Acid Rain Sofi', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('6de541a9-8883-4e68-bf8c-63c2ecbdc631', '20190331_162135__89149__61105.jpg', '20190331_162135__89149__61105.jpg', 'product_images/20190331_162135__89149__61105.jpg', 'https://www.toynamishop.com/product_images/r/497/20190331_162135__89149__61105.jpg', 'products', 'Acid Rain Sofi', 'Acid Rain Sofi', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('6846844f-97fe-4dee-a8e7-248f1e810706', '20190331_164308__42812__73889.jpg', '20190331_164308__42812__73889.jpg', 'product_images/20190331_164308__42812__73889.jpg', 'https://www.toynamishop.com/product_images/j/536/20190331_164308__42812__73889.jpg', 'products', 'Acid Rain Sofi', 'Acid Rain Sofi', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('c4017f6a-7858-4f64-98b9-a3b54ab393f0', '20190331_163015__43973__69129.jpg', '20190331_163015__43973__69129.jpg', 'product_images/20190331_163015__43973__69129.jpg', 'https://www.toynamishop.com/product_images/f/785/20190331_163015__43973__69129.jpg', 'products', 'Acid Rain Sofi', 'Acid Rain Sofi', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('55fc3328-9101-45ca-b88a-18fb478807b8', 'raptor_001__90588__97654.jpg', 'raptor_001__90588__97654.jpg', 'product_images/raptor_001__90588__97654.jpg', 'https://www.toynamishop.com/product_images/i/588/raptor_001__90588__97654.jpg', 'products', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('7a1d792d-4c2d-4a96-af8b-8202304153e1', 'raptor_004__65101__33812.jpg', 'raptor_004__65101__33812.jpg', 'product_images/raptor_004__65101__33812.jpg', 'https://www.toynamishop.com/product_images/j/036/raptor_004__65101__33812.jpg', 'products', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('2ac04b3e-b942-4489-a00c-0d41b81bed54', 'raptor_002__74814__91922.jpg', 'raptor_002__74814__91922.jpg', 'product_images/raptor_002__74814__91922.jpg', 'https://www.toynamishop.com/product_images/q/540/raptor_002__74814__91922.jpg', 'products', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('fbdcbc04-ff3c-4f58-945a-4cc6d8a252c0', 'raptor_006__63382__30728.jpg', 'raptor_006__63382__30728.jpg', 'product_images/raptor_006__63382__30728.jpg', 'https://www.toynamishop.com/product_images/u/526/raptor_006__63382__30728.jpg', 'products', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('6c0a3826-1b38-453a-b93e-57ac692762bd', 'raptor_008__82197__45965.jpg', 'raptor_008__82197__45965.jpg', 'product_images/raptor_008__82197__45965.jpg', 'https://www.toynamishop.com/product_images/b/924/raptor_008__82197__45965.jpg', 'products', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('bf1305a0-d159-412e-8144-da5a29262215', 'raptor_010__49272__54346.jpg', 'raptor_010__49272__54346.jpg', 'product_images/raptor_010__49272__54346.jpg', 'https://www.toynamishop.com/product_images/o/133/raptor_010__49272__54346.jpg', 'products', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('ca22b222-bfb1-40d0-a121-b795e4aa04e8', 'raptor_009__39209__16199.jpg', 'raptor_009__39209__16199.jpg', 'product_images/raptor_009__39209__16199.jpg', 'https://www.toynamishop.com/product_images/j/192/raptor_009__39209__16199.jpg', 'products', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('a4863f92-2ec6-453f-80de-a6c0b0d801f5', 'raptor_012__77513__98788.jpg', 'raptor_012__77513__98788.jpg', 'product_images/raptor_012__77513__98788.jpg', 'https://www.toynamishop.com/product_images/s/621/raptor_012__77513__98788.jpg', 'products', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('e840ed50-6e09-4e8a-b16c-2e2a542974a0', 'raptor_011__29647__44071.jpg', 'raptor_011__29647__44071.jpg', 'product_images/raptor_011__29647__44071.jpg', 'https://www.toynamishop.com/product_images/y/213/raptor_011__29647__44071.jpg', 'products', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'Acid Rain Raptor (Speeder MK.I)(Marine)', 'image/jpeg', 'jpg', ARRAY['product'], 10, '2025-08-24 03:34:39.225191+00', NOW()),
+('8717dfc3-31c4-4128-8339-1cc9ba209801', 'content2__72196__95871.jpg', 'content2__72196__95871.jpg', 'product_images/content2__72196__95871.jpg', 'https://www.toynamishop.com/product_images/q/252/content2__72196__95871.jpg', 'products', 'Acid Rain Space Prisoner', 'Acid Rain Space Prisoner', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('e6745bf6-3854-473e-bfac-6a5680a3d138', 'pose_01__69975__76991.JPG', 'pose_01__69975__76991.JPG', 'product_images/pose_01__69975__76991.JPG', 'https://www.toynamishop.com/product_images/h/579/pose_01__69975__76991.JPG', 'products', 'Acid Rain Space Prisoner', 'Acid Rain Space Prisoner', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('4aab9642-7b7f-45c8-b61f-d1ac6398f44e', 'pose_03__16414__69222.JPG', 'pose_03__16414__69222.JPG', 'product_images/pose_03__16414__69222.JPG', 'https://www.toynamishop.com/product_images/o/468/pose_03__16414__69222.JPG', 'products', 'Acid Rain Space Prisoner', 'Acid Rain Space Prisoner', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('1a17a421-3b5c-4fb2-a3ac-1306d01a1292', 'pose_05__82866__49376.JPG', 'pose_05__82866__49376.JPG', 'product_images/pose_05__82866__49376.JPG', 'https://www.toynamishop.com/product_images/z/937/pose_05__82866__49376.JPG', 'products', 'Acid Rain Space Prisoner', 'Acid Rain Space Prisoner', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('ebed7080-39c6-4298-b3d4-88cee682aea7', 'pose_06__08453__97717.JPG', 'pose_06__08453__97717.JPG', 'product_images/pose_06__08453__97717.JPG', 'https://www.toynamishop.com/product_images/o/138/pose_06__08453__97717.JPG', 'products', 'Acid Rain Space Prisoner', 'Acid Rain Space Prisoner', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('1706c5ee-b79c-44bc-967d-8c5a4a4f0a75', 'pose_08__72659__95049.jpg', 'pose_08__72659__95049.jpg', 'product_images/pose_08__72659__95049.jpg', 'https://www.toynamishop.com/product_images/k/988/pose_08__72659__95049.jpg', 'products', 'Acid Rain Space Prisoner', 'Acid Rain Space Prisoner', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('76e81d94-d2e0-4524-a7bf-cb596ff2828d', 'sasuke_vs_itachi_03__04900__61094.jpg', 'sasuke_vs_itachi_03__04900__61094.jpg', 'product_images/sasuke_vs_itachi_03__04900__61094.jpg', 'https://www.toynamishop.com/product_images/t/377/sasuke_vs_itachi_03__04900__61094.jpg', 'products', 'Naruto Shippuden Exclusive Two-Pack Set: Sasuke vs. Itachi', 'Naruto Shippuden Exclusive Two-Pack Set: Sasuke vs. Itachi', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('935724f8-c977-48d4-911f-33cfa0963b6d', 'sasuke_vs_itachi_01__67982__50205.jpg', 'sasuke_vs_itachi_01__67982__50205.jpg', 'product_images/sasuke_vs_itachi_01__67982__50205.jpg', 'https://www.toynamishop.com/product_images/b/234/sasuke_vs_itachi_01__67982__50205.jpg', 'products', 'Naruto Shippuden Exclusive Two-Pack Set: Sasuke vs. Itachi', 'Naruto Shippuden Exclusive Two-Pack Set: Sasuke vs. Itachi', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('bd87cb8d-7958-40e4-97f4-1f9bc46e225f', 'Toynami_2024_Voltron_T-SHIRT__31111__97666.jpg', 'Toynami_2024_Voltron_T-SHIRT__31111__97666.jpg', 'product_images/Toynami_2024_Voltron_T-SHIRT__31111__97666.jpg', 'https://www.toynamishop.com/product_images/y/604/Toynami_2024_Voltron_T-SHIRT__31111__97666.jpg', 'products', '40th Anniversary Voltron Shirt SDCC Exclusive', '40th Anniversary Voltron Shirt SDCC Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('8255ee78-af0d-4765-8757-aa749b45abdc', 'Screenshot_62__74710__54771.png', 'Screenshot_62__74710__54771.png', 'product_images/Screenshot_62__74710__54771.png', 'https://www.toynamishop.com/product_images/s/787/Screenshot_62__74710__54771.png', 'products', '40th Anniversary Voltron Shirt SDCC Exclusive', '40th Anniversary Voltron Shirt SDCC Exclusive', 'image/png', 'png', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('be94a950-76fd-4135-9762-ba6e4839f643', 'Screenshot_63__43921__18188.png', 'Screenshot_63__43921__18188.png', 'product_images/Screenshot_63__43921__18188.png', 'https://www.toynamishop.com/product_images/m/373/Screenshot_63__43921__18188.png', 'products', '40th Anniversary Voltron Shirt SDCC Exclusive', '40th Anniversary Voltron Shirt SDCC Exclusive', 'image/png', 'png', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('f326fbe4-d708-4bec-b9e6-af9158bb2655', 'skelanimal_dc_heroes_plush_HarleyQuinn_sdcc2013_02__74575__92978.jpg', 'skelanimal_dc_heroes_plush_HarleyQuinn_sdcc2013_02__74575__92978.jpg', 'product_images/skelanimal_dc_heroes_plush_HarleyQuinn_sdcc2013_02__74575__92978.jpg', 'https://www.toynamishop.com/product_images/c/617/skelanimal_dc_heroes_plush_HarleyQuinn_sdcc2013_02__74575__92978.jpg', 'products', 'SDCC 2013 Exclusive: DC Heroes Skelanimals Harley Quinn Mini Plush', 'SDCC 2013 Exclusive: DC Heroes Skelanimals Harley Quinn Mini Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('4be72439-1c46-4e44-8932-96e6d47d5322', 'harleyquinn_marcy_02__81406__54572.jpg', 'harleyquinn_marcy_02__81406__54572.jpg', 'product_images/harleyquinn_marcy_02__81406__54572.jpg', 'https://www.toynamishop.com/product_images/o/901/harleyquinn_marcy_02__81406__54572.jpg', 'products', 'SDCC 2013 Exclusive: DC Heroes Skelanimals Harley Quinn Mini Plush', 'SDCC 2013 Exclusive: DC Heroes Skelanimals Harley Quinn Mini Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('fb442f5e-deb1-4c38-9a27-bdb1939a7d4f', 'harleyquinn_marcy_03__15824__72730.jpg', 'harleyquinn_marcy_03__15824__72730.jpg', 'product_images/harleyquinn_marcy_03__15824__72730.jpg', 'https://www.toynamishop.com/product_images/x/571/harleyquinn_marcy_03__15824__72730.jpg', 'products', 'SDCC 2013 Exclusive: DC Heroes Skelanimals Harley Quinn Mini Plush', 'SDCC 2013 Exclusive: DC Heroes Skelanimals Harley Quinn Mini Plush', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('2067ceaf-e23b-4e75-8187-dcf58e31eca4', 'harleyquinn_marcy_04__89384__98966.jpg', 'harleyquinn_marcy_04__89384__98966.jpg', 'product_images/harleyquinn_marcy_04__89384__98966.jpg', 'https://www.toynamishop.com/product_images/n/394/harleyquinn_marcy_04__89384__98966.jpg', 'products', 'SDCC 2013 Exclusive: DC Heroes Skelanimals Harley Quinn Mini Plush', 'SDCC 2013 Exclusive: DC Heroes Skelanimals Harley Quinn Mini Plush', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('9006b99e-1a62-4ecf-90f2-a3db25295f91', 'skelanimal_dc_heroes_plush_HarleyQuinn_sdcc2013__19637__07601.jpg', 'skelanimal_dc_heroes_plush_HarleyQuinn_sdcc2013__19637__07601.jpg', 'product_images/skelanimal_dc_heroes_plush_HarleyQuinn_sdcc2013__19637__07601.jpg', 'https://www.toynamishop.com/product_images/p/754/skelanimal_dc_heroes_plush_HarleyQuinn_sdcc2013__19637__07601.jpg', 'products', 'SDCC 2013 Exclusive: DC Heroes Skelanimals Harley Quinn Mini Plush', 'SDCC 2013 Exclusive: DC Heroes Skelanimals Harley Quinn Mini Plush', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('18916846-a032-4433-a3a8-a2c627e0ed9e', 'Robotech_Minmay_6_inch_doll_SDCC16__15951__71074.jpg', 'Robotech_Minmay_6_inch_doll_SDCC16__15951__71074.jpg', 'product_images/Robotech_Minmay_6_inch_doll_SDCC16__15951__71074.jpg', 'https://www.toynamishop.com/product_images/z/990/Robotech_Minmay_6_inch_doll_SDCC16__15951__71074.jpg', 'products', 'Comic Con 2016 Exclusive: Robotech Tineez Minmay Plush', 'Comic Con 2016 Exclusive: Robotech Tineez Minmay Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('e81cd599-3471-4e4b-aa7d-bc39a544436a', 'voltron_super_poseable_figure_01__97140__16038.jpg', 'voltron_super_poseable_figure_01__97140__16038.jpg', 'product_images/voltron_super_poseable_figure_01__97140__16038.jpg', 'https://www.toynamishop.com/product_images/j/551/voltron_super_poseable_figure_01__97140__16038.jpg', 'products', 'Super Poseable Die Cast Voltron', 'Super Poseable Die Cast Voltron', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('0fdfa244-efa4-4f75-96c9-67de605f75ab', 'voltron_super_poseable_figure_02__17686__04587.jpg', 'voltron_super_poseable_figure_02__17686__04587.jpg', 'product_images/voltron_super_poseable_figure_02__17686__04587.jpg', 'https://www.toynamishop.com/product_images/l/169/voltron_super_poseable_figure_02__17686__04587.jpg', 'products', 'Super Poseable Die Cast Voltron', 'Super Poseable Die Cast Voltron', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('91b715ef-2f0f-44b5-986d-0b33ac4291f4', 'voltron_super_poseable_figure_03__93901__37704.jpg', 'voltron_super_poseable_figure_03__93901__37704.jpg', 'product_images/voltron_super_poseable_figure_03__93901__37704.jpg', 'https://www.toynamishop.com/product_images/y/659/voltron_super_poseable_figure_03__93901__37704.jpg', 'products', 'Super Poseable Die Cast Voltron', 'Super Poseable Die Cast Voltron', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('72dcf3b3-4186-4b9f-a2d9-a2270152874f', 'voltron_super_poseable_figure_05__62986__18648.jpg', 'voltron_super_poseable_figure_05__62986__18648.jpg', 'product_images/voltron_super_poseable_figure_05__62986__18648.jpg', 'https://www.toynamishop.com/product_images/h/409/voltron_super_poseable_figure_05__62986__18648.jpg', 'products', 'Super Poseable Die Cast Voltron', 'Super Poseable Die Cast Voltron', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('0fdefd2a-b288-4b66-9571-d9e281bee004', 'voltron_super_poseable_figure_04__52553__46710.jpg', 'voltron_super_poseable_figure_04__52553__46710.jpg', 'product_images/voltron_super_poseable_figure_04__52553__46710.jpg', 'https://www.toynamishop.com/product_images/g/689/voltron_super_poseable_figure_04__52553__46710.jpg', 'products', 'Super Poseable Die Cast Voltron', 'Super Poseable Die Cast Voltron', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('627d2ef4-34a5-42f2-8ad0-4423ed00486f', 'voltron_super_poseable_figure5__98532__46776.jpg', 'voltron_super_poseable_figure5__98532__46776.jpg', 'product_images/voltron_super_poseable_figure5__98532__46776.jpg', 'https://www.toynamishop.com/product_images/b/134/voltron_super_poseable_figure5__98532__46776.jpg', 'products', 'Super Poseable Die Cast Voltron', 'Super Poseable Die Cast Voltron', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('85159d2a-27ea-4b4a-a103-179345eb8e80', 'voltron_super_poseable_figure6__26897__19690.jpg', 'voltron_super_poseable_figure6__26897__19690.jpg', 'product_images/voltron_super_poseable_figure6__26897__19690.jpg', 'https://www.toynamishop.com/product_images/e/818/voltron_super_poseable_figure6__26897__19690.jpg', 'products', 'Super Poseable Die Cast Voltron', 'Super Poseable Die Cast Voltron', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('32d35382-8763-46c4-81c3-ea958b514e16', 'voltron_super_deformed_poseable_figure__95976__74553.jpg', 'voltron_super_deformed_poseable_figure__95976__74553.jpg', 'product_images/voltron_super_deformed_poseable_figure__95976__74553.jpg', 'https://www.toynamishop.com/product_images/k/263/voltron_super_deformed_poseable_figure__95976__74553.jpg', 'products', 'Super Poseable Die Cast Voltron', 'Super Poseable Die Cast Voltron', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('d9f46d9f-a050-4efb-9f84-2765efebf645', 'voltron_super_poseable_figure4__10394__28032.jpg', 'voltron_super_poseable_figure4__10394__28032.jpg', 'product_images/voltron_super_poseable_figure4__10394__28032.jpg', 'https://www.toynamishop.com/product_images/z/526/voltron_super_poseable_figure4__10394__28032.jpg', 'products', 'Super Poseable Die Cast Voltron', 'Super Poseable Die Cast Voltron', 'image/jpeg', 'jpg', ARRAY['product'], 10, '2025-08-24 03:34:39.225191+00', NOW()),
+('9a8609f3-eb1a-4541-8876-856f9b468b44', 'voltron_super_poseable_figure2__60396__97432.jpg', 'voltron_super_poseable_figure2__60396__97432.jpg', 'product_images/voltron_super_poseable_figure2__60396__97432.jpg', 'https://www.toynamishop.com/product_images/h/354/voltron_super_poseable_figure2__60396__97432.jpg', 'products', 'Super Poseable Die Cast Voltron', 'Super Poseable Die Cast Voltron', 'image/jpeg', 'jpg', ARRAY['product'], 11, '2025-08-24 03:34:39.225191+00', NOW()),
+('4d21cd21-75d3-46c8-aba8-dc1475c5324a', 'voltron_super_poseable_figure3__54481__55188.jpg', 'voltron_super_poseable_figure3__54481__55188.jpg', 'product_images/voltron_super_poseable_figure3__54481__55188.jpg', 'https://www.toynamishop.com/product_images/o/137/voltron_super_poseable_figure3__54481__55188.jpg', 'products', 'Super Poseable Die Cast Voltron', 'Super Poseable Die Cast Voltron', 'image/jpeg', 'jpg', ARRAY['product'], 12, '2025-08-24 03:34:39.225191+00', NOW()),
+('493cf859-9487-40b7-8aed-9e245221ff5a', 'voltron_super_poseable_figure1__16092__46323.jpg', 'voltron_super_poseable_figure1__16092__46323.jpg', 'product_images/voltron_super_poseable_figure1__16092__46323.jpg', 'https://www.toynamishop.com/product_images/y/736/voltron_super_poseable_figure1__16092__46323.jpg', 'products', 'Super Poseable Die Cast Voltron', 'Super Poseable Die Cast Voltron', 'image/jpeg', 'jpg', ARRAY['product'], 13, '2025-08-24 03:34:39.225191+00', NOW()),
+('ada759b1-7d52-4465-b345-70977ce283fc', 'fav-08a__55569__03821.jpg', 'fav-08a__55569__03821.jpg', 'product_images/fav-08a__55569__03821.jpg', 'https://www.toynamishop.com/product_images/l/153/fav-08a__55569__03821.jpg', 'products', 'Acid Rain Stealth Camelbot HR12e', 'Acid Rain Stealth Camelbot HR12e', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('d74df2c6-5e6b-43b0-9d11-34302bb1b59c', 'fav-08b__75835__88809.jpg', 'fav-08b__75835__88809.jpg', 'product_images/fav-08b__75835__88809.jpg', 'https://www.toynamishop.com/product_images/l/705/fav-08b__75835__88809.jpg', 'products', 'Acid Rain Stealth Camelbot HR12e', 'Acid Rain Stealth Camelbot HR12e', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('ec346ecd-e2df-4af6-9cd0-aa5db97de0a6', 'fav-08c__92937__77185.jpg', 'fav-08c__92937__77185.jpg', 'product_images/fav-08c__92937__77185.jpg', 'https://www.toynamishop.com/product_images/r/804/fav-08c__92937__77185.jpg', 'products', 'Acid Rain Stealth Camelbot HR12e', 'Acid Rain Stealth Camelbot HR12e', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('9ba5f731-e7cd-42e6-a268-408a3a078709', '1-100-scale_super-veritech__0026-Recovered__25746__34469.jpg', '1-100-scale_super-veritech__0026-Recovered__25746__34469.jpg', 'product_images/1-100-scale_super-veritech__0026-Recovered__25746__34469.jpg', 'https://www.toynamishop.com/product_images/m/490/1-100-scale_super-veritech__0026-Recovered__25746__34469.jpg', 'products', 'Robotech 1/100 Max Sterling VF-1J Super Veritech', 'Robotech 1/100 Max Sterling VF-1J Super Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('a8ccbf7b-3ed7-4f89-b876-fb73b1326ff5', '1-100-scale_super-veritech__max-sterling_guardian__16601__76462.jpg', '1-100-scale_super-veritech__max-sterling_guardian__16601__76462.jpg', 'product_images/1-100-scale_super-veritech__max-sterling_guardian__16601__76462.jpg', 'https://www.toynamishop.com/product_images/x/987/1-100-scale_super-veritech__max-sterling_guardian__16601__76462.jpg', 'products', 'Robotech 1/100 Max Sterling VF-1J Super Veritech', 'Robotech 1/100 Max Sterling VF-1J Super Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('7e3b7cbb-a4bb-4811-9ba1-d934636c21f8', '1-100-scale_super-veritech__max-sterling_fighter__70670__64324.jpg', '1-100-scale_super-veritech__max-sterling_fighter__70670__64324.jpg', 'product_images/1-100-scale_super-veritech__max-sterling_fighter__70670__64324.jpg', 'https://www.toynamishop.com/product_images/z/081/1-100-scale_super-veritech__max-sterling_fighter__70670__64324.jpg', 'products', 'Robotech 1/100 Max Sterling VF-1J Super Veritech', 'Robotech 1/100 Max Sterling VF-1J Super Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('a91b2434-9910-43a4-919b-5102eaa5cfae', 'robotech_1-100_VF-1J_max_sterling_super_veritech_armor__54162__10568.jpg', 'robotech_1-100_VF-1J_max_sterling_super_veritech_armor__54162__10568.jpg', 'product_images/robotech_1-100_VF-1J_max_sterling_super_veritech_armor__54162__10568.jpg', 'https://www.toynamishop.com/product_images/z/216/robotech_1-100_VF-1J_max_sterling_super_veritech_armor__54162__10568.jpg', 'products', 'Robotech 1/100 Max Sterling VF-1J Super Veritech', 'Robotech 1/100 Max Sterling VF-1J Super Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('57891cb5-996a-409a-bd8e-1801a3211863', 'naruto_mininja-figurines_ASSORTMENT1__28410__39042.jpg', 'naruto_mininja-figurines_ASSORTMENT1__28410__39042.jpg', 'product_images/naruto_mininja-figurines_ASSORTMENT1__28410__39042.jpg', 'https://www.toynamishop.com/product_images/z/378/naruto_mininja-figurines_ASSORTMENT1__28410__39042.jpg', 'products', 'Naruto Shippuden Mininja Figurines - Series 1', 'Naruto Shippuden Mininja Figurines - Series 1', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('9006fef1-e3ba-4eda-9bde-6e6602afdd1c', 'x8QTmNYk__45745__80198.jpg', 'x8QTmNYk__45745__80198.jpg', 'product_images/x8QTmNYk__45745__80198.jpg', 'https://www.toynamishop.com/product_images/f/861/x8QTmNYk__45745__80198.jpg', 'products', 'Naruto Shippuden Mininja Figurines - Series 1', 'Naruto Shippuden Mininja Figurines - Series 1', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('906a7ed1-5e1f-4693-b580-53da70b09ad7', 'WVEZ6Flk__21578__86087.jpg', 'WVEZ6Flk__21578__86087.jpg', 'product_images/WVEZ6Flk__21578__86087.jpg', 'https://www.toynamishop.com/product_images/u/577/WVEZ6Flk__21578__86087.jpg', 'products', 'Naruto Shippuden Mininja Figurines - Series 1', 'Naruto Shippuden Mininja Figurines - Series 1', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('aab5fe5a-731e-4702-ad25-3a959d62bc36', '0E_vyEB0__79183__27759.jpg', '0E_vyEB0__79183__27759.jpg', 'product_images/0E_vyEB0__79183__27759.jpg', 'https://www.toynamishop.com/product_images/z/768/0E_vyEB0__79183__27759.jpg', 'products', 'Naruto Shippuden Mininja Figurines - Series 1', 'Naruto Shippuden Mininja Figurines - Series 1', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('493c5b15-131d-482e-ac66-725aba846e2f', 'Mi4GqF3w__99071__44052.jpg', 'Mi4GqF3w__99071__44052.jpg', 'product_images/Mi4GqF3w__99071__44052.jpg', 'https://www.toynamishop.com/product_images/b/292/Mi4GqF3w__99071__44052.jpg', 'products', 'Naruto Shippuden Mininja Figurines - Series 1', 'Naruto Shippuden Mininja Figurines - Series 1', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('2e18b5f2-fc7c-4810-a841-655eaa08641b', 'qs8Ko8Lg__88157__50068.jpg', 'qs8Ko8Lg__88157__50068.jpg', 'product_images/qs8Ko8Lg__88157__50068.jpg', 'https://www.toynamishop.com/product_images/t/993/qs8Ko8Lg__88157__50068.jpg', 'products', 'Naruto Shippuden Mininja Figurines - Series 1', 'Naruto Shippuden Mininja Figurines - Series 1', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('4007ed8b-6e66-4f15-8ff6-f734869408d2', 'kibaKjmA__34438__33818.jpg', 'kibaKjmA__34438__33818.jpg', 'product_images/kibaKjmA__34438__33818.jpg', 'https://www.toynamishop.com/product_images/m/927/kibaKjmA__34438__33818.jpg', 'products', 'Naruto Shippuden Mininja Figurines - Series 1', 'Naruto Shippuden Mininja Figurines - Series 1', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('ed705626-d694-49cc-a2cb-6b78ff26e9e5', 'a5h7laps__21724__44942.jpg', 'a5h7laps__21724__44942.jpg', 'product_images/a5h7laps__21724__44942.jpg', 'https://www.toynamishop.com/product_images/z/635/a5h7laps__21724__44942.jpg', 'products', 'Naruto Shippuden Mininja Figurines - Series 1', 'Naruto Shippuden Mininja Figurines - Series 1', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('bf80410f-4654-4bfb-b0da-15c8d68fa2c6', 'Pcez8zOw__41773__98634.jpg', 'Pcez8zOw__41773__98634.jpg', 'product_images/Pcez8zOw__41773__98634.jpg', 'https://www.toynamishop.com/product_images/w/594/Pcez8zOw__41773__98634.jpg', 'products', 'Naruto Shippuden Mininja Figurines - Series 1', 'Naruto Shippuden Mininja Figurines - Series 1', 'image/jpeg', 'jpg', ARRAY['product'], 10, '2025-08-24 03:34:39.225191+00', NOW()),
+('7f56e7d6-0279-4d29-acfc-08009380953f', 'leilbzq4__29424__13109.jpg', 'leilbzq4__29424__13109.jpg', 'product_images/leilbzq4__29424__13109.jpg', 'https://www.toynamishop.com/product_images/v/640/leilbzq4__29424__13109.jpg', 'products', 'Naruto Shippuden Mininja Figurines - Series 1', 'Naruto Shippuden Mininja Figurines - Series 1', 'image/jpeg', 'jpg', ARRAY['product'], 11, '2025-08-24 03:34:39.225191+00', NOW()),
+('1ba8ccc6-04d0-43de-a40d-d2737b20d011', 'xOXKpzEc__34964__38292.jpg', 'xOXKpzEc__34964__38292.jpg', 'product_images/xOXKpzEc__34964__38292.jpg', 'https://www.toynamishop.com/product_images/r/324/xOXKpzEc__34964__38292.jpg', 'products', 'Naruto Shippuden Mininja Figurines - Series 1', 'Naruto Shippuden Mininja Figurines - Series 1', 'image/jpeg', 'jpg', ARRAY['product'], 12, '2025-08-24 03:34:39.225191+00', NOW()),
+('1a448cb9-6166-41ff-9584-dd2920242752', '9CLIsGbU__61229__95719.jpg', '9CLIsGbU__61229__95719.jpg', 'product_images/9CLIsGbU__61229__95719.jpg', 'https://www.toynamishop.com/product_images/w/467/9CLIsGbU__61229__95719.jpg', 'products', 'Naruto Shippuden Mininja Figurines - Series 1', 'Naruto Shippuden Mininja Figurines - Series 1', 'image/jpeg', 'jpg', ARRAY['product'], 13, '2025-08-24 03:34:39.225191+00', NOW()),
+('e6da52d3-9bb6-4672-8b82-464debb087e9', 'jFfFl5cQ__60048__87068.jpg', 'jFfFl5cQ__60048__87068.jpg', 'product_images/jFfFl5cQ__60048__87068.jpg', 'https://www.toynamishop.com/product_images/e/517/jFfFl5cQ__60048__87068.jpg', 'products', 'Naruto Shippuden Mininja Figurines - Series 1', 'Naruto Shippuden Mininja Figurines - Series 1', 'image/jpeg', 'jpg', ARRAY['product'], 14, '2025-08-24 03:34:39.225191+00', NOW()),
+('c3225e28-4f0c-42ae-b55d-3b73238b8417', 'naruto_shippuden_6inch_pvc_sasuke_01__19790__74388.jpg', 'naruto_shippuden_6inch_pvc_sasuke_01__19790__74388.jpg', 'product_images/naruto_shippuden_6inch_pvc_sasuke_01__19790__74388.jpg', 'https://www.toynamishop.com/product_images/w/685/naruto_shippuden_6inch_pvc_sasuke_01__19790__74388.jpg', 'products', 'Deluxe 6" PVC Statue: Sasuke', 'Deluxe 6" PVC Statue: Sasuke', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('88136662-df44-4252-817e-69f77085836c', 'naruto_shippuden_6inch_pvc_sasuke_02__33005__14006.jpg', 'naruto_shippuden_6inch_pvc_sasuke_02__33005__14006.jpg', 'product_images/naruto_shippuden_6inch_pvc_sasuke_02__33005__14006.jpg', 'https://www.toynamishop.com/product_images/e/221/naruto_shippuden_6inch_pvc_sasuke_02__33005__14006.jpg', 'products', 'Deluxe 6" PVC Statue: Sasuke', 'Deluxe 6" PVC Statue: Sasuke', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('77cd69df-a9bf-4367-a8dd-6f20fe7e6726', 'naruto_shippuden_6inch_pvc_sasuke_03__91800__09322.jpg', 'naruto_shippuden_6inch_pvc_sasuke_03__91800__09322.jpg', 'product_images/naruto_shippuden_6inch_pvc_sasuke_03__91800__09322.jpg', 'https://www.toynamishop.com/product_images/r/344/naruto_shippuden_6inch_pvc_sasuke_03__91800__09322.jpg', 'products', 'Deluxe 6" PVC Statue: Sasuke', 'Deluxe 6" PVC Statue: Sasuke', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('d298c22b-caaa-4ce6-957b-86b08bfc7e47', 'naruto_shippuden_6inch_pvc_sasuke_04__10297__26182.jpg', 'naruto_shippuden_6inch_pvc_sasuke_04__10297__26182.jpg', 'product_images/naruto_shippuden_6inch_pvc_sasuke_04__10297__26182.jpg', 'https://www.toynamishop.com/product_images/g/553/naruto_shippuden_6inch_pvc_sasuke_04__10297__26182.jpg', 'products', 'Deluxe 6" PVC Statue: Sasuke', 'Deluxe 6" PVC Statue: Sasuke', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('093dc1de-a362-4760-996a-c625f0feca1f', 'naruto_shippuden_6inch_pvc_sasuke_05__47797__24127.jpg', 'naruto_shippuden_6inch_pvc_sasuke_05__47797__24127.jpg', 'product_images/naruto_shippuden_6inch_pvc_sasuke_05__47797__24127.jpg', 'https://www.toynamishop.com/product_images/c/839/naruto_shippuden_6inch_pvc_sasuke_05__47797__24127.jpg', 'products', 'Deluxe 6" PVC Statue: Sasuke', 'Deluxe 6" PVC Statue: Sasuke', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('7efdf1a8-b435-4775-81d2-87eaba4ae8ee', 'naruto_4inch_s3_deidara_03__08185__64556.jpg', 'naruto_4inch_s3_deidara_03__08185__64556.jpg', 'product_images/naruto_4inch_s3_deidara_03__08185__64556.jpg', 'https://www.toynamishop.com/product_images/y/096/naruto_4inch_s3_deidara_03__08185__64556.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Deidara', 'Naruto Shippuden Poseable Action Figure - Deidara', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('a7fa6b4e-171e-49cd-9f66-790ce30271c2', 'naruto_4inch_s3_deidara_01___64576__40228.jpg', 'naruto_4inch_s3_deidara_01___64576__40228.jpg', 'product_images/naruto_4inch_s3_deidara_01___64576__40228.jpg', 'https://www.toynamishop.com/product_images/v/979/naruto_4inch_s3_deidara_01___64576__40228.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Deidara', 'Naruto Shippuden Poseable Action Figure - Deidara', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('ad6acaca-8739-4d65-84eb-711d9d2c3d24', 'naruto_4inch_s3_deidara_02__89957__19879.jpg', 'naruto_4inch_s3_deidara_02__89957__19879.jpg', 'product_images/naruto_4inch_s3_deidara_02__89957__19879.jpg', 'https://www.toynamishop.com/product_images/k/647/naruto_4inch_s3_deidara_02__89957__19879.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Deidara', 'Naruto Shippuden Poseable Action Figure - Deidara', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('707be0db-1405-4bd8-ad5b-ff01b92a7245', 'troll_hunter_bular01__02044__70199.jpg', 'troll_hunter_bular01__02044__70199.jpg', 'product_images/troll_hunter_bular01__02044__70199.jpg', 'https://www.toynamishop.com/product_images/x/917/troll_hunter_bular01__02044__70199.jpg', 'products', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('be07f1c1-ec48-4455-9f38-aa4212f87e60', 'troll_hunter_bular03__66313__16702.jpg', 'troll_hunter_bular03__66313__16702.jpg', 'product_images/troll_hunter_bular03__66313__16702.jpg', 'https://www.toynamishop.com/product_images/n/646/troll_hunter_bular03__66313__16702.jpg', 'products', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('e7234b05-66bf-4d79-8fcb-165edbbaa34e', 'troll_hunter_signature__77675__17000.jpg', 'troll_hunter_signature__77675__17000.jpg', 'product_images/troll_hunter_signature__77675__17000.jpg', 'https://www.toynamishop.com/product_images/c/792/troll_hunter_signature__77675__17000.jpg', 'products', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('69236fb6-163b-4612-9f8f-7158db26f4e0', 'troll_hunter_bular3__59776__41290.jpg', 'troll_hunter_bular3__59776__41290.jpg', 'product_images/troll_hunter_bular3__59776__41290.jpg', 'https://www.toynamishop.com/product_images/e/245/troll_hunter_bular3__59776__41290.jpg', 'products', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('007b7593-8c57-4b4c-afb9-e33f8a0f0f14', 'HKxSF_Series_1_figurines_set1_3__00212__87368.jpg', 'HKxSF_Series_1_figurines_set1_3__00212__87368.jpg', 'product_images/HKxSF_Series_1_figurines_set1_3__00212__87368.jpg', 'https://www.toynamishop.com/product_images/r/360/HKxSF_Series_1_figurines_set1_3__00212__87368.jpg', 'products', 'Sanrio x Street Fighter 2-Player Figurine Assortment', 'Sanrio x Street Fighter 2-Player Figurine Assortment', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('2ac28cf6-a1b1-4225-a1b6-4392377a2a32', 'HKxSF_Series_1_figurines_set2__28652__76407.jpg', 'HKxSF_Series_1_figurines_set2__28652__76407.jpg', 'product_images/HKxSF_Series_1_figurines_set2__28652__76407.jpg', 'https://www.toynamishop.com/product_images/o/707/HKxSF_Series_1_figurines_set2__28652__76407.jpg', 'products', 'Sanrio x Street Fighter 2-Player Figurine Assortment', 'Sanrio x Street Fighter 2-Player Figurine Assortment', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('e219dc16-ba96-4a89-afcb-2b91d21ab4d0', 'HKxSF_Series_1_figurines_set1__75332__51235.jpg', 'HKxSF_Series_1_figurines_set1__75332__51235.jpg', 'product_images/HKxSF_Series_1_figurines_set1__75332__51235.jpg', 'https://www.toynamishop.com/product_images/t/341/HKxSF_Series_1_figurines_set1__75332__51235.jpg', 'products', 'Sanrio x Street Fighter 2-Player Figurine Assortment', 'Sanrio x Street Fighter 2-Player Figurine Assortment', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('958c14ac-f0bb-4b46-a6c0-cc1b6b52eac3', 'HKxSF_Series_1_figurines_set3__68490__86433.jpg', 'HKxSF_Series_1_figurines_set3__68490__86433.jpg', 'product_images/HKxSF_Series_1_figurines_set3__68490__86433.jpg', 'https://www.toynamishop.com/product_images/s/781/HKxSF_Series_1_figurines_set3__68490__86433.jpg', 'products', 'Sanrio x Street Fighter 2-Player Figurine Assortment', 'Sanrio x Street Fighter 2-Player Figurine Assortment', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('2ab3df40-5bff-4210-aa9b-e5e0d782d91e', 'HKxSF_figurines_series1_pq__06456__50019.jpg', 'HKxSF_figurines_series1_pq__06456__50019.jpg', 'product_images/HKxSF_figurines_series1_pq__06456__50019.jpg', 'https://www.toynamishop.com/product_images/b/433/HKxSF_figurines_series1_pq__06456__50019.jpg', 'products', 'Sanrio x Street Fighter 2-Player Figurine Assortment', 'Sanrio x Street Fighter 2-Player Figurine Assortment', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('9001953d-0e9f-408d-9448-c90449caf6d1', 'acid-rain_b2five_stealth-chapel_sdcc18-exclusive_3__33814__10393.jpg', 'acid-rain_b2five_stealth-chapel_sdcc18-exclusive_3__33814__10393.jpg', 'product_images/acid-rain_b2five_stealth-chapel_sdcc18-exclusive_3__33814__10393.jpg', 'https://www.toynamishop.com/product_images/j/869/acid-rain_b2five_stealth-chapel_sdcc18-exclusive_3__33814__10393.jpg', 'products', 'Acid Rain B2Five Stealth Chapel HETT 600e Exclusive', 'Acid Rain B2Five Stealth Chapel HETT 600e Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('a94f7ed6-5c6c-4386-b361-dd0437cb1455', 'acid-rain_b2five_stealth-chapel_sdcc18-exclusive2__34720__23739.jpg', 'acid-rain_b2five_stealth-chapel_sdcc18-exclusive2__34720__23739.jpg', 'product_images/acid-rain_b2five_stealth-chapel_sdcc18-exclusive2__34720__23739.jpg', 'https://www.toynamishop.com/product_images/e/938/acid-rain_b2five_stealth-chapel_sdcc18-exclusive2__34720__23739.jpg', 'products', 'Acid Rain B2Five Stealth Chapel HETT 600e Exclusive', 'Acid Rain B2Five Stealth Chapel HETT 600e Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('4177ffe5-5a83-4a64-817d-dcfa9d615064', 'FAV-A122_IG-02__85095__60925.jpg', 'FAV-A122_IG-02__85095__60925.jpg', 'product_images/FAV-A122_IG-02__85095__60925.jpg', 'https://www.toynamishop.com/product_images/i/562/FAV-A122_IG-02__85095__60925.jpg', 'products', 'Hellbender Infantry FAV-A122', 'Hellbender Infantry FAV-A122', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('2a9408f2-f9bf-4855-af88-c39267056289', 'FAV-A122_IG-08__68412__43585.jpg', 'FAV-A122_IG-08__68412__43585.jpg', 'product_images/FAV-A122_IG-08__68412__43585.jpg', 'https://www.toynamishop.com/product_images/n/938/FAV-A122_IG-08__68412__43585.jpg', 'products', 'Hellbender Infantry FAV-A122', 'Hellbender Infantry FAV-A122', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('b93acdd3-69dc-43d5-a62e-700efa478d52', 'FAV-A122_IG-05__79850__79702.jpg', 'FAV-A122_IG-05__79850__79702.jpg', 'product_images/FAV-A122_IG-05__79850__79702.jpg', 'https://www.toynamishop.com/product_images/d/369/FAV-A122_IG-05__79850__79702.jpg', 'products', 'Hellbender Infantry FAV-A122', 'Hellbender Infantry FAV-A122', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('a131dd04-3a3b-45bc-bc87-26c2183fc84d', 'FAV-A122_IG-04__52468__94857.jpg', 'FAV-A122_IG-04__52468__94857.jpg', 'product_images/FAV-A122_IG-04__52468__94857.jpg', 'https://www.toynamishop.com/product_images/q/220/FAV-A122_IG-04__52468__94857.jpg', 'products', 'Hellbender Infantry FAV-A122', 'Hellbender Infantry FAV-A122', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('18a8b1e7-2b24-4104-9439-d8746e76e019', 'fav-09a__58415__06822.jpg', 'fav-09a__58415__06822.jpg', 'product_images/fav-09a__58415__06822.jpg', 'https://www.toynamishop.com/product_images/t/336/fav-09a__58415__06822.jpg', 'products', 'Acid Rain Ajax Hoplitai', 'Acid Rain Ajax Hoplitai', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('2db04571-bfd6-46da-908a-265ab5dcb2a1', 'fav-09b__71566__57482.jpg', 'fav-09b__71566__57482.jpg', 'product_images/fav-09b__71566__57482.jpg', 'https://www.toynamishop.com/product_images/z/047/fav-09b__71566__57482.jpg', 'products', 'Acid Rain Ajax Hoplitai', 'Acid Rain Ajax Hoplitai', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('424e8047-6939-4f38-9105-6fa93aeb5866', 'fav-09c__14217__52899.jpg', 'fav-09c__14217__52899.jpg', 'product_images/fav-09c__14217__52899.jpg', 'https://www.toynamishop.com/product_images/c/072/fav-09c__14217__52899.jpg', 'products', 'Acid Rain Ajax Hoplitai', 'Acid Rain Ajax Hoplitai', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('2017d09b-924d-44be-83b2-ccbb1a777b4e', 'NARUTO__68961__07971.jpg', 'NARUTO__68961__07971.jpg', 'product_images/NARUTO__68961__07971.jpg', 'https://www.toynamishop.com/product_images/p/914/NARUTO__68961__07971.jpg', 'products', 'Deluxe 6" PVC Statue: Naruto', 'Deluxe 6" PVC Statue: Naruto', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('b18b98d2-e27d-4470-b545-939606e0554d', 'naruto_pvcfigures_naruto_01__07097__28086.jpg', 'naruto_pvcfigures_naruto_01__07097__28086.jpg', 'product_images/naruto_pvcfigures_naruto_01__07097__28086.jpg', 'https://www.toynamishop.com/product_images/q/750/naruto_pvcfigures_naruto_01__07097__28086.jpg', 'products', 'Deluxe 6" PVC Statue: Naruto', 'Deluxe 6" PVC Statue: Naruto', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('3dfc7f06-c236-4ded-8de5-b5ddab6318e3', 'naruto_pvcfigures_naruto_03__62824__63978.jpg', 'naruto_pvcfigures_naruto_03__62824__63978.jpg', 'product_images/naruto_pvcfigures_naruto_03__62824__63978.jpg', 'https://www.toynamishop.com/product_images/h/510/naruto_pvcfigures_naruto_03__62824__63978.jpg', 'products', 'Deluxe 6" PVC Statue: Naruto', 'Deluxe 6" PVC Statue: Naruto', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('bc71dcf6-0ef2-41e7-a4fe-b7063fc5d84e', 'naruto_pvc_figure_box_front__49376__57328.jpg', 'naruto_pvc_figure_box_front__49376__57328.jpg', 'product_images/naruto_pvc_figure_box_front__49376__57328.jpg', 'https://www.toynamishop.com/product_images/l/878/naruto_pvc_figure_box_front__49376__57328.jpg', 'products', 'Deluxe 6" PVC Statue: Naruto', 'Deluxe 6" PVC Statue: Naruto', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('843da9c7-6797-4299-8d66-425690e0b854', 'naruto_pvc_figure_box_back__22258__40221.jpg', 'naruto_pvc_figure_box_back__22258__40221.jpg', 'product_images/naruto_pvc_figure_box_back__22258__40221.jpg', 'https://www.toynamishop.com/product_images/f/003/naruto_pvc_figure_box_back__22258__40221.jpg', 'products', 'Deluxe 6" PVC Statue: Naruto', 'Deluxe 6" PVC Statue: Naruto', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('9a5c61c1-4abb-4c0f-b5f9-6df630c04b5d', 'TOYNAMI_robotech_combo_sets_1-5__81459__46217.jpg', 'TOYNAMI_robotech_combo_sets_1-5__81459__46217.jpg', 'product_images/TOYNAMI_robotech_combo_sets_1-5__81459__46217.jpg', 'https://www.toynamishop.com/product_images/v/561/TOYNAMI_robotech_combo_sets_1-5__81459__46217.jpg', 'products', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('0fe36ef8-782e-41a9-9fbc-9500ea5de041', 'TOYNAMI_robotech_combo_sets_1-5_action_figures__96451__14664.jpg', 'TOYNAMI_robotech_combo_sets_1-5_action_figures__96451__14664.jpg', 'product_images/TOYNAMI_robotech_combo_sets_1-5_action_figures__96451__14664.jpg', 'https://www.toynamishop.com/product_images/b/250/TOYNAMI_robotech_combo_sets_1-5_action_figures__96451__14664.jpg', 'products', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('1bca82c0-74a9-44d5-af24-504bf4797339', 'TOYNAMI_robotech_combo_set_max_vf-1j__67722__33680.jpg', 'TOYNAMI_robotech_combo_set_max_vf-1j__67722__33680.jpg', 'product_images/TOYNAMI_robotech_combo_set_max_vf-1j__67722__33680.jpg', 'https://www.toynamishop.com/product_images/p/705/TOYNAMI_robotech_combo_set_max_vf-1j__67722__33680.jpg', 'products', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('411b06ad-3d77-4406-9852-e9dc4fe24f6d', 'TOYNAMI_robotech_combo_set_miriya_vf-1j__74995__64973.jpg', 'TOYNAMI_robotech_combo_set_miriya_vf-1j__74995__64973.jpg', 'product_images/TOYNAMI_robotech_combo_set_miriya_vf-1j__74995__64973.jpg', 'https://www.toynamishop.com/product_images/n/741/TOYNAMI_robotech_combo_set_miriya_vf-1j__74995__64973.jpg', 'products', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('684b9e2e-21c8-4e86-bffc-dc7759d131f8', 'TOYNAMI_robotech_combo_set_roy_vf-1s__94764__07386.jpg', 'TOYNAMI_robotech_combo_set_roy_vf-1s__94764__07386.jpg', 'product_images/TOYNAMI_robotech_combo_set_roy_vf-1s__94764__07386.jpg', 'https://www.toynamishop.com/product_images/v/483/TOYNAMI_robotech_combo_set_roy_vf-1s__94764__07386.jpg', 'products', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('cde65f10-cf35-4909-8f78-3a9856fb696f', 'TOYNAMI_robotech_combo_set_ben_dixon_vf-1a__47055__68531.jpg', 'TOYNAMI_robotech_combo_set_ben_dixon_vf-1a__47055__68531.jpg', 'product_images/TOYNAMI_robotech_combo_set_ben_dixon_vf-1a__47055__68531.jpg', 'https://www.toynamishop.com/product_images/w/261/TOYNAMI_robotech_combo_set_ben_dixon_vf-1a__47055__68531.jpg', 'products', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('39682d3a-ad1e-41fe-af67-ca22ac86da41', 'TOYNAMI_robotech_combo_set_rick_hunter_vf-1j__83002__49319.jpg', 'TOYNAMI_robotech_combo_set_rick_hunter_vf-1j__83002__49319.jpg', 'product_images/TOYNAMI_robotech_combo_set_rick_hunter_vf-1j__83002__49319.jpg', 'https://www.toynamishop.com/product_images/f/358/TOYNAMI_robotech_combo_set_rick_hunter_vf-1j__83002__49319.jpg', 'products', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('15ef21d0-a780-4bc7-b6d6-9c7b478d1be8', '1-100-scale_super-veritech__miriya_battloid__23110__09885.jpg', '1-100-scale_super-veritech__miriya_battloid__23110__09885.jpg', 'product_images/1-100-scale_super-veritech__miriya_battloid__23110__09885.jpg', 'https://www.toynamishop.com/product_images/r/369/1-100-scale_super-veritech__miriya_battloid__23110__09885.jpg', 'products', 'Robotech 1/100 Miriya VF-1J Super Veritech', 'Robotech 1/100 Miriya VF-1J Super Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('23547a02-9053-40e6-b5fc-69f97d237efd', '1-100-scale_super-veritech__miriya_guardian__65793__22541.jpg', '1-100-scale_super-veritech__miriya_guardian__65793__22541.jpg', 'product_images/1-100-scale_super-veritech__miriya_guardian__65793__22541.jpg', 'https://www.toynamishop.com/product_images/h/028/1-100-scale_super-veritech__miriya_guardian__65793__22541.jpg', 'products', 'Robotech 1/100 Miriya VF-1J Super Veritech', 'Robotech 1/100 Miriya VF-1J Super Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('88e4e5e0-74c5-4053-9aa9-ef848fd439bb', '1-100-scale_super-veritech__miriya_fighter__48688__57931.jpg', '1-100-scale_super-veritech__miriya_fighter__48688__57931.jpg', 'product_images/1-100-scale_super-veritech__miriya_fighter__48688__57931.jpg', 'https://www.toynamishop.com/product_images/r/407/1-100-scale_super-veritech__miriya_fighter__48688__57931.jpg', 'products', 'Robotech 1/100 Miriya VF-1J Super Veritech', 'Robotech 1/100 Miriya VF-1J Super Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('c15acfe1-0775-4a66-bee2-c35c02456ca9', 'robotech_1-100_VF-1J_miriya_super_veritech_armor__97231__32621.jpg', 'robotech_1-100_VF-1J_miriya_super_veritech_armor__97231__32621.jpg', 'product_images/robotech_1-100_VF-1J_miriya_super_veritech_armor__97231__32621.jpg', 'https://www.toynamishop.com/product_images/b/396/robotech_1-100_VF-1J_miriya_super_veritech_armor__97231__32621.jpg', 'products', 'Robotech 1/100 Miriya VF-1J Super Veritech', 'Robotech 1/100 Miriya VF-1J Super Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('b0f81580-21d6-4d78-9c6f-81e8f60240fc', 'hello-sanrio_SDCC-2018-EXCLUSIVE_capsule-diorama_03__06740__73419.jpg', 'hello-sanrio_SDCC-2018-EXCLUSIVE_capsule-diorama_03__06740__73419.jpg', 'product_images/hello-sanrio_SDCC-2018-EXCLUSIVE_capsule-diorama_03__06740__73419.jpg', 'https://www.toynamishop.com/product_images/u/088/hello-sanrio_SDCC-2018-EXCLUSIVE_capsule-diorama_03__06740__73419.jpg', 'products', 'Hello Sanrio Exclusive Two-Pack Set - Hello Kitty & Pompompurin', 'Hello Sanrio Exclusive Two-Pack Set - Hello Kitty & Pompompurin', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('9600e80f-1992-4eb8-94f8-221d937302f6', 'hello-sanrio_SDCC-2018-EXCLUSIVE_capsule-diorama__92637__75284.jpg', 'hello-sanrio_SDCC-2018-EXCLUSIVE_capsule-diorama__92637__75284.jpg', 'product_images/hello-sanrio_SDCC-2018-EXCLUSIVE_capsule-diorama__92637__75284.jpg', 'https://www.toynamishop.com/product_images/y/563/hello-sanrio_SDCC-2018-EXCLUSIVE_capsule-diorama__92637__75284.jpg', 'products', 'Hello Sanrio Exclusive Two-Pack Set - Hello Kitty & Pompompurin', 'Hello Sanrio Exclusive Two-Pack Set - Hello Kitty & Pompompurin', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('278ba4c0-b81f-4238-8ef6-6dd299c64dcc', 'hello_sannrio_capsule_banner-1__50755__85473.jpg', 'hello_sannrio_capsule_banner-1__50755__85473.jpg', 'product_images/hello_sannrio_capsule_banner-1__50755__85473.jpg', 'https://www.toynamishop.com/product_images/f/029/hello_sannrio_capsule_banner-1__50755__85473.jpg', 'products', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('c2feaef5-a444-47af-bc2b-9f4ffeb2d3f7', 'hello-sanrio_my-melody_03__88549__48195.jpg', 'hello-sanrio_my-melody_03__88549__48195.jpg', 'product_images/hello-sanrio_my-melody_03__88549__48195.jpg', 'https://www.toynamishop.com/product_images/t/207/hello-sanrio_my-melody_03__88549__48195.jpg', 'products', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('a4a96183-b2bd-4279-b9fc-21cf8bf9d35c', 'hello-sanrio_hello-kitty_01__40464__74646.jpg', 'hello-sanrio_hello-kitty_01__40464__74646.jpg', 'product_images/hello-sanrio_hello-kitty_01__40464__74646.jpg', 'https://www.toynamishop.com/product_images/q/930/hello-sanrio_hello-kitty_01__40464__74646.jpg', 'products', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('91aab104-8acf-438d-9828-39a54a42833e', 'hello-sanrio_chococat_01__20812__23843.jpg', 'hello-sanrio_chococat_01__20812__23843.jpg', 'product_images/hello-sanrio_chococat_01__20812__23843.jpg', 'https://www.toynamishop.com/product_images/z/941/hello-sanrio_chococat_01__20812__23843.jpg', 'products', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('13e7b03b-1931-4dfe-a03a-3cdc4b7c2dd0', 'hello-sanrio_keroppi_01__01411__68676.jpg', 'hello-sanrio_keroppi_01__01411__68676.jpg', 'product_images/hello-sanrio_keroppi_01__01411__68676.jpg', 'https://www.toynamishop.com/product_images/b/500/hello-sanrio_keroppi_01__01411__68676.jpg', 'products', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('9aa87418-b121-43c4-be90-ae903159c1ad', 'hello-sanrio_badtz-maru_01__54591__72781.jpg', 'hello-sanrio_badtz-maru_01__54591__72781.jpg', 'product_images/hello-sanrio_badtz-maru_01__54591__72781.jpg', 'https://www.toynamishop.com/product_images/b/522/hello-sanrio_badtz-maru_01__54591__72781.jpg', 'products', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('9905dc49-5a84-4281-8f29-2d87d7ba4daa', 'hypnotoad_package_3__49465__64905.jpg', 'hypnotoad_package_3__49465__64905.jpg', 'product_images/hypnotoad_package_3__49465__64905.jpg', 'https://www.toynamishop.com/product_images/h/603/hypnotoad_package_3__49465__64905.jpg', 'products', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('d7e32b4e-ebc6-4640-aa80-094b54c515ce', 'futurama_hypnotoadvinyl_06__60252__53823.JPG', 'futurama_hypnotoadvinyl_06__60252__53823.JPG', 'product_images/futurama_hypnotoadvinyl_06__60252__53823.JPG', 'https://www.toynamishop.com/product_images/c/477/futurama_hypnotoadvinyl_06__60252__53823.JPG', 'products', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('e5cf0b43-706e-48a0-ac59-024fa03149f6', 'hypnotoad_tineez_figurine__16418__32100.jpg', 'hypnotoad_tineez_figurine__16418__32100.jpg', 'product_images/hypnotoad_tineez_figurine__16418__32100.jpg', 'https://www.toynamishop.com/product_images/k/679/hypnotoad_tineez_figurine__16418__32100.jpg', 'products', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('10df62e2-8d82-46c9-b520-c62d126b7b5a', 'futurama_hypnotoadvinyl_03__69238__87803.jpg', 'futurama_hypnotoadvinyl_03__69238__87803.jpg', 'product_images/futurama_hypnotoadvinyl_03__69238__87803.jpg', 'https://www.toynamishop.com/product_images/r/543/futurama_hypnotoadvinyl_03__69238__87803.jpg', 'products', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('f85fc2f8-3ade-423e-b968-64e6d4e09571', 'futurama_hypnotoadvinyl_box02__19098__82903.jpg', 'futurama_hypnotoadvinyl_box02__19098__82903.jpg', 'product_images/futurama_hypnotoadvinyl_box02__19098__82903.jpg', 'https://www.toynamishop.com/product_images/s/046/futurama_hypnotoadvinyl_box02__19098__82903.jpg', 'products', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('627340b1-3f02-4417-99a2-355bc20b0c3d', 'futurama_hypnotoadvinyl_01__58731__90915.jpg', 'futurama_hypnotoadvinyl_01__58731__90915.jpg', 'product_images/futurama_hypnotoadvinyl_01__58731__90915.jpg', 'https://www.toynamishop.com/product_images/p/698/futurama_hypnotoadvinyl_01__58731__90915.jpg', 'products', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('d056eb4a-04cf-43b7-9125-a109e7f84639', 'futurama_hypnotoadvinyl_04__05615__54637.jpg', 'futurama_hypnotoadvinyl_04__05615__54637.jpg', 'product_images/futurama_hypnotoadvinyl_04__05615__54637.jpg', 'https://www.toynamishop.com/product_images/q/858/futurama_hypnotoadvinyl_04__05615__54637.jpg', 'products', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('0ebfd9ce-4a68-4b36-b68e-99c4b1aae73d', 'futurama_hypnotoadvinyl_02__88146__08586.jpg', 'futurama_hypnotoadvinyl_02__88146__08586.jpg', 'product_images/futurama_hypnotoadvinyl_02__88146__08586.jpg', 'https://www.toynamishop.com/product_images/q/093/futurama_hypnotoadvinyl_02__88146__08586.jpg', 'products', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('bfa05e92-0605-456d-b7e7-f9e971601d2b', 'futurama_hypnotoadvinyl_05__06949__15841.jpg', 'futurama_hypnotoadvinyl_05__06949__15841.jpg', 'product_images/futurama_hypnotoadvinyl_05__06949__15841.jpg', 'https://www.toynamishop.com/product_images/j/208/futurama_hypnotoadvinyl_05__06949__15841.jpg', 'products', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', 'image/jpeg', 'jpg', ARRAY['product'], 10, '2025-08-24 03:34:39.225191+00', NOW()),
+('b808b6cc-fd8c-47e1-9cf5-42f8ea1d59a5', '20190331_170614__29186__22524.jpg', '20190331_170614__29186__22524.jpg', 'product_images/20190331_170614__29186__22524.jpg', 'https://www.toynamishop.com/product_images/j/969/20190331_170614__29186__22524.jpg', 'products', 'Acid Rain EOS Raider', 'Acid Rain EOS Raider', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('c02b5a1e-2656-419a-9a27-bb39fd44da76', '20190331_152637__46499__54775.jpg', '20190331_152637__46499__54775.jpg', 'product_images/20190331_152637__46499__54775.jpg', 'https://www.toynamishop.com/product_images/s/070/20190331_152637__46499__54775.jpg', 'products', 'Acid Rain EOS Raider', 'Acid Rain EOS Raider', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('e7d82c36-8bb2-47d6-bfda-2f982307c353', '20190331_153533__87007__65772.jpg', '20190331_153533__87007__65772.jpg', 'product_images/20190331_153533__87007__65772.jpg', 'https://www.toynamishop.com/product_images/k/692/20190331_153533__87007__65772.jpg', 'products', 'Acid Rain EOS Raider', 'Acid Rain EOS Raider', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('71839a49-f956-450a-bb2f-5846390f5479', '20190331_154630__05728__29759.jpg', '20190331_154630__05728__29759.jpg', 'product_images/20190331_154630__05728__29759.jpg', 'https://www.toynamishop.com/product_images/p/428/20190331_154630__05728__29759.jpg', 'products', 'Acid Rain EOS Raider', 'Acid Rain EOS Raider', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('eea48350-3955-45ca-b11b-161bc250c61f', '20190331_204323__30008__03107.jpg', '20190331_204323__30008__03107.jpg', 'product_images/20190331_204323__30008__03107.jpg', 'https://www.toynamishop.com/product_images/r/455/20190331_204323__30008__03107.jpg', 'products', 'Acid Rain EOS Raider', 'Acid Rain EOS Raider', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('553c23af-aada-47cd-9bbc-88b7d01b09eb', '20190331_155240__17240__59596.jpg', '20190331_155240__17240__59596.jpg', 'product_images/20190331_155240__17240__59596.jpg', 'https://www.toynamishop.com/product_images/a/581/20190331_155240__17240__59596.jpg', 'products', 'Acid Rain EOS Raider', 'Acid Rain EOS Raider', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('149d3326-38fd-4977-b27b-84c181fc0bcc', 'naruto_shippuden_6inch_pvc_gaara_01__57149__50030.jpg', 'naruto_shippuden_6inch_pvc_gaara_01__57149__50030.jpg', 'product_images/naruto_shippuden_6inch_pvc_gaara_01__57149__50030.jpg', 'https://www.toynamishop.com/product_images/t/883/naruto_shippuden_6inch_pvc_gaara_01__57149__50030.jpg', 'products', 'Deluxe 6" PVC Statue: Gaara', 'Deluxe 6" PVC Statue: Gaara', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('d65985ea-0217-477a-8601-fcab4e5695c2', 'naruto_shippuden_6inch_pvc_gaara_02__75694__32378.jpg', 'naruto_shippuden_6inch_pvc_gaara_02__75694__32378.jpg', 'product_images/naruto_shippuden_6inch_pvc_gaara_02__75694__32378.jpg', 'https://www.toynamishop.com/product_images/c/161/naruto_shippuden_6inch_pvc_gaara_02__75694__32378.jpg', 'products', 'Deluxe 6" PVC Statue: Gaara', 'Deluxe 6" PVC Statue: Gaara', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('c20bbe9a-47f3-409f-9743-d833e6a25fd4', 'naruto_shippuden_6inch_pvc_gaara_03__37130__55429.jpg', 'naruto_shippuden_6inch_pvc_gaara_03__37130__55429.jpg', 'product_images/naruto_shippuden_6inch_pvc_gaara_03__37130__55429.jpg', 'https://www.toynamishop.com/product_images/q/728/naruto_shippuden_6inch_pvc_gaara_03__37130__55429.jpg', 'products', 'Deluxe 6" PVC Statue: Gaara', 'Deluxe 6" PVC Statue: Gaara', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('7fdfc96b-b839-4815-8a24-4afae2a90d40', 'naruto_shippuden_6inch_pvc_gaara_04__81794__86099.jpg', 'naruto_shippuden_6inch_pvc_gaara_04__81794__86099.jpg', 'product_images/naruto_shippuden_6inch_pvc_gaara_04__81794__86099.jpg', 'https://www.toynamishop.com/product_images/x/313/naruto_shippuden_6inch_pvc_gaara_04__81794__86099.jpg', 'products', 'Deluxe 6" PVC Statue: Gaara', 'Deluxe 6" PVC Statue: Gaara', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('f11355d3-189c-4b77-a001-e85223f1904f', 'naruto_shippuden_6inch_pvc_gaara_06__08888__60270.jpg', 'naruto_shippuden_6inch_pvc_gaara_06__08888__60270.jpg', 'product_images/naruto_shippuden_6inch_pvc_gaara_06__08888__60270.jpg', 'https://www.toynamishop.com/product_images/o/603/naruto_shippuden_6inch_pvc_gaara_06__08888__60270.jpg', 'products', 'Deluxe 6" PVC Statue: Gaara', 'Deluxe 6" PVC Statue: Gaara', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('a50e6e8a-c371-473b-b557-9569b9ec341d', 'hello_kitty_street_fighter_keychains_mobile_charm3__80718__16445.jpg', 'hello_kitty_street_fighter_keychains_mobile_charm3__80718__16445.jpg', 'product_images/hello_kitty_street_fighter_keychains_mobile_charm3__80718__16445.jpg', 'https://www.toynamishop.com/product_images/u/675/hello_kitty_street_fighter_keychains_mobile_charm3__80718__16445.jpg', 'products', 'Sanrio x Street Fighter Key Chains Assortment', 'Sanrio x Street Fighter Key Chains Assortment', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('71271cb7-54f6-4828-afe6-e131d77a2146', 'IMG_8930_legal__60511__95815.jpg', 'IMG_8930_legal__60511__95815.jpg', 'product_images/IMG_8930_legal__60511__95815.jpg', 'https://www.toynamishop.com/product_images/o/179/IMG_8930_legal__60511__95815.jpg', 'products', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette & Jim Figure COMBO', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette & Jim Figure COMBO', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('121799e3-727e-41fb-b4c5-28060940d5fb', 'troll_hunter_bular03__73931__72440.jpg', 'troll_hunter_bular03__73931__72440.jpg', 'product_images/troll_hunter_bular03__73931__72440.jpg', 'https://www.toynamishop.com/product_images/w/218/troll_hunter_bular03__73931__72440.jpg', 'products', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette & Jim Figure COMBO', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette & Jim Figure COMBO', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('8c611259-0329-4a23-b1b2-f8527297a2fa', 'troll_hunter_signature__78436__30320.jpg', 'troll_hunter_signature__78436__30320.jpg', 'product_images/troll_hunter_signature__78436__30320.jpg', 'https://www.toynamishop.com/product_images/p/730/troll_hunter_signature__78436__30320.jpg', 'products', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette & Jim Figure COMBO', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette & Jim Figure COMBO', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('428381cc-70ce-48e4-b614-d27389de4b4a', 'FAV-A121_IG-02__01763__53769.jpg', 'FAV-A121_IG-02__01763__53769.jpg', 'product_images/FAV-A121_IG-02__01763__53769.jpg', 'https://www.toynamishop.com/product_images/i/275/FAV-A121_IG-02__01763__53769.jpg', 'products', 'Spencer FAV-A121', 'Spencer FAV-A121', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('cd074f36-03e0-4f01-a90b-5fdf3322a441', 'FAV-A121_IG-08__86010__59663.jpg', 'FAV-A121_IG-08__86010__59663.jpg', 'product_images/FAV-A121_IG-08__86010__59663.jpg', 'https://www.toynamishop.com/product_images/e/401/FAV-A121_IG-08__86010__59663.jpg', 'products', 'Spencer FAV-A121', 'Spencer FAV-A121', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('b3d7f052-787f-4623-a0fd-f6d394cdb5ae', 'FAV-A121_IG-03__88334__35206.jpg', 'FAV-A121_IG-03__88334__35206.jpg', 'product_images/FAV-A121_IG-03__88334__35206.jpg', 'https://www.toynamishop.com/product_images/b/928/FAV-A121_IG-03__88334__35206.jpg', 'products', 'Spencer FAV-A121', 'Spencer FAV-A121', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('24e2667b-2663-4233-8a77-b6eee49a5891', 'FAV-A121_IG-05__18684__59190.jpg', 'FAV-A121_IG-05__18684__59190.jpg', 'product_images/FAV-A121_IG-05__18684__59190.jpg', 'https://www.toynamishop.com/product_images/y/904/FAV-A121_IG-05__18684__59190.jpg', 'products', 'Spencer FAV-A121', 'Spencer FAV-A121', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('422cd5db-109f-4519-99c2-e424a1df51c9', 'angel-birds_VF-1A__35293__32151.jpg', 'angel-birds_VF-1A__35293__32151.jpg', 'product_images/angel-birds_VF-1A__35293__32151.jpg', 'https://www.toynamishop.com/product_images/p/466/angel-birds_VF-1A__35293__32151.jpg', 'products', 'Robotech Angel Bird Exclusive', 'Robotech Angel Bird Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('7e5dba27-36e6-4aea-b546-e2d4f1a1aa11', 'angel-birds_VF-1A_2__36979__50361.jpg', 'angel-birds_VF-1A_2__36979__50361.jpg', 'product_images/angel-birds_VF-1A_2__36979__50361.jpg', 'https://www.toynamishop.com/product_images/z/532/angel-birds_VF-1A_2__36979__50361.jpg', 'products', 'Robotech Angel Bird Exclusive', 'Robotech Angel Bird Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('215d66fd-a4e8-46a7-a0d5-e1d9ab2cd71c', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_08__69970__26691.jpg', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_08__69970__26691.jpg', 'product_images/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_08__69970__26691.jpg', 'https://www.toynamishop.com/product_images/e/832/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_08__69970__26691.jpg', 'products', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('6025c468-025f-4cc4-b2fe-f3e4f1d80873', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_02__92284__33381.jpg', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_02__92284__33381.jpg', 'product_images/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_02__92284__33381.jpg', 'https://www.toynamishop.com/product_images/a/892/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_02__92284__33381.jpg', 'products', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('23b8d795-a1e2-45dd-8aab-d9f325fde469', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_05__51212__62181.jpg', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_05__51212__62181.jpg', 'product_images/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_05__51212__62181.jpg', 'https://www.toynamishop.com/product_images/z/240/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_05__51212__62181.jpg', 'products', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('3de4b783-1177-475a-86fa-a799adf48dfe', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_01__59895__06588.jpg', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_01__59895__06588.jpg', 'product_images/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_01__59895__06588.jpg', 'https://www.toynamishop.com/product_images/k/141/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_01__59895__06588.jpg', 'products', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('20823490-8e06-45df-ac29-ff94104c52cf', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_06__31507__07698.jpg', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_06__31507__07698.jpg', 'product_images/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_06__31507__07698.jpg', 'https://www.toynamishop.com/product_images/j/271/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_06__31507__07698.jpg', 'products', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('50d0508b-499f-4ca9-bf3b-b191109b5e9f', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_03__57950__25705.jpg', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_03__57950__25705.jpg', 'product_images/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_03__57950__25705.jpg', 'https://www.toynamishop.com/product_images/v/050/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_03__57950__25705.jpg', 'products', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('0dee8698-4d32-468b-99f0-edc8774f44ab', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_04__20917__80875.jpg', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_04__20917__80875.jpg', 'product_images/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_04__20917__80875.jpg', 'https://www.toynamishop.com/product_images/t/775/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_04__20917__80875.jpg', 'products', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('5ab92894-82e4-4de7-9035-e2e08ebb274f', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_07__45275__81576.jpg', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_07__45275__81576.jpg', 'product_images/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_07__45275__81576.jpg', 'https://www.toynamishop.com/product_images/l/044/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_07__45275__81576.jpg', 'products', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('3fa8a7f5-1e22-4976-8c63-90fefbe7a925', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_09__93034__87721.jpg', 'Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_09__93034__87721.jpg', 'product_images/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_09__93034__87721.jpg', 'https://www.toynamishop.com/product_images/z/216/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_09__93034__87721.jpg', 'products', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 10, '2025-08-24 03:34:39.225191+00', NOW()),
+('19c3c6f1-dc79-4964-ae5f-41390ff47db6', 'fav-12c__18053__70954.jpg', 'fav-12c__18053__70954.jpg', 'product_images/fav-12c__18053__70954.jpg', 'https://www.toynamishop.com/product_images/b/160/fav-12c__18053__70954.jpg', 'products', 'Acid Rain Sand Antbike AB7s', 'Acid Rain Sand Antbike AB7s', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('c622b402-6fdc-4e3f-8b56-f0aed513f38f', 'fav-12b__05519__69111.jpg', 'fav-12b__05519__69111.jpg', 'product_images/fav-12b__05519__69111.jpg', 'https://www.toynamishop.com/product_images/t/523/fav-12b__05519__69111.jpg', 'products', 'Acid Rain Sand Antbike AB7s', 'Acid Rain Sand Antbike AB7s', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('b48edba5-fb3f-4da4-a60c-9ebc634956f7', 'fav-12d__52017__33367.jpg', 'fav-12d__52017__33367.jpg', 'product_images/fav-12d__52017__33367.jpg', 'https://www.toynamishop.com/product_images/j/137/fav-12d__52017__33367.jpg', 'products', 'Acid Rain Sand Antbike AB7s', 'Acid Rain Sand Antbike AB7s', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('f23211e2-326f-460c-824c-be62cb47008d', 'hello_kitty_street_fighter_keychains_mobile_phone_plug__30542__44892.jpg', 'hello_kitty_street_fighter_keychains_mobile_phone_plug__30542__44892.jpg', 'product_images/hello_kitty_street_fighter_keychains_mobile_phone_plug__30542__44892.jpg', 'https://www.toynamishop.com/product_images/q/292/hello_kitty_street_fighter_keychains_mobile_phone_plug__30542__44892.jpg', 'products', 'Sanrio x Street Fighter Mobile Plugs Assortment', 'Sanrio x Street Fighter Mobile Plugs Assortment', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('64099539-e8c7-40ce-b7dd-ef0c5d91a173', 'ACID-RAIN_LAUREL_GHOST_7_01__66749__87833.jpg', 'ACID-RAIN_LAUREL_GHOST_7_01__66749__87833.jpg', 'product_images/ACID-RAIN_LAUREL_GHOST_7_01__66749__87833.jpg', 'https://www.toynamishop.com/product_images/c/706/ACID-RAIN_LAUREL_GHOST_7_01__66749__87833.jpg', 'products', 'Acid Rain Laurel Ghost 7', 'Acid Rain Laurel Ghost 7', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('adbaee74-6c17-443a-9ba1-4f0c888c17e2', 'ACID-RAIN_LAUREL_GHOST_7_03__74108__50202.jpg', 'ACID-RAIN_LAUREL_GHOST_7_03__74108__50202.jpg', 'product_images/ACID-RAIN_LAUREL_GHOST_7_03__74108__50202.jpg', 'https://www.toynamishop.com/product_images/m/923/ACID-RAIN_LAUREL_GHOST_7_03__74108__50202.jpg', 'products', 'Acid Rain Laurel Ghost 7', 'Acid Rain Laurel Ghost 7', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('8eaed14e-9f74-4e71-a5ee-fbc889f007c1', 'ACID-RAIN_LAUREL_GHOST_7_02__81414__31495.jpg', 'ACID-RAIN_LAUREL_GHOST_7_02__81414__31495.jpg', 'product_images/ACID-RAIN_LAUREL_GHOST_7_02__81414__31495.jpg', 'https://www.toynamishop.com/product_images/l/032/ACID-RAIN_LAUREL_GHOST_7_02__81414__31495.jpg', 'products', 'Acid Rain Laurel Ghost 7', 'Acid Rain Laurel Ghost 7', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('acdbec9d-c249-4982-8837-cdcfe68312b6', 'B00YHYFSTS.MAIN.jpg__54744__38830.jpg', 'B00YHYFSTS.MAIN.jpg__54744__38830.jpg', 'product_images/B00YHYFSTS.MAIN.jpg__54744__38830.jpg', 'https://www.toynamishop.com/product_images/g/927/B00YHYFSTS.MAIN.jpg__54744__38830.jpg', 'products', 'Robotech 30th Anniversary 1/100 Roy Fokker GBP-1 Heavy Armor Veritech', 'Robotech 30th Anniversary 1/100 Roy Fokker GBP-1 Heavy Armor Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('f6b2318d-b385-4c32-8399-ea654659d541', 'B00YHYFSTS.PT01.jpg__72757__68149.jpg', 'B00YHYFSTS.PT01.jpg__72757__68149.jpg', 'product_images/B00YHYFSTS.PT01.jpg__72757__68149.jpg', 'https://www.toynamishop.com/product_images/l/129/B00YHYFSTS.PT01.jpg__72757__68149.jpg', 'products', 'Robotech 30th Anniversary 1/100 Roy Fokker GBP-1 Heavy Armor Veritech', 'Robotech 30th Anniversary 1/100 Roy Fokker GBP-1 Heavy Armor Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('b2b94bd9-fb31-4ad8-ab56-4b91c91b6b66', 'B00YHYFSTS.PT02.jpg__90747__70838.jpg', 'B00YHYFSTS.PT02.jpg__90747__70838.jpg', 'product_images/B00YHYFSTS.PT02.jpg__90747__70838.jpg', 'https://www.toynamishop.com/product_images/t/885/B00YHYFSTS.PT02.jpg__90747__70838.jpg', 'products', 'Robotech 30th Anniversary 1/100 Roy Fokker GBP-1 Heavy Armor Veritech', 'Robotech 30th Anniversary 1/100 Roy Fokker GBP-1 Heavy Armor Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('d62caa80-31fa-4ca2-95f9-e83fd0f35d0c', 'B00YHYFSTS.PT03.jpg__47098__31448.jpg', 'B00YHYFSTS.PT03.jpg__47098__31448.jpg', 'product_images/B00YHYFSTS.PT03.jpg__47098__31448.jpg', 'https://www.toynamishop.com/product_images/q/480/B00YHYFSTS.PT03.jpg__47098__31448.jpg', 'products', 'Robotech 30th Anniversary 1/100 Roy Fokker GBP-1 Heavy Armor Veritech', 'Robotech 30th Anniversary 1/100 Roy Fokker GBP-1 Heavy Armor Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('e6125c51-b733-4ddf-9362-57bc145441eb', 'KAKASHI__14350__04819.jpg', 'KAKASHI__14350__04819.jpg', 'product_images/KAKASHI__14350__04819.jpg', 'https://www.toynamishop.com/product_images/p/114/KAKASHI__14350__04819.jpg', 'products', 'Deluxe 6" PVC Statue: Kakashi', 'Deluxe 6" PVC Statue: Kakashi', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('b21e6304-a27a-44b7-ba9a-deb591bedc8c', 'naruto_pvcfigures_kakashi_02__32582__82376.jpg', 'naruto_pvcfigures_kakashi_02__32582__82376.jpg', 'product_images/naruto_pvcfigures_kakashi_02__32582__82376.jpg', 'https://www.toynamishop.com/product_images/k/583/naruto_pvcfigures_kakashi_02__32582__82376.jpg', 'products', 'Deluxe 6" PVC Statue: Kakashi', 'Deluxe 6" PVC Statue: Kakashi', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('da0800eb-d9d9-4462-a8b1-7aaf97cae3cc', 'naruto_pvcfigures_kakashi_01__34967__69335.jpg', 'naruto_pvcfigures_kakashi_01__34967__69335.jpg', 'product_images/naruto_pvcfigures_kakashi_01__34967__69335.jpg', 'https://www.toynamishop.com/product_images/b/437/naruto_pvcfigures_kakashi_01__34967__69335.jpg', 'products', 'Deluxe 6" PVC Statue: Kakashi', 'Deluxe 6" PVC Statue: Kakashi', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('1ad5d166-1d80-4619-8327-e72e3e3e80be', 'naruto_kakashi_pvc_figure_box_front__86538__74682.jpg', 'naruto_kakashi_pvc_figure_box_front__86538__74682.jpg', 'product_images/naruto_kakashi_pvc_figure_box_front__86538__74682.jpg', 'https://www.toynamishop.com/product_images/k/453/naruto_kakashi_pvc_figure_box_front__86538__74682.jpg', 'products', 'Deluxe 6" PVC Statue: Kakashi', 'Deluxe 6" PVC Statue: Kakashi', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('f5a71ef3-5cfa-45dc-9a10-f6b240b7fcfb', 'naruto_kakashi_pvc_figure_box_back__45015__31122.jpg', 'naruto_kakashi_pvc_figure_box_back__45015__31122.jpg', 'product_images/naruto_kakashi_pvc_figure_box_back__45015__31122.jpg', 'https://www.toynamishop.com/product_images/h/088/naruto_kakashi_pvc_figure_box_back__45015__31122.jpg', 'products', 'Deluxe 6" PVC Statue: Kakashi', 'Deluxe 6" PVC Statue: Kakashi', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('0ec9d196-df78-40b4-af77-5a68dc6a536a', '2018-CONVENTION-EXCLUSIVE_POCHACCO-CHOCOCAT_02__29895__85966.jpg', '2018-CONVENTION-EXCLUSIVE_POCHACCO-CHOCOCAT_02__29895__85966.jpg', 'product_images/2018-CONVENTION-EXCLUSIVE_POCHACCO-CHOCOCAT_02__29895__85966.jpg', 'https://www.toynamishop.com/product_images/l/888/2018-CONVENTION-EXCLUSIVE_POCHACCO-CHOCOCAT_02__29895__85966.jpg', 'products', 'Hello Sanrio Exclusive Two-Pack Set - Pochacco & Chococat', 'Hello Sanrio Exclusive Two-Pack Set - Pochacco & Chococat', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('8121fa32-2326-419e-9281-c9ae2f46be2f', '2018-CONVENTION-EXCLUSIVE_POCHACCO-CHOCOCAT__09470__75693.jpg', '2018-CONVENTION-EXCLUSIVE_POCHACCO-CHOCOCAT__09470__75693.jpg', 'product_images/2018-CONVENTION-EXCLUSIVE_POCHACCO-CHOCOCAT__09470__75693.jpg', 'https://www.toynamishop.com/product_images/y/921/2018-CONVENTION-EXCLUSIVE_POCHACCO-CHOCOCAT__09470__75693.jpg', 'products', 'Hello Sanrio Exclusive Two-Pack Set - Pochacco & Chococat', 'Hello Sanrio Exclusive Two-Pack Set - Pochacco & Chococat', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('e82e2118-6aae-468e-a6ca-3f33a604a5a0', 'street_fighte_x_sanrio_chun_li_coinbank01__04455__13811.jpg', 'street_fighte_x_sanrio_chun_li_coinbank01__04455__13811.jpg', 'product_images/street_fighte_x_sanrio_chun_li_coinbank01__04455__13811.jpg', 'https://www.toynamishop.com/product_images/h/589/street_fighte_x_sanrio_chun_li_coinbank01__04455__13811.jpg', 'products', 'Comic Con 2014 Exclusive: Hello Kitty Chun-Li Coin Bank', 'Comic Con 2014 Exclusive: Hello Kitty Chun-Li Coin Bank', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('b6cd4758-20cf-4c18-bf2e-163417c34959', 'street_fighte_x_sanrio_chun_li_coinbank02__39369__67932.jpg', 'street_fighte_x_sanrio_chun_li_coinbank02__39369__67932.jpg', 'product_images/street_fighte_x_sanrio_chun_li_coinbank02__39369__67932.jpg', 'https://www.toynamishop.com/product_images/t/058/street_fighte_x_sanrio_chun_li_coinbank02__39369__67932.jpg', 'products', 'Comic Con 2014 Exclusive: Hello Kitty Chun-Li Coin Bank', 'Comic Con 2014 Exclusive: Hello Kitty Chun-Li Coin Bank', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('f76dcd76-4034-44ca-ab86-c0c4d35a8d69', 'street_fighte_x_sanrio_chun_li_coinbank03__79351__28038.jpg', 'street_fighte_x_sanrio_chun_li_coinbank03__79351__28038.jpg', 'product_images/street_fighte_x_sanrio_chun_li_coinbank03__79351__28038.jpg', 'https://www.toynamishop.com/product_images/k/741/street_fighte_x_sanrio_chun_li_coinbank03__79351__28038.jpg', 'products', 'Comic Con 2014 Exclusive: Hello Kitty Chun-Li Coin Bank', 'Comic Con 2014 Exclusive: Hello Kitty Chun-Li Coin Bank', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('d1017652-5397-4150-a906-ed1819921588', 'street_fighte_x_sanrio_chun_li_coinbank__11134__86158.jpg', 'street_fighte_x_sanrio_chun_li_coinbank__11134__86158.jpg', 'product_images/street_fighte_x_sanrio_chun_li_coinbank__11134__86158.jpg', 'https://www.toynamishop.com/product_images/a/514/street_fighte_x_sanrio_chun_li_coinbank__11134__86158.jpg', 'products', 'Comic Con 2014 Exclusive: Hello Kitty Chun-Li Coin Bank', 'Comic Con 2014 Exclusive: Hello Kitty Chun-Li Coin Bank', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('527cf2aa-bfcd-4b16-9172-23d6f255e9a4', 'Tulipop-Deluxe-Plush_miss-maddy01__88662__68932.jpg', 'Tulipop-Deluxe-Plush_miss-maddy01__88662__68932.jpg', 'product_images/Tulipop-Deluxe-Plush_miss-maddy01__88662__68932.jpg', 'https://www.toynamishop.com/product_images/y/636/Tulipop-Deluxe-Plush_miss-maddy01__88662__68932.jpg', 'products', 'Miss Maddy Deluxe Plush', 'Miss Maddy Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('89d5cc96-710c-4659-9cfb-bb09adaa0c09', '04maddy_plush__67811__99279.jpg', '04maddy_plush__67811__99279.jpg', 'product_images/04maddy_plush__67811__99279.jpg', 'https://www.toynamishop.com/product_images/i/924/04maddy_plush__67811__99279.jpg', 'products', 'Miss Maddy Deluxe Plush', 'Miss Maddy Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('f4673bfd-8fef-44a8-a325-df9ea63c2a28', 'missmaddy_plush_deluxe-01__22216__14366.jpg', 'missmaddy_plush_deluxe-01__22216__14366.jpg', 'product_images/missmaddy_plush_deluxe-01__22216__14366.jpg', 'https://www.toynamishop.com/product_images/r/111/missmaddy_plush_deluxe-01__22216__14366.jpg', 'products', 'Miss Maddy Deluxe Plush', 'Miss Maddy Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('e933b869-f0ae-4505-a687-e4315ffa3f47', '10986515_av2__19471__89139.jpg', '10986515_av2__19471__89139.jpg', 'product_images/10986515_av2__19471__89139.jpg', 'https://www.toynamishop.com/product_images/g/736/10986515_av2__19471__89139.jpg', 'products', 'Naruto Shippuden Mininja Blind Box Figure', 'Naruto Shippuden Mininja Blind Box Figure', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('7a0a0840-9f58-4247-b7de-74ea71bc60d7', 'mininja_series-1_blindbox_01__22150__28180.jpg', 'mininja_series-1_blindbox_01__22150__28180.jpg', 'product_images/mininja_series-1_blindbox_01__22150__28180.jpg', 'https://www.toynamishop.com/product_images/w/736/mininja_series-1_blindbox_01__22150__28180.jpg', 'products', 'Naruto Shippuden Mininja Blind Box Figure', 'Naruto Shippuden Mininja Blind Box Figure', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('2e983713-7442-4869-96c0-902ce458a7b4', 'Naruto-shippuden_2017_mininja_Series-1-blindbox__46460__56665.jpg', 'Naruto-shippuden_2017_mininja_Series-1-blindbox__46460__56665.jpg', 'product_images/Naruto-shippuden_2017_mininja_Series-1-blindbox__46460__56665.jpg', 'https://www.toynamishop.com/product_images/k/670/Naruto-shippuden_2017_mininja_Series-1-blindbox__46460__56665.jpg', 'products', 'Naruto Shippuden Mininja Blind Box Figure', 'Naruto Shippuden Mininja Blind Box Figure', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('131b728c-dae7-45ec-b68e-40bbb84a607a', 'voltron_30th_anniversary_edition_complete_set_02__29956__10937.jpg', 'voltron_30th_anniversary_edition_complete_set_02__29956__10937.jpg', 'product_images/voltron_30th_anniversary_edition_complete_set_02__29956__10937.jpg', 'https://www.toynamishop.com/product_images/m/248/voltron_30th_anniversary_edition_complete_set_02__29956__10937.jpg', 'products', '30th Anniversary Voltron Gift Set', '30th Anniversary Voltron Gift Set', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('d4b1c8bb-c8a7-4752-885c-ee8791f38185', 'voltron_30th_anniversary_edition_robot_form01__57485__85390.jpg', 'voltron_30th_anniversary_edition_robot_form01__57485__85390.jpg', 'product_images/voltron_30th_anniversary_edition_robot_form01__57485__85390.jpg', 'https://www.toynamishop.com/product_images/w/197/voltron_30th_anniversary_edition_robot_form01__57485__85390.jpg', 'products', '30th Anniversary Voltron Gift Set', '30th Anniversary Voltron Gift Set', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('4aac3507-33cf-4b2e-8901-7cd9f5f83e47', 'voltron_30th_anniversary_edition_complete_set__51501__03121.jpg', 'voltron_30th_anniversary_edition_complete_set__51501__03121.jpg', 'product_images/voltron_30th_anniversary_edition_complete_set__51501__03121.jpg', 'https://www.toynamishop.com/product_images/a/209/voltron_30th_anniversary_edition_complete_set__51501__03121.jpg', 'products', '30th Anniversary Voltron Gift Set', '30th Anniversary Voltron Gift Set', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('5ab4cb69-ab20-4a5c-a926-73b3459701d3', 'voltron_30th_anniversary_edition_light_up_weapons_platform__62905__52235.jpg', 'voltron_30th_anniversary_edition_light_up_weapons_platform__62905__52235.jpg', 'product_images/voltron_30th_anniversary_edition_light_up_weapons_platform__62905__52235.jpg', 'https://www.toynamishop.com/product_images/q/916/voltron_30th_anniversary_edition_light_up_weapons_platform__62905__52235.jpg', 'products', '30th Anniversary Voltron Gift Set', '30th Anniversary Voltron Gift Set', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('b71fedfe-8ca8-458a-9d8f-e11af8db7e24', 'toynami_voltron_30th_anniversary_set_ad__68848__87318.jpg', 'toynami_voltron_30th_anniversary_set_ad__68848__87318.jpg', 'product_images/toynami_voltron_30th_anniversary_set_ad__68848__87318.jpg', 'https://www.toynamishop.com/product_images/t/372/toynami_voltron_30th_anniversary_set_ad__68848__87318.jpg', 'products', '30th Anniversary Voltron Gift Set', '30th Anniversary Voltron Gift Set', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('1f40f7d5-8568-4f67-8c31-e3c20b172fba', 'Pose_Heat_Getter_1_Official_Photos_ENG_00-Kv01__17734__18660.jpg', 'Pose_Heat_Getter_1_Official_Photos_ENG_00-Kv01__17734__18660.jpg', 'product_images/Pose_Heat_Getter_1_Official_Photos_ENG_00-Kv01__17734__18660.jpg', 'https://www.toynamishop.com/product_images/y/936/Pose_Heat_Getter_1_Official_Photos_ENG_00-Kv01__17734__18660.jpg', 'products', 'METAL HEAT Series Getter 1 Action Figure', 'METAL HEAT Series Getter 1 Action Figure', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('e4c903ae-2991-46e0-abba-678fe2a2f135', 'Pose_Heat_Getter_1_Official_Photos_ENG_03-xFull_Gear__45847__90126.jpg', 'Pose_Heat_Getter_1_Official_Photos_ENG_03-xFull_Gear__45847__90126.jpg', 'product_images/Pose_Heat_Getter_1_Official_Photos_ENG_03-xFull_Gear__45847__90126.jpg', 'https://www.toynamishop.com/product_images/y/360/Pose_Heat_Getter_1_Official_Photos_ENG_03-xFull_Gear__45847__90126.jpg', 'products', 'METAL HEAT Series Getter 1 Action Figure', 'METAL HEAT Series Getter 1 Action Figure', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('f9626694-55dd-4073-90cf-7723a56aa07a', 'Pose_Heat_Getter_1_Official_Photos_ENG_00-Kv02__93523__43245.jpg', 'Pose_Heat_Getter_1_Official_Photos_ENG_00-Kv02__93523__43245.jpg', 'product_images/Pose_Heat_Getter_1_Official_Photos_ENG_00-Kv02__93523__43245.jpg', 'https://www.toynamishop.com/product_images/t/319/Pose_Heat_Getter_1_Official_Photos_ENG_00-Kv02__93523__43245.jpg', 'products', 'METAL HEAT Series Getter 1 Action Figure', 'METAL HEAT Series Getter 1 Action Figure', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('774985b1-6aab-4b96-9e2a-6f01b6109d6e', 'naruto_epic_scale_hashirama_01__54325__29207.jpg', 'naruto_epic_scale_hashirama_01__54325__29207.jpg', 'product_images/naruto_epic_scale_hashirama_01__54325__29207.jpg', 'https://www.toynamishop.com/product_images/o/852/naruto_epic_scale_hashirama_01__54325__29207.jpg', 'products', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('0b4528cd-4db1-4c31-af10-af671e25b67b', 'naruto_epic_scale_hashirama_11__79187__87245.jpg', 'naruto_epic_scale_hashirama_11__79187__87245.jpg', 'product_images/naruto_epic_scale_hashirama_11__79187__87245.jpg', 'https://www.toynamishop.com/product_images/e/191/naruto_epic_scale_hashirama_11__79187__87245.jpg', 'products', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('8556ac88-d11b-42fe-9409-7646911f4672', 'naruto_epic_scale_hashirama_14__06609__10836.jpg', 'naruto_epic_scale_hashirama_14__06609__10836.jpg', 'product_images/naruto_epic_scale_hashirama_14__06609__10836.jpg', 'https://www.toynamishop.com/product_images/c/382/naruto_epic_scale_hashirama_14__06609__10836.jpg', 'products', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('388cb69f-e8a4-43b2-91dc-339b8f1a6cea', 'naruto_epic_scale_hashirama_12__40940__27809.jpg', 'naruto_epic_scale_hashirama_12__40940__27809.jpg', 'product_images/naruto_epic_scale_hashirama_12__40940__27809.jpg', 'https://www.toynamishop.com/product_images/u/961/naruto_epic_scale_hashirama_12__40940__27809.jpg', 'products', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('b57d912a-7d4d-4c8f-b0a2-c0ffcc9e969e', 'naruto_epic_scale_hashirama_13__47897__53512.jpg', 'naruto_epic_scale_hashirama_13__47897__53512.jpg', 'product_images/naruto_epic_scale_hashirama_13__47897__53512.jpg', 'https://www.toynamishop.com/product_images/t/271/naruto_epic_scale_hashirama_13__47897__53512.jpg', 'products', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('9d8a05e5-cc6a-4499-b6ee-abc559844f3a', 'naruto_epic_scale_hashirama_08__03245__67819.jpg', 'naruto_epic_scale_hashirama_08__03245__67819.jpg', 'product_images/naruto_epic_scale_hashirama_08__03245__67819.jpg', 'https://www.toynamishop.com/product_images/q/058/naruto_epic_scale_hashirama_08__03245__67819.jpg', 'products', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('ab476e66-3803-425a-9d5c-89446b7c716c', 'naruto_epic_scale_hashirama_09__35595__91177.jpg', 'naruto_epic_scale_hashirama_09__35595__91177.jpg', 'product_images/naruto_epic_scale_hashirama_09__35595__91177.jpg', 'https://www.toynamishop.com/product_images/g/353/naruto_epic_scale_hashirama_09__35595__91177.jpg', 'products', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('42e05e19-8a06-48d2-9ca6-2773bd33477b', 'naruto_epic_scale_hashirama_04__92777__25115.jpg', 'naruto_epic_scale_hashirama_04__92777__25115.jpg', 'product_images/naruto_epic_scale_hashirama_04__92777__25115.jpg', 'https://www.toynamishop.com/product_images/r/861/naruto_epic_scale_hashirama_04__92777__25115.jpg', 'products', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('d00d236b-7e76-4a87-8abc-131e8ca20b6e', 'naruto_epic_scale_hashirama_10__68925__31813.jpg', 'naruto_epic_scale_hashirama_10__68925__31813.jpg', 'product_images/naruto_epic_scale_hashirama_10__68925__31813.jpg', 'https://www.toynamishop.com/product_images/k/547/naruto_epic_scale_hashirama_10__68925__31813.jpg', 'products', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', 'image/jpeg', 'jpg', ARRAY['product'], 10, '2025-08-24 03:34:39.225191+00', NOW()),
+('3676053b-5bb7-4152-bf97-c0f798dca6b7', 'FAV-SP01--SDCC__43559__04477.jpg', 'FAV-SP01--SDCC__43559__04477.jpg', 'product_images/FAV-SP01--SDCC__43559__04477.jpg', 'https://www.toynamishop.com/product_images/x/723/FAV-SP01--SDCC__43559__04477.jpg', 'products', 'Acid Rain Green Commander 2019 SDCC Exclusive', 'Acid Rain Green Commander 2019 SDCC Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('6f69a4d3-240c-4776-af79-c2dea78b56bd', 'FAV-SP01--02__24752__82117.jpg', 'FAV-SP01--02__24752__82117.jpg', 'product_images/FAV-SP01--02__24752__82117.jpg', 'https://www.toynamishop.com/product_images/r/027/FAV-SP01--02__24752__82117.jpg', 'products', 'Acid Rain Green Commander 2019 SDCC Exclusive', 'Acid Rain Green Commander 2019 SDCC Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('5bb7a5b5-115e-450a-a892-e7d667f19ffc', 'FAV-SP01-__34754__68510.jpg', 'FAV-SP01-__34754__68510.jpg', 'product_images/FAV-SP01-__34754__68510.jpg', 'https://www.toynamishop.com/product_images/e/578/FAV-SP01-__34754__68510.jpg', 'products', 'Acid Rain Green Commander 2019 SDCC Exclusive', 'Acid Rain Green Commander 2019 SDCC Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('a067299c-96fd-4951-9a89-cb01d5f424b4', 'little-nessies_final__55610__69608.jpg', 'little-nessies_final__55610__69608.jpg', 'product_images/little-nessies_final__55610__69608.jpg', 'https://www.toynamishop.com/product_images/x/440/little-nessies_final__55610__69608.jpg', 'products', 'Little Nessies Blind Box Figurine', 'Little Nessies Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('56a34025-45d0-40b8-94bc-e9d598987a24', 'Space_scientist_White_background__41501__74290.jpg', 'Space_scientist_White_background__41501__74290.jpg', 'product_images/Space_scientist_White_background__41501__74290.jpg', 'https://www.toynamishop.com/product_images/z/807/Space_scientist_White_background__41501__74290.jpg', 'products', 'Acid Rain Space Scientist', 'Acid Rain Space Scientist', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('05551dd6-b4e3-40e5-a507-d6503e34b232', 'IMG_0004__32540__60356.JPG', 'IMG_0004__32540__60356.JPG', 'product_images/IMG_0004__32540__60356.JPG', 'https://www.toynamishop.com/product_images/t/914/IMG_0004__32540__60356.JPG', 'products', 'Acid Rain Space Scientist', 'Acid Rain Space Scientist', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('04b73ec0-e072-401e-b9cf-f4b725cc0d0c', 'IMG_0005__70525__52841.JPG', 'IMG_0005__70525__52841.JPG', 'product_images/IMG_0005__70525__52841.JPG', 'https://www.toynamishop.com/product_images/o/297/IMG_0005__70525__52841.JPG', 'products', 'Acid Rain Space Scientist', 'Acid Rain Space Scientist', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('1fb4eaa2-23bf-424c-b151-82635603b14a', 'IMG_0008__00612__27324.JPG', 'IMG_0008__00612__27324.JPG', 'product_images/IMG_0008__00612__27324.JPG', 'https://www.toynamishop.com/product_images/q/858/IMG_0008__00612__27324.JPG', 'products', 'Acid Rain Space Scientist', 'Acid Rain Space Scientist', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('d4030e31-9ead-47ca-8d0b-8a8e65d4f3bd', 'IMG_0014__03232__92922.JPG', 'IMG_0014__03232__92922.JPG', 'product_images/IMG_0014__03232__92922.JPG', 'https://www.toynamishop.com/product_images/o/777/IMG_0014__03232__92922.JPG', 'products', 'Acid Rain Space Scientist', 'Acid Rain Space Scientist', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('21a7c80d-e08f-4bf0-b9e8-41e213f48944', 'mega-man_keychain__92763__63447.jpg', 'mega-man_keychain__92763__63447.jpg', 'product_images/mega-man_keychain__92763__63447.jpg', 'https://www.toynamishop.com/product_images/z/571/mega-man_keychain__92763__63447.jpg', 'products', 'Mega Man: Fully Charged Clip-On Exclusive', 'Mega Man: Fully Charged Clip-On Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('b981a312-d9fa-40e2-a664-857c0301bf5f', 'b82f0e4e-34ac-fa78-ee34-83ee888f05ea__99147__50745.jpg', 'b82f0e4e-34ac-fa78-ee34-83ee888f05ea__99147__50745.jpg', 'product_images/b82f0e4e-34ac-fa78-ee34-83ee888f05ea__99147__50745.jpg', 'https://www.toynamishop.com/product_images/i/025/b82f0e4e-34ac-fa78-ee34-83ee888f05ea__99147__50745.jpg', 'products', 'Naruto Shippuden Mininja Figurines - Series 2', 'Naruto Shippuden Mininja Figurines - Series 2', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('5d43862d-3e83-40e7-933b-0d5ea3c3efe7', 'wzSGpX9Y__54737__94489.png', 'wzSGpX9Y__54737__94489.png', 'product_images/wzSGpX9Y__54737__94489.png', 'https://www.toynamishop.com/product_images/l/749/wzSGpX9Y__54737__94489.png', 'products', 'Naruto Shippuden Mininja Figurines - Series 2', 'Naruto Shippuden Mininja Figurines - Series 2', 'image/png', 'png', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('c4382d5d-e8a2-4403-8a23-032a65f7b813', 'KVyPp83k__25710__30208.png', 'KVyPp83k__25710__30208.png', 'product_images/KVyPp83k__25710__30208.png', 'https://www.toynamishop.com/product_images/a/532/KVyPp83k__25710__30208.png', 'products', 'Naruto Shippuden Mininja Figurines - Series 2', 'Naruto Shippuden Mininja Figurines - Series 2', 'image/png', 'png', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('d7079017-2c14-4913-8707-c189365933e2', 'Hc6kvfGE__03250__17780.png', 'Hc6kvfGE__03250__17780.png', 'product_images/Hc6kvfGE__03250__17780.png', 'https://www.toynamishop.com/product_images/v/286/Hc6kvfGE__03250__17780.png', 'products', 'Naruto Shippuden Mininja Figurines - Series 2', 'Naruto Shippuden Mininja Figurines - Series 2', 'image/png', 'png', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('5069175b-2329-4b5e-b452-48b75cd36285', 'dlOnJI8k__66429__72853.png', 'dlOnJI8k__66429__72853.png', 'product_images/dlOnJI8k__66429__72853.png', 'https://www.toynamishop.com/product_images/i/177/dlOnJI8k__66429__72853.png', 'products', 'Naruto Shippuden Mininja Figurines - Series 2', 'Naruto Shippuden Mininja Figurines - Series 2', 'image/png', 'png', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('5a012384-3dea-4c7b-83f3-8895ff462b18', 'IwJDQZPg__81587__41129.png', 'IwJDQZPg__81587__41129.png', 'product_images/IwJDQZPg__81587__41129.png', 'https://www.toynamishop.com/product_images/s/715/IwJDQZPg__81587__41129.png', 'products', 'Naruto Shippuden Mininja Figurines - Series 2', 'Naruto Shippuden Mininja Figurines - Series 2', 'image/png', 'png', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('6153541b-1f7c-4ce0-9bbd-69eb29d25210', '6AZaiFt4__41113__12886.png', '6AZaiFt4__41113__12886.png', 'product_images/6AZaiFt4__41113__12886.png', 'https://www.toynamishop.com/product_images/c/549/6AZaiFt4__41113__12886.png', 'products', 'Naruto Shippuden Mininja Figurines - Series 2', 'Naruto Shippuden Mininja Figurines - Series 2', 'image/png', 'png', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('a7267a34-e0ce-4fab-b453-f83806b286ee', 'PUMOB8x0__89811__10556.png', 'PUMOB8x0__89811__10556.png', 'product_images/PUMOB8x0__89811__10556.png', 'https://www.toynamishop.com/product_images/h/733/PUMOB8x0__89811__10556.png', 'products', 'Naruto Shippuden Mininja Figurines - Series 2', 'Naruto Shippuden Mininja Figurines - Series 2', 'image/png', 'png', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('91e149bb-6201-4e21-989d-1c4850744264', 'CeBBOkBQ__69811__20013.png', 'CeBBOkBQ__69811__20013.png', 'product_images/CeBBOkBQ__69811__20013.png', 'https://www.toynamishop.com/product_images/n/643/CeBBOkBQ__69811__20013.png', 'products', 'Naruto Shippuden Mininja Figurines - Series 2', 'Naruto Shippuden Mininja Figurines - Series 2', 'image/png', 'png', ARRAY['product'], 10, '2025-08-24 03:34:39.225191+00', NOW()),
+('fbbf2538-309a-4e6a-b61c-927e5b62e640', 'kh6_DI1s__61928__64835.png', 'kh6_DI1s__61928__64835.png', 'product_images/kh6_DI1s__61928__64835.png', 'https://www.toynamishop.com/product_images/i/187/kh6_DI1s__61928__64835.png', 'products', 'Naruto Shippuden Mininja Figurines - Series 2', 'Naruto Shippuden Mininja Figurines - Series 2', 'image/png', 'png', ARRAY['product'], 11, '2025-08-24 03:34:39.225191+00', NOW()),
+('2409bb09-9f97-4788-bdf6-f123d0f740a6', 'CeQ9BHfM__93933__99118.png', 'CeQ9BHfM__93933__99118.png', 'product_images/CeQ9BHfM__93933__99118.png', 'https://www.toynamishop.com/product_images/z/877/CeQ9BHfM__93933__99118.png', 'products', 'Naruto Shippuden Mininja Figurines - Series 2', 'Naruto Shippuden Mininja Figurines - Series 2', 'image/png', 'png', ARRAY['product'], 12, '2025-08-24 03:34:39.225191+00', NOW()),
+('35a425c9-e003-40fa-9aaa-abf602bf09eb', 'OSzN7gB8__12029__73145.png', 'OSzN7gB8__12029__73145.png', 'product_images/OSzN7gB8__12029__73145.png', 'https://www.toynamishop.com/product_images/t/704/OSzN7gB8__12029__73145.png', 'products', 'Naruto Shippuden Mininja Figurines - Series 2', 'Naruto Shippuden Mininja Figurines - Series 2', 'image/png', 'png', ARRAY['product'], 13, '2025-08-24 03:34:39.225191+00', NOW()),
+('7b4e5c63-4f1c-473b-96a7-56a20ba763c1', 'uh5raaKQ__96158__45889.png', 'uh5raaKQ__96158__45889.png', 'product_images/uh5raaKQ__96158__45889.png', 'https://www.toynamishop.com/product_images/z/703/uh5raaKQ__96158__45889.png', 'products', 'Naruto Shippuden Mininja Figurines - Series 2', 'Naruto Shippuden Mininja Figurines - Series 2', 'image/png', 'png', ARRAY['product'], 14, '2025-08-24 03:34:39.225191+00', NOW()),
+('ac1920de-5f58-42a6-8137-3a94dbf84fa1', 'FAV-A-04_PRODUCT_SHOT_5__69713__93924.jpg', 'FAV-A-04_PRODUCT_SHOT_5__69713__93924.jpg', 'product_images/FAV-A-04_PRODUCT_SHOT_5__69713__93924.jpg', 'https://www.toynamishop.com/product_images/k/778/FAV-A-04_PRODUCT_SHOT_5__69713__93924.jpg', 'products', 'Acid Rain Sand Bunker Set', 'Acid Rain Sand Bunker Set', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('420c3a4e-8221-486f-9fd3-d1a5347c651c', 'FAV-A-04_PRODUCT_SHOT_1_-_Copy__96294__14079.jpg', 'FAV-A-04_PRODUCT_SHOT_1_-_Copy__96294__14079.jpg', 'product_images/FAV-A-04_PRODUCT_SHOT_1_-_Copy__96294__14079.jpg', 'https://www.toynamishop.com/product_images/c/182/FAV-A-04_PRODUCT_SHOT_1_-_Copy__96294__14079.jpg', 'products', 'Acid Rain Sand Bunker Set', 'Acid Rain Sand Bunker Set', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('fb5ec5df-cab8-4aa5-b590-8487cd746956', 'FAV-A-04_PRODUCT_SHOT_3__25463__87613.jpg', 'FAV-A-04_PRODUCT_SHOT_3__25463__87613.jpg', 'product_images/FAV-A-04_PRODUCT_SHOT_3__25463__87613.jpg', 'https://www.toynamishop.com/product_images/s/860/FAV-A-04_PRODUCT_SHOT_3__25463__87613.jpg', 'products', 'Acid Rain Sand Bunker Set', 'Acid Rain Sand Bunker Set', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('91bf0b6a-cbe0-4db2-b4cc-efc4d424cf92', 'B00YHYI8EU.MAIN.jpg__61335__36068.jpg', 'B00YHYI8EU.MAIN.jpg__61335__36068.jpg', 'product_images/B00YHYI8EU.MAIN.jpg__61335__36068.jpg', 'https://www.toynamishop.com/product_images/f/078/B00YHYI8EU.MAIN.jpg__61335__36068.jpg', 'products', 'Robotech 30th Anniversary 1/100 Rick Hunter GBP-1J Heavy Armor Veritech', 'Robotech 30th Anniversary 1/100 Rick Hunter GBP-1J Heavy Armor Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('3730b4e5-9640-4847-96db-d4503a27165c', 'B00YHYI8EU.PT01.jpg__01566__33278.jpg', 'B00YHYI8EU.PT01.jpg__01566__33278.jpg', 'product_images/B00YHYI8EU.PT01.jpg__01566__33278.jpg', 'https://www.toynamishop.com/product_images/p/579/B00YHYI8EU.PT01.jpg__01566__33278.jpg', 'products', 'Robotech 30th Anniversary 1/100 Rick Hunter GBP-1J Heavy Armor Veritech', 'Robotech 30th Anniversary 1/100 Rick Hunter GBP-1J Heavy Armor Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('4bf206be-2d92-45f9-a1ca-2c6a7f993c1f', 'B00YHYI8EU.PT02.jpg__88743__82592.jpg', 'B00YHYI8EU.PT02.jpg__88743__82592.jpg', 'product_images/B00YHYI8EU.PT02.jpg__88743__82592.jpg', 'https://www.toynamishop.com/product_images/h/932/B00YHYI8EU.PT02.jpg__88743__82592.jpg', 'products', 'Robotech 30th Anniversary 1/100 Rick Hunter GBP-1J Heavy Armor Veritech', 'Robotech 30th Anniversary 1/100 Rick Hunter GBP-1J Heavy Armor Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('13a957e7-4473-4ddd-b187-5657d079e483', 'B00YHYI8EU.PT03.jpg__55440__13710.jpg', 'B00YHYI8EU.PT03.jpg__55440__13710.jpg', 'product_images/B00YHYI8EU.PT03.jpg__55440__13710.jpg', 'https://www.toynamishop.com/product_images/k/851/B00YHYI8EU.PT03.jpg__55440__13710.jpg', 'products', 'Robotech 30th Anniversary 1/100 Rick Hunter GBP-1J Heavy Armor Veritech', 'Robotech 30th Anniversary 1/100 Rick Hunter GBP-1J Heavy Armor Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('d4041055-7b36-42ea-88a3-32ce206b9edc', 'macross_calibre_wings_f14_max04__15969__34385.jpg', 'macross_calibre_wings_f14_max04__15969__34385.jpg', 'product_images/macross_calibre_wings_f14_max04__15969__34385.jpg', 'https://www.toynamishop.com/product_images/c/292/macross_calibre_wings_f14_max04__15969__34385.jpg', 'products', 'Macross Calibre Wings 1:72 F-14 UN Spacy MAX TYPE', 'Macross Calibre Wings 1:72 F-14 UN Spacy MAX TYPE', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('4a4c808d-aefb-424c-8147-3d4e8fe3aec8', 'macross_calibre_wings_f14_max01__77505__09709.jpg', 'macross_calibre_wings_f14_max01__77505__09709.jpg', 'product_images/macross_calibre_wings_f14_max01__77505__09709.jpg', 'https://www.toynamishop.com/product_images/x/092/macross_calibre_wings_f14_max01__77505__09709.jpg', 'products', 'Macross Calibre Wings 1:72 F-14 UN Spacy MAX TYPE', 'Macross Calibre Wings 1:72 F-14 UN Spacy MAX TYPE', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('bff85717-1f99-4d00-a972-0160a555ba2e', 'macross_calibre_wings_f14_max02__98001__08109.jpg', 'macross_calibre_wings_f14_max02__98001__08109.jpg', 'product_images/macross_calibre_wings_f14_max02__98001__08109.jpg', 'https://www.toynamishop.com/product_images/j/267/macross_calibre_wings_f14_max02__98001__08109.jpg', 'products', 'Macross Calibre Wings 1:72 F-14 UN Spacy MAX TYPE', 'Macross Calibre Wings 1:72 F-14 UN Spacy MAX TYPE', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('df4a4782-c096-44c0-8986-13f95da11525', 'macross_calibre_wings_f14_max03__11926__75561.jpg', 'macross_calibre_wings_f14_max03__11926__75561.jpg', 'product_images/macross_calibre_wings_f14_max03__11926__75561.jpg', 'https://www.toynamishop.com/product_images/q/884/macross_calibre_wings_f14_max03__11926__75561.jpg', 'products', 'Macross Calibre Wings 1:72 F-14 UN Spacy MAX TYPE', 'Macross Calibre Wings 1:72 F-14 UN Spacy MAX TYPE', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('314cd18a-803a-4637-b061-6287638df018', 'macross_calibre_wings_f14_max05__58609__20141.jpg', 'macross_calibre_wings_f14_max05__58609__20141.jpg', 'product_images/macross_calibre_wings_f14_max05__58609__20141.jpg', 'https://www.toynamishop.com/product_images/n/543/macross_calibre_wings_f14_max05__58609__20141.jpg', 'products', 'Macross Calibre Wings 1:72 F-14 UN Spacy MAX TYPE', 'Macross Calibre Wings 1:72 F-14 UN Spacy MAX TYPE', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('7f368cf6-614a-4c94-91a0-2be0d5834ead', 'hamz_unipo_plush_sdcc2013_01__96943__77641.jpg', 'hamz_unipo_plush_sdcc2013_01__96943__77641.jpg', 'product_images/hamz_unipo_plush_sdcc2013_01__96943__77641.jpg', 'https://www.toynamishop.com/product_images/v/565/hamz_unipo_plush_sdcc2013_01__96943__77641.jpg', 'products', 'UNKL Hamz Critter Plush', 'UNKL Hamz Critter Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('f758e86d-a59b-4c43-9383-f4603227797b', 'hamz_unipo_plush_sdcc2013__29035__70155.jpg', 'hamz_unipo_plush_sdcc2013__29035__70155.jpg', 'product_images/hamz_unipo_plush_sdcc2013__29035__70155.jpg', 'https://www.toynamishop.com/product_images/q/594/hamz_unipo_plush_sdcc2013__29035__70155.jpg', 'products', 'UNKL Hamz Critter Plush', 'UNKL Hamz Critter Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('bf8a4aa9-fcfc-4954-92fd-01d66c8c0fb4', 'hamz_hazmapo_plush_02__15300__02056.jpg', 'hamz_hazmapo_plush_02__15300__02056.jpg', 'product_images/hamz_hazmapo_plush_02__15300__02056.jpg', 'https://www.toynamishop.com/product_images/u/308/hamz_hazmapo_plush_02__15300__02056.jpg', 'products', 'UNKL Hamz Critter Plush', 'UNKL Hamz Critter Plush', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('1bde3fdb-05db-46d7-a1b8-405758fbe773', 'hamz_hazmapo_plush_01__11115__30344.jpg', 'hamz_hazmapo_plush_01__11115__30344.jpg', 'product_images/hamz_hazmapo_plush_01__11115__30344.jpg', 'https://www.toynamishop.com/product_images/d/382/hamz_hazmapo_plush_01__11115__30344.jpg', 'products', 'UNKL Hamz Critter Plush', 'UNKL Hamz Critter Plush', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('1a405038-eca6-4c18-bac2-6f4e7cae1c0d', 'hamz_hazmapo_plush_03__65952__29567.jpg', 'hamz_hazmapo_plush_03__65952__29567.jpg', 'product_images/hamz_hazmapo_plush_03__65952__29567.jpg', 'https://www.toynamishop.com/product_images/x/973/hamz_hazmapo_plush_03__65952__29567.jpg', 'products', 'UNKL Hamz Critter Plush', 'UNKL Hamz Critter Plush', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('3102114a-7784-434f-b339-9ce460cf7b58', 'skelanimals_plush_cute_as_hell_diego4__57580__78243.jpg', 'skelanimals_plush_cute_as_hell_diego4__57580__78243.jpg', 'product_images/skelanimals_plush_cute_as_hell_diego4__57580__78243.jpg', 'https://www.toynamishop.com/product_images/d/482/skelanimals_plush_cute_as_hell_diego4__57580__78243.jpg', 'products', 'Comic Con 2014 Exclusive: Skelanimals "Cute-As-Hell" Diego Plush', 'Comic Con 2014 Exclusive: Skelanimals "Cute-As-Hell" Diego Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('dc56f797-e3cc-4858-9dcf-8ccf60edb575', 'skelanimals_plush_cute_as_hell_diego3__57536__51966.jpg', 'skelanimals_plush_cute_as_hell_diego3__57536__51966.jpg', 'product_images/skelanimals_plush_cute_as_hell_diego3__57536__51966.jpg', 'https://www.toynamishop.com/product_images/y/509/skelanimals_plush_cute_as_hell_diego3__57536__51966.jpg', 'products', 'Comic Con 2014 Exclusive: Skelanimals "Cute-As-Hell" Diego Plush', 'Comic Con 2014 Exclusive: Skelanimals "Cute-As-Hell" Diego Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('ead56aa4-a6df-4c1d-ab49-914d507a9154', 'skelanimals_plush_cute_as_hell_diego2__38786__99070.jpg', 'skelanimals_plush_cute_as_hell_diego2__38786__99070.jpg', 'product_images/skelanimals_plush_cute_as_hell_diego2__38786__99070.jpg', 'https://www.toynamishop.com/product_images/w/015/skelanimals_plush_cute_as_hell_diego2__38786__99070.jpg', 'products', 'Comic Con 2014 Exclusive: Skelanimals "Cute-As-Hell" Diego Plush', 'Comic Con 2014 Exclusive: Skelanimals "Cute-As-Hell" Diego Plush', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('1885c33c-e281-4620-ba48-1916415ba5bb', 'naruto-shippuden_sage-mode-Naruto__75432__39915.jpg', 'naruto-shippuden_sage-mode-Naruto__75432__39915.jpg', 'product_images/naruto-shippuden_sage-mode-Naruto__75432__39915.jpg', 'https://www.toynamishop.com/product_images/p/228/naruto-shippuden_sage-mode-Naruto__75432__39915.jpg', 'products', 'Comic Con 2017 Exclusive: Sage Mode Naruto Figurine', 'Comic Con 2017 Exclusive: Sage Mode Naruto Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('2c245364-426b-4a02-9d82-b888d0f13cf7', 'IMG_0019__09603__95774.JPG', 'IMG_0019__09603__95774.JPG', 'product_images/IMG_0019__09603__95774.JPG', 'https://www.toynamishop.com/product_images/t/101/IMG_0019__09603__95774.JPG', 'products', 'Acid Rain Laurel Airbourne', 'Acid Rain Laurel Airbourne', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('bd6c79e2-d606-476c-9700-bb4f82b55320', 'IMG_0007__62338__12625.JPG', 'IMG_0007__62338__12625.JPG', 'product_images/IMG_0007__62338__12625.JPG', 'https://www.toynamishop.com/product_images/x/108/IMG_0007__62338__12625.JPG', 'products', 'Acid Rain Laurel Airbourne', 'Acid Rain Laurel Airbourne', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('29c6a8b9-4be7-42f6-90ee-3e2b520f0298', 'IMG_0008__34363__65297.JPG', 'IMG_0008__34363__65297.JPG', 'product_images/IMG_0008__34363__65297.JPG', 'https://www.toynamishop.com/product_images/v/345/IMG_0008__34363__65297.JPG', 'products', 'Acid Rain Laurel Airbourne', 'Acid Rain Laurel Airbourne', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('17c338da-41d1-4521-94a4-f1502a3415e5', 'IMG_0015__56161__37715.JPG', 'IMG_0015__56161__37715.JPG', 'product_images/IMG_0015__56161__37715.JPG', 'https://www.toynamishop.com/product_images/t/801/IMG_0015__56161__37715.JPG', 'products', 'Acid Rain Laurel Airbourne', 'Acid Rain Laurel Airbourne', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('2404ccb8-9d18-4018-829e-6e5d371545da', 'IMG_0017__94059__73648.JPG', 'IMG_0017__94059__73648.JPG', 'product_images/IMG_0017__94059__73648.JPG', 'https://www.toynamishop.com/product_images/m/811/IMG_0017__94059__73648.JPG', 'products', 'Acid Rain Laurel Airbourne', 'Acid Rain Laurel Airbourne', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('c1e42730-ccd8-446c-a9eb-ec6bc2e67881', 'IMG_0018_copy__00053__66874.jpg', 'IMG_0018_copy__00053__66874.jpg', 'product_images/IMG_0018_copy__00053__66874.jpg', 'https://www.toynamishop.com/product_images/d/657/IMG_0018_copy__00053__66874.jpg', 'products', 'Acid Rain Laurel Airbourne', 'Acid Rain Laurel Airbourne', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('801ad57b-6e75-4f83-ad20-ac0e5cb568d4', 'Tulipop-Deluxe-Plush_Gloomy01__83391__90650.jpg', 'Tulipop-Deluxe-Plush_Gloomy01__83391__90650.jpg', 'product_images/Tulipop-Deluxe-Plush_Gloomy01__83391__90650.jpg', 'https://www.toynamishop.com/product_images/w/081/Tulipop-Deluxe-Plush_Gloomy01__83391__90650.jpg', 'products', 'Gloomy Deluxe Plush', 'Gloomy Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('d226ac7e-2a43-420e-a4ac-f274b3904a90', '04gloomy_plush__67620__60762.jpg', '04gloomy_plush__67620__60762.jpg', 'product_images/04gloomy_plush__67620__60762.jpg', 'https://www.toynamishop.com/product_images/c/796/04gloomy_plush__67620__60762.jpg', 'products', 'Gloomy Deluxe Plush', 'Gloomy Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('7ca484c7-49c4-4a38-9f30-a3f932c33c8d', 'gloomy_plush_deluxe-04__46303__51148.jpg', 'gloomy_plush_deluxe-04__46303__51148.jpg', 'product_images/gloomy_plush_deluxe-04__46303__51148.jpg', 'https://www.toynamishop.com/product_images/u/855/gloomy_plush_deluxe-04__46303__51148.jpg', 'products', 'Gloomy Deluxe Plush', 'Gloomy Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('58918d90-fef5-4be5-846f-a9c3d7e19d03', 'little_nimbus_special_edition__68571__50326.jpg', 'little_nimbus_special_edition__68571__50326.jpg', 'product_images/little_nimbus_special_edition__68571__50326.jpg', 'https://www.toynamishop.com/product_images/d/362/little_nimbus_special_edition__68571__50326.jpg', 'products', 'Little Nimbus Special Edition Figurines Set - 2021 CONVENTION EXCLUSIVE', 'Little Nimbus Special Edition Figurines Set - 2021 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('03391fa5-9c64-40f9-b8d0-2233010ee75f', 'little_nimbus_special_edition__01__48806__42638.jpg', 'little_nimbus_special_edition__01__48806__42638.jpg', 'product_images/little_nimbus_special_edition__01__48806__42638.jpg', 'https://www.toynamishop.com/product_images/z/946/little_nimbus_special_edition__01__48806__42638.jpg', 'products', 'Little Nimbus Special Edition Figurines Set - 2021 CONVENTION EXCLUSIVE', 'Little Nimbus Special Edition Figurines Set - 2021 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('af33d0b2-db3e-4e2f-a1f5-3b913c89d12d', 'little_nimbus_special_edition__03__00725__44417.jpg', 'little_nimbus_special_edition__03__00725__44417.jpg', 'product_images/little_nimbus_special_edition__03__00725__44417.jpg', 'https://www.toynamishop.com/product_images/d/037/little_nimbus_special_edition__03__00725__44417.jpg', 'products', 'Little Nimbus Special Edition Figurines Set - 2021 CONVENTION EXCLUSIVE', 'Little Nimbus Special Edition Figurines Set - 2021 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('4b131e21-8d22-473b-8801-03f6a59efb2c', 'little_nimbus_special_edition__02__17206__43600.jpg', 'little_nimbus_special_edition__02__17206__43600.jpg', 'product_images/little_nimbus_special_edition__02__17206__43600.jpg', 'https://www.toynamishop.com/product_images/n/276/little_nimbus_special_edition__02__17206__43600.jpg', 'products', 'Little Nimbus Special Edition Figurines Set - 2021 CONVENTION EXCLUSIVE', 'Little Nimbus Special Edition Figurines Set - 2021 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('e18d3822-c446-43de-b2c4-422120aa022a', 'little_nimbus_special_edition__04__43573__38885.jpg', 'little_nimbus_special_edition__04__43573__38885.jpg', 'product_images/little_nimbus_special_edition__04__43573__38885.jpg', 'https://www.toynamishop.com/product_images/d/844/little_nimbus_special_edition__04__43573__38885.jpg', 'products', 'Little Nimbus Special Edition Figurines Set - 2021 CONVENTION EXCLUSIVE', 'Little Nimbus Special Edition Figurines Set - 2021 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('7f819181-49b3-47ab-bb4a-1486e1a9ce3a', 'voltron_30th_anniversary_jumbo_lion_robot_01__75868__06086.jpg', 'voltron_30th_anniversary_jumbo_lion_robot_01__75868__06086.jpg', 'product_images/voltron_30th_anniversary_jumbo_lion_robot_01__75868__06086.jpg', 'https://www.toynamishop.com/product_images/t/194/voltron_30th_anniversary_jumbo_lion_robot_01__75868__06086.jpg', 'products', '30th Anniversary Voltron Jumbo Lion Force Vinyl', '30th Anniversary Voltron Jumbo Lion Force Vinyl', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('b07fcde2-c3f9-41db-9cae-9336962ab211', 'voltron_30th_anniversary_jumbo_lion_robot_04__99745__26135.jpg', 'voltron_30th_anniversary_jumbo_lion_robot_04__99745__26135.jpg', 'product_images/voltron_30th_anniversary_jumbo_lion_robot_04__99745__26135.jpg', 'https://www.toynamishop.com/product_images/n/563/voltron_30th_anniversary_jumbo_lion_robot_04__99745__26135.jpg', 'products', '30th Anniversary Voltron Jumbo Lion Force Vinyl', '30th Anniversary Voltron Jumbo Lion Force Vinyl', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('3499eb6d-6483-43e9-8c5a-c132978cefc1', 'voltron_30th_anniversary_jumbo_lion_robot_03__64871__19481.jpg', 'voltron_30th_anniversary_jumbo_lion_robot_03__64871__19481.jpg', 'product_images/voltron_30th_anniversary_jumbo_lion_robot_03__64871__19481.jpg', 'https://www.toynamishop.com/product_images/f/576/voltron_30th_anniversary_jumbo_lion_robot_03__64871__19481.jpg', 'products', '30th Anniversary Voltron Jumbo Lion Force Vinyl', '30th Anniversary Voltron Jumbo Lion Force Vinyl', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('be28f1e3-448b-44e6-a71a-1bbd412bbad4', 'voltron_30th_anniversary_jumbo_lion_robot_02__80493__20291.jpg', 'voltron_30th_anniversary_jumbo_lion_robot_02__80493__20291.jpg', 'product_images/voltron_30th_anniversary_jumbo_lion_robot_02__80493__20291.jpg', 'https://www.toynamishop.com/product_images/e/403/voltron_30th_anniversary_jumbo_lion_robot_02__80493__20291.jpg', 'products', '30th Anniversary Voltron Jumbo Lion Force Vinyl', '30th Anniversary Voltron Jumbo Lion Force Vinyl', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('7db6ed0a-578a-4252-9145-1c0dee9cb4ff', 'voltron_30th_anniversary_jumbo_lion_robot_newsletter__98043__26756.jpg', 'voltron_30th_anniversary_jumbo_lion_robot_newsletter__98043__26756.jpg', 'product_images/voltron_30th_anniversary_jumbo_lion_robot_newsletter__98043__26756.jpg', 'https://www.toynamishop.com/product_images/v/904/voltron_30th_anniversary_jumbo_lion_robot_newsletter__98043__26756.jpg', 'products', '30th Anniversary Voltron Jumbo Lion Force Vinyl', '30th Anniversary Voltron Jumbo Lion Force Vinyl', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('6ad659b3-fb99-4c49-896d-ebcd336cc98c', 'Cover__54626__04956.jpg', 'Cover__54626__04956.jpg', 'product_images/Cover__54626__04956.jpg', 'https://www.toynamishop.com/product_images/c/315/Cover__54626__04956.jpg', 'products', 'Acid Rain B2Five Agurts Beaver WF4w', 'Acid Rain B2Five Agurts Beaver WF4w', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('b7662b4a-3850-4322-8f2a-e2c7191f6b61', 'V_form2__84023__61844.jpg', 'V_form2__84023__61844.jpg', 'product_images/V_form2__84023__61844.jpg', 'https://www.toynamishop.com/product_images/k/886/V_form2__84023__61844.jpg', 'products', 'Acid Rain B2Five Agurts Beaver WF4w', 'Acid Rain B2Five Agurts Beaver WF4w', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('4430f1ae-07a9-4914-a01f-00ff51cb8e35', 'worker__89808__26380.jpg', 'worker__89808__26380.jpg', 'product_images/worker__89808__26380.jpg', 'https://www.toynamishop.com/product_images/i/779/worker__89808__26380.jpg', 'products', 'Acid Rain B2Five Agurts Beaver WF4w', 'Acid Rain B2Five Agurts Beaver WF4w', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('4dac4ec7-8b76-4710-92c1-ea0c1ba5c5ca', 'combine2__56774__60145.jpg', 'combine2__56774__60145.jpg', 'product_images/combine2__56774__60145.jpg', 'https://www.toynamishop.com/product_images/k/323/combine2__56774__60145.jpg', 'products', 'Acid Rain B2Five Agurts Beaver WF4w', 'Acid Rain B2Five Agurts Beaver WF4w', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('7578de5a-09a7-4cd7-950a-f8fd3adee72f', 'all_parts__26426__68328.jpg', 'all_parts__26426__68328.jpg', 'product_images/all_parts__26426__68328.jpg', 'https://www.toynamishop.com/product_images/v/063/all_parts__26426__68328.jpg', 'products', 'Acid Rain B2Five Agurts Beaver WF4w', 'Acid Rain B2Five Agurts Beaver WF4w', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('41a5df83-c0c5-41aa-b0dc-6b22caca3385', 'b2five_agurts_beaver_wf4w_11__66045__46429.jpg', 'b2five_agurts_beaver_wf4w_11__66045__46429.jpg', 'product_images/b2five_agurts_beaver_wf4w_11__66045__46429.jpg', 'https://www.toynamishop.com/product_images/e/272/b2five_agurts_beaver_wf4w_11__66045__46429.jpg', 'products', 'Acid Rain B2Five Agurts Beaver WF4w', 'Acid Rain B2Five Agurts Beaver WF4w', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('fd53a983-ce4b-4436-9f81-95b7ff89145c', 'FAV-A-05_PRODUCT_SHOT_5__32479__41935.jpg', 'FAV-A-05_PRODUCT_SHOT_5__32479__41935.jpg', 'product_images/FAV-A-05_PRODUCT_SHOT_5__32479__41935.jpg', 'https://www.toynamishop.com/product_images/p/859/FAV-A-05_PRODUCT_SHOT_5__32479__41935.jpg', 'products', 'Acid Rain Sand Tactical Engineer', 'Acid Rain Sand Tactical Engineer', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('abdc9cdd-2b76-4012-9f8d-fd93d15f81a3', 'FAV-A-05_PRODUCT_SHOT_2__91159__90377.jpg', 'FAV-A-05_PRODUCT_SHOT_2__91159__90377.jpg', 'product_images/FAV-A-05_PRODUCT_SHOT_2__91159__90377.jpg', 'https://www.toynamishop.com/product_images/m/450/FAV-A-05_PRODUCT_SHOT_2__91159__90377.jpg', 'products', 'Acid Rain Sand Tactical Engineer', 'Acid Rain Sand Tactical Engineer', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('1a2c9306-d5b3-48bd-919f-7d6a164ae79a', 'FAV-A-05_PRODUCT_SHOT_4__26104__09240.jpg', 'FAV-A-05_PRODUCT_SHOT_4__26104__09240.jpg', 'product_images/FAV-A-05_PRODUCT_SHOT_4__26104__09240.jpg', 'https://www.toynamishop.com/product_images/g/895/FAV-A-05_PRODUCT_SHOT_4__26104__09240.jpg', 'products', 'Acid Rain Sand Tactical Engineer', 'Acid Rain Sand Tactical Engineer', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('dc2972a6-0948-432e-8600-823ce411bfce', 'ICHIGO__70849__42729.jpg', 'ICHIGO__70849__42729.jpg', 'product_images/ICHIGO__70849__42729.jpg', 'https://www.toynamishop.com/product_images/e/797/ICHIGO__70849__42729.jpg', 'products', 'Deluxe 6" PVC Statue: Ichigo', 'Deluxe 6" PVC Statue: Ichigo', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('7e690066-b738-4c64-9753-39035869a9d4', 'bleach_6inch_ichigo_02__44008__32631.jpg', 'bleach_6inch_ichigo_02__44008__32631.jpg', 'product_images/bleach_6inch_ichigo_02__44008__32631.jpg', 'https://www.toynamishop.com/product_images/z/839/bleach_6inch_ichigo_02__44008__32631.jpg', 'products', 'Deluxe 6" PVC Statue: Ichigo', 'Deluxe 6" PVC Statue: Ichigo', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('303a1573-64d1-4e76-aa78-cd032511730c', 'bleach_6inch_ichigo_01__72894__58000.jpg', 'bleach_6inch_ichigo_01__72894__58000.jpg', 'product_images/bleach_6inch_ichigo_01__72894__58000.jpg', 'https://www.toynamishop.com/product_images/l/114/bleach_6inch_ichigo_01__72894__58000.jpg', 'products', 'Deluxe 6" PVC Statue: Ichigo', 'Deluxe 6" PVC Statue: Ichigo', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('5a2efdcd-025c-43fa-932c-f9539aa3f825', 'bleach_ichigo_action_figure_box_front__22046__04588.jpg', 'bleach_ichigo_action_figure_box_front__22046__04588.jpg', 'product_images/bleach_ichigo_action_figure_box_front__22046__04588.jpg', 'https://www.toynamishop.com/product_images/b/884/bleach_ichigo_action_figure_box_front__22046__04588.jpg', 'products', 'Deluxe 6" PVC Statue: Ichigo', 'Deluxe 6" PVC Statue: Ichigo', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('f7611654-2f3e-4de7-bec9-1ab5852c558a', 'bleach_ichigo_action_figure_box_back__12185__35722.jpg', 'bleach_ichigo_action_figure_box_back__12185__35722.jpg', 'product_images/bleach_ichigo_action_figure_box_back__12185__35722.jpg', 'https://www.toynamishop.com/product_images/h/567/bleach_ichigo_action_figure_box_back__12185__35722.jpg', 'products', 'Deluxe 6" PVC Statue: Ichigo', 'Deluxe 6" PVC Statue: Ichigo', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('02646bca-2c54-410d-b975-2fc69fd28f93', 'Robotech_YR-052F_Cyclone_10__09584__52495.jpg', 'Robotech_YR-052F_Cyclone_10__09584__52495.jpg', 'product_images/Robotech_YR-052F_Cyclone_10__09584__52495.jpg', 'https://www.toynamishop.com/product_images/d/710/Robotech_YR-052F_Cyclone_10__09584__52495.jpg', 'products', 'PRE-ORDER DEPOSIT: The New Generation YR-052F Transformable Cyclone', 'PRE-ORDER DEPOSIT: The New Generation YR-052F Transformable Cyclone', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('4ee46100-6bf8-41b6-b582-cf7525a53f3d', 'Robotech_YR-052F_Cyclone_02__79872__33480.jpg', 'Robotech_YR-052F_Cyclone_02__79872__33480.jpg', 'product_images/Robotech_YR-052F_Cyclone_02__79872__33480.jpg', 'https://www.toynamishop.com/product_images/x/336/Robotech_YR-052F_Cyclone_02__79872__33480.jpg', 'products', 'PRE-ORDER DEPOSIT: The New Generation YR-052F Transformable Cyclone', 'PRE-ORDER DEPOSIT: The New Generation YR-052F Transformable Cyclone', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('7f2a3b1c-0544-4ce2-955f-9f4b7135df3e', 'Robotech_YR-052F_Cyclone_01__73278__12981.jpg', 'Robotech_YR-052F_Cyclone_01__73278__12981.jpg', 'product_images/Robotech_YR-052F_Cyclone_01__73278__12981.jpg', 'https://www.toynamishop.com/product_images/x/195/Robotech_YR-052F_Cyclone_01__73278__12981.jpg', 'products', 'PRE-ORDER DEPOSIT: The New Generation YR-052F Transformable Cyclone', 'PRE-ORDER DEPOSIT: The New Generation YR-052F Transformable Cyclone', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('df4e28ca-177e-4c32-8843-de548c945e51', 'Robotech_YR-052F_Cyclone_09__77256__29451.jpg', 'Robotech_YR-052F_Cyclone_09__77256__29451.jpg', 'product_images/Robotech_YR-052F_Cyclone_09__77256__29451.jpg', 'https://www.toynamishop.com/product_images/t/115/Robotech_YR-052F_Cyclone_09__77256__29451.jpg', 'products', 'PRE-ORDER DEPOSIT: The New Generation YR-052F Transformable Cyclone', 'PRE-ORDER DEPOSIT: The New Generation YR-052F Transformable Cyclone', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('f29c2db0-0f06-4b63-a56f-122541d0646d', 'Robotech_YR-052F_Cyclone_08__28144__49287.jpg', 'Robotech_YR-052F_Cyclone_08__28144__49287.jpg', 'product_images/Robotech_YR-052F_Cyclone_08__28144__49287.jpg', 'https://www.toynamishop.com/product_images/m/737/Robotech_YR-052F_Cyclone_08__28144__49287.jpg', 'products', 'PRE-ORDER DEPOSIT: The New Generation YR-052F Transformable Cyclone', 'PRE-ORDER DEPOSIT: The New Generation YR-052F Transformable Cyclone', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('a22ec32d-0853-4fc6-bae4-088cd09255f7', 'BW0_02_01__19488__08749.jpg', 'BW0_02_01__19488__08749.jpg', 'product_images/BW0_02_01__19488__08749.jpg', 'https://www.toynamishop.com/product_images/x/882/BW0_02_01__19488__08749.jpg', 'products', 'Comic Con 2017 Exclusive: B2Five Stealth MK1e set', 'Comic Con 2017 Exclusive: B2Five Stealth MK1e set', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('b741cec4-27ab-42d4-9f24-0084b106074d', 'BW0_02_02__37745__74769.JPG', 'BW0_02_02__37745__74769.JPG', 'product_images/BW0_02_02__37745__74769.JPG', 'https://www.toynamishop.com/product_images/c/968/BW0_02_02__37745__74769.JPG', 'products', 'Comic Con 2017 Exclusive: B2Five Stealth MK1e set', 'Comic Con 2017 Exclusive: B2Five Stealth MK1e set', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('4ede7f14-3fb2-451a-9e87-788131f50716', 'BW0_02_03__85274__32716.JPG', 'BW0_02_03__85274__32716.JPG', 'product_images/BW0_02_03__85274__32716.JPG', 'https://www.toynamishop.com/product_images/j/186/BW0_02_03__85274__32716.JPG', 'products', 'Comic Con 2017 Exclusive: B2Five Stealth MK1e set', 'Comic Con 2017 Exclusive: B2Five Stealth MK1e set', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('90440468-9b7f-4327-bb6a-f6e5799748a8', 'IMG_NEW__91314__96118.jpg', 'IMG_NEW__91314__96118.jpg', 'product_images/IMG_NEW__91314__96118.jpg', 'https://www.toynamishop.com/product_images/v/714/IMG_NEW__91314__96118.jpg', 'products', 'Acid Rain Forseti Viking Shield', 'Acid Rain Forseti Viking Shield', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('0fab5a1d-b1e7-4437-819d-c5cca898747e', 'IMG_0011__94154__95347.JPG', 'IMG_0011__94154__95347.JPG', 'product_images/IMG_0011__94154__95347.JPG', 'https://www.toynamishop.com/product_images/b/569/IMG_0011__94154__95347.JPG', 'products', 'Acid Rain Forseti Viking Shield', 'Acid Rain Forseti Viking Shield', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('c78ea5cc-797b-4e12-8b5d-5a38047c0d0b', 'IMG_0013__38477__73443.JPG', 'IMG_0013__38477__73443.JPG', 'product_images/IMG_0013__38477__73443.JPG', 'https://www.toynamishop.com/product_images/d/255/IMG_0013__38477__73443.JPG', 'products', 'Acid Rain Forseti Viking Shield', 'Acid Rain Forseti Viking Shield', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('7c6dbf23-02ed-42b5-adfc-6e25954db5ac', 'IMG_0019__58020__64932.JPG', 'IMG_0019__58020__64932.JPG', 'product_images/IMG_0019__58020__64932.JPG', 'https://www.toynamishop.com/product_images/j/643/IMG_0019__58020__64932.JPG', 'products', 'Acid Rain Forseti Viking Shield', 'Acid Rain Forseti Viking Shield', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('afda3531-7e6d-4d76-8ba7-6404f2709b5c', 'IMG_0018__66215__35606.JPG', 'IMG_0018__66215__35606.JPG', 'product_images/IMG_0018__66215__35606.JPG', 'https://www.toynamishop.com/product_images/e/778/IMG_0018__66215__35606.JPG', 'products', 'Acid Rain Forseti Viking Shield', 'Acid Rain Forseti Viking Shield', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('3ab3023b-c056-40a5-84ba-3d73e24e622c', 'IMG_0017__03544__75812.JPG', 'IMG_0017__03544__75812.JPG', 'product_images/IMG_0017__03544__75812.JPG', 'https://www.toynamishop.com/product_images/u/091/IMG_0017__03544__75812.JPG', 'products', 'Acid Rain Forseti Viking Shield', 'Acid Rain Forseti Viking Shield', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('e8d191e7-5dd4-4bad-a029-a1658a18c29c', 'B00YHYX2SW.MAIN.jpg__41141__39517.jpg', 'B00YHYX2SW.MAIN.jpg__41141__39517.jpg', 'product_images/B00YHYX2SW.MAIN.jpg__41141__39517.jpg', 'https://www.toynamishop.com/product_images/e/401/B00YHYX2SW.MAIN.jpg__41141__39517.jpg', 'products', 'Robotech 30th Anniversary 1/100 Max Sterling GBP-1J Heavy Armor Veritech', 'Robotech 30th Anniversary 1/100 Max Sterling GBP-1J Heavy Armor Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('0df078c9-9bad-40a8-ba29-72973bc02552', 'B00YHYX2SW.PT03.jpg__53566__10463.jpg', 'B00YHYX2SW.PT03.jpg__53566__10463.jpg', 'product_images/B00YHYX2SW.PT03.jpg__53566__10463.jpg', 'https://www.toynamishop.com/product_images/k/947/B00YHYX2SW.PT03.jpg__53566__10463.jpg', 'products', 'Robotech 30th Anniversary 1/100 Max Sterling GBP-1J Heavy Armor Veritech', 'Robotech 30th Anniversary 1/100 Max Sterling GBP-1J Heavy Armor Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('c8580d1c-81e5-4e6d-bf49-378b45b1bb78', 'B00YHYX2SW.PT01.jpg__50919__49533.jpg', 'B00YHYX2SW.PT01.jpg__50919__49533.jpg', 'product_images/B00YHYX2SW.PT01.jpg__50919__49533.jpg', 'https://www.toynamishop.com/product_images/r/029/B00YHYX2SW.PT01.jpg__50919__49533.jpg', 'products', 'Robotech 30th Anniversary 1/100 Max Sterling GBP-1J Heavy Armor Veritech', 'Robotech 30th Anniversary 1/100 Max Sterling GBP-1J Heavy Armor Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('500500f7-59f3-43aa-b4d6-b1e0787fb77b', 'B00YHYX2SW.PT02.jpg__00440__94540.jpg', 'B00YHYX2SW.PT02.jpg__00440__94540.jpg', 'product_images/B00YHYX2SW.PT02.jpg__00440__94540.jpg', 'https://www.toynamishop.com/product_images/o/097/B00YHYX2SW.PT02.jpg__00440__94540.jpg', 'products', 'Robotech 30th Anniversary 1/100 Max Sterling GBP-1J Heavy Armor Veritech', 'Robotech 30th Anniversary 1/100 Max Sterling GBP-1J Heavy Armor Veritech', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('739c8e10-866e-4fde-8ef9-96df1f893690', 'robotech_SD_figurines_sdcc01__97150__87027.jpg', 'robotech_SD_figurines_sdcc01__97150__87027.jpg', 'product_images/robotech_SD_figurines_sdcc01__97150__87027.jpg', 'https://www.toynamishop.com/product_images/s/386/robotech_SD_figurines_sdcc01__97150__87027.jpg', 'products', 'Comic Con 2014 Exclusive: Robotech Chibi Skull Leader VF-1S in Military Gray', 'Comic Con 2014 Exclusive: Robotech Chibi Skull Leader VF-1S in Military Gray', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('61896e71-06a7-4e4a-a29e-527143db164c', 'robotech_SD_figurines_sdcc03__27009__87083.jpg', 'robotech_SD_figurines_sdcc03__27009__87083.jpg', 'product_images/robotech_SD_figurines_sdcc03__27009__87083.jpg', 'https://www.toynamishop.com/product_images/j/051/robotech_SD_figurines_sdcc03__27009__87083.jpg', 'products', 'Comic Con 2014 Exclusive: Robotech Chibi Skull Leader VF-1S in Military Gray', 'Comic Con 2014 Exclusive: Robotech Chibi Skull Leader VF-1S in Military Gray', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('7ff9c509-5ac3-4e1f-ada0-04aca9006a83', 'robotech_SD_figurines_sdcc02__26698__38021.jpg', 'robotech_SD_figurines_sdcc02__26698__38021.jpg', 'product_images/robotech_SD_figurines_sdcc02__26698__38021.jpg', 'https://www.toynamishop.com/product_images/g/914/robotech_SD_figurines_sdcc02__26698__38021.jpg', 'products', 'Comic Con 2014 Exclusive: Robotech Chibi Skull Leader VF-1S in Military Gray', 'Comic Con 2014 Exclusive: Robotech Chibi Skull Leader VF-1S in Military Gray', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('52e055a6-ba5b-4deb-a524-6c1905f1434d', 'Tulipop-Deluxe-Plush_bubble01__99243__83537.jpg', 'Tulipop-Deluxe-Plush_bubble01__99243__83537.jpg', 'product_images/Tulipop-Deluxe-Plush_bubble01__99243__83537.jpg', 'https://www.toynamishop.com/product_images/i/447/Tulipop-Deluxe-Plush_bubble01__99243__83537.jpg', 'products', 'Bubble Deluxe Plush', 'Bubble Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('07bf4a99-5d55-4844-9889-760e501cab2d', '04bubble__88076__18338.jpg', '04bubble__88076__18338.jpg', 'product_images/04bubble__88076__18338.jpg', 'https://www.toynamishop.com/product_images/y/546/04bubble__88076__18338.jpg', 'products', 'Bubble Deluxe Plush', 'Bubble Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('f39b6bde-4fdc-461f-80a3-ebc417caf69c', 'bubble_plush_deluxe-03__20587__56067.jpg', 'bubble_plush_deluxe-03__20587__56067.jpg', 'product_images/bubble_plush_deluxe-03__20587__56067.jpg', 'https://www.toynamishop.com/product_images/e/659/bubble_plush_deluxe-03__20587__56067.jpg', 'products', 'Bubble Deluxe Plush', 'Bubble Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('acefe274-34f0-4326-9e79-0d0048060a28', 'macross_calibre_wings_f14_miriya04__28900__37270.jpg', 'macross_calibre_wings_f14_miriya04__28900__37270.jpg', 'product_images/macross_calibre_wings_f14_miriya04__28900__37270.jpg', 'https://www.toynamishop.com/product_images/i/869/macross_calibre_wings_f14_miriya04__28900__37270.jpg', 'products', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('7d16dd0f-1f1a-4373-8980-bcff120ffe7f', 'macross_calibre_wings_f14_miriya01__34470__58893.jpg', 'macross_calibre_wings_f14_miriya01__34470__58893.jpg', 'product_images/macross_calibre_wings_f14_miriya01__34470__58893.jpg', 'https://www.toynamishop.com/product_images/q/562/macross_calibre_wings_f14_miriya01__34470__58893.jpg', 'products', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('2da79d8c-803d-41df-9c99-86cf32bc70b8', 'macross_calibre_wings_f14_miriya02__07647__83522.jpg', 'macross_calibre_wings_f14_miriya02__07647__83522.jpg', 'product_images/macross_calibre_wings_f14_miriya02__07647__83522.jpg', 'https://www.toynamishop.com/product_images/f/785/macross_calibre_wings_f14_miriya02__07647__83522.jpg', 'products', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('511b25ce-907e-447c-a9b5-ec46c3bbdef3', 'macross_calibre_wings_f14_miriya03__76232__45883.jpg', 'macross_calibre_wings_f14_miriya03__76232__45883.jpg', 'product_images/macross_calibre_wings_f14_miriya03__76232__45883.jpg', 'https://www.toynamishop.com/product_images/v/409/macross_calibre_wings_f14_miriya03__76232__45883.jpg', 'products', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('c3777ca5-b6e3-41c7-92d2-36e1428eb806', 'macross_calibre_wings_f14_miriya05__70727__83045.jpg', 'macross_calibre_wings_f14_miriya05__70727__83045.jpg', 'product_images/macross_calibre_wings_f14_miriya05__70727__83045.jpg', 'https://www.toynamishop.com/product_images/c/964/macross_calibre_wings_f14_miriya05__70727__83045.jpg', 'products', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('21eb829f-b029-405e-9c76-ba8678cdccc4', 'macross_calibre_wings_miriya_sterling_f14_banner__36328__53068.jpg', 'macross_calibre_wings_miriya_sterling_f14_banner__36328__53068.jpg', 'product_images/macross_calibre_wings_miriya_sterling_f14_banner__36328__53068.jpg', 'https://www.toynamishop.com/product_images/x/813/macross_calibre_wings_miriya_sterling_f14_banner__36328__53068.jpg', 'products', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('2129a40b-0ff9-4a8a-b6c5-523999567990', 'FAV-A-06_PRODUCT_SHOT_5__69952__20434.jpg', 'FAV-A-06_PRODUCT_SHOT_5__69952__20434.jpg', 'product_images/FAV-A-06_PRODUCT_SHOT_5__69952__20434.jpg', 'https://www.toynamishop.com/product_images/j/695/FAV-A-06_PRODUCT_SHOT_5__69952__20434.jpg', 'products', 'Acid Rain Sand Armored Trailer Set', 'Acid Rain Sand Armored Trailer Set', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('ce79fec4-234e-4200-a32d-cb8fde5634b6', 'FAV-A-06_PRODUCT_SHOT_2__67434__77878.jpg', 'FAV-A-06_PRODUCT_SHOT_2__67434__77878.jpg', 'product_images/FAV-A-06_PRODUCT_SHOT_2__67434__77878.jpg', 'https://www.toynamishop.com/product_images/u/241/FAV-A-06_PRODUCT_SHOT_2__67434__77878.jpg', 'products', 'Acid Rain Sand Armored Trailer Set', 'Acid Rain Sand Armored Trailer Set', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('e5e6981c-8561-4ccf-b705-fac986adb912', 'FAV-A-06_PRODUCT_SHOT_3__30697__15186.jpg', 'FAV-A-06_PRODUCT_SHOT_3__30697__15186.jpg', 'product_images/FAV-A-06_PRODUCT_SHOT_3__30697__15186.jpg', 'https://www.toynamishop.com/product_images/d/855/FAV-A-06_PRODUCT_SHOT_3__30697__15186.jpg', 'products', 'Acid Rain Sand Armored Trailer Set', 'Acid Rain Sand Armored Trailer Set', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('26c98d5b-5bbc-4b84-85cf-879d72e3c8ee', 'alexpardee_img_5918__04434__18516.jpg', 'alexpardee_img_5918__04434__18516.jpg', 'product_images/alexpardee_img_5918__04434__18516.jpg', 'https://www.toynamishop.com/product_images/h/927/alexpardee_img_5918__04434__18516.jpg', 'products', 'SDCC 2011 Exclusive: Canman Alex Pardee', 'SDCC 2011 Exclusive: Canman Alex Pardee', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('cf5e07fe-63f6-4f58-8eff-4c5ad757efa1', 'alexpardee_img_5928__67127__59488.jpg', 'alexpardee_img_5928__67127__59488.jpg', 'product_images/alexpardee_img_5928__67127__59488.jpg', 'https://www.toynamishop.com/product_images/t/161/alexpardee_img_5928__67127__59488.jpg', 'products', 'SDCC 2011 Exclusive: Canman Alex Pardee', 'SDCC 2011 Exclusive: Canman Alex Pardee', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('7a3cc40f-53f6-4443-a59f-ccd4d5c3e128', 'alexpardee_img_5930__48091__60165.jpg', 'alexpardee_img_5930__48091__60165.jpg', 'product_images/alexpardee_img_5930__48091__60165.jpg', 'https://www.toynamishop.com/product_images/c/750/alexpardee_img_5930__48091__60165.jpg', 'products', 'SDCC 2011 Exclusive: Canman Alex Pardee', 'SDCC 2011 Exclusive: Canman Alex Pardee', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('e685e6f3-a113-444c-9b13-09fbda268872', 'alexpardee_img_5929__28707__83064.jpg', 'alexpardee_img_5929__28707__83064.jpg', 'product_images/alexpardee_img_5929__28707__83064.jpg', 'https://www.toynamishop.com/product_images/o/530/alexpardee_img_5929__28707__83064.jpg', 'products', 'SDCC 2011 Exclusive: Canman Alex Pardee', 'SDCC 2011 Exclusive: Canman Alex Pardee', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('0da75b38-dbab-41af-96ec-486a19e6992c', 'alexpardee_img_5920__78335__57617.jpg', 'alexpardee_img_5920__78335__57617.jpg', 'product_images/alexpardee_img_5920__78335__57617.jpg', 'https://www.toynamishop.com/product_images/r/975/alexpardee_img_5920__78335__57617.jpg', 'products', 'SDCC 2011 Exclusive: Canman Alex Pardee', 'SDCC 2011 Exclusive: Canman Alex Pardee', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('5b5d8fdc-df51-4690-8c69-e007d4f6619f', 'alexpardee_img_5922__68964__32238.jpg', 'alexpardee_img_5922__68964__32238.jpg', 'product_images/alexpardee_img_5922__68964__32238.jpg', 'https://www.toynamishop.com/product_images/p/027/alexpardee_img_5922__68964__32238.jpg', 'products', 'SDCC 2011 Exclusive: Canman Alex Pardee', 'SDCC 2011 Exclusive: Canman Alex Pardee', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('e89e9fcb-bc74-4310-813b-c9337a65bad7', 'alexpardee_img_5924__43264__81418.jpg', 'alexpardee_img_5924__43264__81418.jpg', 'product_images/alexpardee_img_5924__43264__81418.jpg', 'https://www.toynamishop.com/product_images/y/018/alexpardee_img_5924__43264__81418.jpg', 'products', 'SDCC 2011 Exclusive: Canman Alex Pardee', 'SDCC 2011 Exclusive: Canman Alex Pardee', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('c6f30f45-9756-421c-9439-9a4ba08e4603', 'naruto_six_paths_bust_01__38330__88337.jpg', 'naruto_six_paths_bust_01__38330__88337.jpg', 'product_images/naruto_six_paths_bust_01__38330__88337.jpg', 'https://www.toynamishop.com/product_images/h/830/naruto_six_paths_bust_01__38330__88337.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('1824889e-d13a-4c52-9031-63af01357b34', 'naruto_six_paths_bust_07__88537__41097.jpg', 'naruto_six_paths_bust_07__88537__41097.jpg', 'product_images/naruto_six_paths_bust_07__88537__41097.jpg', 'https://www.toynamishop.com/product_images/p/333/naruto_six_paths_bust_07__88537__41097.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('134e30b6-ccdd-4b30-8b7e-59192babf96c', 'naruto_six_paths_bust_09__39921__10083.jpg', 'naruto_six_paths_bust_09__39921__10083.jpg', 'product_images/naruto_six_paths_bust_09__39921__10083.jpg', 'https://www.toynamishop.com/product_images/v/367/naruto_six_paths_bust_09__39921__10083.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('8ab8d53f-95a1-4b70-b6f9-ea10c22a4e15', 'naruto_six_paths_bust_05__57705__42292.jpg', 'naruto_six_paths_bust_05__57705__42292.jpg', 'product_images/naruto_six_paths_bust_05__57705__42292.jpg', 'https://www.toynamishop.com/product_images/m/054/naruto_six_paths_bust_05__57705__42292.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('0142c67e-27ec-44e9-ba76-08b35c0524fe', 'naruto_six_paths_bust_08__67197__14567.jpg', 'naruto_six_paths_bust_08__67197__14567.jpg', 'product_images/naruto_six_paths_bust_08__67197__14567.jpg', 'https://www.toynamishop.com/product_images/z/866/naruto_six_paths_bust_08__67197__14567.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('5e8147b3-8e5d-48fe-a581-d2147940f39f', 'naruto_six_paths_bust_04__40476__30986.jpg', 'naruto_six_paths_bust_04__40476__30986.jpg', 'product_images/naruto_six_paths_bust_04__40476__30986.jpg', 'https://www.toynamishop.com/product_images/p/913/naruto_six_paths_bust_04__40476__30986.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('b84c1d40-8760-492f-b30f-836556096b88', 'naruto_six_paths_bust_02__20861__17293.jpg', 'naruto_six_paths_bust_02__20861__17293.jpg', 'product_images/naruto_six_paths_bust_02__20861__17293.jpg', 'https://www.toynamishop.com/product_images/s/967/naruto_six_paths_bust_02__20861__17293.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('20604d78-4483-4827-90cc-0e533435ea7b', 'naruto_six_paths_bust_06__41972__04919.jpg', 'naruto_six_paths_bust_06__41972__04919.jpg', 'product_images/naruto_six_paths_bust_06__41972__04919.jpg', 'https://www.toynamishop.com/product_images/e/873/naruto_six_paths_bust_06__41972__04919.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('00d02eef-86d1-4e6b-868e-0b04d49d94c3', 'naruto_six_paths_bust_03__48478__99582.jpg', 'naruto_six_paths_bust_03__48478__99582.jpg', 'product_images/naruto_six_paths_bust_03__48478__99582.jpg', 'https://www.toynamishop.com/product_images/d/532/naruto_six_paths_bust_03__48478__99582.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 10, '2025-08-24 03:34:39.225191+00', NOW()),
+('250fab1f-296f-4e88-abe9-f589600df5eb', 'naruto_six_paths_bust_02_pq__70396__32208.jpg', 'naruto_six_paths_bust_02_pq__70396__32208.jpg', 'product_images/naruto_six_paths_bust_02_pq__70396__32208.jpg', 'https://www.toynamishop.com/product_images/h/563/naruto_six_paths_bust_02_pq__70396__32208.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 11, '2025-08-24 03:34:39.225191+00', NOW()),
+('5007cd70-9aa5-49d8-a76e-e4da07808483', 'FAV-SP18-order-FN_01__35350__11498.jpg', 'FAV-SP18-order-FN_01__35350__11498.jpg', 'product_images/FAV-SP18-order-FN_01__35350__11498.jpg', 'https://www.toynamishop.com/product_images/o/445/FAV-SP18-order-FN_01__35350__11498.jpg', 'products', 'Acid Rain Valdo - 2021 CONVENTION EXCLUSIVE', 'Acid Rain Valdo - 2021 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('86f70315-84aa-45e4-8388-655425b8a935', 'FAV-SP18-order-FN_02__00672__80995.jpg', 'FAV-SP18-order-FN_02__00672__80995.jpg', 'product_images/FAV-SP18-order-FN_02__00672__80995.jpg', 'https://www.toynamishop.com/product_images/k/106/FAV-SP18-order-FN_02__00672__80995.jpg', 'products', 'Acid Rain Valdo - 2021 CONVENTION EXCLUSIVE', 'Acid Rain Valdo - 2021 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('8debc8bb-97f0-4ef2-8e72-0cba4e314334', 'FAV-SP18-order-FN_03__28017__77462.jpg', 'FAV-SP18-order-FN_03__28017__77462.jpg', 'product_images/FAV-SP18-order-FN_03__28017__77462.jpg', 'https://www.toynamishop.com/product_images/j/484/FAV-SP18-order-FN_03__28017__77462.jpg', 'products', 'Acid Rain Valdo - 2021 CONVENTION EXCLUSIVE', 'Acid Rain Valdo - 2021 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('23d54f3a-81ba-498f-81ec-92459c5ac491', 'White_background__07788__85581.JPG', 'White_background__07788__85581.JPG', 'product_images/White_background__07788__85581.JPG', 'https://www.toynamishop.com/product_images/r/012/White_background__07788__85581.JPG', 'products', 'Acid Rain Flame Trooper', 'Acid Rain Flame Trooper', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('e5a3e076-2ad8-459a-8b4c-9606bb58987c', 'pose_01__48192__56152.JPG', 'pose_01__48192__56152.JPG', 'product_images/pose_01__48192__56152.JPG', 'https://www.toynamishop.com/product_images/n/907/pose_01__48192__56152.JPG', 'products', 'Acid Rain Flame Trooper', 'Acid Rain Flame Trooper', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('6b655fcc-649a-460b-86ea-a29b409695d6', 'pose_02__33883__99467.JPG', 'pose_02__33883__99467.JPG', 'product_images/pose_02__33883__99467.JPG', 'https://www.toynamishop.com/product_images/z/430/pose_02__33883__99467.JPG', 'products', 'Acid Rain Flame Trooper', 'Acid Rain Flame Trooper', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('64d8023d-2cb6-4748-91c9-b200a737967f', 'pose_06__47761__64186.JPG', 'pose_06__47761__64186.JPG', 'product_images/pose_06__47761__64186.JPG', 'https://www.toynamishop.com/product_images/o/682/pose_06__47761__64186.JPG', 'products', 'Acid Rain Flame Trooper', 'Acid Rain Flame Trooper', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('c8ef3fc8-2e45-46be-90aa-c9ad32e23ee6', 'pose_04__13347__35052.JPG', 'pose_04__13347__35052.JPG', 'product_images/pose_04__13347__35052.JPG', 'https://www.toynamishop.com/product_images/e/013/pose_04__13347__35052.JPG', 'products', 'Acid Rain Flame Trooper', 'Acid Rain Flame Trooper', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('a8b9dadd-5f02-407d-bc37-400e197c1a10', 'Amphista2__40593__57423.jpg', 'Amphista2__40593__57423.jpg', 'product_images/Amphista2__40593__57423.jpg', 'https://www.toynamishop.com/product_images/j/177/Amphista2__40593__57423.jpg', 'products', 'Acid Rain Amphista', 'Acid Rain Amphista', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('0da5ab87-98e4-4ec9-96a9-c181e0360de7', 'IMG_0009__80851__11594.JPG', 'IMG_0009__80851__11594.JPG', 'product_images/IMG_0009__80851__11594.JPG', 'https://www.toynamishop.com/product_images/k/991/IMG_0009__80851__11594.JPG', 'products', 'Acid Rain Amphista', 'Acid Rain Amphista', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('6283b961-548a-4c00-b28c-4e1528ec67d6', 'IMG_0011__02847__43652.JPG', 'IMG_0011__02847__43652.JPG', 'product_images/IMG_0011__02847__43652.JPG', 'https://www.toynamishop.com/product_images/m/353/IMG_0011__02847__43652.JPG', 'products', 'Acid Rain Amphista', 'Acid Rain Amphista', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('9b3aeb0b-ae6b-4d43-b136-4e076a33d85c', 'IMG_0020__87191__63843.JPG', 'IMG_0020__87191__63843.JPG', 'product_images/IMG_0020__87191__63843.JPG', 'https://www.toynamishop.com/product_images/l/005/IMG_0020__87191__63843.JPG', 'products', 'Acid Rain Amphista', 'Acid Rain Amphista', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('e79b6406-8d9f-4140-b5bc-44f3e4ee789e', 'IMG_0021__14591__49752.JPG', 'IMG_0021__14591__49752.JPG', 'product_images/IMG_0021__14591__49752.JPG', 'https://www.toynamishop.com/product_images/m/309/IMG_0021__14591__49752.JPG', 'products', 'Acid Rain Amphista', 'Acid Rain Amphista', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('38739dcc-2c90-45b0-8929-57b1f1bacfbc', 'IMG_0024__54010__61198.JPG', 'IMG_0024__54010__61198.JPG', 'product_images/IMG_0024__54010__61198.JPG', 'https://www.toynamishop.com/product_images/t/200/IMG_0024__54010__61198.JPG', 'products', 'Acid Rain Amphista', 'Acid Rain Amphista', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('3ec4b6be-1475-45a6-9a2b-7919371f39cf', 'IMG_0025__02915__35081.JPG', 'IMG_0025__02915__35081.JPG', 'product_images/IMG_0025__02915__35081.JPG', 'https://www.toynamishop.com/product_images/h/923/IMG_0025__02915__35081.JPG', 'products', 'Acid Rain Amphista', 'Acid Rain Amphista', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('bc7b4e53-3b86-4ecc-8283-818595ed441c', 'shogun_warriors_godzilla_03__34714__78586.jpg', 'shogun_warriors_godzilla_03__34714__78586.jpg', 'product_images/shogun_warriors_godzilla_03__34714__78586.jpg', 'https://www.toynamishop.com/product_images/x/105/shogun_warriors_godzilla_03__34714__78586.jpg', 'products', 'Shogun Warriors 1964 Godzilla Jumbo', 'Shogun Warriors 1964 Godzilla Jumbo', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('2cdf2fde-8a4a-40a1-9bdb-1e3cb7bcc3cb', 'shogun_warriors_godzilla_06__93652__52113.jpg', 'shogun_warriors_godzilla_06__93652__52113.jpg', 'product_images/shogun_warriors_godzilla_06__93652__52113.jpg', 'https://www.toynamishop.com/product_images/e/596/shogun_warriors_godzilla_06__93652__52113.jpg', 'products', 'Shogun Warriors 1964 Godzilla Jumbo', 'Shogun Warriors 1964 Godzilla Jumbo', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('afea33f7-085c-4c23-9ad4-fe6eadfbf3e2', 'shogun_warriors_godzilla_07__23098__38106.jpg', 'shogun_warriors_godzilla_07__23098__38106.jpg', 'product_images/shogun_warriors_godzilla_07__23098__38106.jpg', 'https://www.toynamishop.com/product_images/d/985/shogun_warriors_godzilla_07__23098__38106.jpg', 'products', 'Shogun Warriors 1964 Godzilla Jumbo', 'Shogun Warriors 1964 Godzilla Jumbo', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('800ed3a4-b264-4c3c-9422-95ebbee42821', 'shogun_warriors_godzilla_04__91127__13031.jpg', 'shogun_warriors_godzilla_04__91127__13031.jpg', 'product_images/shogun_warriors_godzilla_04__91127__13031.jpg', 'https://www.toynamishop.com/product_images/g/984/shogun_warriors_godzilla_04__91127__13031.jpg', 'products', 'Shogun Warriors 1964 Godzilla Jumbo', 'Shogun Warriors 1964 Godzilla Jumbo', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('3cb10f2e-c1b5-449b-9ff1-221040e25205', 'shogun_warriors_godzilla_05__12572__47142.jpg', 'shogun_warriors_godzilla_05__12572__47142.jpg', 'product_images/shogun_warriors_godzilla_05__12572__47142.jpg', 'https://www.toynamishop.com/product_images/v/515/shogun_warriors_godzilla_05__12572__47142.jpg', 'products', 'Shogun Warriors 1964 Godzilla Jumbo', 'Shogun Warriors 1964 Godzilla Jumbo', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('735f7ad9-08e6-42c9-97b0-56098f823860', 'shogun_warrior_godzilla_02__28585__21902.jpg', 'shogun_warrior_godzilla_02__28585__21902.jpg', 'product_images/shogun_warrior_godzilla_02__28585__21902.jpg', 'https://www.toynamishop.com/product_images/q/350/shogun_warrior_godzilla_02__28585__21902.jpg', 'products', 'Shogun Warriors 1964 Godzilla Jumbo', 'Shogun Warriors 1964 Godzilla Jumbo', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('7432f150-9ec5-47f8-ac41-6b0da7a3a09b', 'voltron_40th_anniversary_18__28411__61290.jpg', 'voltron_40th_anniversary_18__28411__61290.jpg', 'product_images/voltron_40th_anniversary_18__28411__61290.jpg', 'https://www.toynamishop.com/product_images/j/449/voltron_40th_anniversary_18__28411__61290.jpg', 'products', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collectors Set', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('57b3610e-1d12-4a90-8204-a3bd960b9db7', 'voltron_40th_anniversary_19__46340__10159.jpg', 'voltron_40th_anniversary_19__46340__10159.jpg', 'product_images/voltron_40th_anniversary_19__46340__10159.jpg', 'https://www.toynamishop.com/product_images/t/687/voltron_40th_anniversary_19__46340__10159.jpg', 'products', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collectors Set', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('d2ef15c1-ca56-4b1e-974a-94432c9ca0c2', 'voltron_40th_anniversary_20__61467__10035.jpg', 'voltron_40th_anniversary_20__61467__10035.jpg', 'product_images/voltron_40th_anniversary_20__61467__10035.jpg', 'https://www.toynamishop.com/product_images/b/125/voltron_40th_anniversary_20__61467__10035.jpg', 'products', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collectors Set', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('054b4d3b-5dcb-4403-80e6-ca237bf44cda', 'voltron_40th_anniversary_07__22559__61096.jpg', 'voltron_40th_anniversary_07__22559__61096.jpg', 'product_images/voltron_40th_anniversary_07__22559__61096.jpg', 'https://www.toynamishop.com/product_images/o/186/voltron_40th_anniversary_07__22559__61096.jpg', 'products', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collectors Set', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('ee0d4523-c8c1-477f-9393-6fcc90810048', 'voltron_40th_anniversary_06__34167__40720.jpg', 'voltron_40th_anniversary_06__34167__40720.jpg', 'product_images/voltron_40th_anniversary_06__34167__40720.jpg', 'https://www.toynamishop.com/product_images/r/547/voltron_40th_anniversary_06__34167__40720.jpg', 'products', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collectors Set', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('55b6e9a7-73b4-43e2-9cd2-41ba4e0bfb6e', 'voltron_40th_anniversary_22__50828__19371.jpg', 'voltron_40th_anniversary_22__50828__19371.jpg', 'product_images/voltron_40th_anniversary_22__50828__19371.jpg', 'https://www.toynamishop.com/product_images/r/426/voltron_40th_anniversary_22__50828__19371.jpg', 'products', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collectors Set', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('9ec89d64-77bf-44ef-9c3b-3acb41b48d48', 'voltron_40th_anniversary_23__48148__05893.jpg', 'voltron_40th_anniversary_23__48148__05893.jpg', 'product_images/voltron_40th_anniversary_23__48148__05893.jpg', 'https://www.toynamishop.com/product_images/g/837/voltron_40th_anniversary_23__48148__05893.jpg', 'products', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collectors Set', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('6d28087a-85a6-480d-9104-73dfb292c763', 'voltron_40th_anniversary_21__48962__76487.jpg', 'voltron_40th_anniversary_21__48962__76487.jpg', 'product_images/voltron_40th_anniversary_21__48962__76487.jpg', 'https://www.toynamishop.com/product_images/n/339/voltron_40th_anniversary_21__48962__76487.jpg', 'products', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collectors Set', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('22c7fcaa-24ab-4b61-a7a0-a099b31a81fc', 'Tulipop-Deluxe-Plush_fred01__69550__91372.jpg', 'Tulipop-Deluxe-Plush_fred01__69550__91372.jpg', 'product_images/Tulipop-Deluxe-Plush_fred01__69550__91372.jpg', 'https://www.toynamishop.com/product_images/x/464/Tulipop-Deluxe-Plush_fred01__69550__91372.jpg', 'products', 'Fred Deluxe Plush', 'Fred Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('bb54d16d-fb5d-44f8-8fe2-82f1d08a6d39', '04fred__18686__68038.jpg', '04fred__18686__68038.jpg', 'product_images/04fred__18686__68038.jpg', 'https://www.toynamishop.com/product_images/e/455/04fred__18686__68038.jpg', 'products', 'Fred Deluxe Plush', 'Fred Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('eb568cef-5f98-406e-81aa-b74b65130376', 'fred_plush_deluxe-02__19285__26475.jpg', 'fred_plush_deluxe-02__19285__26475.jpg', 'product_images/fred_plush_deluxe-02__19285__26475.jpg', 'https://www.toynamishop.com/product_images/u/768/fred_plush_deluxe-02__19285__26475.jpg', 'products', 'Fred Deluxe Plush', 'Fred Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('d9cc61b0-057c-4e24-959b-9fb7637e0a22', 'unkl_DC_COMICS_batman_10inch01__84989__91006.jpg', 'unkl_DC_COMICS_batman_10inch01__84989__91006.jpg', 'product_images/unkl_DC_COMICS_batman_10inch01__84989__91006.jpg', 'https://www.toynamishop.com/product_images/v/342/unkl_DC_COMICS_batman_10inch01__84989__91006.jpg', 'products', 'Comic Con 2014 Exclusive: UNKL 10" UniPo Batman', 'Comic Con 2014 Exclusive: UNKL 10" UniPo Batman', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('89614466-63a2-4383-a0bc-df086b782acb', 'unkl_DC_COMICS_batman_10inch02__27413__94760.jpg', 'unkl_DC_COMICS_batman_10inch02__27413__94760.jpg', 'product_images/unkl_DC_COMICS_batman_10inch02__27413__94760.jpg', 'https://www.toynamishop.com/product_images/l/396/unkl_DC_COMICS_batman_10inch02__27413__94760.jpg', 'products', 'Comic Con 2014 Exclusive: UNKL 10" UniPo Batman', 'Comic Con 2014 Exclusive: UNKL 10" UniPo Batman', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('1c38a4df-6cee-4f82-8942-99050aee1774', 'unkl_DC_COMICS_batman_10inch03__83449__14877.jpg', 'unkl_DC_COMICS_batman_10inch03__83449__14877.jpg', 'product_images/unkl_DC_COMICS_batman_10inch03__83449__14877.jpg', 'https://www.toynamishop.com/product_images/x/827/unkl_DC_COMICS_batman_10inch03__83449__14877.jpg', 'products', 'Comic Con 2014 Exclusive: UNKL 10" UniPo Batman', 'Comic Con 2014 Exclusive: UNKL 10" UniPo Batman', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('b055418e-8d63-4303-9908-ff9ae16919ce', 'unkl_DC_COMICS_batman_10inch__13437__44995.jpg', 'unkl_DC_COMICS_batman_10inch__13437__44995.jpg', 'product_images/unkl_DC_COMICS_batman_10inch__13437__44995.jpg', 'https://www.toynamishop.com/product_images/n/493/unkl_DC_COMICS_batman_10inch__13437__44995.jpg', 'products', 'Comic Con 2014 Exclusive: UNKL 10" UniPo Batman', 'Comic Con 2014 Exclusive: UNKL 10" UniPo Batman', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('a041b3f8-7cd3-41dd-8dac-9f1272c2d1b8', 'RUKIA__21058__48379.jpg', 'RUKIA__21058__48379.jpg', 'product_images/RUKIA__21058__48379.jpg', 'https://www.toynamishop.com/product_images/i/157/RUKIA__21058__48379.jpg', 'products', 'Deluxe 6" PVC Statue: Rukia', 'Deluxe 6" PVC Statue: Rukia', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('c1c6e8a4-c5cc-49cc-828e-89928e2a7134', 'bleach_6inch_rukia_03__73276__50334.jpg', 'bleach_6inch_rukia_03__73276__50334.jpg', 'product_images/bleach_6inch_rukia_03__73276__50334.jpg', 'https://www.toynamishop.com/product_images/n/590/bleach_6inch_rukia_03__73276__50334.jpg', 'products', 'Deluxe 6" PVC Statue: Rukia', 'Deluxe 6" PVC Statue: Rukia', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('593f6855-bb0b-4c5e-bfdd-6f3b8f0ef2a4', 'bleach_rukia_action_figure_box_front__85564__33594.jpg', 'bleach_rukia_action_figure_box_front__85564__33594.jpg', 'product_images/bleach_rukia_action_figure_box_front__85564__33594.jpg', 'https://www.toynamishop.com/product_images/o/869/bleach_rukia_action_figure_box_front__85564__33594.jpg', 'products', 'Deluxe 6" PVC Statue: Rukia', 'Deluxe 6" PVC Statue: Rukia', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('296b8250-2166-4ce0-b3f1-6219054cfe87', 'bleach_rukia_action_figure_box_back__55883__29932.jpg', 'bleach_rukia_action_figure_box_back__55883__29932.jpg', 'product_images/bleach_rukia_action_figure_box_back__55883__29932.jpg', 'https://www.toynamishop.com/product_images/w/511/bleach_rukia_action_figure_box_back__55883__29932.jpg', 'products', 'Deluxe 6" PVC Statue: Rukia', 'Deluxe 6" PVC Statue: Rukia', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('712de2ce-7aef-4609-8d97-fe8ddeb822d8', 'B013RKEG0Y.MAIN.jpg__47824__97524.jpg', 'B013RKEG0Y.MAIN.jpg__47824__97524.jpg', 'product_images/B013RKEG0Y.MAIN.jpg__47824__97524.jpg', 'https://www.toynamishop.com/product_images/k/466/B013RKEG0Y.MAIN.jpg__47824__97524.jpg', 'products', 'Altimite DX Transforming Voltron', 'Altimite DX Transforming Voltron', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('51051ab7-99fd-424b-9509-07fb5f3d81f6', 'B013RKEG0Y.BACK.jpg__59725__39170.jpg', 'B013RKEG0Y.BACK.jpg__59725__39170.jpg', 'product_images/B013RKEG0Y.BACK.jpg__59725__39170.jpg', 'https://www.toynamishop.com/product_images/f/703/B013RKEG0Y.BACK.jpg__59725__39170.jpg', 'products', 'Altimite DX Transforming Voltron', 'Altimite DX Transforming Voltron', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('f7be1cd3-951d-400f-87f8-6ed6db6ec3e5', 'B013RKEG0Y.PT01.jpg__71314__57529.jpg', 'B013RKEG0Y.PT01.jpg__71314__57529.jpg', 'product_images/B013RKEG0Y.PT01.jpg__71314__57529.jpg', 'https://www.toynamishop.com/product_images/j/597/B013RKEG0Y.PT01.jpg__71314__57529.jpg', 'products', 'Altimite DX Transforming Voltron', 'Altimite DX Transforming Voltron', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('1c1af61e-0833-4779-a6b8-5e47a9b8cb6b', 'B013RKEG0Y.PT02.jpg__07050__08864.jpg', 'B013RKEG0Y.PT02.jpg__07050__08864.jpg', 'product_images/B013RKEG0Y.PT02.jpg__07050__08864.jpg', 'https://www.toynamishop.com/product_images/s/125/B013RKEG0Y.PT02.jpg__07050__08864.jpg', 'products', 'Altimite DX Transforming Voltron', 'Altimite DX Transforming Voltron', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('e9f3c122-fc56-40f0-8277-85942c466d64', 'fav-13d__43457__75676.jpg', 'fav-13d__43457__75676.jpg', 'product_images/fav-13d__43457__75676.jpg', 'https://www.toynamishop.com/product_images/u/750/fav-13d__43457__75676.jpg', 'products', 'Acid Rain Field Vanguard', 'Acid Rain Field Vanguard', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('807263f9-160c-4f32-bdf9-6f2cb0a58919', 'fav-13b__36595__99196.jpg', 'fav-13b__36595__99196.jpg', 'product_images/fav-13b__36595__99196.jpg', 'https://www.toynamishop.com/product_images/i/910/fav-13b__36595__99196.jpg', 'products', 'Acid Rain Field Vanguard', 'Acid Rain Field Vanguard', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('7944e8e3-fa14-4474-bf19-deba5b1557e4', 'fav-13c__47003__75320.jpg', 'fav-13c__47003__75320.jpg', 'product_images/fav-13c__47003__75320.jpg', 'https://www.toynamishop.com/product_images/j/531/fav-13c__47003__75320.jpg', 'products', 'Acid Rain Field Vanguard', 'Acid Rain Field Vanguard', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('fba102d2-7146-4335-8e57-9ed02b920d96', 'acid_rain_field_vanguard_11__39990__91721.jpg', 'acid_rain_field_vanguard_11__39990__91721.jpg', 'product_images/acid_rain_field_vanguard_11__39990__91721.jpg', 'https://www.toynamishop.com/product_images/t/329/acid_rain_field_vanguard_11__39990__91721.jpg', 'products', 'Acid Rain Field Vanguard', 'Acid Rain Field Vanguard', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('4f4227ad-4efc-4ef6-a750-b873939263f5', 'acid_rain_field_vanguard_12__25003__77495.jpg', 'acid_rain_field_vanguard_12__25003__77495.jpg', 'product_images/acid_rain_field_vanguard_12__25003__77495.jpg', 'https://www.toynamishop.com/product_images/o/889/acid_rain_field_vanguard_12__25003__77495.jpg', 'products', 'Acid Rain Field Vanguard', 'Acid Rain Field Vanguard', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('87c489fb-9e19-4b70-b2a1-c7734cd062e6', 'mospeada_cyclone_ride_armor_stick_03__97307__04880.jpg', 'mospeada_cyclone_ride_armor_stick_03__97307__04880.jpg', 'product_images/mospeada_cyclone_ride_armor_stick_03__97307__04880.jpg', 'https://www.toynamishop.com/product_images/m/225/mospeada_cyclone_ride_armor_stick_03__97307__04880.jpg', 'products', 'Mospeada Cyclone Limited Edition Vinyl Figure - STICK', 'Mospeada Cyclone Limited Edition Vinyl Figure - STICK', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('23a4614d-1086-4294-a2da-0fddfa4a6ce3', 'mospeada_cyclone_ride_armor_stick_06__68197__10187.jpg', 'mospeada_cyclone_ride_armor_stick_06__68197__10187.jpg', 'product_images/mospeada_cyclone_ride_armor_stick_06__68197__10187.jpg', 'https://www.toynamishop.com/product_images/w/128/mospeada_cyclone_ride_armor_stick_06__68197__10187.jpg', 'products', 'Mospeada Cyclone Limited Edition Vinyl Figure - STICK', 'Mospeada Cyclone Limited Edition Vinyl Figure - STICK', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('fd75e31d-6483-4a1d-b28a-cafcff94822d', 'FAV-SP19-order-FN_01__85057__93501.jpg', 'FAV-SP19-order-FN_01__85057__93501.jpg', 'product_images/FAV-SP19-order-FN_01__85057__93501.jpg', 'https://www.toynamishop.com/product_images/l/708/FAV-SP19-order-FN_01__85057__93501.jpg', 'products', 'Acid Rain Nana (Neo Atlantis Mascot) - 2021 Convention Exclusive', 'Acid Rain Nana (Neo Atlantis Mascot) - 2021 Convention Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('9f607005-fc35-43b8-9f31-ff15424ffbbf', 'FAV-SP19-order-FN_02__26057__10094.jpg', 'FAV-SP19-order-FN_02__26057__10094.jpg', 'product_images/FAV-SP19-order-FN_02__26057__10094.jpg', 'https://www.toynamishop.com/product_images/u/455/FAV-SP19-order-FN_02__26057__10094.jpg', 'products', 'Acid Rain Nana (Neo Atlantis Mascot) - 2021 Convention Exclusive', 'Acid Rain Nana (Neo Atlantis Mascot) - 2021 Convention Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('927e7ed8-78c1-4ad3-8208-441b73574d87', 'FAV-SP19-order-FN_03__97724__36282.jpg', 'FAV-SP19-order-FN_03__97724__36282.jpg', 'product_images/FAV-SP19-order-FN_03__97724__36282.jpg', 'https://www.toynamishop.com/product_images/m/036/FAV-SP19-order-FN_03__97724__36282.jpg', 'products', 'Acid Rain Nana (Neo Atlantis Mascot) - 2021 Convention Exclusive', 'Acid Rain Nana (Neo Atlantis Mascot) - 2021 Convention Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('67cc9676-111a-41ee-8cb6-d058ec3c0a3a', 'IMG_0017__38505__35210.JPG', 'IMG_0017__38505__35210.JPG', 'product_images/IMG_0017__38505__35210.JPG', 'https://www.toynamishop.com/product_images/r/188/IMG_0017__38505__35210.JPG', 'products', 'Acid Rain Laurel Corpse', 'Acid Rain Laurel Corpse', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('92252aa9-f33c-486f-8efa-339f29437b93', 'IMG_0004__14903__14550.JPG', 'IMG_0004__14903__14550.JPG', 'product_images/IMG_0004__14903__14550.JPG', 'https://www.toynamishop.com/product_images/j/818/IMG_0004__14903__14550.JPG', 'products', 'Acid Rain Laurel Corpse', 'Acid Rain Laurel Corpse', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('47cd840d-5072-4f9f-9aca-0b6d344d66b3', 'IMG_0002__22911__11891.JPG', 'IMG_0002__22911__11891.JPG', 'product_images/IMG_0002__22911__11891.JPG', 'https://www.toynamishop.com/product_images/j/821/IMG_0002__22911__11891.JPG', 'products', 'Acid Rain Laurel Corpse', 'Acid Rain Laurel Corpse', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('82b1d9c3-754c-4437-b16e-3b8790e91ff6', 'IMG_0006__84941__33674.JPG', 'IMG_0006__84941__33674.JPG', 'product_images/IMG_0006__84941__33674.JPG', 'https://www.toynamishop.com/product_images/p/865/IMG_0006__84941__33674.JPG', 'products', 'Acid Rain Laurel Corpse', 'Acid Rain Laurel Corpse', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('cc95bc46-6f55-48e4-8e27-922cbb7c7d0a', 'IMG_0007__80401__29481.JPG', 'IMG_0007__80401__29481.JPG', 'product_images/IMG_0007__80401__29481.JPG', 'https://www.toynamishop.com/product_images/o/490/IMG_0007__80401__29481.JPG', 'products', 'Acid Rain Laurel Corpse', 'Acid Rain Laurel Corpse', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('74e2c45a-0e0b-49d5-8cd8-e826513a7f26', 'IMG_0008__63582__85553.JPG', 'IMG_0008__63582__85553.JPG', 'product_images/IMG_0008__63582__85553.JPG', 'https://www.toynamishop.com/product_images/m/068/IMG_0008__63582__85553.JPG', 'products', 'Acid Rain Laurel Corpse', 'Acid Rain Laurel Corpse', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('62fc2596-2d40-40c1-bd44-d46eb78c6408', 'IMG_0009__68856__73654.JPG', 'IMG_0009__68856__73654.JPG', 'product_images/IMG_0009__68856__73654.JPG', 'https://www.toynamishop.com/product_images/d/897/IMG_0009__68856__73654.JPG', 'products', 'Acid Rain Laurel Corpse', 'Acid Rain Laurel Corpse', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('c826338a-df03-4713-ac87-875f429839de', 'VF-1D_CONVENTION-EXCLUSIVE_2__12849__14044.jpg', 'VF-1D_CONVENTION-EXCLUSIVE_2__12849__14044.jpg', 'product_images/VF-1D_CONVENTION-EXCLUSIVE_2__12849__14044.jpg', 'https://www.toynamishop.com/product_images/e/262/VF-1D_CONVENTION-EXCLUSIVE_2__12849__14044.jpg', 'products', 'Macross Calibre Wings 1:72 F-14 VF-1D Convention Exclusive', 'Macross Calibre Wings 1:72 F-14 VF-1D Convention Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('57301c8d-fe66-46f9-b495-1b4e1e3a3367', 'unkl_10_inch_spongebob01__67058__71028.jpg', 'unkl_10_inch_spongebob01__67058__71028.jpg', 'product_images/unkl_10_inch_spongebob01__67058__71028.jpg', 'https://www.toynamishop.com/product_images/j/681/unkl_10_inch_spongebob01__67058__71028.jpg', 'products', 'Comic Con 2014 Exclusive: UNKL 10" UniPo SpongeBob', 'Comic Con 2014 Exclusive: UNKL 10" UniPo SpongeBob', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('ade48e1e-9ab9-4b88-a241-6563d9691cb9', 'unkl_10_inch_spongebob02__12630__34217.jpg', 'unkl_10_inch_spongebob02__12630__34217.jpg', 'product_images/unkl_10_inch_spongebob02__12630__34217.jpg', 'https://www.toynamishop.com/product_images/t/817/unkl_10_inch_spongebob02__12630__34217.jpg', 'products', 'Comic Con 2014 Exclusive: UNKL 10" UniPo SpongeBob', 'Comic Con 2014 Exclusive: UNKL 10" UniPo SpongeBob', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('1d93ced2-b087-4ef0-b542-60dcd161e483', 'unkl_10_inch_spongebob__72597__72091.jpg', 'unkl_10_inch_spongebob__72597__72091.jpg', 'product_images/unkl_10_inch_spongebob__72597__72091.jpg', 'https://www.toynamishop.com/product_images/b/581/unkl_10_inch_spongebob__72597__72091.jpg', 'products', 'Comic Con 2014 Exclusive: UNKL 10" UniPo SpongeBob', 'Comic Con 2014 Exclusive: UNKL 10" UniPo SpongeBob', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('d0a550e2-4b50-417c-828e-d6aa365b91bc', 'PAIN_VS_NARUTO_DELUXE_COMBO_PACK__95963__14366.jpg', 'PAIN_VS_NARUTO_DELUXE_COMBO_PACK__95963__14366.jpg', 'product_images/PAIN_VS_NARUTO_DELUXE_COMBO_PACK__95963__14366.jpg', 'https://www.toynamishop.com/product_images/z/308/PAIN_VS_NARUTO_DELUXE_COMBO_PACK__95963__14366.jpg', 'products', 'Naruto Shippuden Exclusive Two-Pack Set: Sage Mode Naruto vs. Pain', 'Naruto Shippuden Exclusive Two-Pack Set: Sage Mode Naruto vs. Pain', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('e697da36-2853-4d92-bb4a-a70e3b955b46', 'mospeada_cyclone_ride_armor_ray_05__06916__24331.jpg', 'mospeada_cyclone_ride_armor_ray_05__06916__24331.jpg', 'product_images/mospeada_cyclone_ride_armor_ray_05__06916__24331.jpg', 'https://www.toynamishop.com/product_images/y/005/mospeada_cyclone_ride_armor_ray_05__06916__24331.jpg', 'products', 'Mospeada Cyclone Limited Edition Vinyl Figure - RAY', 'Mospeada Cyclone Limited Edition Vinyl Figure - RAY', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('967c5b87-a426-455b-9fc7-f927660bbc9c', 'mospeada_cyclone_ride_armor_ray_07__56137__73863.jpg', 'mospeada_cyclone_ride_armor_ray_07__56137__73863.jpg', 'product_images/mospeada_cyclone_ride_armor_ray_07__56137__73863.jpg', 'https://www.toynamishop.com/product_images/x/011/mospeada_cyclone_ride_armor_ray_07__56137__73863.jpg', 'products', 'Mospeada Cyclone Limited Edition Vinyl Figure - RAY', 'Mospeada Cyclone Limited Edition Vinyl Figure - RAY', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('64a1815d-0d53-4936-8d87-e91d51b82a57', 'FAV-A01_PROMO_3__92565__76023.jpg', 'FAV-A01_PROMO_3__92565__76023.jpg', 'product_images/FAV-A01_PROMO_3__92565__76023.jpg', 'https://www.toynamishop.com/product_images/h/927/FAV-A01_PROMO_3__92565__76023.jpg', 'products', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('e91109da-b20f-4d4f-96f1-a65ac1ba7883', 'FAV-A01_PROMO_2__96206__20093.jpg', 'FAV-A01_PROMO_2__96206__20093.jpg', 'product_images/FAV-A01_PROMO_2__96206__20093.jpg', 'https://www.toynamishop.com/product_images/m/026/FAV-A01_PROMO_2__96206__20093.jpg', 'products', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('105647a9-6ef3-4308-90b7-b68154475a7e', 'FAV-A-01_PRODUCT_SHOT_4__95144__87963.jpg', 'FAV-A-01_PRODUCT_SHOT_4__95144__87963.jpg', 'product_images/FAV-A-01_PRODUCT_SHOT_4__95144__87963.jpg', 'https://www.toynamishop.com/product_images/m/257/FAV-A-01_PRODUCT_SHOT_4__95144__87963.jpg', 'products', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('3b8ed47b-6118-4a6f-bda1-d0f4fd6a080e', 'FAV-A-01_PRODUCT_SHOT_3__24903__86193.jpg', 'FAV-A-01_PRODUCT_SHOT_3__24903__86193.jpg', 'product_images/FAV-A-01_PRODUCT_SHOT_3__24903__86193.jpg', 'https://www.toynamishop.com/product_images/k/589/FAV-A-01_PRODUCT_SHOT_3__24903__86193.jpg', 'products', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('83669ca8-71bd-4806-b4c8-01353bced053', 'FAV-A-01_PRODUCT_SHOT_2__73396__29899.jpg', 'FAV-A-01_PRODUCT_SHOT_2__73396__29899.jpg', 'product_images/FAV-A-01_PRODUCT_SHOT_2__73396__29899.jpg', 'https://www.toynamishop.com/product_images/m/214/FAV-A-01_PRODUCT_SHOT_2__73396__29899.jpg', 'products', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('3f76ab09-21b6-4f60-acea-06c6edbdadde', 'FAV-A-01_PRODUCT_SHOT_1__67681__07144.jpg', 'FAV-A-01_PRODUCT_SHOT_1__67681__07144.jpg', 'product_images/FAV-A-01_PRODUCT_SHOT_1__67681__07144.jpg', 'https://www.toynamishop.com/product_images/c/645/FAV-A-01_PRODUCT_SHOT_1__67681__07144.jpg', 'products', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('d09ad3f1-2623-4576-9971-cad7dc9587aa', 'Tulipop_Fred_coin-bank_01__82208__13633.jpg', 'Tulipop_Fred_coin-bank_01__82208__13633.jpg', 'product_images/Tulipop_Fred_coin-bank_01__82208__13633.jpg', 'https://www.toynamishop.com/product_images/n/267/Tulipop_Fred_coin-bank_01__82208__13633.jpg', 'products', 'FRED Vinyl Coin Bank', 'FRED Vinyl Coin Bank', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('7e24a75f-4ab2-42df-938d-759ee2498936', 'Tulipop_Fred_coin-bank_02-1__21635__33872.jpg', 'Tulipop_Fred_coin-bank_02-1__21635__33872.jpg', 'product_images/Tulipop_Fred_coin-bank_02-1__21635__33872.jpg', 'https://www.toynamishop.com/product_images/c/900/Tulipop_Fred_coin-bank_02-1__21635__33872.jpg', 'products', 'FRED Vinyl Coin Bank', 'FRED Vinyl Coin Bank', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('1f2ea758-559d-43a5-b8b5-9044098d5845', 'Tulipop_Fred-Coin-Bank-box-1__26991__86714.jpg', 'Tulipop_Fred-Coin-Bank-box-1__26991__86714.jpg', 'product_images/Tulipop_Fred-Coin-Bank-box-1__26991__86714.jpg', 'https://www.toynamishop.com/product_images/a/923/Tulipop_Fred-Coin-Bank-box-1__26991__86714.jpg', 'products', 'FRED Vinyl Coin Bank', 'FRED Vinyl Coin Bank', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('9660512d-e85d-4ded-9fc6-864ccbd59868', 'P1301483__23379__75418.jpg', 'P1301483__23379__75418.jpg', 'product_images/P1301483__23379__75418.jpg', 'https://www.toynamishop.com/product_images/f/385/P1301483__23379__75418.jpg', 'products', 'Macross Calibre Wings 1:72 VF-1S Valkyrie Fighter', 'Macross Calibre Wings 1:72 VF-1S Valkyrie Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('37628cdc-22bb-4e95-9b6c-7fdcab389be0', 'P1301485__79399__80210.jpg', 'P1301485__79399__80210.jpg', 'product_images/P1301485__79399__80210.jpg', 'https://www.toynamishop.com/product_images/x/993/P1301485__79399__80210.jpg', 'products', 'Macross Calibre Wings 1:72 VF-1S Valkyrie Fighter', 'Macross Calibre Wings 1:72 VF-1S Valkyrie Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('791bfc76-fa59-4d35-aa5e-feda128ea8d5', 'CA72RB06-1__40200__54764.jpg', 'CA72RB06-1__40200__54764.jpg', 'product_images/CA72RB06-1__40200__54764.jpg', 'https://www.toynamishop.com/product_images/l/106/CA72RB06-1__40200__54764.jpg', 'products', 'Macross Calibre Wings 1:72 VF-1S Valkyrie Fighter', 'Macross Calibre Wings 1:72 VF-1S Valkyrie Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('fc570760-e855-4275-b12e-3947cd1eb1bc', 'CA72RB06-2__90290__36866.jpg', 'CA72RB06-2__90290__36866.jpg', 'product_images/CA72RB06-2__90290__36866.jpg', 'https://www.toynamishop.com/product_images/m/609/CA72RB06-2__90290__36866.jpg', 'products', 'Macross Calibre Wings 1:72 VF-1S Valkyrie Fighter', 'Macross Calibre Wings 1:72 VF-1S Valkyrie Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('6f8beba3-5a89-40c5-8d1d-210f177d1489', '1__01327__97031.jpg', '1__01327__97031.jpg', 'product_images/1__01327__97031.jpg', 'https://www.toynamishop.com/product_images/l/880/1__01327__97031.jpg', 'products', 'Macross Calibre Wings 1:72 VF-1S Valkyrie Fighter', 'Macross Calibre Wings 1:72 VF-1S Valkyrie Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('61c67402-68b0-408d-bc50-1cf445657cfc', 'godzilla_statue_01__37648__85276.jpg', 'godzilla_statue_01__37648__85276.jpg', 'product_images/godzilla_statue_01__37648__85276.jpg', 'https://www.toynamishop.com/product_images/a/278/godzilla_statue_01__37648__85276.jpg', 'products', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('fdf4da42-b6a2-4557-95e5-07884ca96340', 'godzilla_statue_07__96020__06812.jpg', 'godzilla_statue_07__96020__06812.jpg', 'product_images/godzilla_statue_07__96020__06812.jpg', 'https://www.toynamishop.com/product_images/e/317/godzilla_statue_07__96020__06812.jpg', 'products', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('69ee6881-731f-47e8-919e-16630afbe858', 'godzilla_statue_02__71767__88756.jpg', 'godzilla_statue_02__71767__88756.jpg', 'product_images/godzilla_statue_02__71767__88756.jpg', 'https://www.toynamishop.com/product_images/y/084/godzilla_statue_02__71767__88756.jpg', 'products', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('f463d387-924a-4494-a39b-5fbee1f2f524', 'godzilla_statue_06__32175__08339.jpg', 'godzilla_statue_06__32175__08339.jpg', 'product_images/godzilla_statue_06__32175__08339.jpg', 'https://www.toynamishop.com/product_images/g/691/godzilla_statue_06__32175__08339.jpg', 'products', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('7c9ac096-4e7e-4f43-a826-efa85ee3dcfd', 'godzilla_statue_05__73871__07244.jpg', 'godzilla_statue_05__73871__07244.jpg', 'product_images/godzilla_statue_05__73871__07244.jpg', 'https://www.toynamishop.com/product_images/l/098/godzilla_statue_05__73871__07244.jpg', 'products', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('2518320a-9150-4980-92bc-99b6abab5471', 'godzilla_statue_04__61481__56632.jpg', 'godzilla_statue_04__61481__56632.jpg', 'product_images/godzilla_statue_04__61481__56632.jpg', 'https://www.toynamishop.com/product_images/c/998/godzilla_statue_04__61481__56632.jpg', 'products', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('a1c36010-f09b-4713-a0f0-2757f7368f9c', 'godzilla_statue_08__96871__24008.jpg', 'godzilla_statue_08__96871__24008.jpg', 'product_images/godzilla_statue_08__96871__24008.jpg', 'https://www.toynamishop.com/product_images/e/851/godzilla_statue_08__96871__24008.jpg', 'products', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('d8ac312f-12c1-475c-8317-f8c50648d328', 'godzilla_statue_03__06134__77592.jpg', 'godzilla_statue_03__06134__77592.jpg', 'product_images/godzilla_statue_03__06134__77592.jpg', 'https://www.toynamishop.com/product_images/n/251/godzilla_statue_03__06134__77592.jpg', 'products', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('f2aa9bc5-6747-46a4-af59-0c1ff78b4743', 'godzilla_statue_09__78273__21933.jpg', 'godzilla_statue_09__78273__21933.jpg', 'product_images/godzilla_statue_09__78273__21933.jpg', 'https://www.toynamishop.com/product_images/p/093/godzilla_statue_09__78273__21933.jpg', 'products', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', 'image/jpeg', 'jpg', ARRAY['product'], 10, '2025-08-24 03:34:39.225191+00', NOW()),
+('f691120a-22c4-4913-ae86-6b1851b900ec', 'canman_blank_01__57387__58315.jpg', 'canman_blank_01__57387__58315.jpg', 'product_images/canman_blank_01__57387__58315.jpg', 'https://www.toynamishop.com/product_images/n/350/canman_blank_01__57387__58315.jpg', 'products', 'The Canmans Blank Canman', 'The Canmans Blank Canman', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('9f413056-5a0a-4639-89cf-1864210106bf', 'canman_blank_02__92475__79371.jpg', 'canman_blank_02__92475__79371.jpg', 'product_images/canman_blank_02__92475__79371.jpg', 'https://www.toynamishop.com/product_images/z/561/canman_blank_02__92475__79371.jpg', 'products', 'The Canmans Blank Canman', 'The Canmans Blank Canman', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('05ba0c90-b0ac-4aea-85cb-902a61f645ba', 'canman_blank_03__10620__70240.jpg', 'canman_blank_03__10620__70240.jpg', 'product_images/canman_blank_03__10620__70240.jpg', 'https://www.toynamishop.com/product_images/x/178/canman_blank_03__10620__70240.jpg', 'products', 'The Canmans Blank Canman', 'The Canmans Blank Canman', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('8013cfe6-a683-4ed3-85c9-45e748ab19b3', 'Tulipop_tineez_mini_plush_Fred__35443__99947.jpg', 'Tulipop_tineez_mini_plush_Fred__35443__99947.jpg', 'product_images/Tulipop_tineez_mini_plush_Fred__35443__99947.jpg', 'https://www.toynamishop.com/product_images/p/025/Tulipop_tineez_mini_plush_Fred__35443__99947.jpg', 'products', 'Tulipop Fred Tineez Plush', 'Tulipop Fred Tineez Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('5615c59d-9c83-4529-a877-6cfada7f0f95', 'FAV-SP20-order-FN_01__87756__42567.jpg', 'FAV-SP20-order-FN_01__87756__42567.jpg', 'product_images/FAV-SP20-order-FN_01__87756__42567.jpg', 'https://www.toynamishop.com/product_images/w/261/FAV-SP20-order-FN_01__87756__42567.jpg', 'products', 'Acid Rain Halogen Jeep - 2021 Convention Exclusive', 'Acid Rain Halogen Jeep - 2021 Convention Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('26b8f79f-be17-4b05-9faa-d54f25c6792a', 'FAV-SP20-order-FN_02__59925__85883.jpg', 'FAV-SP20-order-FN_02__59925__85883.jpg', 'product_images/FAV-SP20-order-FN_02__59925__85883.jpg', 'https://www.toynamishop.com/product_images/o/082/FAV-SP20-order-FN_02__59925__85883.jpg', 'products', 'Acid Rain Halogen Jeep - 2021 Convention Exclusive', 'Acid Rain Halogen Jeep - 2021 Convention Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('630b3e8f-8976-4fcd-a27e-c858ed3b3d8b', 'FAV-SP20-order-FN_03__80505__55578.jpg', 'FAV-SP20-order-FN_03__80505__55578.jpg', 'product_images/FAV-SP20-order-FN_03__80505__55578.jpg', 'https://www.toynamishop.com/product_images/t/351/FAV-SP20-order-FN_03__80505__55578.jpg', 'products', 'Acid Rain Halogen Jeep - 2021 Convention Exclusive', 'Acid Rain Halogen Jeep - 2021 Convention Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('224e8304-ab58-430d-8ce9-660d2c3b147d', 'IMG_0001__51706__18795.JPG', 'IMG_0001__51706__18795.JPG', 'product_images/IMG_0001__51706__18795.JPG', 'https://www.toynamishop.com/product_images/v/483/IMG_0001__51706__18795.JPG', 'products', 'Acid Rain Laurel Rescue', 'Acid Rain Laurel Rescue', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('fbf2522d-1f0e-4747-8261-a9e976737494', 'IMG_0016__45006__00550.JPG', 'IMG_0016__45006__00550.JPG', 'product_images/IMG_0016__45006__00550.JPG', 'https://www.toynamishop.com/product_images/h/917/IMG_0016__45006__00550.JPG', 'products', 'Acid Rain Laurel Rescue', 'Acid Rain Laurel Rescue', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('5b4eaeab-c071-4211-995d-2d879ad08632', 'IMG_0019__59659__23721.JPG', 'IMG_0019__59659__23721.JPG', 'product_images/IMG_0019__59659__23721.JPG', 'https://www.toynamishop.com/product_images/q/187/IMG_0019__59659__23721.JPG', 'products', 'Acid Rain Laurel Rescue', 'Acid Rain Laurel Rescue', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('d94d80bb-98ce-4609-be57-4779518b353f', 'IMG_0018__88526__04949.JPG', 'IMG_0018__88526__04949.JPG', 'product_images/IMG_0018__88526__04949.JPG', 'https://www.toynamishop.com/product_images/f/131/IMG_0018__88526__04949.JPG', 'products', 'Acid Rain Laurel Rescue', 'Acid Rain Laurel Rescue', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('0cc42dd1-2578-4945-9d42-6ff390219f62', 'IMG_0012__62242__24319.JPG', 'IMG_0012__62242__24319.JPG', 'product_images/IMG_0012__62242__24319.JPG', 'https://www.toynamishop.com/product_images/a/364/IMG_0012__62242__24319.JPG', 'products', 'Acid Rain Laurel Rescue', 'Acid Rain Laurel Rescue', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('2d475101-83f6-41f8-a4a0-698cd32476aa', 'FEy4HJnaMAEndjX__08917__14178.jpg', 'FEy4HJnaMAEndjX__08917__14178.jpg', 'product_images/FEy4HJnaMAEndjX__08917__14178.jpg', 'https://www.toynamishop.com/product_images/x/847/FEy4HJnaMAEndjX__08917__14178.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K01 WENENU', 'Toys Alliance MILLINILLIONS MI-K01 WENENU', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('108b4582-210a-4a2e-bab2-c5a964369a57', 'FEy4HJmagAE333z__41909__42485.jpg', 'FEy4HJmagAE333z__41909__42485.jpg', 'product_images/FEy4HJmagAE333z__41909__42485.jpg', 'https://www.toynamishop.com/product_images/v/167/FEy4HJmagAE333z__41909__42485.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K01 WENENU', 'Toys Alliance MILLINILLIONS MI-K01 WENENU', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('6b687b1e-532c-41a3-b763-75005de8b829', 'FEy4HJlaMAEf3MK__79285__92896.jpg', 'FEy4HJlaMAEf3MK__79285__92896.jpg', 'product_images/FEy4HJlaMAEf3MK__79285__92896.jpg', 'https://www.toynamishop.com/product_images/m/174/FEy4HJlaMAEf3MK__79285__92896.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K01 WENENU', 'Toys Alliance MILLINILLIONS MI-K01 WENENU', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('f0bc85fb-0a0c-443d-b5cc-f50778044b9e', 'FEy4HJlagAUcrwz__16175__55614.jpg', 'FEy4HJlagAUcrwz__16175__55614.jpg', 'product_images/FEy4HJlagAUcrwz__16175__55614.jpg', 'https://www.toynamishop.com/product_images/b/418/FEy4HJlagAUcrwz__16175__55614.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K01 WENENU', 'Toys Alliance MILLINILLIONS MI-K01 WENENU', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('d132ac6e-0a3f-47fb-9883-b80dea7274c9', 'DSC_0520__55510__69000.JPG', 'DSC_0520__55510__69000.JPG', 'product_images/DSC_0520__55510__69000.JPG', 'https://www.toynamishop.com/product_images/e/191/DSC_0520__55510__69000.JPG', 'products', 'B2Five R711 Laurel LA3R', 'B2Five R711 Laurel LA3R', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('9d38429f-4b93-432b-91df-46c3c6885185', 'DSC_0485__45606__47045.JPG', 'DSC_0485__45606__47045.JPG', 'product_images/DSC_0485__45606__47045.JPG', 'https://www.toynamishop.com/product_images/p/940/DSC_0485__45606__47045.JPG', 'products', 'B2Five R711 Laurel LA3R', 'B2Five R711 Laurel LA3R', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('83e01ea5-36e5-4a68-9af1-c2b93b1da192', 'DSC_0491__78676__06968.JPG', 'DSC_0491__78676__06968.JPG', 'product_images/DSC_0491__78676__06968.JPG', 'https://www.toynamishop.com/product_images/g/433/DSC_0491__78676__06968.JPG', 'products', 'B2Five R711 Laurel LA3R', 'B2Five R711 Laurel LA3R', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('836ba739-16d5-40b0-8cc4-22c0cadc2125', 'DSC_0502__10105__50857.JPG', 'DSC_0502__10105__50857.JPG', 'product_images/DSC_0502__10105__50857.JPG', 'https://www.toynamishop.com/product_images/w/729/DSC_0502__10105__50857.JPG', 'products', 'B2Five R711 Laurel LA3R', 'B2Five R711 Laurel LA3R', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('8f027dff-823d-49ba-adb4-0e153ad29f74', 'DSC_0508__87163__16481.JPG', 'DSC_0508__87163__16481.JPG', 'product_images/DSC_0508__87163__16481.JPG', 'https://www.toynamishop.com/product_images/n/021/DSC_0508__87163__16481.JPG', 'products', 'B2Five R711 Laurel LA3R', 'B2Five R711 Laurel LA3R', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('fbb15ac2-86f3-45bc-acd4-f18c670ca647', 'little-embers_blind-box-series-2__83794__49787.jpg', 'little-embers_blind-box-series-2__83794__49787.jpg', 'product_images/little-embers_blind-box-series-2__83794__49787.jpg', 'https://www.toynamishop.com/product_images/v/074/little-embers_blind-box-series-2__83794__49787.jpg', 'products', 'Little Embers SERIES 2 Blind Box Figurine', 'Little Embers SERIES 2 Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('87c8f3a7-bfe5-40f8-9c08-e2fa6aa99421', 'little_embers_Series2_04__22864__24147.jpg', 'little_embers_Series2_04__22864__24147.jpg', 'product_images/little_embers_Series2_04__22864__24147.jpg', 'https://www.toynamishop.com/product_images/d/344/little_embers_Series2_04__22864__24147.jpg', 'products', 'Little Embers SERIES 2 Blind Box Figurine', 'Little Embers SERIES 2 Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('b64795eb-80d9-456c-ae79-2022f2f1dbaa', 'little_embers_Series2_01__06832__59813.jpg', 'little_embers_Series2_01__06832__59813.jpg', 'product_images/little_embers_Series2_01__06832__59813.jpg', 'https://www.toynamishop.com/product_images/j/871/little_embers_Series2_01__06832__59813.jpg', 'products', 'Little Embers SERIES 2 Blind Box Figurine', 'Little Embers SERIES 2 Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('d94586ce-bf33-4161-bba0-44a863409ecc', 'little_embers_Series2_07__64462__10673.jpg', 'little_embers_Series2_07__64462__10673.jpg', 'product_images/little_embers_Series2_07__64462__10673.jpg', 'https://www.toynamishop.com/product_images/n/723/little_embers_Series2_07__64462__10673.jpg', 'products', 'Little Embers SERIES 2 Blind Box Figurine', 'Little Embers SERIES 2 Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('2e36f94d-3451-4ddf-a822-626e20df86ff', 'little_embers_Series2_14__99701__07831.jpg', 'little_embers_Series2_14__99701__07831.jpg', 'product_images/little_embers_Series2_14__99701__07831.jpg', 'https://www.toynamishop.com/product_images/m/507/little_embers_Series2_14__99701__07831.jpg', 'products', 'Little Embers SERIES 2 Blind Box Figurine', 'Little Embers SERIES 2 Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('7522dca8-3ec6-4f52-b314-e07ffd2eb5f9', 'little_embers_Series2_10__14284__77703.jpg', 'little_embers_Series2_10__14284__77703.jpg', 'product_images/little_embers_Series2_10__14284__77703.jpg', 'https://www.toynamishop.com/product_images/d/569/little_embers_Series2_10__14284__77703.jpg', 'products', 'Little Embers SERIES 2 Blind Box Figurine', 'Little Embers SERIES 2 Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('b26e785b-5913-4d08-9a8d-6d0ba211c85a', 'P1017753__17041__34643.jpg', 'P1017753__17041__34643.jpg', 'product_images/P1017753__17041__34643.jpg', 'https://www.toynamishop.com/product_images/q/981/P1017753__17041__34643.jpg', 'products', 'Macross Calibre Wings 1:72 VF-1S Fighter Valkyrie STEALTH - 2020 CONVENTION EXCLUSIVE PRE-ORDER', 'Macross Calibre Wings 1:72 VF-1S Fighter Valkyrie STEALTH - 2020 CONVENTION EXCLUSIVE PRE-ORDER', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('eb6a73b6-5a30-43c0-9bcb-294d9bc1e288', 'P1017704__75821__10366.jpg', 'P1017704__75821__10366.jpg', 'product_images/P1017704__75821__10366.jpg', 'https://www.toynamishop.com/product_images/r/642/P1017704__75821__10366.jpg', 'products', 'Macross Calibre Wings 1:72 VF-1S Fighter Valkyrie STEALTH - 2020 CONVENTION EXCLUSIVE PRE-ORDER', 'Macross Calibre Wings 1:72 VF-1S Fighter Valkyrie STEALTH - 2020 CONVENTION EXCLUSIVE PRE-ORDER', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('6f9b48fc-86c3-4456-99c0-24d95564fc8a', 'P1017700__53047__72123.jpg', 'P1017700__53047__72123.jpg', 'product_images/P1017700__53047__72123.jpg', 'https://www.toynamishop.com/product_images/r/092/P1017700__53047__72123.jpg', 'products', 'Macross Calibre Wings 1:72 VF-1S Fighter Valkyrie STEALTH - 2020 CONVENTION EXCLUSIVE PRE-ORDER', 'Macross Calibre Wings 1:72 VF-1S Fighter Valkyrie STEALTH - 2020 CONVENTION EXCLUSIVE PRE-ORDER', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('d8ee9633-3873-4e70-8a24-37ba99f1928c', 'P1017706__30382__77796.jpg', 'P1017706__30382__77796.jpg', 'product_images/P1017706__30382__77796.jpg', 'https://www.toynamishop.com/product_images/c/468/P1017706__30382__77796.jpg', 'products', 'Macross Calibre Wings 1:72 VF-1S Fighter Valkyrie STEALTH - 2020 CONVENTION EXCLUSIVE PRE-ORDER', 'Macross Calibre Wings 1:72 VF-1S Fighter Valkyrie STEALTH - 2020 CONVENTION EXCLUSIVE PRE-ORDER', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('e97dd0f2-183e-4006-9893-a4e8046eadcc', 'P1017751__17934__21493.jpg', 'P1017751__17934__21493.jpg', 'product_images/P1017751__17934__21493.jpg', 'https://www.toynamishop.com/product_images/l/009/P1017751__17934__21493.jpg', 'products', 'Macross Calibre Wings 1:72 VF-1S Fighter Valkyrie STEALTH - 2020 CONVENTION EXCLUSIVE PRE-ORDER', 'Macross Calibre Wings 1:72 VF-1S Fighter Valkyrie STEALTH - 2020 CONVENTION EXCLUSIVE PRE-ORDER', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('80686688-fc2a-47a2-9247-30284db0f66a', 'Tulipop_tineez_mini_plush_Miss_Maddy_10_inch__71979__11301.jpg', 'Tulipop_tineez_mini_plush_Miss_Maddy_10_inch__71979__11301.jpg', 'product_images/Tulipop_tineez_mini_plush_Miss_Maddy_10_inch__71979__11301.jpg', 'https://www.toynamishop.com/product_images/w/928/Tulipop_tineez_mini_plush_Miss_Maddy_10_inch__71979__11301.jpg', 'products', 'Tulipop Miss Maddy Tineez Plush', 'Tulipop Miss Maddy Tineez Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('a8e8bd9d-967c-4b80-a99c-14cd98069439', 'robotech-limited-edition-poster_SDCC2018__09370__59497.jpg', 'robotech-limited-edition-poster_SDCC2018__09370__59497.jpg', 'product_images/robotech-limited-edition-poster_SDCC2018__09370__59497.jpg', 'https://www.toynamishop.com/product_images/e/502/robotech-limited-edition-poster_SDCC2018__09370__59497.jpg', 'products', 'Robotech Defense Force Poster - 2018 SDCC Exclusive', 'Robotech Defense Force Poster - 2018 SDCC Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('00c03830-4324-4bf8-96c2-0a2a4657cdd4', 'Robotech_YR-052F_Cyclone_10__36244__36116.jpg', 'Robotech_YR-052F_Cyclone_10__36244__36116.jpg', 'product_images/Robotech_YR-052F_Cyclone_10__36244__36116.jpg', 'https://www.toynamishop.com/product_images/p/466/Robotech_YR-052F_Cyclone_10__36244__36116.jpg', 'products', 'PREORDER REQUIRED: The New Generation YR-052F Transformable Cyclone (FINAL PAYMENT)', 'PREORDER REQUIRED: The New Generation YR-052F Transformable Cyclone (FINAL PAYMENT)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('fd064e02-6ba9-4aec-aa94-629bc2841ea3', 'Robotech_YR-052F_Cyclone_02__95747__42531.jpg', 'Robotech_YR-052F_Cyclone_02__95747__42531.jpg', 'product_images/Robotech_YR-052F_Cyclone_02__95747__42531.jpg', 'https://www.toynamishop.com/product_images/x/514/Robotech_YR-052F_Cyclone_02__95747__42531.jpg', 'products', 'PREORDER REQUIRED: The New Generation YR-052F Transformable Cyclone (FINAL PAYMENT)', 'PREORDER REQUIRED: The New Generation YR-052F Transformable Cyclone (FINAL PAYMENT)', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('14c9dd9b-3e69-4733-bdc2-0e8ef7958e07', 'Robotech_YR-052F_Cyclone_01__40467__46125.jpg', 'Robotech_YR-052F_Cyclone_01__40467__46125.jpg', 'product_images/Robotech_YR-052F_Cyclone_01__40467__46125.jpg', 'https://www.toynamishop.com/product_images/y/624/Robotech_YR-052F_Cyclone_01__40467__46125.jpg', 'products', 'PREORDER REQUIRED: The New Generation YR-052F Transformable Cyclone (FINAL PAYMENT)', 'PREORDER REQUIRED: The New Generation YR-052F Transformable Cyclone (FINAL PAYMENT)', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('4633dcf2-6843-4070-83da-a55c7001f05a', 'Robotech_YR-052F_Cyclone_09__73402__57361.jpg', 'Robotech_YR-052F_Cyclone_09__73402__57361.jpg', 'product_images/Robotech_YR-052F_Cyclone_09__73402__57361.jpg', 'https://www.toynamishop.com/product_images/t/794/Robotech_YR-052F_Cyclone_09__73402__57361.jpg', 'products', 'PREORDER REQUIRED: The New Generation YR-052F Transformable Cyclone (FINAL PAYMENT)', 'PREORDER REQUIRED: The New Generation YR-052F Transformable Cyclone (FINAL PAYMENT)', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('b759b91f-8e2c-4a17-a4d0-c75057786bef', 'Robotech_YR-052F_Cyclone_08__58557__59053.jpg', 'Robotech_YR-052F_Cyclone_08__58557__59053.jpg', 'product_images/Robotech_YR-052F_Cyclone_08__58557__59053.jpg', 'https://www.toynamishop.com/product_images/p/820/Robotech_YR-052F_Cyclone_08__58557__59053.jpg', 'products', 'PREORDER REQUIRED: The New Generation YR-052F Transformable Cyclone (FINAL PAYMENT)', 'PREORDER REQUIRED: The New Generation YR-052F Transformable Cyclone (FINAL PAYMENT)', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('faab5ea7-e233-400d-a3a1-259f1ad8baa0', 'futurama_robot_santa_collection__54317__06589.jpg', 'futurama_robot_santa_collection__54317__06589.jpg', 'product_images/futurama_robot_santa_collection__54317__06589.jpg', 'https://www.toynamishop.com/product_images/c/937/futurama_robot_santa_collection__54317__06589.jpg', 'products', 'Futurama "Robot Santa Build-A-Bot" Action Figure Set', 'Futurama "Robot Santa Build-A-Bot" Action Figure Set', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('d28bb9b2-98da-499f-9361-4e54361f3c3b', 'futurama_robot_santa_collection2__76349__28626.jpg', 'futurama_robot_santa_collection2__76349__28626.jpg', 'product_images/futurama_robot_santa_collection2__76349__28626.jpg', 'https://www.toynamishop.com/product_images/s/884/futurama_robot_santa_collection2__76349__28626.jpg', 'products', 'Futurama "Robot Santa Build-A-Bot" Action Figure Set', 'Futurama "Robot Santa Build-A-Bot" Action Figure Set', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('a4e793f4-c662-4030-9e0d-843b6409b89f', 'voltron_40th_anniversary_18__49687__55983.jpg', 'voltron_40th_anniversary_18__49687__55983.jpg', 'product_images/voltron_40th_anniversary_18__49687__55983.jpg', 'https://www.toynamishop.com/product_images/o/618/voltron_40th_anniversary_18__49687__55983.jpg', 'products', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collectors Set', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('79e60cf1-683b-4d9c-ab9a-904c62ba0cd2', 'voltron_40th_anniversary_19__80862__36003.jpg', 'voltron_40th_anniversary_19__80862__36003.jpg', 'product_images/voltron_40th_anniversary_19__80862__36003.jpg', 'https://www.toynamishop.com/product_images/v/788/voltron_40th_anniversary_19__80862__36003.jpg', 'products', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collectors Set', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('1741da08-872a-470d-b106-631c11919114', 'voltron_40th_anniversary_20__29751__43832.jpg', 'voltron_40th_anniversary_20__29751__43832.jpg', 'product_images/voltron_40th_anniversary_20__29751__43832.jpg', 'https://www.toynamishop.com/product_images/p/761/voltron_40th_anniversary_20__29751__43832.jpg', 'products', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collectors Set', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('1951e25a-43f1-4d96-964b-6fbd4a99af1c', 'voltron_40th_anniversary_07__81955__39392.jpg', 'voltron_40th_anniversary_07__81955__39392.jpg', 'product_images/voltron_40th_anniversary_07__81955__39392.jpg', 'https://www.toynamishop.com/product_images/d/495/voltron_40th_anniversary_07__81955__39392.jpg', 'products', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collectors Set', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('d8e5b23e-481c-4e48-94ad-f439529c7a2e', 'voltron_40th_anniversary_06__75102__23800.jpg', 'voltron_40th_anniversary_06__75102__23800.jpg', 'product_images/voltron_40th_anniversary_06__75102__23800.jpg', 'https://www.toynamishop.com/product_images/k/988/voltron_40th_anniversary_06__75102__23800.jpg', 'products', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collectors Set', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('ced7bc3b-6cb2-42f9-9b93-8e1afdd53e8d', 'voltron_40th_anniversary_22__80445__44289.jpg', 'voltron_40th_anniversary_22__80445__44289.jpg', 'product_images/voltron_40th_anniversary_22__80445__44289.jpg', 'https://www.toynamishop.com/product_images/x/184/voltron_40th_anniversary_22__80445__44289.jpg', 'products', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collectors Set', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('e4af219f-17b4-478f-82dd-90aca4011be9', 'voltron_40th_anniversary_23__15577__81196.jpg', 'voltron_40th_anniversary_23__15577__81196.jpg', 'product_images/voltron_40th_anniversary_23__15577__81196.jpg', 'https://www.toynamishop.com/product_images/b/626/voltron_40th_anniversary_23__15577__81196.jpg', 'products', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collectors Set', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('50cef07c-b7e9-4461-93ac-abdc40b0b53a', 'voltron_40th_anniversary_21__58000__53477.jpg', 'voltron_40th_anniversary_21__58000__53477.jpg', 'product_images/voltron_40th_anniversary_21__58000__53477.jpg', 'https://www.toynamishop.com/product_images/y/833/voltron_40th_anniversary_21__58000__53477.jpg', 'products', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collectors Set', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('e7622d11-fbab-420d-a2ef-46b3d7e90e63', 'Tulipop_tineez_bubble_01__09651__69091.jpg', 'Tulipop_tineez_bubble_01__09651__69091.jpg', 'product_images/Tulipop_tineez_bubble_01__09651__69091.jpg', 'https://www.toynamishop.com/product_images/s/550/Tulipop_tineez_bubble_01__09651__69091.jpg', 'products', 'Tulipop Bubble Tineez Plush', 'Tulipop Bubble Tineez Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('ac8d5752-9719-4d73-988c-0083ff42eb1a', 'FAV-C01-order-FN_01__94443__42108.jpg', 'FAV-C01-order-FN_01__94443__42108.jpg', 'product_images/FAV-C01-order-FN_01__94443__42108.jpg', 'https://www.toynamishop.com/product_images/t/636/FAV-C01-order-FN_01__94443__42108.jpg', 'products', 'Acid Rain Shadow of Assamite - 2021 Convention Exclusive', 'Acid Rain Shadow of Assamite - 2021 Convention Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('e995e1aa-6852-4236-bbcb-0fcff9e77e5d', 'FAV-C01-order-FN_02__29462__71049.jpg', 'FAV-C01-order-FN_02__29462__71049.jpg', 'product_images/FAV-C01-order-FN_02__29462__71049.jpg', 'https://www.toynamishop.com/product_images/z/937/FAV-C01-order-FN_02__29462__71049.jpg', 'products', 'Acid Rain Shadow of Assamite - 2021 Convention Exclusive', 'Acid Rain Shadow of Assamite - 2021 Convention Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('d4ddbff4-adcd-4296-ab0b-55955a179777', 'macross_hikaru_valkyrie__50398__65781.jpg', 'macross_hikaru_valkyrie__50398__65781.jpg', 'product_images/macross_hikaru_valkyrie__50398__65781.jpg', 'https://www.toynamishop.com/product_images/d/462/macross_hikaru_valkyrie__50398__65781.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1J Ichijo Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1J Ichijo Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('718e1c3e-e6c2-4404-801f-d48fee038ba0', 'macross_hikaru_valkyrie_01__15774__01285.jpg', 'macross_hikaru_valkyrie_01__15774__01285.jpg', 'product_images/macross_hikaru_valkyrie_01__15774__01285.jpg', 'https://www.toynamishop.com/product_images/a/327/macross_hikaru_valkyrie_01__15774__01285.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1J Ichijo Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1J Ichijo Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('6d2a5fa2-f62d-4d55-b4d4-499cbacda58b', 'macross_hikaru_valkyrie_04__73934__80309.jpg', 'macross_hikaru_valkyrie_04__73934__80309.jpg', 'product_images/macross_hikaru_valkyrie_04__73934__80309.jpg', 'https://www.toynamishop.com/product_images/f/890/macross_hikaru_valkyrie_04__73934__80309.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1J Ichijo Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1J Ichijo Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('87decabc-8e7a-4a2b-8ff7-8efd1e9c27ca', 'macross_hikaru_valkyrie_03__15930__63932.jpg', 'macross_hikaru_valkyrie_03__15930__63932.jpg', 'product_images/macross_hikaru_valkyrie_03__15930__63932.jpg', 'https://www.toynamishop.com/product_images/f/643/macross_hikaru_valkyrie_03__15930__63932.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1J Ichijo Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1J Ichijo Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('727d5760-550c-4671-9617-cbd043c743d0', 'macross_hikaru_valkyrie_02__05728__89341.jpg', 'macross_hikaru_valkyrie_02__05728__89341.jpg', 'product_images/macross_hikaru_valkyrie_02__05728__89341.jpg', 'https://www.toynamishop.com/product_images/p/876/macross_hikaru_valkyrie_02__05728__89341.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1J Ichijo Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1J Ichijo Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('b12031c2-e106-488a-be62-dd8de193e5e5', 'MIK-02-order-01__36696__94837.jpg', 'MIK-02-order-01__36696__94837.jpg', 'product_images/MIK-02-order-01__36696__94837.jpg', 'https://www.toynamishop.com/product_images/i/420/MIK-02-order-01__36696__94837.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K02 Tao-Sor', 'Toys Alliance MILLINILLIONS MI-K02 Tao-Sor', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('fe199a7b-28e8-4fed-81e6-a8d8c7e82c25', 'MIK-02-order-04__43942__77370.jpg', 'MIK-02-order-04__43942__77370.jpg', 'product_images/MIK-02-order-04__43942__77370.jpg', 'https://www.toynamishop.com/product_images/q/512/MIK-02-order-04__43942__77370.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K02 Tao-Sor', 'Toys Alliance MILLINILLIONS MI-K02 Tao-Sor', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('c1c39380-4283-4ef6-aae1-b93f7cdddcc3', 'MIK-02-order-03__67343__28965.jpg', 'MIK-02-order-03__67343__28965.jpg', 'product_images/MIK-02-order-03__67343__28965.jpg', 'https://www.toynamishop.com/product_images/c/411/MIK-02-order-03__67343__28965.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K02 Tao-Sor', 'Toys Alliance MILLINILLIONS MI-K02 Tao-Sor', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('da9efb74-f743-4c18-8a30-ec63c105a5fa', 'IMG_NEW__75784__73717.jpg', 'IMG_NEW__75784__73717.jpg', 'product_images/IMG_NEW__75784__73717.jpg', 'https://www.toynamishop.com/product_images/k/104/IMG_NEW__75784__73717.jpg', 'products', 'Acid Rain Laurel Worker', 'Acid Rain Laurel Worker', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('82511e6f-8cba-4b63-954a-866b7bf0845b', 'c2da99f0-3eaa-4b05-b43b-548ef7b0302d__12983__08555.jpg', 'c2da99f0-3eaa-4b05-b43b-548ef7b0302d__12983__08555.jpg', 'product_images/c2da99f0-3eaa-4b05-b43b-548ef7b0302d__12983__08555.jpg', 'https://www.toynamishop.com/product_images/t/628/c2da99f0-3eaa-4b05-b43b-548ef7b0302d__12983__08555.jpg', 'products', 'Acid Rain Laurel Worker', 'Acid Rain Laurel Worker', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('8351de06-cf71-447d-8d30-a946106c0804', '4f26e8fc-beae-456c-83fa-9e5d4b82e93f__38961__82018.jpg', '4f26e8fc-beae-456c-83fa-9e5d4b82e93f__38961__82018.jpg', 'product_images/4f26e8fc-beae-456c-83fa-9e5d4b82e93f__38961__82018.jpg', 'https://www.toynamishop.com/product_images/r/858/4f26e8fc-beae-456c-83fa-9e5d4b82e93f__38961__82018.jpg', 'products', 'Acid Rain Laurel Worker', 'Acid Rain Laurel Worker', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('30f4ad9d-833b-40e9-b43d-85fe090e1d4f', 'ba04311e-e1fc-4980-bf77-9b30a32c3130__55089__18880.jpg', 'ba04311e-e1fc-4980-bf77-9b30a32c3130__55089__18880.jpg', 'product_images/ba04311e-e1fc-4980-bf77-9b30a32c3130__55089__18880.jpg', 'https://www.toynamishop.com/product_images/s/828/ba04311e-e1fc-4980-bf77-9b30a32c3130__55089__18880.jpg', 'products', 'Acid Rain Laurel Worker', 'Acid Rain Laurel Worker', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('c9b5c6a9-2bb7-4cbf-9089-b0e7ad56331e', 'Tulipop_tineez_mini_plush_Gloomy__41396__88020.jpg', 'Tulipop_tineez_mini_plush_Gloomy__41396__88020.jpg', 'product_images/Tulipop_tineez_mini_plush_Gloomy__41396__88020.jpg', 'https://www.toynamishop.com/product_images/y/238/Tulipop_tineez_mini_plush_Gloomy__41396__88020.jpg', 'products', 'Tulipop Gloomy Tineez Plush', 'Tulipop Gloomy Tineez Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('ca9871b4-b3a2-42a0-aa52-8fb37584b933', 'futurama_tineez1_2_package__89125__60885.jpg', 'futurama_tineez1_2_package__89125__60885.jpg', 'product_images/futurama_tineez1_2_package__89125__60885.jpg', 'https://www.toynamishop.com/product_images/z/621/futurama_tineez1_2_package__89125__60885.jpg', 'products', 'Futurama Tineez Series 1.2 Mini-Figure 3-pack', 'Futurama Tineez Series 1.2 Mini-Figure 3-pack', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('8204b70f-cc34-45e0-b8ee-7ab2040a7c76', 'futurama_tineez1_2_alternate_universe_zoidberg_01__88370__44047.jpg', 'futurama_tineez1_2_alternate_universe_zoidberg_01__88370__44047.jpg', 'product_images/futurama_tineez1_2_alternate_universe_zoidberg_01__88370__44047.jpg', 'https://www.toynamishop.com/product_images/m/029/futurama_tineez1_2_alternate_universe_zoidberg_01__88370__44047.jpg', 'products', 'Futurama Tineez Series 1.2 Mini-Figure 3-pack', 'Futurama Tineez Series 1.2 Mini-Figure 3-pack', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('be03079d-1249-413b-8619-c3a27ab9ec45', 'futurama_tineez1_2_bumblebee_bender_01__94930__34504.jpg', 'futurama_tineez1_2_bumblebee_bender_01__94930__34504.jpg', 'product_images/futurama_tineez1_2_bumblebee_bender_01__94930__34504.jpg', 'https://www.toynamishop.com/product_images/b/185/futurama_tineez1_2_bumblebee_bender_01__94930__34504.jpg', 'products', 'Futurama Tineez Series 1.2 Mini-Figure 3-pack', 'Futurama Tineez Series 1.2 Mini-Figure 3-pack', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('d25854a9-4aac-409e-b8de-f4b6e0fe9380', 'futurama_tineez1_2_robot_devil_01__37598__00518.jpg', 'futurama_tineez1_2_robot_devil_01__37598__00518.jpg', 'product_images/futurama_tineez1_2_robot_devil_01__37598__00518.jpg', 'https://www.toynamishop.com/product_images/c/355/futurama_tineez1_2_robot_devil_01__37598__00518.jpg', 'products', 'Futurama Tineez Series 1.2 Mini-Figure 3-pack', 'Futurama Tineez Series 1.2 Mini-Figure 3-pack', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('482d69e7-0d1f-4c2b-81e0-4b91bcc59a32', 'main__93022__86347.jpg', 'main__93022__86347.jpg', 'product_images/main__93022__86347.jpg', 'https://www.toynamishop.com/product_images/z/818/main__93022__86347.jpg', 'products', 'Mospeada Legioss AFC-01Z (Red)', 'Mospeada Legioss AFC-01Z (Red)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('68e40f0d-1960-4cd3-89d5-c70a72e6f3e1', 'img_02__93983__80111.jpg', 'img_02__93983__80111.jpg', 'product_images/img_02__93983__80111.jpg', 'https://www.toynamishop.com/product_images/c/005/img_02__93983__80111.jpg', 'products', 'Mospeada Legioss AFC-01Z (Red)', 'Mospeada Legioss AFC-01Z (Red)', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('d31e6875-db01-40f5-b41d-784625ae3696', 'img01__80115__04443.jpg', 'img01__80115__04443.jpg', 'product_images/img01__80115__04443.jpg', 'https://www.toynamishop.com/product_images/o/918/img01__80115__04443.jpg', 'products', 'Mospeada Legioss AFC-01Z (Red)', 'Mospeada Legioss AFC-01Z (Red)', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('0dd7819d-92a5-4da0-bd97-00841b4dc639', 'DSC_0454__76468__84229.jpg', 'DSC_0454__76468__84229.jpg', 'product_images/DSC_0454__76468__84229.jpg', 'https://www.toynamishop.com/product_images/t/546/DSC_0454__76468__84229.jpg', 'products', 'B2Five K6 Jungle Speeder MK1K', 'B2Five K6 Jungle Speeder MK1K', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('8db11e78-339e-4d0c-9ede-023c59683b26', 'DSC_0447__11645__43772.jpg', 'DSC_0447__11645__43772.jpg', 'product_images/DSC_0447__11645__43772.jpg', 'https://www.toynamishop.com/product_images/q/409/DSC_0447__11645__43772.jpg', 'products', 'B2Five K6 Jungle Speeder MK1K', 'B2Five K6 Jungle Speeder MK1K', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('f37631d9-b18c-4b0b-82c8-58e5485b5297', 'DSC_0444__76218__71722.jpg', 'DSC_0444__76218__71722.jpg', 'product_images/DSC_0444__76218__71722.jpg', 'https://www.toynamishop.com/product_images/f/285/DSC_0444__76218__71722.jpg', 'products', 'B2Five K6 Jungle Speeder MK1K', 'B2Five K6 Jungle Speeder MK1K', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('1fe03f61-6e5d-4d56-be30-78470bf96396', 'DSC_0462__35095__58910.jpg', 'DSC_0462__35095__58910.jpg', 'product_images/DSC_0462__35095__58910.jpg', 'https://www.toynamishop.com/product_images/s/385/DSC_0462__35095__58910.jpg', 'products', 'B2Five K6 Jungle Speeder MK1K', 'B2Five K6 Jungle Speeder MK1K', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('7b927be4-d18a-49ef-9220-b8574f8dc338', 'DSC_0463__26147__96935.jpg', 'DSC_0463__26147__96935.jpg', 'product_images/DSC_0463__26147__96935.jpg', 'https://www.toynamishop.com/product_images/p/886/DSC_0463__26147__96935.jpg', 'products', 'B2Five K6 Jungle Speeder MK1K', 'B2Five K6 Jungle Speeder MK1K', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('3a089ce8-9d27-46ca-8793-3651dbdcd131', 'Little_Ember_Iridescent_Pearl_Edition__94354__49574.jpg', 'Little_Ember_Iridescent_Pearl_Edition__94354__49574.jpg', 'product_images/Little_Ember_Iridescent_Pearl_Edition__94354__49574.jpg', 'https://www.toynamishop.com/product_images/g/521/Little_Ember_Iridescent_Pearl_Edition__94354__49574.jpg', 'products', 'Little Ember Iridescent Pearl Edition', 'Little Ember Iridescent Pearl Edition', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('8ab98d80-8e5f-4734-afdc-25f0daa6970c', 'little-embers_pearlescent-edition__88910__62145.jpg', 'little-embers_pearlescent-edition__88910__62145.jpg', 'product_images/little-embers_pearlescent-edition__88910__62145.jpg', 'https://www.toynamishop.com/product_images/n/280/little-embers_pearlescent-edition__88910__62145.jpg', 'products', 'Little Ember Iridescent Pearl Edition', 'Little Ember Iridescent Pearl Edition', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('8f76bbe6-3084-43a6-808f-a51f50417418', 'little-embers_pearlescent-edition2__00496__57364.jpg', 'little-embers_pearlescent-edition2__00496__57364.jpg', 'product_images/little-embers_pearlescent-edition2__00496__57364.jpg', 'https://www.toynamishop.com/product_images/d/379/little-embers_pearlescent-edition2__00496__57364.jpg', 'products', 'Little Ember Iridescent Pearl Edition', 'Little Ember Iridescent Pearl Edition', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('dc1378a4-91e8-483a-bc65-b6ad0413ed0d', 'FAV-A02-PIC_6__07686__10060.jpg', 'FAV-A02-PIC_6__07686__10060.jpg', 'product_images/FAV-A02-PIC_6__07686__10060.jpg', 'https://www.toynamishop.com/product_images/t/253/FAV-A02-PIC_6__07686__10060.jpg', 'products', 'Acid Rain Field Flakbike FB7f', 'Acid Rain Field Flakbike FB7f', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('46034ad8-9914-47f0-9cc3-a087b99086a3', 'FAV-A02-PIC_1__18039__51132.jpg', 'FAV-A02-PIC_1__18039__51132.jpg', 'product_images/FAV-A02-PIC_1__18039__51132.jpg', 'https://www.toynamishop.com/product_images/j/225/FAV-A02-PIC_1__18039__51132.jpg', 'products', 'Acid Rain Field Flakbike FB7f', 'Acid Rain Field Flakbike FB7f', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('98710892-e5fd-42f5-8f5b-d27e636097c1', 'FAV-A02-PIC_2__40634__54466.jpg', 'FAV-A02-PIC_2__40634__54466.jpg', 'product_images/FAV-A02-PIC_2__40634__54466.jpg', 'https://www.toynamishop.com/product_images/p/132/FAV-A02-PIC_2__40634__54466.jpg', 'products', 'Acid Rain Field Flakbike FB7f', 'Acid Rain Field Flakbike FB7f', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('8cde551f-402a-4caa-8f63-2c07404c72b9', 'a598e3ea-23b3-403f-875a-ef3faf048c81__56039__15087.jpg', 'a598e3ea-23b3-403f-875a-ef3faf048c81__56039__15087.jpg', 'product_images/a598e3ea-23b3-403f-875a-ef3faf048c81__56039__15087.jpg', 'https://www.toynamishop.com/product_images/i/028/a598e3ea-23b3-403f-875a-ef3faf048c81__56039__15087.jpg', 'products', 'Naruto Sage Mode Epic Scale Statue', 'Naruto Sage Mode Epic Scale Statue', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('ac3d5ddd-459e-4ec5-85e7-143a4f63780e', '39e51ef6-e2bf-4687-a843-d38fde5d858b__54992__41610.jpg', '39e51ef6-e2bf-4687-a843-d38fde5d858b__54992__41610.jpg', 'product_images/39e51ef6-e2bf-4687-a843-d38fde5d858b__54992__41610.jpg', 'https://www.toynamishop.com/product_images/r/312/39e51ef6-e2bf-4687-a843-d38fde5d858b__54992__41610.jpg', 'products', 'Naruto Sage Mode Epic Scale Statue', 'Naruto Sage Mode Epic Scale Statue', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('9e40cdc7-070f-4e1c-85b5-1f8137e107d5', '10822903_hi__81052__86046.jpg', '10822903_hi__81052__86046.jpg', 'product_images/10822903_hi__81052__86046.jpg', 'https://www.toynamishop.com/product_images/w/706/10822903_hi__81052__86046.jpg', 'products', 'Tulipop Blind Boxes Figure with Diorama', 'Tulipop Blind Boxes Figure with Diorama', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('2020903f-65e5-452a-a9d9-129a4d5319b2', '10822903_av2__89097__04392.jpg', '10822903_av2__89097__04392.jpg', 'product_images/10822903_av2__89097__04392.jpg', 'https://www.toynamishop.com/product_images/u/353/10822903_av2__89097__04392.jpg', 'products', 'Tulipop Blind Boxes Figure with Diorama', 'Tulipop Blind Boxes Figure with Diorama', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('fc8dedfb-8ef7-4003-b7c1-b544ddeac76c', 'robotech_new_gen_alpha_t-shirt__78249__43919.jpg', 'robotech_new_gen_alpha_t-shirt__78249__43919.jpg', 'product_images/robotech_new_gen_alpha_t-shirt__78249__43919.jpg', 'https://www.toynamishop.com/product_images/j/716/robotech_new_gen_alpha_t-shirt__78249__43919.jpg', 'products', 'Robotech New Generation Mars Base Alpha Shirt', 'Robotech New Generation Mars Base Alpha Shirt', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('b5988dfb-0d33-485d-b2c8-4e2f4132add5', 'Screenshot_62__88692__70901.png', 'Screenshot_62__88692__70901.png', 'product_images/Screenshot_62__88692__70901.png', 'https://www.toynamishop.com/product_images/o/581/Screenshot_62__88692__70901.png', 'products', 'Robotech New Generation Mars Base Alpha Shirt', 'Robotech New Generation Mars Base Alpha Shirt', 'image/png', 'png', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('5cd63cb9-b906-48a7-bb80-401144bafb8a', 'Screenshot_63__76679__30400.png', 'Screenshot_63__76679__30400.png', 'product_images/Screenshot_63__76679__30400.png', 'https://www.toynamishop.com/product_images/e/964/Screenshot_63__76679__30400.png', 'products', 'Robotech New Generation Mars Base Alpha Shirt', 'Robotech New Generation Mars Base Alpha Shirt', 'image/png', 'png', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('9f28029e-40c2-4636-9ea8-cc3df33deb85', 'Robotech_YR-052F_Cyclone_10__31264__17851.jpg', 'Robotech_YR-052F_Cyclone_10__31264__17851.jpg', 'product_images/Robotech_YR-052F_Cyclone_10__31264__17851.jpg', 'https://www.toynamishop.com/product_images/k/825/Robotech_YR-052F_Cyclone_10__31264__17851.jpg', 'products', 'The New Generation YR-052F Transformable Cyclone', 'The New Generation YR-052F Transformable Cyclone', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('dfbf8286-7a76-4970-96ec-c176dd9b00a3', 'Robotech_YR-052F_Cyclone_02__04086__60242.jpg', 'Robotech_YR-052F_Cyclone_02__04086__60242.jpg', 'product_images/Robotech_YR-052F_Cyclone_02__04086__60242.jpg', 'https://www.toynamishop.com/product_images/v/052/Robotech_YR-052F_Cyclone_02__04086__60242.jpg', 'products', 'The New Generation YR-052F Transformable Cyclone', 'The New Generation YR-052F Transformable Cyclone', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('aa79bf8b-0efa-4133-80e3-bd8a7d31b8cc', 'Robotech_YR-052F_Cyclone_01__46441__34352.jpg', 'Robotech_YR-052F_Cyclone_01__46441__34352.jpg', 'product_images/Robotech_YR-052F_Cyclone_01__46441__34352.jpg', 'https://www.toynamishop.com/product_images/z/366/Robotech_YR-052F_Cyclone_01__46441__34352.jpg', 'products', 'The New Generation YR-052F Transformable Cyclone', 'The New Generation YR-052F Transformable Cyclone', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('9b3bce48-b5e3-4d14-aaec-90a86eb447a5', 'Robotech_YR-052F_Cyclone_09__10054__05470.jpg', 'Robotech_YR-052F_Cyclone_09__10054__05470.jpg', 'product_images/Robotech_YR-052F_Cyclone_09__10054__05470.jpg', 'https://www.toynamishop.com/product_images/n/236/Robotech_YR-052F_Cyclone_09__10054__05470.jpg', 'products', 'The New Generation YR-052F Transformable Cyclone', 'The New Generation YR-052F Transformable Cyclone', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('8a851625-bc71-4c36-a0b9-75f7c4648a59', 'Robotech_YR-052F_Cyclone_08__22526__05019.jpg', 'Robotech_YR-052F_Cyclone_08__22526__05019.jpg', 'product_images/Robotech_YR-052F_Cyclone_08__22526__05019.jpg', 'https://www.toynamishop.com/product_images/q/007/Robotech_YR-052F_Cyclone_08__22526__05019.jpg', 'products', 'The New Generation YR-052F Transformable Cyclone', 'The New Generation YR-052F Transformable Cyclone', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('67a83513-99ea-454d-8665-fe00679aa7bd', 'naruto_shippuden_4inch_Kurama_Link_Mode_05__53795__78605.jpg', 'naruto_shippuden_4inch_Kurama_Link_Mode_05__53795__78605.jpg', 'product_images/naruto_shippuden_4inch_Kurama_Link_Mode_05__53795__78605.jpg', 'https://www.toynamishop.com/product_images/r/891/naruto_shippuden_4inch_Kurama_Link_Mode_05__53795__78605.jpg', 'products', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('cdbf04b5-2610-469b-92f4-35861956ec55', 'naruto_shippuden_4inch_Kurama_Link_Mode_01__60665__19906.jpg', 'naruto_shippuden_4inch_Kurama_Link_Mode_01__60665__19906.jpg', 'product_images/naruto_shippuden_4inch_Kurama_Link_Mode_01__60665__19906.jpg', 'https://www.toynamishop.com/product_images/m/814/naruto_shippuden_4inch_Kurama_Link_Mode_01__60665__19906.jpg', 'products', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('5e695a9b-3514-4f7b-b137-98228ae344dd', 'naruto_shippuden_4inch_Kurama_Link_Mode_04__79179__20118.jpg', 'naruto_shippuden_4inch_Kurama_Link_Mode_04__79179__20118.jpg', 'product_images/naruto_shippuden_4inch_Kurama_Link_Mode_04__79179__20118.jpg', 'https://www.toynamishop.com/product_images/u/906/naruto_shippuden_4inch_Kurama_Link_Mode_04__79179__20118.jpg', 'products', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('6a473267-4332-4b26-b559-128c3decf8da', 'naruto_shippuden_4inch_Kurama_Link_Mode_02__91449__47736.jpg', 'naruto_shippuden_4inch_Kurama_Link_Mode_02__91449__47736.jpg', 'product_images/naruto_shippuden_4inch_Kurama_Link_Mode_02__91449__47736.jpg', 'https://www.toynamishop.com/product_images/r/718/naruto_shippuden_4inch_Kurama_Link_Mode_02__91449__47736.jpg', 'products', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('b1dea252-b288-48d8-82d0-188fefbe0a6a', 'naruto_shippuden_4inch_Kurama_Link_Mode_03__91714__67150.jpg', 'naruto_shippuden_4inch_Kurama_Link_Mode_03__91714__67150.jpg', 'product_images/naruto_shippuden_4inch_Kurama_Link_Mode_03__91714__67150.jpg', 'https://www.toynamishop.com/product_images/a/750/naruto_shippuden_4inch_Kurama_Link_Mode_03__91714__67150.jpg', 'products', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('9b21d395-5658-41ef-a6ed-c5657f623239', 'naruto_shippuden_4inch_Kurama_Link_Mode_06__08633__05120.jpg', 'naruto_shippuden_4inch_Kurama_Link_Mode_06__08633__05120.jpg', 'product_images/naruto_shippuden_4inch_Kurama_Link_Mode_06__08633__05120.jpg', 'https://www.toynamishop.com/product_images/e/530/naruto_shippuden_4inch_Kurama_Link_Mode_06__08633__05120.jpg', 'products', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('71324f1b-59b1-4223-9251-792b5435d3f6', 'MIK-03-order-1__62891__26458.jpg', 'MIK-03-order-1__62891__26458.jpg', 'product_images/MIK-03-order-1__62891__26458.jpg', 'https://www.toynamishop.com/product_images/c/383/MIK-03-order-1__62891__26458.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K03 Tiger Bill', 'Toys Alliance MILLINILLIONS MI-K03 Tiger Bill', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('4b071aa2-175c-46ea-ac4e-7da681606e0e', 'MIK-03-order-4__78002__77812.jpg', 'MIK-03-order-4__78002__77812.jpg', 'product_images/MIK-03-order-4__78002__77812.jpg', 'https://www.toynamishop.com/product_images/v/531/MIK-03-order-4__78002__77812.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K03 Tiger Bill', 'Toys Alliance MILLINILLIONS MI-K03 Tiger Bill', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('75fe3026-2043-41d1-9f5b-a2db06c08d7b', 'MIK-03-order-3__73303__58657.jpg', 'MIK-03-order-3__73303__58657.jpg', 'product_images/MIK-03-order-3__73303__58657.jpg', 'https://www.toynamishop.com/product_images/u/702/MIK-03-order-3__73303__58657.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K03 Tiger Bill', 'Toys Alliance MILLINILLIONS MI-K03 Tiger Bill', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('a0c9587d-9d68-4ea7-87b1-56fa05256b91', 'skelanimal_DotD_mini_plush_kit_01__77227__02595.jpg', 'skelanimal_DotD_mini_plush_kit_01__77227__02595.jpg', 'product_images/skelanimal_DotD_mini_plush_kit_01__77227__02595.jpg', 'https://www.toynamishop.com/product_images/e/885/skelanimal_DotD_mini_plush_kit_01__77227__02595.jpg', 'products', 'Skelanimals Day of the Dead Kit (Cat) Mini Plush', 'Skelanimals Day of the Dead Kit (Cat) Mini Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('453ef54f-ad19-4eff-8da9-3322866b0b36', 'little_nimbus_figurines__08082__17867.jpg', 'little_nimbus_figurines__08082__17867.jpg', 'product_images/little_nimbus_figurines__08082__17867.jpg', 'https://www.toynamishop.com/product_images/o/336/little_nimbus_figurines__08082__17867.jpg', 'products', 'Little Nimbus Blind Box Figurine', 'Little Nimbus Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('00c196be-6688-4972-b224-6a96bc268fa5', '10822905_av2__10799__77191.jpg', '10822905_av2__10799__77191.jpg', 'product_images/10822905_av2__10799__77191.jpg', 'https://www.toynamishop.com/product_images/z/585/10822905_av2__10799__77191.jpg', 'products', 'Sonic x Sanrio Blind Box Figure', 'Sonic x Sanrio Blind Box Figure', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('f1febeea-cf88-4311-a3c1-c86e55d9867c', '10822905_hi__38370__36548.jpg', '10822905_hi__38370__36548.jpg', 'product_images/10822905_hi__38370__36548.jpg', 'https://www.toynamishop.com/product_images/i/810/10822905_hi__38370__36548.jpg', 'products', 'Sonic x Sanrio Blind Box Figure', 'Sonic x Sanrio Blind Box Figure', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('203e8c29-321b-4e62-9df9-b4809212be7c', 'Legioss_Typ_AFC-01I_1__90557__00068.jpg', 'Legioss_Typ_AFC-01I_1__90557__00068.jpg', 'product_images/Legioss_Typ_AFC-01I_1__90557__00068.jpg', 'https://www.toynamishop.com/product_images/y/091/Legioss_Typ_AFC-01I_1__90557__00068.jpg', 'products', 'Mospeada Legioss AFC-01I (Green)', 'Mospeada Legioss AFC-01I (Green)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('3156cb3b-26f3-44d2-8288-71f3aa553b0b', 'Legioss_Typ_AFC-01I_2__95653__99953.jpg', 'Legioss_Typ_AFC-01I_2__95653__99953.jpg', 'product_images/Legioss_Typ_AFC-01I_2__95653__99953.jpg', 'https://www.toynamishop.com/product_images/s/252/Legioss_Typ_AFC-01I_2__95653__99953.jpg', 'products', 'Mospeada Legioss AFC-01I (Green)', 'Mospeada Legioss AFC-01I (Green)', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('5a146ca2-4750-4b25-8454-704dbdaf5783', 'Legioss_Typ_AFC-01I_5__66878__96505.jpg', 'Legioss_Typ_AFC-01I_5__66878__96505.jpg', 'product_images/Legioss_Typ_AFC-01I_5__66878__96505.jpg', 'https://www.toynamishop.com/product_images/q/997/Legioss_Typ_AFC-01I_5__66878__96505.jpg', 'products', 'Mospeada Legioss AFC-01I (Green)', 'Mospeada Legioss AFC-01I (Green)', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('8cb705f9-6c4e-4102-8d0f-a6f36e21c808', 'KAHEN_LEGIOSS_TYPE-JOTA_02__03862__00983.jpg', 'KAHEN_LEGIOSS_TYPE-JOTA_02__03862__00983.jpg', 'product_images/KAHEN_LEGIOSS_TYPE-JOTA_02__03862__00983.jpg', 'https://www.toynamishop.com/product_images/a/542/KAHEN_LEGIOSS_TYPE-JOTA_02__03862__00983.jpg', 'products', 'Mospeada Legioss AFC-01I (Green)', 'Mospeada Legioss AFC-01I (Green)', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('e440386a-5591-47cb-b98f-0fe1f61a3b71', 'FAV-A-03-PIC-6__64585__24724.jpg', 'FAV-A-03-PIC-6__64585__24724.jpg', 'product_images/FAV-A-03-PIC-6__64585__24724.jpg', 'https://www.toynamishop.com/product_images/n/800/FAV-A-03-PIC-6__64585__24724.jpg', 'products', 'Acid Rain Field Wildebeest WB3f', 'Acid Rain Field Wildebeest WB3f', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('12eb4abe-986e-49a5-9123-a1b0452ab6e6', 'FAV-A-03-PIC-3__20380__16029.jpg', 'FAV-A-03-PIC-3__20380__16029.jpg', 'product_images/FAV-A-03-PIC-3__20380__16029.jpg', 'https://www.toynamishop.com/product_images/c/016/FAV-A-03-PIC-3__20380__16029.jpg', 'products', 'Acid Rain Field Wildebeest WB3f', 'Acid Rain Field Wildebeest WB3f', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('2469df26-49fa-45fd-8cef-3ba530cd0e2c', 'FAV-A-03-PIC-5__51148__70316.jpg', 'FAV-A-03-PIC-5__51148__70316.jpg', 'product_images/FAV-A-03-PIC-5__51148__70316.jpg', 'https://www.toynamishop.com/product_images/h/435/FAV-A-03-PIC-5__51148__70316.jpg', 'products', 'Acid Rain Field Wildebeest WB3f', 'Acid Rain Field Wildebeest WB3f', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('023e19df-444a-442a-8e57-9a580daf86ff', 'MACROSS_shogun_warriors_VF-1S__29967__70625.jpg', 'MACROSS_shogun_warriors_VF-1S__29967__70625.jpg', 'product_images/MACROSS_shogun_warriors_VF-1S__29967__70625.jpg', 'https://www.toynamishop.com/product_images/g/412/MACROSS_shogun_warriors_VF-1S__29967__70625.jpg', 'products', 'Macross Skull Leader Shogun Warrior VF-1S SDCC 2023 Exclusive', 'Macross Skull Leader Shogun Warrior VF-1S SDCC 2023 Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('a94c761b-fbef-4456-9583-34c45863d5c2', 'MACROSS_shogun_warriors_VF-1S_01__36854__72075.jpg', 'MACROSS_shogun_warriors_VF-1S_01__36854__72075.jpg', 'product_images/MACROSS_shogun_warriors_VF-1S_01__36854__72075.jpg', 'https://www.toynamishop.com/product_images/e/625/MACROSS_shogun_warriors_VF-1S_01__36854__72075.jpg', 'products', 'Macross Skull Leader Shogun Warrior VF-1S SDCC 2023 Exclusive', 'Macross Skull Leader Shogun Warrior VF-1S SDCC 2023 Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('a8c480f5-e7dc-4355-9961-75a0523cdade', 'MACROSS_shogun_warriors_VF-1S_02__55825__75476.jpg', 'MACROSS_shogun_warriors_VF-1S_02__55825__75476.jpg', 'product_images/MACROSS_shogun_warriors_VF-1S_02__55825__75476.jpg', 'https://www.toynamishop.com/product_images/l/818/MACROSS_shogun_warriors_VF-1S_02__55825__75476.jpg', 'products', 'Macross Skull Leader Shogun Warrior VF-1S SDCC 2023 Exclusive', 'Macross Skull Leader Shogun Warrior VF-1S SDCC 2023 Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('90d2dc57-51a5-4355-a2c0-8937bf585f8b', 'MACROSS_shogun-warriors_VF-1S_03__39202__62553.jpg', 'MACROSS_shogun-warriors_VF-1S_03__39202__62553.jpg', 'product_images/MACROSS_shogun-warriors_VF-1S_03__39202__62553.jpg', 'https://www.toynamishop.com/product_images/v/976/MACROSS_shogun-warriors_VF-1S_03__39202__62553.jpg', 'products', 'Macross Skull Leader Shogun Warrior VF-1S SDCC 2023 Exclusive', 'Macross Skull Leader Shogun Warrior VF-1S SDCC 2023 Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('9ea5f3c0-b8e3-4256-9add-a9270f5d6ceb', 'rick-hunter_battloid_01__19590__50822.jpg', 'rick-hunter_battloid_01__19590__50822.jpg', 'product_images/rick-hunter_battloid_01__19590__50822.jpg', 'https://www.toynamishop.com/product_images/o/204/rick-hunter_battloid_01__19590__50822.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - RICK HUNTER VOLUME 1', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - RICK HUNTER VOLUME 1', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('1a4bd230-061d-444c-8794-f016952963e9', 'micronian_rick_hunter_fighter_01__93909__90360.jpg', 'micronian_rick_hunter_fighter_01__93909__90360.jpg', 'product_images/micronian_rick_hunter_fighter_01__93909__90360.jpg', 'https://www.toynamishop.com/product_images/z/614/micronian_rick_hunter_fighter_01__93909__90360.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - RICK HUNTER VOLUME 1', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - RICK HUNTER VOLUME 1', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('791191d4-fe53-4ba7-977b-bd3a2244d5c3', 'micronian_rick_hunter_guardian_01__43564__63319.jpg', 'micronian_rick_hunter_guardian_01__43564__63319.jpg', 'product_images/micronian_rick_hunter_guardian_01__43564__63319.jpg', 'https://www.toynamishop.com/product_images/r/425/micronian_rick_hunter_guardian_01__43564__63319.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - RICK HUNTER VOLUME 1', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - RICK HUNTER VOLUME 1', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('f5a58128-dfbe-410c-8489-48a07f74e02c', 'ROBOTECH_MICRONIAN-PILOTS_VOL1_RICK-HUNTER__05571__57439.jpg', 'ROBOTECH_MICRONIAN-PILOTS_VOL1_RICK-HUNTER__05571__57439.jpg', 'product_images/ROBOTECH_MICRONIAN-PILOTS_VOL1_RICK-HUNTER__05571__57439.jpg', 'https://www.toynamishop.com/product_images/r/943/ROBOTECH_MICRONIAN-PILOTS_VOL1_RICK-HUNTER__05571__57439.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - RICK HUNTER VOLUME 1', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - RICK HUNTER VOLUME 1', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('92e6c665-df7a-460c-bbd4-3b0dea1975a2', 'chaple6__15237__75246.jpg', 'chaple6__15237__75246.jpg', 'product_images/chaple6__15237__75246.jpg', 'https://www.toynamishop.com/product_images/x/348/chaple6__15237__75246.jpg', 'products', 'B2Five K6 Jungle Chapel HTT600k', 'B2Five K6 Jungle Chapel HTT600k', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('ed4b93e0-c1bf-4aab-9877-a233f55ad437', 'chaple10__27438__96976.jpg', 'chaple10__27438__96976.jpg', 'product_images/chaple10__27438__96976.jpg', 'https://www.toynamishop.com/product_images/p/097/chaple10__27438__96976.jpg', 'products', 'B2Five K6 Jungle Chapel HTT600k', 'B2Five K6 Jungle Chapel HTT600k', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('0a9bac1b-10f0-487b-a76b-4356eb5d8684', 'chaple4__32401__91259.jpg', 'chaple4__32401__91259.jpg', 'product_images/chaple4__32401__91259.jpg', 'https://www.toynamishop.com/product_images/p/386/chaple4__32401__91259.jpg', 'products', 'B2Five K6 Jungle Chapel HTT600k', 'B2Five K6 Jungle Chapel HTT600k', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('0f94bc60-0865-4936-8ac6-9fc780f7b77a', 'chaple5__75677__73328.jpg', 'chaple5__75677__73328.jpg', 'product_images/chaple5__75677__73328.jpg', 'https://www.toynamishop.com/product_images/p/081/chaple5__75677__73328.jpg', 'products', 'B2Five K6 Jungle Chapel HTT600k', 'B2Five K6 Jungle Chapel HTT600k', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('0ae0a3a8-a82f-4c8c-be71-2c756cef2d5a', 'chaple8__41425__27394.jpg', 'chaple8__41425__27394.jpg', 'product_images/chaple8__41425__27394.jpg', 'https://www.toynamishop.com/product_images/d/978/chaple8__41425__27394.jpg', 'products', 'B2Five K6 Jungle Chapel HTT600k', 'B2Five K6 Jungle Chapel HTT600k', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('c32dbb4d-ceba-4ffe-908a-5dc89b7af082', 'futurama_plush_robot_devil_01__69006__39231.jpg', 'futurama_plush_robot_devil_01__69006__39231.jpg', 'product_images/futurama_plush_robot_devil_01__69006__39231.jpg', 'https://www.toynamishop.com/product_images/c/859/futurama_plush_robot_devil_01__69006__39231.jpg', 'products', 'SDCC 2011 Exclusive: Futurama Robot Devil Plush', 'SDCC 2011 Exclusive: Futurama Robot Devil Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('8330b2a4-92e7-44c5-8b5c-f4621d40ffe9', 'skelanimal_DotD_mini_plush_diego_01__33637__09069.jpg', 'skelanimal_DotD_mini_plush_diego_01__33637__09069.jpg', 'product_images/skelanimal_DotD_mini_plush_diego_01__33637__09069.jpg', 'https://www.toynamishop.com/product_images/y/966/skelanimal_DotD_mini_plush_diego_01__33637__09069.jpg', 'products', 'Skelanimals Day of the Dead Diego (Bat) Mini Plush', 'Skelanimals Day of the Dead Diego (Bat) Mini Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('481b18b6-1f95-4962-ad02-a29ff26f9a35', 'Toynami-07_little_burnt_embers__83909__40297.jpg', 'Toynami-07_little_burnt_embers__83909__40297.jpg', 'product_images/Toynami-07_little_burnt_embers__83909__40297.jpg', 'https://www.toynamishop.com/product_images/r/004/Toynami-07_little_burnt_embers__83909__40297.jpg', 'products', 'Little Burnt Embers', 'Little Burnt Embers', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('6018c338-d1bf-449f-ae61-0a6e8dca86a3', 'macross_roy-focker_valkyrie__38255__21243.jpg', 'macross_roy-focker_valkyrie__38255__21243.jpg', 'product_images/macross_roy-focker_valkyrie__38255__21243.jpg', 'https://www.toynamishop.com/product_images/f/655/macross_roy-focker_valkyrie__38255__21243.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1S Roy Focker Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1S Roy Focker Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('4938b828-5b44-4266-b618-ceaf7eae7dd1', 'macross_roy-focker_valkyrie_01__09489__62367.jpg', 'macross_roy-focker_valkyrie_01__09489__62367.jpg', 'product_images/macross_roy-focker_valkyrie_01__09489__62367.jpg', 'https://www.toynamishop.com/product_images/p/061/macross_roy-focker_valkyrie_01__09489__62367.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1S Roy Focker Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1S Roy Focker Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('64d7adb5-a95a-4ede-a9b0-4ed924153b79', 'macross_roy-focker_valkyrie_03__29028__11614.jpg', 'macross_roy-focker_valkyrie_03__29028__11614.jpg', 'product_images/macross_roy-focker_valkyrie_03__29028__11614.jpg', 'https://www.toynamishop.com/product_images/g/247/macross_roy-focker_valkyrie_03__29028__11614.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1S Roy Focker Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1S Roy Focker Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('f1d99916-c4ed-423f-aa24-a0b4d7dc056e', 'macross_roy-focker_valkyrie_04__68017__38860.jpg', 'macross_roy-focker_valkyrie_04__68017__38860.jpg', 'product_images/macross_roy-focker_valkyrie_04__68017__38860.jpg', 'https://www.toynamishop.com/product_images/t/577/macross_roy-focker_valkyrie_04__68017__38860.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1S Roy Focker Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1S Roy Focker Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('23b647e4-94de-42ff-a956-205ef11a52df', 'macross_roy-focker_valkyrie_02__45742__51922.jpg', 'macross_roy-focker_valkyrie_02__45742__51922.jpg', 'product_images/macross_roy-focker_valkyrie_02__45742__51922.jpg', 'https://www.toynamishop.com/product_images/x/058/macross_roy-focker_valkyrie_02__45742__51922.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1S Roy Focker Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1S Roy Focker Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('88ee581e-e1e6-4d05-bb82-8a2264ace43b', 'LIttle_Embers_Enamel_pins__74447__90426.jpg', 'LIttle_Embers_Enamel_pins__74447__90426.jpg', 'product_images/LIttle_Embers_Enamel_pins__74447__90426.jpg', 'https://www.toynamishop.com/product_images/y/261/LIttle_Embers_Enamel_pins__74447__90426.jpg', 'products', 'Little Embers Blind Box Enamel Pin', 'Little Embers Blind Box Enamel Pin', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('d2ac9adc-9acd-400b-9013-9f7b8dd13126', 'MIK-04-order-1__31815__37669.jpg', 'MIK-04-order-1__31815__37669.jpg', 'product_images/MIK-04-order-1__31815__37669.jpg', 'https://www.toynamishop.com/product_images/c/924/MIK-04-order-1__31815__37669.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K04 Ryukin', 'Toys Alliance MILLINILLIONS MI-K04 Ryukin', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('6139c42d-1562-4c8b-8912-db832050a309', 'MIK-04-order-4__90189__62570.jpg', 'MIK-04-order-4__90189__62570.jpg', 'product_images/MIK-04-order-4__90189__62570.jpg', 'https://www.toynamishop.com/product_images/a/399/MIK-04-order-4__90189__62570.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K04 Ryukin', 'Toys Alliance MILLINILLIONS MI-K04 Ryukin', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('aaa9151d-3d31-478a-9c7d-036a76d14018', 'MIK-04-order-3__14031__24058.jpg', 'MIK-04-order-3__14031__24058.jpg', 'product_images/MIK-04-order-3__14031__24058.jpg', 'https://www.toynamishop.com/product_images/t/943/MIK-04-order-3__14031__24058.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K04 Ryukin', 'Toys Alliance MILLINILLIONS MI-K04 Ryukin', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('4f07e71d-5102-4a84-a5fa-d9cfc8ebb904', 'Sonic_x_Hello_Kitty__07518__27900.jpg', 'Sonic_x_Hello_Kitty__07518__27900.jpg', 'product_images/Sonic_x_Hello_Kitty__07518__27900.jpg', 'https://www.toynamishop.com/product_images/v/563/Sonic_x_Hello_Kitty__07518__27900.jpg', 'products', 'Sonic x Hello Kitty 10 inch Deluxe Plush', 'Sonic x Hello Kitty 10 inch Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('839a263b-eb07-40ff-8437-ba52a80c1fe9', '11064189_hi__70009__22939.jpg', '11064189_hi__70009__22939.jpg', 'product_images/11064189_hi__70009__22939.jpg', 'https://www.toynamishop.com/product_images/a/146/11064189_hi__70009__22939.jpg', 'products', 'Sonic x Hello Kitty 10 inch Deluxe Plush', 'Sonic x Hello Kitty 10 inch Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('28c22fe7-69a4-4d7e-ab29-601a281a9513', 'Picture1__63958__48423.jpg', 'Picture1__63958__48423.jpg', 'product_images/Picture1__63958__48423.jpg', 'https://www.toynamishop.com/product_images/n/462/Picture1__63958__48423.jpg', 'products', 'Little BURNT Embers Series 2 Blind Box Figurine', 'Little BURNT Embers Series 2 Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('6ea99078-d6b7-4fa3-b37d-ef13450e2f3d', 'little_burnt_embers_s2_16__94058__62565.jpg', 'little_burnt_embers_s2_16__94058__62565.jpg', 'product_images/little_burnt_embers_s2_16__94058__62565.jpg', 'https://www.toynamishop.com/product_images/x/669/little_burnt_embers_s2_16__94058__62565.jpg', 'products', 'Little BURNT Embers Series 2 Blind Box Figurine', 'Little BURNT Embers Series 2 Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('61b6de81-61ac-4d46-b104-0b831a0ad367', 'little_burnt_embers_s2_15__06984__27743.jpg', 'little_burnt_embers_s2_15__06984__27743.jpg', 'product_images/little_burnt_embers_s2_15__06984__27743.jpg', 'https://www.toynamishop.com/product_images/b/331/little_burnt_embers_s2_15__06984__27743.jpg', 'products', 'Little BURNT Embers Series 2 Blind Box Figurine', 'Little BURNT Embers Series 2 Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('2ba856c0-ff9f-4772-8a0f-18d4d47184e9', 'skelanimal_DotD_mini_plush_maxx_01__04251__29854.jpg', 'skelanimal_DotD_mini_plush_maxx_01__04251__29854.jpg', 'product_images/skelanimal_DotD_mini_plush_maxx_01__04251__29854.jpg', 'https://www.toynamishop.com/product_images/a/201/skelanimal_DotD_mini_plush_maxx_01__04251__29854.jpg', 'products', 'Skelanimals Day of the Dead Maxx (Bulldog) Mini Plush', 'Skelanimals Day of the Dead Maxx (Bulldog) Mini Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('92e014d7-b39a-4036-b5b5-ee12400b507b', 'macross_zentradibattlepod_07__33599__18849.jpg', 'macross_zentradibattlepod_07__33599__18849.jpg', 'product_images/macross_zentradibattlepod_07__33599__18849.jpg', 'https://www.toynamishop.com/product_images/k/766/macross_zentradibattlepod_07__33599__18849.jpg', 'products', '2010 SDCC Exclusive: Macross Vinyl Figure Zentradi (Regault) Tactical Battlepod', '2010 SDCC Exclusive: Macross Vinyl Figure Zentradi (Regault) Tactical Battlepod', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('1de8492e-147c-4d36-bd1a-27969f874203', 'macross_zentradibattlepod_08__85241__13665.jpg', 'macross_zentradibattlepod_08__85241__13665.jpg', 'product_images/macross_zentradibattlepod_08__85241__13665.jpg', 'https://www.toynamishop.com/product_images/k/340/macross_zentradibattlepod_08__85241__13665.jpg', 'products', '2010 SDCC Exclusive: Macross Vinyl Figure Zentradi (Regault) Tactical Battlepod', '2010 SDCC Exclusive: Macross Vinyl Figure Zentradi (Regault) Tactical Battlepod', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('b6210ef3-cc7f-474b-a7d0-43be239b6d22', 'macross_zentradibattlepod_09__89701__32069.jpg', 'macross_zentradibattlepod_09__89701__32069.jpg', 'product_images/macross_zentradibattlepod_09__89701__32069.jpg', 'https://www.toynamishop.com/product_images/j/329/macross_zentradibattlepod_09__89701__32069.jpg', 'products', '2010 SDCC Exclusive: Macross Vinyl Figure Zentradi (Regault) Tactical Battlepod', '2010 SDCC Exclusive: Macross Vinyl Figure Zentradi (Regault) Tactical Battlepod', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('a5503003-544a-4580-8478-9c4f12a39f4d', 'LIttle_Embers_Rubber-Keychains__92542__52816.jpg', 'LIttle_Embers_Rubber-Keychains__92542__52816.jpg', 'product_images/LIttle_Embers_Rubber-Keychains__92542__52816.jpg', 'https://www.toynamishop.com/product_images/r/358/LIttle_Embers_Rubber-Keychains__92542__52816.jpg', 'products', 'Little Embers Figure Keychain', 'Little Embers Figure Keychain', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('550092aa-bf4d-42a1-9703-cb657446f1c0', 'Macross_VF-1J_t-shirt__07461__30855.jpg', 'Macross_VF-1J_t-shirt__07461__30855.jpg', 'product_images/Macross_VF-1J_t-shirt__07461__30855.jpg', 'https://www.toynamishop.com/product_images/s/250/Macross_VF-1J_t-shirt__07461__30855.jpg', 'products', 'Macross VF-1J Vermilion Squad Shirt', 'Macross VF-1J Vermilion Squad Shirt', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('b9ad9b42-13d4-404a-9600-b1ebede6524f', 'robotech_T-Shirts_2022-01__07702__26120.jpg', 'robotech_T-Shirts_2022-01__07702__26120.jpg', 'product_images/robotech_T-Shirts_2022-01__07702__26120.jpg', 'https://www.toynamishop.com/product_images/f/882/robotech_T-Shirts_2022-01__07702__26120.jpg', 'products', 'Macross VF-1J Vermilion Squad Shirt', 'Macross VF-1J Vermilion Squad Shirt', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('c2284b01-3509-41f4-bad2-063bce0cc952', 'Screenshot_62__36252__76080.png', 'Screenshot_62__36252__76080.png', 'product_images/Screenshot_62__36252__76080.png', 'https://www.toynamishop.com/product_images/n/644/Screenshot_62__36252__76080.png', 'products', 'Macross VF-1J Vermilion Squad Shirt', 'Macross VF-1J Vermilion Squad Shirt', 'image/png', 'png', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('c82939e0-3362-44c7-bb17-03e8ea5bf7d5', 'Screenshot_63__34480__79138.png', 'Screenshot_63__34480__79138.png', 'product_images/Screenshot_63__34480__79138.png', 'https://www.toynamishop.com/product_images/k/087/Screenshot_63__34480__79138.png', 'products', 'Macross VF-1J Vermilion Squad Shirt', 'Macross VF-1J Vermilion Squad Shirt', 'image/png', 'png', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('1de45843-a021-48b5-9e3d-faea72800743', '2__16715__96825.jpg', '2__16715__96825.jpg', 'product_images/2__16715__96825.jpg', 'https://www.toynamishop.com/product_images/j/981/2__16715__96825.jpg', 'products', 'B2Five Moose Laurel LA3b', 'B2Five Moose Laurel LA3b', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('c00fa6bb-178c-462e-b498-64bf5d26f426', '12__52196__53629.jpg', '12__52196__53629.jpg', 'product_images/12__52196__53629.jpg', 'https://www.toynamishop.com/product_images/k/046/12__52196__53629.jpg', 'products', 'B2Five Moose Laurel LA3b', 'B2Five Moose Laurel LA3b', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('cfe53803-199a-4277-a181-eb6ba02bd073', '13__83325__91855.jpg', '13__83325__91855.jpg', 'product_images/13__83325__91855.jpg', 'https://www.toynamishop.com/product_images/h/001/13__83325__91855.jpg', 'products', 'B2Five Moose Laurel LA3b', 'B2Five Moose Laurel LA3b', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('fce93429-c8cf-4412-8e94-e4e4849b54b9', 'all_parts__45705__83041.jpg', 'all_parts__45705__83041.jpg', 'product_images/all_parts__45705__83041.jpg', 'https://www.toynamishop.com/product_images/f/523/all_parts__45705__83041.jpg', 'products', 'B2Five Moose Laurel LA3b', 'B2Five Moose Laurel LA3b', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('361eea67-e746-48ec-8b84-3c3c0f65e799', 'CA72RB0708-1__62958__32719.jpg', 'CA72RB0708-1__62958__32719.jpg', 'product_images/CA72RB0708-1__62958__32719.jpg', 'https://www.toynamishop.com/product_images/i/025/CA72RB0708-1__62958__32719.jpg', 'products', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('d08b29a8-273a-4533-b60d-3f89c4bec9b2', 'CA72RB0708-2__07423__66655.jpg', 'CA72RB0708-2__07423__66655.jpg', 'product_images/CA72RB0708-2__07423__66655.jpg', 'https://www.toynamishop.com/product_images/f/458/CA72RB0708-2__07423__66655.jpg', 'products', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('a04ffbcd-7eb3-4802-940c-03651ed50c0b', 'P1011814__52385__20301.jpg', 'P1011814__52385__20301.jpg', 'product_images/P1011814__52385__20301.jpg', 'https://www.toynamishop.com/product_images/q/580/P1011814__52385__20301.jpg', 'products', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('ec8fc318-4f2e-4805-9043-12556910c93b', 'P1011811__15034__48898.jpg', 'P1011811__15034__48898.jpg', 'product_images/P1011811__15034__48898.jpg', 'https://www.toynamishop.com/product_images/g/268/P1011811__15034__48898.jpg', 'products', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('a7e9592c-6222-4cd7-b12c-e4773170d755', 'P1011819__16943__21443.jpg', 'P1011819__16943__21443.jpg', 'product_images/P1011819__16943__21443.jpg', 'https://www.toynamishop.com/product_images/h/997/P1011819__16943__21443.jpg', 'products', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('58ba6d67-2bc8-4e96-9532-432db060f51f', 'P1011812__44985__97876.jpg', 'P1011812__44985__97876.jpg', 'product_images/P1011812__44985__97876.jpg', 'https://www.toynamishop.com/product_images/f/657/P1011812__44985__97876.jpg', 'products', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('efe7c805-a035-4288-a45c-7bbd94c6aa7b', 'P1011815__61247__65305.jpg', 'P1011815__61247__65305.jpg', 'product_images/P1011815__61247__65305.jpg', 'https://www.toynamishop.com/product_images/z/918/P1011815__61247__65305.jpg', 'products', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('0c7a1204-b8ed-4c06-a8a8-eb23b84167cb', 'skelanimal_DotD_mini_plush_jae_01__86611__99741.jpg', 'skelanimal_DotD_mini_plush_jae_01__86611__99741.jpg', 'product_images/skelanimal_DotD_mini_plush_jae_01__86611__99741.jpg', 'https://www.toynamishop.com/product_images/e/463/skelanimal_DotD_mini_plush_jae_01__86611__99741.jpg', 'products', 'Skelanimals Day of the Dead Jae (Wolf) Mini Plush', 'Skelanimals Day of the Dead Jae (Wolf) Mini Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('741f591b-1bbd-4c6b-8211-ac2d1803685c', 'Phantom-Team-A__55592__88869.jpg', 'Phantom-Team-A__55592__88869.jpg', 'product_images/Phantom-Team-A__55592__88869.jpg', 'https://www.toynamishop.com/product_images/m/570/Phantom-Team-A__55592__88869.jpg', 'products', 'Acid Rain Phantom Team A - [Mirage + Eclipse]', 'Acid Rain Phantom Team A - [Mirage + Eclipse]', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('9db06b1a-52d6-4850-be42-49fb1efcfdc6', 'IMG_0001__63115__49788.JPG', 'IMG_0001__63115__49788.JPG', 'product_images/IMG_0001__63115__49788.JPG', 'https://www.toynamishop.com/product_images/k/941/IMG_0001__63115__49788.JPG', 'products', 'Acid Rain Phantom Team A - [Mirage + Eclipse]', 'Acid Rain Phantom Team A - [Mirage + Eclipse]', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('b51f4654-c217-4693-88b7-4dff7fe1014e', 'IMG_0002__41085__71303.JPG', 'IMG_0002__41085__71303.JPG', 'product_images/IMG_0002__41085__71303.JPG', 'https://www.toynamishop.com/product_images/u/292/IMG_0002__41085__71303.JPG', 'products', 'Acid Rain Phantom Team A - [Mirage + Eclipse]', 'Acid Rain Phantom Team A - [Mirage + Eclipse]', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('1420cbf1-dbe1-446b-99a8-a85c8a25475e', 'IMG_0003__50833__47621.JPG', 'IMG_0003__50833__47621.JPG', 'product_images/IMG_0003__50833__47621.JPG', 'https://www.toynamishop.com/product_images/k/938/IMG_0003__50833__47621.JPG', 'products', 'Acid Rain Phantom Team A - [Mirage + Eclipse]', 'Acid Rain Phantom Team A - [Mirage + Eclipse]', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('d6c1d15b-a734-471b-91b5-b8a8ebc109d4', 'IMG_0020__73783__73746.JPG', 'IMG_0020__73783__73746.JPG', 'product_images/IMG_0020__73783__73746.JPG', 'https://www.toynamishop.com/product_images/g/048/IMG_0020__73783__73746.JPG', 'products', 'Acid Rain Phantom Team A - [Mirage + Eclipse]', 'Acid Rain Phantom Team A - [Mirage + Eclipse]', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('4cd11967-0823-4c30-81d9-12d9431bff6c', 'voltron_40th_anniversary_18__18028__57272.jpg', 'voltron_40th_anniversary_18__18028__57272.jpg', 'product_images/voltron_40th_anniversary_18__18028__57272.jpg', 'https://www.toynamishop.com/product_images/v/597/voltron_40th_anniversary_18__18028__57272.jpg', 'products', 'Voltron 40th Anniversary Collectors Set', 'Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('c3e23e8f-fc24-42fa-b263-86289a28b8ab', 'voltron_40th_anniversary_19__69666__73340.jpg', 'voltron_40th_anniversary_19__69666__73340.jpg', 'product_images/voltron_40th_anniversary_19__69666__73340.jpg', 'https://www.toynamishop.com/product_images/v/061/voltron_40th_anniversary_19__69666__73340.jpg', 'products', 'Voltron 40th Anniversary Collectors Set', 'Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('f53f8e75-028e-4c26-af0e-ee363ce23ecb', 'voltron_40th_anniversary_20__51761__13869.jpg', 'voltron_40th_anniversary_20__51761__13869.jpg', 'product_images/voltron_40th_anniversary_20__51761__13869.jpg', 'https://www.toynamishop.com/product_images/o/212/voltron_40th_anniversary_20__51761__13869.jpg', 'products', 'Voltron 40th Anniversary Collectors Set', 'Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('f790fc54-f6b4-4205-a381-b5b4e4632228', 'voltron_40th_anniversary_07__33112__70363.jpg', 'voltron_40th_anniversary_07__33112__70363.jpg', 'product_images/voltron_40th_anniversary_07__33112__70363.jpg', 'https://www.toynamishop.com/product_images/j/725/voltron_40th_anniversary_07__33112__70363.jpg', 'products', 'Voltron 40th Anniversary Collectors Set', 'Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('42cb476f-0ae9-4f5c-8de1-7aa6ff17d5d9', 'voltron_40th_anniversary_06__56863__85204.jpg', 'voltron_40th_anniversary_06__56863__85204.jpg', 'product_images/voltron_40th_anniversary_06__56863__85204.jpg', 'https://www.toynamishop.com/product_images/y/454/voltron_40th_anniversary_06__56863__85204.jpg', 'products', 'Voltron 40th Anniversary Collectors Set', 'Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('ae18351f-b75b-49ac-9ff2-c539726915bd', 'voltron_40th_anniversary_22__88122__38267.jpg', 'voltron_40th_anniversary_22__88122__38267.jpg', 'product_images/voltron_40th_anniversary_22__88122__38267.jpg', 'https://www.toynamishop.com/product_images/b/506/voltron_40th_anniversary_22__88122__38267.jpg', 'products', 'Voltron 40th Anniversary Collectors Set', 'Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('93d361b5-69f4-4574-b82f-58ca3d3753a6', 'voltron_40th_anniversary_23__76514__64085.jpg', 'voltron_40th_anniversary_23__76514__64085.jpg', 'product_images/voltron_40th_anniversary_23__76514__64085.jpg', 'https://www.toynamishop.com/product_images/r/373/voltron_40th_anniversary_23__76514__64085.jpg', 'products', 'Voltron 40th Anniversary Collectors Set', 'Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('129c71e9-028f-4043-a3b4-5ba95ebb2f1b', 'voltron_40th_anniversary_21__64645__50461.jpg', 'voltron_40th_anniversary_21__64645__50461.jpg', 'product_images/voltron_40th_anniversary_21__64645__50461.jpg', 'https://www.toynamishop.com/product_images/e/033/voltron_40th_anniversary_21__64645__50461.jpg', 'products', 'Voltron 40th Anniversary Collectors Set', 'Voltron 40th Anniversary Collectors Set', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('92bf2ad6-a178-4c50-81df-c4a2c38acdd8', 'MIK-05-order-1__26289__44112.jpg', 'MIK-05-order-1__26289__44112.jpg', 'product_images/MIK-05-order-1__26289__44112.jpg', 'https://www.toynamishop.com/product_images/m/893/MIK-05-order-1__26289__44112.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K05 Rainbow Yume', 'Toys Alliance MILLINILLIONS MI-K05 Rainbow Yume', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('dc780662-4bd1-4ee0-abdf-7c963cb6a0f8', 'MIK-05-order-4__16738__27061.jpg', 'MIK-05-order-4__16738__27061.jpg', 'product_images/MIK-05-order-4__16738__27061.jpg', 'https://www.toynamishop.com/product_images/y/472/MIK-05-order-4__16738__27061.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K05 Rainbow Yume', 'Toys Alliance MILLINILLIONS MI-K05 Rainbow Yume', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('962969f6-03ff-443f-bb2b-fc546f338ada', 'MIK-05-order-3__31845__32512.jpg', 'MIK-05-order-3__31845__32512.jpg', 'product_images/MIK-05-order-3__31845__32512.jpg', 'https://www.toynamishop.com/product_images/h/294/MIK-05-order-3__31845__32512.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K05 Rainbow Yume', 'Toys Alliance MILLINILLIONS MI-K05 Rainbow Yume', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('f2cd04c2-528a-4077-934b-8ebfcb112b91', 'micronian_ben_dixon_battloid_01__46483__16642.jpg', 'micronian_ben_dixon_battloid_01__46483__16642.jpg', 'product_images/micronian_ben_dixon_battloid_01__46483__16642.jpg', 'https://www.toynamishop.com/product_images/x/101/micronian_ben_dixon_battloid_01__46483__16642.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - BEN DIXON VOLUME 2', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - BEN DIXON VOLUME 2', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('38114988-1e5f-494b-9439-e1ce2268bf01', 'micronian_ben_dixon_fighter_01__70389__04653.jpg', 'micronian_ben_dixon_fighter_01__70389__04653.jpg', 'product_images/micronian_ben_dixon_fighter_01__70389__04653.jpg', 'https://www.toynamishop.com/product_images/l/840/micronian_ben_dixon_fighter_01__70389__04653.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - BEN DIXON VOLUME 2', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - BEN DIXON VOLUME 2', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('8bc64f18-4772-4082-a7aa-4dd1d7419224', 'micronian_ben_dixon_guardian_01__10520__93052.jpg', 'micronian_ben_dixon_guardian_01__10520__93052.jpg', 'product_images/micronian_ben_dixon_guardian_01__10520__93052.jpg', 'https://www.toynamishop.com/product_images/u/711/micronian_ben_dixon_guardian_01__10520__93052.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - BEN DIXON VOLUME 2', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - BEN DIXON VOLUME 2', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('9ed04a1d-8a83-47a2-ab6c-c2410772a937', 'ROBOTECH_MICRONIAN-PILOTS_VOL2_BEN-DIXON-1__94517__71691.jpg', 'ROBOTECH_MICRONIAN-PILOTS_VOL2_BEN-DIXON-1__94517__71691.jpg', 'product_images/ROBOTECH_MICRONIAN-PILOTS_VOL2_BEN-DIXON-1__94517__71691.jpg', 'https://www.toynamishop.com/product_images/i/900/ROBOTECH_MICRONIAN-PILOTS_VOL2_BEN-DIXON-1__94517__71691.jpg', 'products', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - BEN DIXON VOLUME 2', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - BEN DIXON VOLUME 2', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('2b6c4bf9-66d2-4fd4-b3c3-83af6a5e84b5', 'Amy_x_My_Melody__90406__72821.jpg', 'Amy_x_My_Melody__90406__72821.jpg', 'product_images/Amy_x_My_Melody__90406__72821.jpg', 'https://www.toynamishop.com/product_images/v/906/Amy_x_My_Melody__90406__72821.jpg', 'products', 'Amy x My Melody 10 inch Deluxe Plush', 'Amy x My Melody 10 inch Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('357944a5-047d-4b44-bfd5-a3ed7a009e39', '11064193_av1__57577__38640.jpg', '11064193_av1__57577__38640.jpg', 'product_images/11064193_av1__57577__38640.jpg', 'https://www.toynamishop.com/product_images/a/655/11064193_av1__57577__38640.jpg', 'products', 'Amy x My Melody 10 inch Deluxe Plush', 'Amy x My Melody 10 inch Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('99d9bc37-b8f0-4a85-ada3-e719b5be35ce', 'Robotech_Shogun-Warriors_VF-1S__66994__67763.jpg', 'Robotech_Shogun-Warriors_VF-1S__66994__67763.jpg', 'product_images/Robotech_Shogun-Warriors_VF-1S__66994__67763.jpg', 'https://www.toynamishop.com/product_images/j/854/Robotech_Shogun-Warriors_VF-1S__66994__67763.jpg', 'products', 'Robotech Roy Fokkers Shogun Warrior VF-1S', 'Robotech Roy Fokkers Shogun Warrior VF-1S', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('15f0db0e-2899-4962-8702-f0f1da90adb9', 'Robotech_Shogun-Warriors_VF-1S_01__16011__86941.jpg', 'Robotech_Shogun-Warriors_VF-1S_01__16011__86941.jpg', 'product_images/Robotech_Shogun-Warriors_VF-1S_01__16011__86941.jpg', 'https://www.toynamishop.com/product_images/x/758/Robotech_Shogun-Warriors_VF-1S_01__16011__86941.jpg', 'products', 'Robotech Roy Fokkers Shogun Warrior VF-1S', 'Robotech Roy Fokkers Shogun Warrior VF-1S', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('f9c6b986-6106-495a-9be7-f6ed7566899a', 'Robotech_Shogun-Warriors_VF-1S_03__49088__75357.jpg', 'Robotech_Shogun-Warriors_VF-1S_03__49088__75357.jpg', 'product_images/Robotech_Shogun-Warriors_VF-1S_03__49088__75357.jpg', 'https://www.toynamishop.com/product_images/x/573/Robotech_Shogun-Warriors_VF-1S_03__49088__75357.jpg', 'products', 'Robotech Roy Fokkers Shogun Warrior VF-1S', 'Robotech Roy Fokkers Shogun Warrior VF-1S', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('07af3f35-9075-41c0-b61f-954ec88f21e0', 'bucks1__70933__11376.jpg', 'bucks1__70933__11376.jpg', 'product_images/bucks1__70933__11376.jpg', 'https://www.toynamishop.com/product_images/t/509/bucks1__70933__11376.jpg', 'products', 'B2Five Bucks Team Trooper Set', 'B2Five Bucks Team Trooper Set', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('2833dc00-25a9-40da-bf73-99b40324cb89', 'bucks2__22633__50614.jpg', 'bucks2__22633__50614.jpg', 'product_images/bucks2__22633__50614.jpg', 'https://www.toynamishop.com/product_images/o/071/bucks2__22633__50614.jpg', 'products', 'B2Five Bucks Team Trooper Set', 'B2Five Bucks Team Trooper Set', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('c2872ebc-c1c4-4a39-9e7d-dae74b377833', 'bucks3__40013__98065.jpg', 'bucks3__40013__98065.jpg', 'product_images/bucks3__40013__98065.jpg', 'https://www.toynamishop.com/product_images/k/064/bucks3__40013__98065.jpg', 'products', 'B2Five Bucks Team Trooper Set', 'B2Five Bucks Team Trooper Set', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('6df91b23-a3b8-4fd0-ba3a-846ac66f3de1', 'bucks9__41786__06868.jpg', 'bucks9__41786__06868.jpg', 'product_images/bucks9__41786__06868.jpg', 'https://www.toynamishop.com/product_images/b/602/bucks9__41786__06868.jpg', 'products', 'B2Five Bucks Team Trooper Set', 'B2Five Bucks Team Trooper Set', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('59599336-ce56-400c-aafe-819c063ac177', 'bucks10__21362__86522.jpg', 'bucks10__21362__86522.jpg', 'product_images/bucks10__21362__86522.jpg', 'https://www.toynamishop.com/product_images/t/716/bucks10__21362__86522.jpg', 'products', 'B2Five Bucks Team Trooper Set', 'B2Five Bucks Team Trooper Set', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('aa51d809-259d-4398-93fb-938a4a78ff38', 'bucks7__69734__61700.jpg', 'bucks7__69734__61700.jpg', 'product_images/bucks7__69734__61700.jpg', 'https://www.toynamishop.com/product_images/k/884/bucks7__69734__61700.jpg', 'products', 'B2Five Bucks Team Trooper Set', 'B2Five Bucks Team Trooper Set', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('99402984-f57c-42df-aa13-71bc96e3049e', 'macross_max_vf-1j_valkyrie__74864__36162.jpg', 'macross_max_vf-1j_valkyrie__74864__36162.jpg', 'product_images/macross_max_vf-1j_valkyrie__74864__36162.jpg', 'https://www.toynamishop.com/product_images/z/753/macross_max_vf-1j_valkyrie__74864__36162.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1J Max Jenius Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1J Max Jenius Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('b886df27-01b3-4410-983b-1938a50c9508', 'vf-1j_max_battroid_01__34362__81898.jpg', 'vf-1j_max_battroid_01__34362__81898.jpg', 'product_images/vf-1j_max_battroid_01__34362__81898.jpg', 'https://www.toynamishop.com/product_images/c/234/vf-1j_max_battroid_01__34362__81898.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1J Max Jenius Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1J Max Jenius Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('d221e669-3b83-413b-86e1-c270683883a5', 'vf-1j_max_gerwalk_01__77897__78457.jpg', 'vf-1j_max_gerwalk_01__77897__78457.jpg', 'product_images/vf-1j_max_gerwalk_01__77897__78457.jpg', 'https://www.toynamishop.com/product_images/d/496/vf-1j_max_gerwalk_01__77897__78457.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1J Max Jenius Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1J Max Jenius Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('05e5c295-ad1b-41d0-bb11-69fd65638ff4', 'vf-1j_max_valkyrie_01__77473__63787.jpg', 'vf-1j_max_valkyrie_01__77473__63787.jpg', 'product_images/vf-1j_max_valkyrie_01__77473__63787.jpg', 'https://www.toynamishop.com/product_images/t/331/vf-1j_max_valkyrie_01__77473__63787.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1J Max Jenius Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1J Max Jenius Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('903f2c73-997e-467d-a679-94d11d4ee079', 'vf-1j_max_battroid_02__11250__44843.jpg', 'vf-1j_max_battroid_02__11250__44843.jpg', 'product_images/vf-1j_max_battroid_02__11250__44843.jpg', 'https://www.toynamishop.com/product_images/z/056/vf-1j_max_battroid_02__11250__44843.jpg', 'products', 'Macross Saga: Retro Transformable 1/100 VF-1J Max Jenius Valkyrie', 'Macross Saga: Retro Transformable 1/100 VF-1J Max Jenius Valkyrie', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('6066a7c5-3ead-42e0-8bfa-54914b2fa2ac', 'skelanimal_pvc_series_3_092810_08__24729__32417.jpg', 'skelanimal_pvc_series_3_092810_08__24729__32417.jpg', 'product_images/skelanimal_pvc_series_3_092810_08__24729__32417.jpg', 'https://www.toynamishop.com/product_images/b/451/skelanimal_pvc_series_3_092810_08__24729__32417.jpg', 'products', 'Skelanimals Series 3 Vinyl Figure Set of 3', 'Skelanimals Series 3 Vinyl Figure Set of 3', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('c58a3355-fe93-4056-ade4-68a7c322de35', 'skelanimal_pvc_figurines_series_3__41084__32140.jpg', 'skelanimal_pvc_figurines_series_3__41084__32140.jpg', 'product_images/skelanimal_pvc_figurines_series_3__41084__32140.jpg', 'https://www.toynamishop.com/product_images/t/361/skelanimal_pvc_figurines_series_3__41084__32140.jpg', 'products', 'Skelanimals Series 3 Vinyl Figure Set of 3', 'Skelanimals Series 3 Vinyl Figure Set of 3', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('3ffb2e1f-950e-4c3a-84b7-687a5c022eeb', 'Little_Glowing_Embers__39512__57013.jpg', 'Little_Glowing_Embers__39512__57013.jpg', 'product_images/Little_Glowing_Embers__39512__57013.jpg', 'https://www.toynamishop.com/product_images/i/397/Little_Glowing_Embers__39512__57013.jpg', 'products', 'Little Glowing Embers Blind Box Figurine', 'Little Glowing Embers Blind Box Figurine', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('c3eb6768-f0d2-4535-941a-9928c26713de', 'skelanimal_DotD_mini_plush_jack_01__36701__10348.jpg', 'skelanimal_DotD_mini_plush_jack_01__36701__10348.jpg', 'product_images/skelanimal_DotD_mini_plush_jack_01__36701__10348.jpg', 'https://www.toynamishop.com/product_images/x/542/skelanimal_DotD_mini_plush_jack_01__36701__10348.jpg', 'products', 'Skelanimals Day of the Dead Jack (Rabbit) Mini Plush', 'Skelanimals Day of the Dead Jack (Rabbit) Mini Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('b80c3d1b-9d47-422b-baca-5cc0c2f3e9f1', 'macross_VF-1S_t-shirt__24885__44400.jpg', 'macross_VF-1S_t-shirt__24885__44400.jpg', 'product_images/macross_VF-1S_t-shirt__24885__44400.jpg', 'https://www.toynamishop.com/product_images/q/974/macross_VF-1S_t-shirt__24885__44400.jpg', 'products', 'Macross VF-1S Skull Squad Shirt', 'Macross VF-1S Skull Squad Shirt', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('f1824616-93c0-4169-a705-dfdd575ffb16', 'robotech_T-Shirts_2022-02__20629__61001.jpg', 'robotech_T-Shirts_2022-02__20629__61001.jpg', 'product_images/robotech_T-Shirts_2022-02__20629__61001.jpg', 'https://www.toynamishop.com/product_images/b/599/robotech_T-Shirts_2022-02__20629__61001.jpg', 'products', 'Macross VF-1S Skull Squad Shirt', 'Macross VF-1S Skull Squad Shirt', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('988e34db-2513-4865-843f-c7870f7d695c', 'Screenshot_62__29131__10611.png', 'Screenshot_62__29131__10611.png', 'product_images/Screenshot_62__29131__10611.png', 'https://www.toynamishop.com/product_images/o/477/Screenshot_62__29131__10611.png', 'products', 'Macross VF-1S Skull Squad Shirt', 'Macross VF-1S Skull Squad Shirt', 'image/png', 'png', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('ce878103-db73-4e4e-b234-fa9ef36a26a5', 'Screenshot_63__20072__93007.png', 'Screenshot_63__20072__93007.png', 'product_images/Screenshot_63__20072__93007.png', 'https://www.toynamishop.com/product_images/j/536/Screenshot_63__20072__93007.png', 'products', 'Macross VF-1S Skull Squad Shirt', 'Macross VF-1S Skull Squad Shirt', 'image/png', 'png', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('a17ca3a2-d5a3-40e5-adc4-022a85b59b88', 'Skelanimals_backpack_kit_deluxe_encore__03296__18468.jpg', 'Skelanimals_backpack_kit_deluxe_encore__03296__18468.jpg', 'product_images/Skelanimals_backpack_kit_deluxe_encore__03296__18468.jpg', 'https://www.toynamishop.com/product_images/p/903/Skelanimals_backpack_kit_deluxe_encore__03296__18468.jpg', 'products', 'Skelanimals Deluxe Backpack Kit (Cat)', 'Skelanimals Deluxe Backpack Kit (Cat)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('628140f5-0422-4dd1-ad71-2b1d676f077f', 'Knuckles_x_Badtz_Maru__79563__89654.jpg', 'Knuckles_x_Badtz_Maru__79563__89654.jpg', 'product_images/Knuckles_x_Badtz_Maru__79563__89654.jpg', 'https://www.toynamishop.com/product_images/w/092/Knuckles_x_Badtz_Maru__79563__89654.jpg', 'products', 'Knuckles x Badtz-Maru 10 inch Deluxe Plush', 'Knuckles x Badtz-Maru 10 inch Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('102ebda1-6924-4827-9aec-3c77ea85d4ff', '11064191_av1__63931__88048.jpg', '11064191_av1__63931__88048.jpg', 'product_images/11064191_av1__63931__88048.jpg', 'https://www.toynamishop.com/product_images/r/904/11064191_av1__63931__88048.jpg', 'products', 'Knuckles x Badtz-Maru 10 inch Deluxe Plush', 'Knuckles x Badtz-Maru 10 inch Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('972de67a-3f77-4a45-902f-f779b01df023', 'skelanimals_dc_heroes_dark_knight_exclusive02__29158__83118.jpg', 'skelanimals_dc_heroes_dark_knight_exclusive02__29158__83118.jpg', 'product_images/skelanimals_dc_heroes_dark_knight_exclusive02__29158__83118.jpg', 'https://www.toynamishop.com/product_images/z/818/skelanimals_dc_heroes_dark_knight_exclusive02__29158__83118.jpg', 'products', 'SDCC 2012 Exclusive: DC Comics x Skelanimals The Dark Knight Rises Batman Jae Plush', 'SDCC 2012 Exclusive: DC Comics x Skelanimals The Dark Knight Rises Batman Jae Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('0acbd4fe-dacd-4847-9ff6-5ce23cd886d0', 'skelanimals_dc_heroes_dark_knight_exclusive01__41350__42487.jpg', 'skelanimals_dc_heroes_dark_knight_exclusive01__41350__42487.jpg', 'product_images/skelanimals_dc_heroes_dark_knight_exclusive01__41350__42487.jpg', 'https://www.toynamishop.com/product_images/z/900/skelanimals_dc_heroes_dark_knight_exclusive01__41350__42487.jpg', 'products', 'SDCC 2012 Exclusive: DC Comics x Skelanimals The Dark Knight Rises Batman Jae Plush', 'SDCC 2012 Exclusive: DC Comics x Skelanimals The Dark Knight Rises Batman Jae Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('f7f4506a-2581-41ab-b2d3-3d61f462b787', '283462469_171315495331691_4609032428240053035_n__94300__58541.jpg', '283462469_171315495331691_4609032428240053035_n__94300__58541.jpg', 'product_images/283462469_171315495331691_4609032428240053035_n__94300__58541.jpg', 'https://www.toynamishop.com/product_images/o/155/283462469_171315495331691_4609032428240053035_n__94300__58541.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K06 Boss K', 'Toys Alliance MILLINILLIONS MI-K06 Boss K', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('bc51b95b-2ce2-4157-b227-746fcdc3ec37', '281869831_171315505331690_6491266588225028275_n__16823__93998.jpg', '281869831_171315505331690_6491266588225028275_n__16823__93998.jpg', 'product_images/281869831_171315505331690_6491266588225028275_n__16823__93998.jpg', 'https://www.toynamishop.com/product_images/c/397/281869831_171315505331690_6491266588225028275_n__16823__93998.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K06 Boss K', 'Toys Alliance MILLINILLIONS MI-K06 Boss K', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('30c8d82c-98f6-4386-afee-57ae1fe52ceb', '283304236_171315515331689_4046402623354121850_n__28552__00075.jpg', '283304236_171315515331689_4046402623354121850_n__28552__00075.jpg', 'product_images/283304236_171315515331689_4046402623354121850_n__28552__00075.jpg', 'https://www.toynamishop.com/product_images/p/261/283304236_171315515331689_4046402623354121850_n__28552__00075.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K06 Boss K', 'Toys Alliance MILLINILLIONS MI-K06 Boss K', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('7b5a2055-3056-4939-b7b8-312f5dba4c79', 'ALL___42949__77661.jpg', 'ALL___42949__77661.jpg', 'product_images/ALL___42949__77661.jpg', 'https://www.toynamishop.com/product_images/k/175/ALL___42949__77661.jpg', 'products', 'B2Five Abaddon Trooper Set', 'B2Five Abaddon Trooper Set', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('b84d8677-1f59-4acb-b187-770c34b92c40', '1__19277__83743.jpg', '1__19277__83743.jpg', 'product_images/1__19277__83743.jpg', 'https://www.toynamishop.com/product_images/v/549/1__19277__83743.jpg', 'products', 'B2Five Abaddon Trooper Set', 'B2Five Abaddon Trooper Set', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('d9409b1c-9e06-4da2-aa22-d4d0c46b5b3c', '9__76030__76347.jpg', '9__76030__76347.jpg', 'product_images/9__76030__76347.jpg', 'https://www.toynamishop.com/product_images/p/069/9__76030__76347.jpg', 'products', 'B2Five Abaddon Trooper Set', 'B2Five Abaddon Trooper Set', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('e84fb3d1-5a0d-4c51-b1f4-b180a80ec4e5', '5__40195__47375.jpg', '5__40195__47375.jpg', 'product_images/5__40195__47375.jpg', 'https://www.toynamishop.com/product_images/f/346/5__40195__47375.jpg', 'products', 'B2Five Abaddon Trooper Set', 'B2Five Abaddon Trooper Set', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('7b916f3e-6118-4dda-9481-c4f55d95e078', '7__12441__91642.jpg', '7__12441__91642.jpg', 'product_images/7__12441__91642.jpg', 'https://www.toynamishop.com/product_images/p/354/7__12441__91642.jpg', 'products', 'B2Five Abaddon Trooper Set', 'B2Five Abaddon Trooper Set', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('74eade15-c201-4a15-a3e2-b696750e1da7', 'emily_bendy_figure_01__98707__59345.jpg', 'emily_bendy_figure_01__98707__59345.jpg', 'product_images/emily_bendy_figure_01__98707__59345.jpg', 'https://www.toynamishop.com/product_images/s/617/emily_bendy_figure_01__98707__59345.jpg', 'products', 'Emily the Strange 6" Bendy Figure', 'Emily the Strange 6" Bendy Figure', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('e48234d9-713e-4d55-9c5f-03f49594edd1', 'emily_bendy_figure_02__87763__56449.jpg', 'emily_bendy_figure_02__87763__56449.jpg', 'product_images/emily_bendy_figure_02__87763__56449.jpg', 'https://www.toynamishop.com/product_images/b/255/emily_bendy_figure_02__87763__56449.jpg', 'products', 'Emily the Strange 6" Bendy Figure', 'Emily the Strange 6" Bendy Figure', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('e1bf1c7e-6e24-48c0-8465-b03f3a9a6b13', 'emily_bendy_figure_04__69395__88774.jpg', 'emily_bendy_figure_04__69395__88774.jpg', 'product_images/emily_bendy_figure_04__69395__88774.jpg', 'https://www.toynamishop.com/product_images/b/990/emily_bendy_figure_04__69395__88774.jpg', 'products', 'Emily the Strange 6" Bendy Figure', 'Emily the Strange 6" Bendy Figure', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('dcb6cc04-9af9-4a30-8404-f4bf92517026', 'emily_bendy_figure_03__02496__95839.jpg', 'emily_bendy_figure_03__02496__95839.jpg', 'product_images/emily_bendy_figure_03__02496__95839.jpg', 'https://www.toynamishop.com/product_images/t/092/emily_bendy_figure_03__02496__95839.jpg', 'products', 'Emily the Strange 6" Bendy Figure', 'Emily the Strange 6" Bendy Figure', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('543cb0d2-17a3-46f4-82e1-ad8efcfe8e7c', 'emily_bendy_figure_05__93270__94564.jpg', 'emily_bendy_figure_05__93270__94564.jpg', 'product_images/emily_bendy_figure_05__93270__94564.jpg', 'https://www.toynamishop.com/product_images/e/755/emily_bendy_figure_05__93270__94564.jpg', 'products', 'Emily the Strange 6" Bendy Figure', 'Emily the Strange 6" Bendy Figure', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('895bb695-8c43-45c1-9037-74517220f52b', 'Phantom-Team-B__96125__73882.jpg', 'Phantom-Team-B__96125__73882.jpg', 'product_images/Phantom-Team-B__96125__73882.jpg', 'https://www.toynamishop.com/product_images/x/200/Phantom-Team-B__96125__73882.jpg', 'products', 'Acid Rain Phantom Team B - [Parhelion + Aurora]', 'Acid Rain Phantom Team B - [Parhelion + Aurora]', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('09b3f1e5-af9e-4e2a-9081-f548b62af36e', 'IMG_0052__22775__15056.JPG', 'IMG_0052__22775__15056.JPG', 'product_images/IMG_0052__22775__15056.JPG', 'https://www.toynamishop.com/product_images/s/226/IMG_0052__22775__15056.JPG', 'products', 'Acid Rain Phantom Team B - [Parhelion + Aurora]', 'Acid Rain Phantom Team B - [Parhelion + Aurora]', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('f145af94-03b3-4126-9566-95cb6836f2f6', 'IMG_0044__48090__04629.JPG', 'IMG_0044__48090__04629.JPG', 'product_images/IMG_0044__48090__04629.JPG', 'https://www.toynamishop.com/product_images/f/849/IMG_0044__48090__04629.JPG', 'products', 'Acid Rain Phantom Team B - [Parhelion + Aurora]', 'Acid Rain Phantom Team B - [Parhelion + Aurora]', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('90ae8d56-fe95-49c0-9c58-1527049bf9b1', 'IMG_0035__70466__46669.JPG', 'IMG_0035__70466__46669.JPG', 'product_images/IMG_0035__70466__46669.JPG', 'https://www.toynamishop.com/product_images/q/062/IMG_0035__70466__46669.JPG', 'products', 'Acid Rain Phantom Team B - [Parhelion + Aurora]', 'Acid Rain Phantom Team B - [Parhelion + Aurora]', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('852e26fa-b87f-4098-ae32-2438a589bf52', 'IMG_0051__99112__90650.JPG', 'IMG_0051__99112__90650.JPG', 'product_images/IMG_0051__99112__90650.JPG', 'https://www.toynamishop.com/product_images/k/959/IMG_0051__99112__90650.JPG', 'products', 'Acid Rain Phantom Team B - [Parhelion + Aurora]', 'Acid Rain Phantom Team B - [Parhelion + Aurora]', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('1f41543a-09df-4bdc-b04c-6d96db76206b', 'skelanimal_vinyl_series2_maxx__11034__66934.jpg', 'skelanimal_vinyl_series2_maxx__11034__66934.jpg', 'product_images/skelanimal_vinyl_series2_maxx__11034__66934.jpg', 'https://www.toynamishop.com/product_images/h/525/skelanimal_vinyl_series2_maxx__11034__66934.jpg', 'products', 'Skelanimals Maxx the Bulldog Vinyl Figure', 'Skelanimals Maxx the Bulldog Vinyl Figure', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('6d2cbe18-62ce-4095-823d-34393b93bc21', 'Tails_x_Chococat__01332__43681.jpg', 'Tails_x_Chococat__01332__43681.jpg', 'product_images/Tails_x_Chococat__01332__43681.jpg', 'https://www.toynamishop.com/product_images/a/783/Tails_x_Chococat__01332__43681.jpg', 'products', 'Tails x Chococat 10 inch Deluxe Plush', 'Tails x Chococat 10 inch Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('98dc1024-0658-4b4f-8905-5c06c7b87a06', '11064195_av1__69053__38532.jpg', '11064195_av1__69053__38532.jpg', 'product_images/11064195_av1__69053__38532.jpg', 'https://www.toynamishop.com/product_images/z/710/11064195_av1__69053__38532.jpg', 'products', 'Tails x Chococat 10 inch Deluxe Plush', 'Tails x Chococat 10 inch Deluxe Plush', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('74ee9df6-fbbe-48b0-b770-5cb5e5e55186', 'naruto-4-inch__08__44513__81433.jpg', 'naruto-4-inch__08__44513__81433.jpg', 'product_images/naruto-4-inch__08__44513__81433.jpg', 'https://www.toynamishop.com/product_images/a/186/naruto-4-inch__08__44513__81433.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Naruto', 'Naruto Shippuden Poseable Action Figure - Naruto', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('51672708-9856-4a9a-a93c-a584952d157a', 'naruto-4-inch_02__16731__36558.jpg', 'naruto-4-inch_02__16731__36558.jpg', 'product_images/naruto-4-inch_02__16731__36558.jpg', 'https://www.toynamishop.com/product_images/l/933/naruto-4-inch_02__16731__36558.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Naruto', 'Naruto Shippuden Poseable Action Figure - Naruto', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('ef48539b-3c40-480b-9a84-6bb439b198e8', 'naruto-4-inch_03__96929__01196.jpg', 'naruto-4-inch_03__96929__01196.jpg', 'product_images/naruto-4-inch_03__96929__01196.jpg', 'https://www.toynamishop.com/product_images/t/503/naruto-4-inch_03__96929__01196.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Naruto', 'Naruto Shippuden Poseable Action Figure - Naruto', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('3a9e37c3-3e2f-4b4c-a143-b3386a292dc2', 'shippuden_4-inch-figures_series1_0045__48474__63645.jpg', 'shippuden_4-inch-figures_series1_0045__48474__63645.jpg', 'product_images/shippuden_4-inch-figures_series1_0045__48474__63645.jpg', 'https://www.toynamishop.com/product_images/j/805/shippuden_4-inch-figures_series1_0045__48474__63645.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Naruto', 'Naruto Shippuden Poseable Action Figure - Naruto', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('793110d0-5aeb-4f31-8494-016885e372a5', 'shippuden_4-inch-figures_series1_0046__27163__06592.jpg', 'shippuden_4-inch-figures_series1_0046__27163__06592.jpg', 'product_images/shippuden_4-inch-figures_series1_0046__27163__06592.jpg', 'https://www.toynamishop.com/product_images/d/674/shippuden_4-inch-figures_series1_0046__27163__06592.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Naruto', 'Naruto Shippuden Poseable Action Figure - Naruto', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('d9f18417-eed5-4e48-86ca-448b21f61e54', 'shippuden_4-inch-figures_series1_0048__84735__17430.jpg', 'shippuden_4-inch-figures_series1_0048__84735__17430.jpg', 'product_images/shippuden_4-inch-figures_series1_0048__84735__17430.jpg', 'https://www.toynamishop.com/product_images/x/519/shippuden_4-inch-figures_series1_0048__84735__17430.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Naruto', 'Naruto Shippuden Poseable Action Figure - Naruto', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('faf6e24c-b2a4-43ea-afd4-7473a14ab0ce', '283755790_171315341998373_3594315868801986188_n__93451__14302.jpg', '283755790_171315341998373_3594315868801986188_n__93451__14302.jpg', 'product_images/283755790_171315341998373_3594315868801986188_n__93451__14302.jpg', 'https://www.toynamishop.com/product_images/g/412/283755790_171315341998373_3594315868801986188_n__93451__14302.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K07A Monster Child', 'Toys Alliance MILLINILLIONS MI-K07A Monster Child', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('5792ea3a-a1b4-4285-8472-f986269fbe72', '281766779_171315365331704_5355448836561394613_n__57547__98523.jpg', '281766779_171315365331704_5355448836561394613_n__57547__98523.jpg', 'product_images/281766779_171315365331704_5355448836561394613_n__57547__98523.jpg', 'https://www.toynamishop.com/product_images/z/128/281766779_171315365331704_5355448836561394613_n__57547__98523.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K07A Monster Child', 'Toys Alliance MILLINILLIONS MI-K07A Monster Child', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('14acbf11-235d-4eed-91bf-265db95682b4', '283246888_171315318665042_4205698843941398574_n__83500__85341.jpg', '283246888_171315318665042_4205698843941398574_n__83500__85341.jpg', 'product_images/283246888_171315318665042_4205698843941398574_n__83500__85341.jpg', 'https://www.toynamishop.com/product_images/w/184/283246888_171315318665042_4205698843941398574_n__83500__85341.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K07A Monster Child', 'Toys Alliance MILLINILLIONS MI-K07A Monster Child', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('11df072f-ab1a-4ee0-8bcf-6ea3f9eb76d5', 'cyclone_t-shirt__57647__09693.jpg', 'cyclone_t-shirt__57647__09693.jpg', 'product_images/cyclone_t-shirt__57647__09693.jpg', 'https://www.toynamishop.com/product_images/o/742/cyclone_t-shirt__57647__09693.jpg', 'products', 'Mospeada Cyclone Ride Armor Shirt', 'Mospeada Cyclone Ride Armor Shirt', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('b5f3df60-64c6-4537-8d46-cc9a9f4652ae', 'robotech_T-Shirts_2022-05__50080__16555.jpg', 'robotech_T-Shirts_2022-05__50080__16555.jpg', 'product_images/robotech_T-Shirts_2022-05__50080__16555.jpg', 'https://www.toynamishop.com/product_images/k/147/robotech_T-Shirts_2022-05__50080__16555.jpg', 'products', 'Mospeada Cyclone Ride Armor Shirt', 'Mospeada Cyclone Ride Armor Shirt', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('3e1bab9e-7d5c-4a0f-bf2b-13be5ce1701f', 'Screenshot_62__80801__57235.png', 'Screenshot_62__80801__57235.png', 'product_images/Screenshot_62__80801__57235.png', 'https://www.toynamishop.com/product_images/k/552/Screenshot_62__80801__57235.png', 'products', 'Mospeada Cyclone Ride Armor Shirt', 'Mospeada Cyclone Ride Armor Shirt', 'image/png', 'png', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('4d8f764e-f347-4cf3-962b-04b60aa303a8', 'Screenshot_63__22912__69369.png', 'Screenshot_63__22912__69369.png', 'product_images/Screenshot_63__22912__69369.png', 'https://www.toynamishop.com/product_images/e/683/Screenshot_63__22912__69369.png', 'products', 'Mospeada Cyclone Ride Armor Shirt', 'Mospeada Cyclone Ride Armor Shirt', 'image/png', 'png', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('caa8e886-c450-43b7-8a13-aa6136524367', 'robotech_shogun-warriors_VF-1J_01__68917__32619.jpg', 'robotech_shogun-warriors_VF-1J_01__68917__32619.jpg', 'product_images/robotech_shogun-warriors_VF-1J_01__68917__32619.jpg', 'https://www.toynamishop.com/product_images/g/499/robotech_shogun-warriors_VF-1J_01__68917__32619.jpg', 'products', 'Robotech Rick Hunters Shogun Warrior VF-1J', 'Robotech Rick Hunters Shogun Warrior VF-1J', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('c68ae5c7-27ce-45d1-901a-8fcd4be7d7bd', 'robotech_shogun-warriors_VF-1J_02__91925__51599.jpg', 'robotech_shogun-warriors_VF-1J_02__91925__51599.jpg', 'product_images/robotech_shogun-warriors_VF-1J_02__91925__51599.jpg', 'https://www.toynamishop.com/product_images/y/992/robotech_shogun-warriors_VF-1J_02__91925__51599.jpg', 'products', 'Robotech Rick Hunters Shogun Warrior VF-1J', 'Robotech Rick Hunters Shogun Warrior VF-1J', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('ce00567c-7a5c-410b-8b45-21bf490b45e4', 'robotech_shogun-warriors_VF-1J_03__53432__57389.jpg', 'robotech_shogun-warriors_VF-1J_03__53432__57389.jpg', 'product_images/robotech_shogun-warriors_VF-1J_03__53432__57389.jpg', 'https://www.toynamishop.com/product_images/x/192/robotech_shogun-warriors_VF-1J_03__53432__57389.jpg', 'products', 'Robotech Rick Hunters Shogun Warrior VF-1J', 'Robotech Rick Hunters Shogun Warrior VF-1J', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('9aaf9485-5eb9-4230-aa04-a6eacb6631c5', 'robotech_shogun-warriors_VF-1J__83414__84892.jpg', 'robotech_shogun-warriors_VF-1J__83414__84892.jpg', 'product_images/robotech_shogun-warriors_VF-1J__83414__84892.jpg', 'https://www.toynamishop.com/product_images/z/946/robotech_shogun-warriors_VF-1J__83414__84892.jpg', 'products', 'Robotech Rick Hunters Shogun Warrior VF-1J', 'Robotech Rick Hunters Shogun Warrior VF-1J', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('a3001858-cb3f-4e27-ba26-57f3963f4073', 'macross_gbp-1_vf-1s-valkyrie__10152__88897.jpg', 'macross_gbp-1_vf-1s-valkyrie__10152__88897.jpg', 'product_images/macross_gbp-1_vf-1s-valkyrie__10152__88897.jpg', 'https://www.toynamishop.com/product_images/x/226/macross_gbp-1_vf-1s-valkyrie__10152__88897.jpg', 'products', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('4b89fce2-56a5-4478-8d16-6875356ce578', 'macross_gbp-1_vf-1s-battroid__71213__75039.jpg', 'macross_gbp-1_vf-1s-battroid__71213__75039.jpg', 'product_images/macross_gbp-1_vf-1s-battroid__71213__75039.jpg', 'https://www.toynamishop.com/product_images/e/284/macross_gbp-1_vf-1s-battroid__71213__75039.jpg', 'products', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('5a33668a-32e3-4c8b-9c35-fc6c9db5ebef', 'macross_gbp-1_vf-1s-battroid3__51349__89989.jpg', 'macross_gbp-1_vf-1s-battroid3__51349__89989.jpg', 'product_images/macross_gbp-1_vf-1s-battroid3__51349__89989.jpg', 'https://www.toynamishop.com/product_images/m/516/macross_gbp-1_vf-1s-battroid3__51349__89989.jpg', 'products', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('a5ba655b-3361-4d0a-b34d-471c0d4b2d94', 'macross_gbp-1_vf-1s-fighter__21265__70212.jpg', 'macross_gbp-1_vf-1s-fighter__21265__70212.jpg', 'product_images/macross_gbp-1_vf-1s-fighter__21265__70212.jpg', 'https://www.toynamishop.com/product_images/h/270/macross_gbp-1_vf-1s-fighter__21265__70212.jpg', 'products', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('4fb13f42-75c1-455a-83dd-3841ce6dbbcc', 'macross_gbp-1_vf-1s-gerwalk__54998__35200.jpg', 'macross_gbp-1_vf-1s-gerwalk__54998__35200.jpg', 'product_images/macross_gbp-1_vf-1s-gerwalk__54998__35200.jpg', 'https://www.toynamishop.com/product_images/c/683/macross_gbp-1_vf-1s-gerwalk__54998__35200.jpg', 'products', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('ffc55d5e-ca72-40cb-9cbb-9f631bdd8549', 'Macross_VF-1S_Armored_Valkyrie_GBP-1S__34065__22314.jpg', 'Macross_VF-1S_Armored_Valkyrie_GBP-1S__34065__22314.jpg', 'product_images/Macross_VF-1S_Armored_Valkyrie_GBP-1S__34065__22314.jpg', 'https://www.toynamishop.com/product_images/x/667/Macross_VF-1S_Armored_Valkyrie_GBP-1S__34065__22314.jpg', 'products', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('87a31017-18ef-457f-ba11-28c38d066fcb', 'macross_gbp-1_vf-1s-package__58280__86608.jpg', 'macross_gbp-1_vf-1s-package__58280__86608.jpg', 'product_images/macross_gbp-1_vf-1s-package__58280__86608.jpg', 'https://www.toynamishop.com/product_images/d/091/macross_gbp-1_vf-1s-package__58280__86608.jpg', 'products', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('b5ffb64c-d94f-4b52-8524-ac7fa3eefb4b', 'BW1_01__29431__05249.jpg', 'BW1_01__29431__05249.jpg', 'product_images/BW1_01__29431__05249.jpg', 'https://www.toynamishop.com/product_images/n/378/BW1_01__29431__05249.jpg', 'products', 'B2Five R711 Speeder MK1R', 'B2Five R711 Speeder MK1R', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('31f74439-3d2c-4059-99e8-1e361ece7bfd', 'DSC_0015__04259__87656.jpg', 'DSC_0015__04259__87656.jpg', 'product_images/DSC_0015__04259__87656.jpg', 'https://www.toynamishop.com/product_images/i/851/DSC_0015__04259__87656.jpg', 'products', 'B2Five R711 Speeder MK1R', 'B2Five R711 Speeder MK1R', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('2a0e9097-7cda-4335-9bb0-ed81c5e23c0d', 'DSC_0021__57144__05505.jpg', 'DSC_0021__57144__05505.jpg', 'product_images/DSC_0021__57144__05505.jpg', 'https://www.toynamishop.com/product_images/r/749/DSC_0021__57144__05505.jpg', 'products', 'B2Five R711 Speeder MK1R', 'B2Five R711 Speeder MK1R', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('7ff55c25-bac9-4e5c-bb23-4cc2116cb4eb', '283112892_171314148665159_7613725488676118031_n__73766__71069.jpg', '283112892_171314148665159_7613725488676118031_n__73766__71069.jpg', 'product_images/283112892_171314148665159_7613725488676118031_n__73766__71069.jpg', 'https://www.toynamishop.com/product_images/d/478/283112892_171314148665159_7613725488676118031_n__73766__71069.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K07B Monster Child', 'Toys Alliance MILLINILLIONS MI-K07B Monster Child', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('2b8287d7-a390-4829-a8d5-f5b0b9ae827f', '282383999_171314108665163_1624826331944760417_n__07603__90201.jpg', '282383999_171314108665163_1624826331944760417_n__07603__90201.jpg', 'product_images/282383999_171314108665163_1624826331944760417_n__07603__90201.jpg', 'https://www.toynamishop.com/product_images/d/852/282383999_171314108665163_1624826331944760417_n__07603__90201.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K07B Monster Child', 'Toys Alliance MILLINILLIONS MI-K07B Monster Child', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('74e6ffdb-0afa-4efb-a678-fae2b34b3836', '281854233_171314118665162_864120373636970174_n__25425__37214.jpg', '281854233_171314118665162_864120373636970174_n__25425__37214.jpg', 'product_images/281854233_171314118665162_864120373636970174_n__25425__37214.jpg', 'https://www.toynamishop.com/product_images/q/143/281854233_171314118665162_864120373636970174_n__25425__37214.jpg', 'products', 'Toys Alliance MILLINILLIONS MI-K07B Monster Child', 'Toys Alliance MILLINILLIONS MI-K07B Monster Child', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('609ac918-9b85-4f39-a264-7145bbfaa556', 'product_235__32289__13309.jpg', 'product_235__32289__13309.jpg', 'product_images/product_235__32289__13309.jpg', 'https://www.toynamishop.com/product_images/v/865/product_235__32289__13309.jpg', 'products', 'Tulipop Vinyl Keychain - Bubble', 'Tulipop Vinyl Keychain - Bubble', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('3a8ae045-2fd1-44da-acb2-bb6f0e13a3f6', 'product_236__27359__86434.jpg', 'product_236__27359__86434.jpg', 'product_images/product_236__27359__86434.jpg', 'https://www.toynamishop.com/product_images/c/242/product_236__27359__86434.jpg', 'products', 'Tulipop Vinyl Keychain - Bubble', 'Tulipop Vinyl Keychain - Bubble', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('0e4c2aba-46d6-4678-921c-6ec8ccccc782', 'DSC_0759_final__25466__41490.jpg', 'DSC_0759_final__25466__41490.jpg', 'product_images/DSC_0759_final__25466__41490.jpg', 'https://www.toynamishop.com/product_images/d/208/DSC_0759_final__25466__41490.jpg', 'products', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('ad2cdf4f-206e-4413-810e-4ac0fc1ad820', 'Aviator_Flight_Jacket__98258__09488.jpg', 'Aviator_Flight_Jacket__98258__09488.jpg', 'product_images/Aviator_Flight_Jacket__98258__09488.jpg', 'https://www.toynamishop.com/product_images/y/932/Aviator_Flight_Jacket__98258__09488.jpg', 'products', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('b7d58458-b183-420c-8c87-7f934a0109a1', 'DSC_0822_final__61931__72513.jpg', 'DSC_0822_final__61931__72513.jpg', 'product_images/DSC_0822_final__61931__72513.jpg', 'https://www.toynamishop.com/product_images/e/325/DSC_0822_final__61931__72513.jpg', 'products', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('89a72321-415a-42ac-a7e4-3ed4b2a02641', 'DSC_0814_final__32580__91258.jpg', 'DSC_0814_final__32580__91258.jpg', 'product_images/DSC_0814_final__32580__91258.jpg', 'https://www.toynamishop.com/product_images/y/750/DSC_0814_final__32580__91258.jpg', 'products', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('d5b62e3a-57cf-4f3f-82b7-6e596e542dd3', 'DSC_0762_final__95311__94304.jpg', 'DSC_0762_final__95311__94304.jpg', 'product_images/DSC_0762_final__95311__94304.jpg', 'https://www.toynamishop.com/product_images/f/959/DSC_0762_final__95311__94304.jpg', 'products', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('78cd5e13-a574-4ea2-94ab-40555b811d21', 'DSC_0765_final__77151__79359.jpg', 'DSC_0765_final__77151__79359.jpg', 'product_images/DSC_0765_final__77151__79359.jpg', 'https://www.toynamishop.com/product_images/r/870/DSC_0765_final__77151__79359.jpg', 'products', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('ebbb2c2a-9a4a-444a-ad68-39e9fd497282', 'DSC_0766_final__97093__98062.jpg', 'DSC_0766_final__97093__98062.jpg', 'product_images/DSC_0766_final__97093__98062.jpg', 'https://www.toynamishop.com/product_images/j/016/DSC_0766_final__97093__98062.jpg', 'products', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('53f8e96d-b89d-409b-adf3-1478d81718f8', 'DSC_0827_final__20513__65002.jpg', 'DSC_0827_final__20513__65002.jpg', 'product_images/DSC_0827_final__20513__65002.jpg', 'https://www.toynamishop.com/product_images/t/739/DSC_0827_final__20513__65002.jpg', 'products', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('72bc8bf3-496b-43c1-995c-f657a2bf3814', 'DSC_0768_final__70510__31314.jpg', 'DSC_0768_final__70510__31314.jpg', 'product_images/DSC_0768_final__70510__31314.jpg', 'https://www.toynamishop.com/product_images/h/043/DSC_0768_final__70510__31314.jpg', 'products', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', 'image/jpeg', 'jpg', ARRAY['product'], 10, '2025-08-24 03:34:39.225191+00', NOW()),
+('353ed9dc-bb6e-46c7-a0c4-417f0cc673e2', 'DSC_0035__81377__70165.jpg', 'DSC_0035__81377__70165.jpg', 'product_images/DSC_0035__81377__70165.jpg', 'https://www.toynamishop.com/product_images/j/505/DSC_0035__81377__70165.jpg', 'products', 'B2Five K6 Jungle Soldiers', 'B2Five K6 Jungle Soldiers', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('b6059cc6-ea22-4b72-ac51-0301f0882465', 'DSC_0030__83901__61356.jpg', 'DSC_0030__83901__61356.jpg', 'product_images/DSC_0030__83901__61356.jpg', 'https://www.toynamishop.com/product_images/i/190/DSC_0030__83901__61356.jpg', 'products', 'B2Five K6 Jungle Soldiers', 'B2Five K6 Jungle Soldiers', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('7f788786-cf46-4ede-885a-29a638b967af', 'DSC_0040__80468__95574.jpg', 'DSC_0040__80468__95574.jpg', 'product_images/DSC_0040__80468__95574.jpg', 'https://www.toynamishop.com/product_images/m/058/DSC_0040__80468__95574.jpg', 'products', 'B2Five K6 Jungle Soldiers', 'B2Five K6 Jungle Soldiers', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('78f0bd6c-44cc-49cd-a99d-14c90cf897ef', 'DSC_0045__08048__39135.jpg', 'DSC_0045__08048__39135.jpg', 'product_images/DSC_0045__08048__39135.jpg', 'https://www.toynamishop.com/product_images/n/193/DSC_0045__08048__39135.jpg', 'products', 'B2Five K6 Jungle Soldiers', 'B2Five K6 Jungle Soldiers', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('2492088a-ff98-4e43-a382-751c123e4214', 'DSC_0042__85766__69366.jpg', 'DSC_0042__85766__69366.jpg', 'product_images/DSC_0042__85766__69366.jpg', 'https://www.toynamishop.com/product_images/m/327/DSC_0042__85766__69366.jpg', 'products', 'B2Five K6 Jungle Soldiers', 'B2Five K6 Jungle Soldiers', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('b5e79991-8eb3-4e99-92f0-7c7240bcf07e', 'kakashi-4-inch_03__02365__12416.jpg', 'kakashi-4-inch_03__02365__12416.jpg', 'product_images/kakashi-4-inch_03__02365__12416.jpg', 'https://www.toynamishop.com/product_images/q/380/kakashi-4-inch_03__02365__12416.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Kakashi', 'Naruto Shippuden Poseable Action Figure - Kakashi', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('7dc80488-e433-437f-9820-d81af81a400f', 'kakashi-4-inch_12__34252__90403.jpg', 'kakashi-4-inch_12__34252__90403.jpg', 'product_images/kakashi-4-inch_12__34252__90403.jpg', 'https://www.toynamishop.com/product_images/v/305/kakashi-4-inch_12__34252__90403.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Kakashi', 'Naruto Shippuden Poseable Action Figure - Kakashi', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('7d37dfd3-c9d1-4256-8ba5-7dbd1185584e', 'kakashi-4-inch_08__42658__98216.jpg', 'kakashi-4-inch_08__42658__98216.jpg', 'product_images/kakashi-4-inch_08__42658__98216.jpg', 'https://www.toynamishop.com/product_images/z/867/kakashi-4-inch_08__42658__98216.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Kakashi', 'Naruto Shippuden Poseable Action Figure - Kakashi', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('4c307af1-8403-4d17-9e6d-602ee654524c', 'kakashi-4-inch_09__05321__79432.jpg', 'kakashi-4-inch_09__05321__79432.jpg', 'product_images/kakashi-4-inch_09__05321__79432.jpg', 'https://www.toynamishop.com/product_images/w/851/kakashi-4-inch_09__05321__79432.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Kakashi', 'Naruto Shippuden Poseable Action Figure - Kakashi', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('57ca94e7-f777-498d-8633-0c34fc08ed48', 'shippuden_4-inch-figures_series1_0050__75115__28213.jpg', 'shippuden_4-inch-figures_series1_0050__75115__28213.jpg', 'product_images/shippuden_4-inch-figures_series1_0050__75115__28213.jpg', 'https://www.toynamishop.com/product_images/y/329/shippuden_4-inch-figures_series1_0050__75115__28213.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Kakashi', 'Naruto Shippuden Poseable Action Figure - Kakashi', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('f1ea5506-edbe-470c-b097-2ea0840a17d5', 'shippuden_4-inch-figures_series1_0053__79113__02975.jpg', 'shippuden_4-inch-figures_series1_0053__79113__02975.jpg', 'product_images/shippuden_4-inch-figures_series1_0053__79113__02975.jpg', 'https://www.toynamishop.com/product_images/t/782/shippuden_4-inch-figures_series1_0053__79113__02975.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Kakashi', 'Naruto Shippuden Poseable Action Figure - Kakashi', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('5d441d7e-2211-4e6d-a7f7-806d49b24bee', 'shippuden_4-inch-figures_series1_0052__95803__89158.jpg', 'shippuden_4-inch-figures_series1_0052__95803__89158.jpg', 'product_images/shippuden_4-inch-figures_series1_0052__95803__89158.jpg', 'https://www.toynamishop.com/product_images/k/553/shippuden_4-inch-figures_series1_0052__95803__89158.jpg', 'products', 'Naruto Shippuden Poseable Action Figure - Kakashi', 'Naruto Shippuden Poseable Action Figure - Kakashi', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('6efc8922-a2eb-4d34-8d97-65a4537ce9eb', 'naruto_six_paths_bust_01__57158__29259.jpg', 'naruto_six_paths_bust_01__57158__29259.jpg', 'product_images/naruto_six_paths_bust_01__57158__29259.jpg', 'https://www.toynamishop.com/product_images/z/063/naruto_six_paths_bust_01__57158__29259.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('a5bdf52c-3e65-40f2-9ee1-90243bd03306', 'naruto_six_paths_bust_07__51787__99831.jpg', 'naruto_six_paths_bust_07__51787__99831.jpg', 'product_images/naruto_six_paths_bust_07__51787__99831.jpg', 'https://www.toynamishop.com/product_images/r/596/naruto_six_paths_bust_07__51787__99831.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('dc1ad700-165e-4c0c-8e75-e5efd84dcb04', 'naruto_six_paths_bust_09__28356__90260.jpg', 'naruto_six_paths_bust_09__28356__90260.jpg', 'product_images/naruto_six_paths_bust_09__28356__90260.jpg', 'https://www.toynamishop.com/product_images/h/723/naruto_six_paths_bust_09__28356__90260.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('a1b17a2a-da39-4e16-be95-4a2f3e26a479', 'naruto_six_paths_bust_05__52367__26866.jpg', 'naruto_six_paths_bust_05__52367__26866.jpg', 'product_images/naruto_six_paths_bust_05__52367__26866.jpg', 'https://www.toynamishop.com/product_images/m/964/naruto_six_paths_bust_05__52367__26866.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('903e580e-736f-491e-926e-7e8cbb4ceb15', 'naruto_six_paths_bust_08__99373__22779.jpg', 'naruto_six_paths_bust_08__99373__22779.jpg', 'product_images/naruto_six_paths_bust_08__99373__22779.jpg', 'https://www.toynamishop.com/product_images/o/057/naruto_six_paths_bust_08__99373__22779.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('9bd28bbf-4bef-46ec-851b-6d74c8bd8568', 'naruto_six_paths_bust_04__99540__77143.jpg', 'naruto_six_paths_bust_04__99540__77143.jpg', 'product_images/naruto_six_paths_bust_04__99540__77143.jpg', 'https://www.toynamishop.com/product_images/t/396/naruto_six_paths_bust_04__99540__77143.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('a49f8471-de72-4c03-aa3b-0ed30d668e81', 'naruto_six_paths_bust_02__21963__99471.jpg', 'naruto_six_paths_bust_02__21963__99471.jpg', 'product_images/naruto_six_paths_bust_02__21963__99471.jpg', 'https://www.toynamishop.com/product_images/z/484/naruto_six_paths_bust_02__21963__99471.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('41764b6f-50e4-45a2-812a-aa680980b9c0', 'naruto_six_paths_bust_06__79368__95587.jpg', 'naruto_six_paths_bust_06__79368__95587.jpg', 'product_images/naruto_six_paths_bust_06__79368__95587.jpg', 'https://www.toynamishop.com/product_images/q/462/naruto_six_paths_bust_06__79368__95587.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('2ec59885-f9e6-4ade-acd4-74c5459c3407', 'naruto_six_paths_bust_03__41125__28559.jpg', 'naruto_six_paths_bust_03__41125__28559.jpg', 'product_images/naruto_six_paths_bust_03__41125__28559.jpg', 'https://www.toynamishop.com/product_images/i/130/naruto_six_paths_bust_03__41125__28559.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 10, '2025-08-24 03:34:39.225191+00', NOW()),
+('aef9ddb1-76f6-434e-b8d3-3262ee40152b', 'naruto_six_paths_bust_02_pq__99257__98161.jpg', 'naruto_six_paths_bust_02_pq__99257__98161.jpg', 'product_images/naruto_six_paths_bust_02_pq__99257__98161.jpg', 'https://www.toynamishop.com/product_images/x/340/naruto_six_paths_bust_02_pq__99257__98161.jpg', 'products', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', 'image/jpeg', 'jpg', ARRAY['product'], 11, '2025-08-24 03:34:39.225191+00', NOW()),
+('3c27987d-6bb9-43a3-81f2-ed7d5b3131e6', 'Bleach_series_2_Toshiro_1__58469__79294.jpg', 'Bleach_series_2_Toshiro_1__58469__79294.jpg', 'product_images/Bleach_series_2_Toshiro_1__58469__79294.jpg', 'https://www.toynamishop.com/product_images/j/591/Bleach_series_2_Toshiro_1__58469__79294.jpg', 'products', 'Deluxe 6" PVC Statue: Toshiro', 'Deluxe 6" PVC Statue: Toshiro', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('1f1f3844-126f-4dc6-ad61-7c8a6083ce81', 'Bleach_series_2_Toshiro_2__80912__53042.jpg', 'Bleach_series_2_Toshiro_2__80912__53042.jpg', 'product_images/Bleach_series_2_Toshiro_2__80912__53042.jpg', 'https://www.toynamishop.com/product_images/s/075/Bleach_series_2_Toshiro_2__80912__53042.jpg', 'products', 'Deluxe 6" PVC Statue: Toshiro', 'Deluxe 6" PVC Statue: Toshiro', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('e2d62540-bfb6-4c64-8750-411454998c36', 'BLEACH_collection-2_renji-and-toshiro__04930__13020.jpg', 'BLEACH_collection-2_renji-and-toshiro__04930__13020.jpg', 'product_images/BLEACH_collection-2_renji-and-toshiro__04930__13020.jpg', 'https://www.toynamishop.com/product_images/l/261/BLEACH_collection-2_renji-and-toshiro__04930__13020.jpg', 'products', 'Deluxe 6" PVC Statue: Toshiro', 'Deluxe 6" PVC Statue: Toshiro', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('5655f5ce-7e1b-42d7-a34f-e582d1d57f02', 'SDCC2025_robotech_skull_cyclone_01__36218.jpg', 'SDCC2025_robotech_skull_cyclone_01__36218.jpg', 'product_images/SDCC2025_robotech_skull_cyclone_01__36218.jpg', 'https://www.toynamishop.com/product_images/w/955/SDCC2025_robotech_skull_cyclone_01__36218.jpg', 'products', 'Admiral Hunters Exclusive VR-052F Cyclone', 'Admiral Hunters Exclusive VR-052F Cyclone', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('a44556ac-8c69-4ac1-98eb-45486c3cae74', 'SDCC2025_robotech_skull_cyclone_02__91192.jpg', 'SDCC2025_robotech_skull_cyclone_02__91192.jpg', 'product_images/SDCC2025_robotech_skull_cyclone_02__91192.jpg', 'https://www.toynamishop.com/product_images/g/963/SDCC2025_robotech_skull_cyclone_02__91192.jpg', 'products', 'Admiral Hunters Exclusive VR-052F Cyclone', 'Admiral Hunters Exclusive VR-052F Cyclone', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('376966da-6bba-4f57-84d2-fcf789b5e2d3', 'SDCC2025_robotech_vf1j_morpher_01__25005.jpg', 'SDCC2025_robotech_vf1j_morpher_01__25005.jpg', 'product_images/SDCC2025_robotech_vf1j_morpher_01__25005.jpg', 'https://www.toynamishop.com/product_images/z/258/SDCC2025_robotech_vf1j_morpher_01__25005.jpg', 'products', '40th Anniversary Super Veritech Morpher - Rick Hunter VF1J Edition', '40th Anniversary Super Veritech Morpher - Rick Hunter VF1J Edition', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('0c9d4c05-ff0d-4f36-9d56-c5545b576ed6', 'SDCC2025_robotech_vf1j_morpher_02__59435.jpg', 'SDCC2025_robotech_vf1j_morpher_02__59435.jpg', 'product_images/SDCC2025_robotech_vf1j_morpher_02__59435.jpg', 'https://www.toynamishop.com/product_images/a/415/SDCC2025_robotech_vf1j_morpher_02__59435.jpg', 'products', '40th Anniversary Super Veritech Morpher - Rick Hunter VF1J Edition', '40th Anniversary Super Veritech Morpher - Rick Hunter VF1J Edition', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('ec51bdd4-f8ec-4e1d-a511-b3be111a7a27', 'SDCC2025_robotech_CYCLONE_40TH__t-shirt__65750.jpg', 'SDCC2025_robotech_CYCLONE_40TH__t-shirt__65750.jpg', 'product_images/SDCC2025_robotech_CYCLONE_40TH__t-shirt__65750.jpg', 'https://www.toynamishop.com/product_images/w/153/SDCC2025_robotech_CYCLONE_40TH__t-shirt__65750.jpg', 'products', 'Robotech Skull Cyclone Shirt 2025 SDCC Exclusive', 'Robotech Skull Cyclone Shirt 2025 SDCC Exclusive', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('9e0f729e-a254-4283-aa4d-ee8bc112d9e5', 'Screenshot_62__61127__20264.1750464106.1280.1280__34677.png', 'Screenshot_62__61127__20264.1750464106.1280.1280__34677.png', 'product_images/Screenshot_62__61127__20264.1750464106.1280.1280__34677.png', 'https://www.toynamishop.com/product_images/k/091/Screenshot_62__61127__20264.1750464106.1280.1280__34677.png', 'products', 'Robotech Skull Cyclone Shirt 2025 SDCC Exclusive', 'Robotech Skull Cyclone Shirt 2025 SDCC Exclusive', 'image/png', 'png', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('32e6031f-4f5e-42e0-a3c6-68e407e74f77', 'Screenshot_63__68468__55352.1750464106.1280.1280__05366.png', 'Screenshot_63__68468__55352.1750464106.1280.1280__05366.png', 'product_images/Screenshot_63__68468__55352.1750464106.1280.1280__05366.png', 'https://www.toynamishop.com/product_images/a/262/Screenshot_63__68468__55352.1750464106.1280.1280__05366.png', 'products', 'Robotech Skull Cyclone Shirt 2025 SDCC Exclusive', 'Robotech Skull Cyclone Shirt 2025 SDCC Exclusive', 'image/png', 'png', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('60622859-585b-4001-ba53-80bf03ea2213', 'ALPHA_FIGHTER_official_photo_US_A1__62980.jpg', 'ALPHA_FIGHTER_official_photo_US_A1__62980.jpg', 'product_images/ALPHA_FIGHTER_official_photo_US_A1__62980.jpg', 'https://www.toynamishop.com/product_images/y/865/ALPHA_FIGHTER_official_photo_US_A1__62980.jpg', 'products', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 2, '2025-08-24 03:34:39.225191+00', NOW()),
+('77a4fcce-28de-4500-aeaa-2272bd654466', '10_ALPHA_FIGHTER_official_photo_US_I1__83069.jpg', '10_ALPHA_FIGHTER_official_photo_US_I1__83069.jpg', 'product_images/10_ALPHA_FIGHTER_official_photo_US_I1__83069.jpg', 'https://www.toynamishop.com/product_images/z/015/10_ALPHA_FIGHTER_official_photo_US_I1__83069.jpg', 'products', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 3, '2025-08-24 03:34:39.225191+00', NOW()),
+('68af91f1-b5c2-4a9f-9ab9-2cbad1e240d4', 'ALPHA_FIGHTER_official_photo_US_A2__01200.jpg', 'ALPHA_FIGHTER_official_photo_US_A2__01200.jpg', 'product_images/ALPHA_FIGHTER_official_photo_US_A2__01200.jpg', 'https://www.toynamishop.com/product_images/w/036/ALPHA_FIGHTER_official_photo_US_A2__01200.jpg', 'products', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 4, '2025-08-24 03:34:39.225191+00', NOW()),
+('caae4c3e-1d78-4111-8af7-5475ea9fb39d', 'ALPHA_FIGHTER_official_photo_US_A3__59087.jpg', 'ALPHA_FIGHTER_official_photo_US_A3__59087.jpg', 'product_images/ALPHA_FIGHTER_official_photo_US_A3__59087.jpg', 'https://www.toynamishop.com/product_images/i/563/ALPHA_FIGHTER_official_photo_US_A3__59087.jpg', 'products', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 5, '2025-08-24 03:34:39.225191+00', NOW()),
+('1495e86b-3ab5-4cd1-b1fa-f5b7c04dec70', 'ALPHA_FIGHTER_official_photo_US_D1__27471.jpg', 'ALPHA_FIGHTER_official_photo_US_D1__27471.jpg', 'product_images/ALPHA_FIGHTER_official_photo_US_D1__27471.jpg', 'https://www.toynamishop.com/product_images/h/673/ALPHA_FIGHTER_official_photo_US_D1__27471.jpg', 'products', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 6, '2025-08-24 03:34:39.225191+00', NOW()),
+('13fde5fc-2846-49b5-95da-0f8bc2e2a573', 'ALPHA_FIGHTER_official_photo_US_F2__35152.jpg', 'ALPHA_FIGHTER_official_photo_US_F2__35152.jpg', 'product_images/ALPHA_FIGHTER_official_photo_US_F2__35152.jpg', 'https://www.toynamishop.com/product_images/y/541/ALPHA_FIGHTER_official_photo_US_F2__35152.jpg', 'products', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 7, '2025-08-24 03:34:39.225191+00', NOW()),
+('e264f3eb-9da7-4065-b036-e177119e2e09', 'ALPHA_FIGHTER_official_photo_US_D5__38922.jpg', 'ALPHA_FIGHTER_official_photo_US_D5__38922.jpg', 'product_images/ALPHA_FIGHTER_official_photo_US_D5__38922.jpg', 'https://www.toynamishop.com/product_images/e/933/ALPHA_FIGHTER_official_photo_US_D5__38922.jpg', 'products', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 8, '2025-08-24 03:34:39.225191+00', NOW()),
+('1cdd2260-9af5-4bca-a02c-38d676113433', '09_ALPHA_FIGHTER_official_photo_US_F3__90775.jpg', '09_ALPHA_FIGHTER_official_photo_US_F3__90775.jpg', 'product_images/09_ALPHA_FIGHTER_official_photo_US_F3__90775.jpg', 'https://www.toynamishop.com/product_images/y/535/09_ALPHA_FIGHTER_official_photo_US_F3__90775.jpg', 'products', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 9, '2025-08-24 03:34:39.225191+00', NOW()),
+('62b3303b-cf3b-4ac4-b29d-de917fd39c87', '01_ALPHA_FIGHTER_official_photo_US_G1__89442.jpg', '01_ALPHA_FIGHTER_official_photo_US_G1__89442.jpg', 'product_images/01_ALPHA_FIGHTER_official_photo_US_G1__89442.jpg', 'https://www.toynamishop.com/product_images/t/575/01_ALPHA_FIGHTER_official_photo_US_G1__89442.jpg', 'products', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 10, '2025-08-24 03:34:39.225191+00', NOW()),
+('dc364bfd-739d-4c23-ac60-5de5db39c4f4', '08_ALPHA_FIGHTER_official_photo_US_F1__29964.jpg', '08_ALPHA_FIGHTER_official_photo_US_F1__29964.jpg', 'product_images/08_ALPHA_FIGHTER_official_photo_US_F1__29964.jpg', 'https://www.toynamishop.com/product_images/n/523/08_ALPHA_FIGHTER_official_photo_US_F1__29964.jpg', 'products', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 11, '2025-08-24 03:34:39.225191+00', NOW()),
+('4678f6ba-31d6-42de-ad5b-b727d6d5f046', '02_ALPHA_FIGHTER_official_photo_US_G2__29856.jpg', '02_ALPHA_FIGHTER_official_photo_US_G2__29856.jpg', 'product_images/02_ALPHA_FIGHTER_official_photo_US_G2__29856.jpg', 'https://www.toynamishop.com/product_images/b/564/02_ALPHA_FIGHTER_official_photo_US_G2__29856.jpg', 'products', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 12, '2025-08-24 03:34:39.225191+00', NOW()),
+('16345247-4c3b-4195-95f2-5b289ec4b222', '03_ALPHA_FIGHTER_official_photo_US_G3__24029.jpg', '03_ALPHA_FIGHTER_official_photo_US_G3__24029.jpg', 'product_images/03_ALPHA_FIGHTER_official_photo_US_G3__24029.jpg', 'https://www.toynamishop.com/product_images/m/281/03_ALPHA_FIGHTER_official_photo_US_G3__24029.jpg', 'products', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 13, '2025-08-24 03:34:39.225191+00', NOW()),
+('cc46647d-641b-48e4-bf5c-32e766d94f1d', '05_ALPHA_FIGHTER_official_photo_US_G5__38408.jpg', '05_ALPHA_FIGHTER_official_photo_US_G5__38408.jpg', 'product_images/05_ALPHA_FIGHTER_official_photo_US_G5__38408.jpg', 'https://www.toynamishop.com/product_images/n/227/05_ALPHA_FIGHTER_official_photo_US_G5__38408.jpg', 'products', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 14, '2025-08-24 03:34:39.225191+00', NOW()),
+('c6b027ad-1d92-42e1-977a-562d2d9156e4', '04_ALPHA_FIGHTER_official_photo_US_G4__63131.jpg', '04_ALPHA_FIGHTER_official_photo_US_G4__63131.jpg', 'product_images/04_ALPHA_FIGHTER_official_photo_US_G4__63131.jpg', 'https://www.toynamishop.com/product_images/r/673/04_ALPHA_FIGHTER_official_photo_US_G4__63131.jpg', 'products', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', 'image/jpeg', 'jpg', ARRAY['product'], 15, '2025-08-24 03:34:39.225191+00', NOW());
+
+-- ======================================
+-- 🔗 Media Usage Records (Product Images)  
+-- ======================================
+INSERT INTO media_usage (id, media_id, entity_type, entity_id, field_name, created_at) VALUES 
+('1b8fe87d-cd94-4842-a5b4-7f8856c5a6fa', 'bb3c900c-0f5a-46c0-81cb-8daa8b857cf9', 'product', '700', 'gallery_image_2', NOW()),
+('8caaf9a7-daed-4f7b-a45e-4973914043a3', '278feb70-a8e0-4efb-b35d-fc68384eaca5', 'product', '701', 'gallery_image_2', NOW()),
+('dae6a773-dc6e-49cc-b7e7-4030534550d0', '22dce933-3f7b-4547-96c3-b3306b326715', 'product', '701', 'gallery_image_3', NOW()),
+('ff7d1b9b-a9d4-4c9f-a9cf-aa5d4c2aee57', 'a5cf1548-1acf-42f6-b65f-b5ffbf3ecad2', 'product', '701', 'gallery_image_4', NOW()),
+('2342f0c2-47d7-43c2-9464-74a874aca730', '346c39de-7fbd-4208-ae59-2cc774617260', 'product', '701', 'gallery_image_5', NOW()),
+('887a4874-6426-4fc1-8bba-11642e702f29', '6f05c7c8-f5fd-4628-af47-c49a0217c2fb', 'product', '701', 'gallery_image_6', NOW()),
+('28fd872f-c807-4d26-8815-882ed91c7a3c', 'b3b441b0-311b-403a-831b-811e3f3fb8eb', 'product', '701', 'gallery_image_7', NOW()),
+('7da99836-8668-44ca-9f51-fc6115dba9a2', 'e423c299-575b-42fb-ab75-d857976e3381', 'product', '701', 'gallery_image_8', NOW()),
+('0e39407f-63a7-4004-8168-ffdc70303c72', '821eea78-95de-42ee-9dc0-efa75b200d0b', 'product', '701', 'gallery_image_9', NOW()),
+('512039f5-21c8-4f3f-a24b-decc4d10e3dd', 'ecb91e97-2d45-4363-842b-69832626960d', 'product', '702', 'gallery_image_2', NOW()),
+('3ce0a874-3acf-442d-9092-96250d648f74', 'd387fef0-4ab0-4966-90ce-5c3b5d17af65', 'product', '702', 'gallery_image_3', NOW()),
+('d7113532-ef2e-49f8-b3a7-763095ff131e', '02c1017a-5c7b-45db-ac1d-278c7b06cfe9', 'product', '703', 'gallery_image_2', NOW()),
+('e2ec6fbe-8505-43b1-bcee-447c24bb800c', 'fcaad9fa-9fa7-4a19-802b-7081cf016c04', 'product', '704', 'gallery_image_2', NOW()),
+('600e7146-b449-48a5-800a-b7e6529bf338', '9306b4dc-8d3a-4ca6-be5b-17e8ba68a12c', 'product', '704', 'gallery_image_3', NOW()),
+('a005af66-28e0-440a-9a56-80ab90264115', '2758e2e6-832f-456a-824d-5ee954381c61', 'product', '704', 'gallery_image_4', NOW()),
+('cb806fe6-b5c9-496a-912a-399c86816c18', '0005abfa-143d-4a43-89a8-a0caa4131f35', 'product', '704', 'gallery_image_5', NOW()),
+('5d63bab7-bba0-43b5-bb73-4ee194858c70', '6be54c7e-fd3c-4768-8915-14370dbcf9d0', 'product', '704', 'gallery_image_6', NOW()),
+('f4ef9b14-e2f8-454f-8ca6-72a45d22627d', 'f4436078-6d60-40c1-b62f-88cacd82bc11', 'product', '704', 'gallery_image_7', NOW()),
+('575d6f32-b99f-4e1d-9f10-ba32138dbebe', '4e0a83b4-074c-4cac-bc7b-0e4950379df3', 'product', '705', 'gallery_image_2', NOW()),
+('d640e8cc-fd09-412a-b3f1-04eb0b8306d9', '9198176b-f8a6-4806-849d-6ac012906c71', 'product', '705', 'gallery_image_3', NOW()),
+('989fcef8-30f2-4bd0-8c4b-8ca8adc5c5be', '0092c0a1-e487-4146-957a-3383f4c32997', 'product', '705', 'gallery_image_4', NOW()),
+('fa1bfaf2-0a6b-4518-9513-a5a8da3cf5b3', '98e70c22-7088-4437-92fe-e33d74a803de', 'product', '705', 'gallery_image_5', NOW()),
+('863099ce-5fdf-4c6a-84ff-d2e83987e837', 'a9fa8da1-289b-440a-8268-06d5b9d0aa41', 'product', '706', 'gallery_image_2', NOW()),
+('0d95686d-e087-4c25-ae2e-4891ea74cf73', '9b926d04-a98f-4141-a89a-b8e4e9d4f1a0', 'product', '706', 'gallery_image_3', NOW()),
+('3f0f6b6e-d466-4c35-beee-6a7dffab08f5', '3acc83f1-e9d2-4cce-b439-9ea35049cae6', 'product', '706', 'gallery_image_4', NOW()),
+('d248ae80-c0b2-4ada-aa64-29d52c3c3a5a', 'bf057125-0058-4398-b488-16d5fef73c5e', 'product', '706', 'gallery_image_5', NOW()),
+('2f5f7240-ed9d-4ead-afee-7fea0f349486', '296eea6c-00f8-4d98-a6b6-c83763dd4d84', 'product', '706', 'gallery_image_6', NOW()),
+('e768121c-366c-4cda-813e-846d3099d73f', 'd4dc4f61-6eb4-4911-9392-b2cc9544f3f2', 'product', '706', 'gallery_image_7', NOW()),
+('25d3b637-a9c3-477f-afbc-710f3afb5ca9', '92ff86dd-8093-4726-a97b-16d9cd37b402', 'product', '707', 'gallery_image_2', NOW()),
+('33d21f86-cb28-4a9a-b4fe-91ee376db228', 'd92c0d7e-752a-4a66-9ccd-699eede9f890', 'product', '707', 'gallery_image_3', NOW()),
+('0163e564-2942-4fad-b89f-3510e6af8c85', 'b33263f4-abf7-4c87-a68b-2499a15fa245', 'product', '707', 'gallery_image_4', NOW()),
+('2c2892f5-a218-4c44-8479-62bc655caa6e', '05b0e8dc-7d8d-47fc-a099-41e88ffe9d50', 'product', '707', 'gallery_image_5', NOW()),
+('6c05fd63-bb84-4e02-8bbe-eb078a7e1e7e', 'a2f32ce4-1385-4af3-a83a-78ad5149afaa', 'product', '707', 'gallery_image_6', NOW()),
+('8524cee0-aed5-44e3-a5ce-e259f9399279', 'a7ac53f5-ef16-4382-af58-317a90392570', 'product', '707', 'gallery_image_7', NOW()),
+('7b1f8165-7a0b-4198-be51-642b3bddbbde', '0d2011a0-065d-4576-a0d7-cb8a5dbb4461', 'product', '708', 'gallery_image_2', NOW()),
+('1cbbe8ed-1f45-4c6f-a3e0-fb228b4a62b4', '6b785b93-b44f-45bd-8cf7-0679aa42afe2', 'product', '708', 'gallery_image_3', NOW()),
+('bae3097a-0618-4e83-9f96-f36ca4c611f4', '62692d2c-7a45-4410-b311-27bb932bca5d', 'product', '708', 'gallery_image_4', NOW()),
+('9405075b-7fb6-4998-8806-3cbdbadafecf', 'ace5fb6c-e46f-44d9-b135-b27a5ca2bf35', 'product', '708', 'gallery_image_5', NOW()),
+('00be885d-80dd-4d31-995a-6fe3988cd4bd', '1d603dff-a827-412e-8b2b-533c27930de6', 'product', '709', 'gallery_image_2', NOW()),
+('0cb86d9c-650e-45d1-93a7-c5232ee9bb7f', 'ce4e0473-0cdb-4016-9499-9d013527698c', 'product', '709', 'gallery_image_3', NOW()),
+('c9a975c7-716f-443e-879e-6e2fb2ec3deb', '364b2aea-326d-41dd-9ca9-e1e1baff4622', 'product', '709', 'gallery_image_4', NOW()),
+('d55c54e5-09d1-42cf-be1d-eaa98bf67ea2', '4bfc7981-eb5d-4e37-bd3a-6eef8bd259fa', 'product', '710', 'gallery_image_2', NOW()),
+('78705612-e8e5-431a-bcb8-8bae293bb23a', '11bb36fb-39f5-48a1-91a6-903a60f164e9', 'product', '710', 'gallery_image_3', NOW()),
+('772ac157-d198-4fcc-b20c-a966712a4e36', 'ec07bf20-d273-465b-97de-5ddf46a631cd', 'product', '710', 'gallery_image_4', NOW()),
+('4bb6e90b-29fa-4314-b496-2d8658e33046', '66d4e893-7d3b-4b5f-8ae2-5fb1365f1ffb', 'product', '711', 'gallery_image_2', NOW()),
+('c99f2088-9baf-4198-b0f2-03a717cef0cf', 'd6d078ca-5635-41f5-87c2-a6e52a4383a3', 'product', '711', 'gallery_image_3', NOW()),
+('fee0ad48-c586-4a45-9e5b-545f15c161f6', '3befb799-ed88-4d68-98d0-fc649a62938e', 'product', '712', 'gallery_image_2', NOW()),
+('8628b017-f309-4364-8a1b-f0f3e4b25e06', '683f32c7-b5a9-41b1-b3b4-e15630750805', 'product', '712', 'gallery_image_3', NOW()),
+('1c2a50de-81f4-44d8-9005-29e96339cbb1', '7839f800-f044-4c9c-9120-245e010e56e7', 'product', '712', 'gallery_image_4', NOW()),
+('20d21c0e-cbfe-4b06-a2a6-0efa21d484b3', 'd15c4a98-0315-46bd-88fd-e87c161575e2', 'product', '712', 'gallery_image_5', NOW()),
+('c17086cc-b1d4-40a9-83fd-c7ad3c89383d', 'fee09bdf-bedc-41bc-9b0f-11814a76b53e', 'product', '712', 'gallery_image_6', NOW()),
+('3ef69bc9-5336-4841-afce-e42ee04e5ddf', '36a93a88-234d-445f-bc75-f78711a5aa01', 'product', '713', 'gallery_image_2', NOW()),
+('ddcbac58-24a2-4cd8-aa79-00c24fd1004a', '7cb257af-46a7-4b6e-acbc-23ff0b63d247', 'product', '713', 'gallery_image_3', NOW()),
+('5acb5fbe-c72e-4e59-b856-c0c04fd4cac1', '331acaf2-0e4b-4c4a-a6f1-b2b22ecce8ba', 'product', '713', 'gallery_image_4', NOW()),
+('2ae41780-b24e-4454-83ba-e563cd9a1b5f', '80d0e490-1177-4f36-9d7c-62e81f7df9f9', 'product', '714', 'gallery_image_2', NOW()),
+('8b04d094-3044-43cc-adec-3b9a5be89a78', '53b0660b-ab5f-42e7-a37d-e80cc18ca037', 'product', '714', 'gallery_image_3', NOW()),
+('11e09e22-040e-45a1-a4da-42eb21d4fa7c', '4ac93f7d-883e-41f1-9cf0-c124a08fc77c', 'product', '714', 'gallery_image_4', NOW()),
+('70bf6c36-3582-4732-954e-1faea949704f', '77fa0e92-ff41-4b05-99a1-0fdd6351048c', 'product', '715', 'gallery_image_2', NOW()),
+('76ef7f60-cb2e-4cf6-8067-26052482df7f', '2b9a646e-e697-45bb-b49d-d7fd9869ff5b', 'product', '716', 'gallery_image_2', NOW()),
+('624e1c47-9fc8-42e9-979b-f122b29d60f8', '716140ff-9028-494f-8f04-1d437838aa92', 'product', '716', 'gallery_image_3', NOW()),
+('004b5081-70b8-4186-84af-7223541e4ab8', 'fb11acd6-7ade-4a75-81ef-4c1d7ed29643', 'product', '717', 'gallery_image_2', NOW()),
+('82198035-9f85-4f13-8002-a6fad8250d70', '6e67fb6d-8ec9-4baf-87e2-9224a9bdd94f', 'product', '717', 'gallery_image_3', NOW()),
+('503b97b6-e35a-4876-9db7-3d2203e5ce2b', '95ae54ff-3680-4e88-b0c7-bd3311d971b0', 'product', '717', 'gallery_image_4', NOW()),
+('af909175-a167-4417-9c71-b62bde0da125', 'b66fbc55-d13c-4688-aa42-7e42423ad9e7', 'product', '717', 'gallery_image_5', NOW()),
+('2c2b6ac2-0d6c-448a-a4dd-25c882ca5a71', '32b75896-834e-4f54-802c-1503c2b1ddb9', 'product', '717', 'gallery_image_6', NOW()),
+('f86cf0ad-9fa6-4e07-aa8b-9d62913dc27b', 'fc22d5bb-9617-4266-b4d0-93e13cd2b3bf', 'product', '717', 'gallery_image_7', NOW()),
+('e2f8844e-24e1-4d5f-8460-19091dad176a', '42ac2196-f672-438e-b3b8-8e5b3ab7e137', 'product', '717', 'gallery_image_8', NOW()),
+('14dfa2c8-487f-4700-9247-40345e705cd0', '147cb807-a425-46a7-bc9e-b0aed086c976', 'product', '717', 'gallery_image_9', NOW()),
+('0ef831e4-0e6a-4e96-bf30-5e200cd001a6', '0e2ffb1d-d252-48e2-ab0a-a5e739749cc3', 'product', '717', 'gallery_image_10', NOW()),
+('796c96ec-10d6-4daf-880e-3d1f9cbe89b1', '5de02983-987d-48f8-9c96-34c91f7874d1', 'product', '717', 'gallery_image_11', NOW()),
+('a9fb3787-19d5-4738-ba80-8e53a9f0786d', '0f56f94a-f418-4bcf-8743-87bd318b8530', 'product', '718', 'gallery_image_2', NOW()),
+('f71bffdb-77d9-47dd-8324-dd84b8832458', 'ac907c72-45c8-4025-ba9e-30220fc9c2df', 'product', '718', 'gallery_image_3', NOW()),
+('556d5849-6822-4bdb-8e0b-26e7044fb332', '4ed37cea-1932-4f96-96e4-310ff0f70648', 'product', '718', 'gallery_image_4', NOW()),
+('b8e9cf00-b110-4d51-a6e2-5dac6468879d', 'b6d936e8-0d91-4ff6-9cf3-77e6534a515f', 'product', '718', 'gallery_image_5', NOW()),
+('9b8c9bb0-7d0c-4324-8065-598c572c385b', '90934af9-c9d9-416f-9c09-7c3ef0aa4b69', 'product', '718', 'gallery_image_6', NOW()),
+('7a952713-19bd-49d9-aa82-5a2aacad01ab', '5873b042-48ea-4a90-bd43-971023afd3d7', 'product', '718', 'gallery_image_7', NOW()),
+('f533fe8b-70ec-44c6-ad8b-19b73dc4a823', '950f7bc5-81c9-4857-97f2-6e8ee38c99d8', 'product', '718', 'gallery_image_8', NOW()),
+('58339fb8-8c05-4d5e-b95e-785bc1f3121b', '16bf3d50-3e79-4a72-ac29-edea9671b5f5', 'product', '718', 'gallery_image_9', NOW()),
+('cd63c4be-9058-4e4c-8a53-3e16e98d5a26', 'efcf8fd9-abf2-48f3-b351-8c1fb66bbfa7', 'product', '719', 'gallery_image_2', NOW()),
+('51b21653-576f-49c5-b57b-e06a6f3c0ba5', '7ce8fe99-daac-4088-8912-6305a7bc50cc', 'product', '719', 'gallery_image_3', NOW()),
+('96f1cc5d-f841-4b08-825e-9433c143f69a', 'f00028bf-f1e9-4063-961b-8210ca4649b3', 'product', '719', 'gallery_image_4', NOW()),
+('1fc9a097-ef5d-475e-8347-3e3d9f535ee5', '5a90ffef-0b34-4d82-ab5d-b5db40b15668', 'product', '720', 'gallery_image_2', NOW()),
+('67260eae-db05-4e83-b590-b3097627b2a7', '747e4ed4-3b7b-4468-a8e3-8859309fe729', 'product', '721', 'gallery_image_2', NOW()),
+('e3e3264f-bd51-45d1-891a-3380d483d325', '8e6d95dc-5aae-4390-bd3e-c9236666684b', 'product', '721', 'gallery_image_3', NOW()),
+('1a83bcf2-96f9-415b-bc06-e104be7cfa7c', '63cb830b-c649-42d1-83ea-0fab3a2e7e07', 'product', '721', 'gallery_image_4', NOW()),
+('a5acfab0-4346-4538-8614-3b0633530686', 'ed11ff4e-2e6f-4dd4-95d4-f34af711e555', 'product', '722', 'gallery_image_2', NOW()),
+('976655f3-1410-4b4f-b85e-078722914ff7', 'f16b3c47-57ac-4ee4-b3e2-aff2f67c26e9', 'product', '722', 'gallery_image_3', NOW()),
+('ce02c029-699a-41ec-a72f-7f030f5333ae', '69940b47-66e9-4db8-8e05-703d138c42de', 'product', '722', 'gallery_image_4', NOW()),
+('463a83bb-6f1c-480c-abd8-1a722a1f30dd', 'd5c3c947-a4db-441f-8fb6-828cdeb76fb9', 'product', '722', 'gallery_image_5', NOW()),
+('45caf093-35f6-4526-861d-1e16a7f5c920', '901df516-adb2-4ed7-b5a6-45afa02cb12d', 'product', '723', 'gallery_image_2', NOW()),
+('414e29fc-4f51-4240-bb93-942b85276c6a', 'ec8c79c5-b124-42a7-9269-8fd773eed175', 'product', '723', 'gallery_image_3', NOW()),
+('fbe70894-3dab-4160-be7c-a1c8029ccdb8', 'e75d68f4-84aa-40fb-a9cf-d041ce3a196a', 'product', '723', 'gallery_image_4', NOW()),
+('3120cb1d-8db4-4dab-a091-dd1012c81ae5', '1408bb1d-7a92-4367-a30d-64771d09c026', 'product', '723', 'gallery_image_5', NOW()),
+('9cb989ed-d4f0-47f2-b56d-64db92a042a3', '760ee98d-2b49-4894-b0f1-9f13ba438951', 'product', '724', 'gallery_image_2', NOW()),
+('4a796001-4349-442a-bd80-8fb9cd52746f', '4a844f4c-a87b-4f48-bb9f-5749c5e56fdc', 'product', '724', 'gallery_image_3', NOW()),
+('0ff2bf45-f5dc-4e6b-9ddb-6d80b1edbb32', 'a1fa8eca-27fc-4bf4-8332-824b545ed151', 'product', '724', 'gallery_image_4', NOW()),
+('1072d05d-c452-48a0-881e-3cf85d12cfbb', 'b9382dd7-3fe8-4814-9611-224f7d061e48', 'product', '725', 'gallery_image_2', NOW()),
+('cd00be6a-0151-4bb3-b891-d680faf34dd1', '6ea12df2-87b2-4b8c-a239-086bd21ffeec', 'product', '726', 'gallery_image_2', NOW()),
+('46641216-c3e7-4aff-a49f-6b7645625397', 'c621424f-52fe-427b-8ec1-f9e9b35735c7', 'product', '726', 'gallery_image_3', NOW()),
+('d7cc7148-194d-4baf-8e68-d7436b3d0ce2', '3e82c55c-b4a8-4dd1-b6b8-2abda0b1892b', 'product', '726', 'gallery_image_4', NOW()),
+('b128fd7b-75bc-44a5-9292-2105a1802ac3', '165281ff-cba6-496e-b05e-995b18a8464b', 'product', '727', 'gallery_image_2', NOW()),
+('d379d38e-91da-4d1f-bb36-bff8a4aa2765', '182eb933-d003-4ace-840d-5ce586a35438', 'product', '727', 'gallery_image_3', NOW()),
+('1f0dd835-ee6c-44d4-b77a-950f43d85490', 'e858ed2b-627b-4211-abf8-5778848688db', 'product', '727', 'gallery_image_4', NOW()),
+('4fa19ef3-a996-4e26-a11d-a42e341ea3a6', '3ecce5fa-7558-4664-a6bb-f1abe1d85a8b', 'product', '728', 'gallery_image_2', NOW()),
+('994a86c0-5fff-464a-ab3d-c4e632cf65f1', '2c23383f-a92a-4468-92cb-a1f85fa8d714', 'product', '728', 'gallery_image_3', NOW()),
+('79a89234-932c-4a20-ad21-cbe652655207', '170be4d7-5f8e-4707-bdd7-3a2c52b1bc56', 'product', '728', 'gallery_image_4', NOW()),
+('ed175822-31ae-4e62-9759-bec25726a98f', 'fd733f5b-e38e-4c8c-8f40-502942dc85e4', 'product', '728', 'gallery_image_5', NOW()),
+('27520a4a-7d0e-4ce2-ba86-098d50998b32', '31d9d360-fcf7-4a95-bbc4-2ab4f964dd5a', 'product', '728', 'gallery_image_6', NOW()),
+('3f212a02-f6ae-46a8-be66-c2dce466c7ce', '8f5dcc87-3f31-4ee6-b240-69298fc1b8a0', 'product', '729', 'gallery_image_2', NOW()),
+('9bddd358-d319-41d1-b1ef-9db8c8023b75', 'c92c6cd7-4cbd-4980-a30d-32b3918277dc', 'product', '729', 'gallery_image_3', NOW()),
+('19aed9c6-9381-464c-b458-c8fd156ac67e', '01fafa72-9519-43a8-accd-1dba17355424', 'product', '729', 'gallery_image_4', NOW()),
+('0988a564-096b-45e9-afd9-484b7bfe23d8', '05b02a4b-5844-4f2d-b78a-8cce0d3fe2eb', 'product', '730', 'gallery_image_2', NOW()),
+('d5686033-1271-40a9-80fe-9b63f91d874c', '0f44b9e0-e81f-4302-b8e7-bfe58a7453a3', 'product', '730', 'gallery_image_3', NOW()),
+('442c795e-4d0e-4b41-a359-4e6ac9f76d20', '6ec7fec8-a48f-4e68-9037-ba218f158f2e', 'product', '730', 'gallery_image_4', NOW()),
+('593d4bf4-dd1e-489c-9f8f-b74ad570f04d', '3861f082-833b-4d97-aae8-53acd8af6571', 'product', '730', 'gallery_image_5', NOW()),
+('0681818c-809e-47b6-aed0-92591bc940f9', 'c5d18a78-00ff-4b26-b6fe-29e76125fa30', 'product', '730', 'gallery_image_6', NOW()),
+('5fcefed7-8db1-4475-9429-d8198f678f76', '5f8ba450-28b3-406d-8ccf-be621f1b233d', 'product', '731', 'gallery_image_2', NOW()),
+('c97ed10f-5768-46ec-b8fd-cb856e9df57d', '4bce8900-65fb-43e8-a211-6bfcb395a8b9', 'product', '731', 'gallery_image_3', NOW()),
+('0505b96b-e27d-4ab1-8b83-110188cd25ee', '872139d9-7053-4561-9544-b005c3c4ccf7', 'product', '731', 'gallery_image_4', NOW()),
+('f1673817-bbf5-43e7-8adc-b7acc5618440', 'db8675c2-19fe-4c82-871e-96a696e030ac', 'product', '731', 'gallery_image_5', NOW()),
+('be960b74-f1af-44be-8f09-4de97f75001f', 'fdd9199b-34d0-472a-bcbd-3a4705dbae51', 'product', '731', 'gallery_image_6', NOW()),
+('ea8169cd-3695-4b5b-9c11-e74e428f538f', '2ddb3a2b-f341-440f-99b4-7de5a70652fa', 'product', '732', 'gallery_image_2', NOW()),
+('5a024fb4-24db-4383-8416-c06c9a033cca', 'b007e9a5-ee33-40a9-a449-310c3e898676', 'product', '733', 'gallery_image_2', NOW()),
+('78c2d609-4274-49c6-a9d7-54459c44bde6', 'cc949ab9-3409-46bc-9697-2986ed9870bd', 'product', '733', 'gallery_image_3', NOW()),
+('53c83d47-c5ed-47c4-b5fc-b9cde9b34b55', '1224fa95-ed59-4be7-a885-5db33a1e873a', 'product', '733', 'gallery_image_4', NOW()),
+('ff9f7a35-7d31-47f4-a995-c718f437c878', '93abacf7-f086-43d4-a58e-1130d42c3f77', 'product', '733', 'gallery_image_5', NOW()),
+('d4155cef-1846-4127-be9a-a4111e86a129', 'ff785982-c7ef-493f-bcd0-15c2318ab7ad', 'product', '733', 'gallery_image_6', NOW()),
+('395f5641-c615-474a-bdd9-db06d8865d72', '69736792-3129-4d5a-9114-ad83246a7a45', 'product', '734', 'gallery_image_2', NOW()),
+('5c1c5342-9a67-47e6-8b4c-7a4ab613fe99', '83a810a5-77e0-4965-b4fb-cd48b842648d', 'product', '734', 'gallery_image_3', NOW()),
+('d0e5e1d6-b331-49cd-9206-aeb1e29f4ff5', '922c3214-21eb-4084-a634-e8b84937eb23', 'product', '734', 'gallery_image_4', NOW()),
+('aa1b536b-67ef-49af-ab2d-be81a0e068bc', '9b818b6e-75a8-41dc-9768-adcf933e1117', 'product', '734', 'gallery_image_5', NOW()),
+('0f4b27ee-d382-41a0-ae59-f9d48e5792e2', 'a39109c0-cc91-431f-ac3a-ad2c20bda2eb', 'product', '735', 'gallery_image_2', NOW()),
+('c7a0de04-c13f-4939-ab81-2ec655747079', '92110b54-2a00-4bcf-adca-36b9f1635299', 'product', '735', 'gallery_image_3', NOW()),
+('223dc61e-7202-4749-91cf-be1b81752fb2', 'afc0cc08-aec0-4871-a020-cdac01bf7af0', 'product', '736', 'gallery_image_2', NOW()),
+('502a7462-9bc8-4bd2-9e37-77f482877dae', '5f7a8919-8811-42a7-b976-31a4d0b4b4de', 'product', '737', 'gallery_image_2', NOW()),
+('fe433f7e-e3ac-4bd6-b0ab-fda7bfd6d6f4', '2428c652-5110-4a31-9b16-895e71fff187', 'product', '737', 'gallery_image_3', NOW()),
+('a5b248db-2c57-48a1-89c9-fca2f7d38425', 'af6ea4b3-2143-4bb0-b6f2-2e9060b26c08', 'product', '737', 'gallery_image_4', NOW()),
+('11dad076-7176-4960-9fb0-f21c26dc7390', '9bb856f9-0585-45c1-aca3-46b8daa499e3', 'product', '737', 'gallery_image_5', NOW()),
+('99af41ff-9399-42a8-bd70-8558d5eec5f0', '05751e4e-6210-42ab-8d19-9626500a3389', 'product', '737', 'gallery_image_6', NOW()),
+('2531d49e-ffd2-4552-b424-239c7c45f082', '80158d94-27d7-4b97-bd54-a80dbe5fdde7', 'product', '738', 'gallery_image_2', NOW()),
+('ae488d6b-25b5-4bd5-ab39-6448ba5c7d56', 'e3cdef88-4a42-4da1-bdfa-d01bf7390abf', 'product', '738', 'gallery_image_3', NOW()),
+('c4dc458d-b585-40e2-9670-4abc57922d3e', 'cd6e76cd-cd92-483e-84b7-abd49d11c512', 'product', '738', 'gallery_image_4', NOW()),
+('1c74c377-c65a-46bf-b9cd-8a83f0ba354e', '6503a941-3dff-4999-bf62-bb9563f1df9a', 'product', '739', 'gallery_image_2', NOW()),
+('a914b17a-b584-4065-979e-81f0a34285b5', '25a56da3-d7c1-4308-8992-6bd0e4ee6bce', 'product', '739', 'gallery_image_3', NOW()),
+('1174ee41-efa8-4300-8131-c569be948283', '9c861d2b-9497-4d93-8cb9-6d3688a9ad30', 'product', '739', 'gallery_image_4', NOW()),
+('2e300bf1-00df-4efe-ac78-098775022343', '8dd9eaf4-bca1-4db6-867a-c4b55a3a0265', 'product', '740', 'gallery_image_2', NOW()),
+('e5e861be-ea3a-4400-acc0-3680cd2a37dc', '607a7310-22d0-42da-8925-8cbae7a85e22', 'product', '740', 'gallery_image_3', NOW()),
+('d983fe16-b144-4808-b2e8-f97b5e6cf600', '4040a3f9-3bfd-4b13-80b3-4e4d7a7e375b', 'product', '740', 'gallery_image_4', NOW()),
+('371e4c6d-3fff-46d2-a32b-f30ce677e1e2', 'e9eda057-3a4f-4aba-91fd-7d0c98b7fff0', 'product', '740', 'gallery_image_5', NOW()),
+('558fa388-9b28-4c53-a4e4-f6450964c494', '8abe057a-4f45-4af2-b594-72c0511bb32f', 'product', '741', 'gallery_image_2', NOW()),
+('4b36dd9a-aa03-4aba-bbc0-d6dc39997fd3', '3958ee54-dfc2-4974-bcbb-b4df6e90adc3', 'product', '741', 'gallery_image_3', NOW()),
+('e65379d3-1e2b-4deb-afe8-ac7a0acc6e9e', '6fe89802-2dda-4f55-a2ec-8d21aca72687', 'product', '742', 'gallery_image_2', NOW()),
+('9d742470-406e-4eea-b437-098a82fa0da6', '75d75921-d90b-4be9-b5ba-a50f1c835c12', 'product', '742', 'gallery_image_3', NOW()),
+('826e18bd-e551-436b-bdc5-835778eb9afc', '366c27b3-212d-43e9-a59b-7e0358ff5db4', 'product', '742', 'gallery_image_4', NOW()),
+('5c2b1b78-4852-4d16-9954-5ea8547570af', 'd507bff9-7e54-4c74-85fe-aa3996e4b9cc', 'product', '742', 'gallery_image_5', NOW()),
+('02baf9ce-9eac-426f-bcf7-74906b6a1f48', '8e66614a-baf3-49aa-9cab-123fcb168d2f', 'product', '743', 'gallery_image_2', NOW()),
+('002e35db-4cfd-4022-9133-783a3fa4fd29', '4b8d2857-233b-4c2c-9c14-0ef758f0519d', 'product', '743', 'gallery_image_3', NOW()),
+('0d304df3-84f8-4f86-b267-b3bf89908bb4', 'd7e5ecf6-530d-4e34-b587-fabb3af4a26d', 'product', '743', 'gallery_image_4', NOW()),
+('a04fc6a8-0dbc-4d05-93d4-c019347a2119', '92870de3-c4e8-45a8-88eb-803fa9bf874a', 'product', '743', 'gallery_image_5', NOW()),
+('c446d2d0-5f43-4d08-a560-bd70c4a7fa00', '352ca767-c2f4-4912-874f-767215d22735', 'product', '743', 'gallery_image_6', NOW()),
+('7c732e6c-0fd1-4ce3-add1-cecdfb6cf382', 'b8d75be8-21bd-4135-b748-e2c1599fe36a', 'product', '744', 'gallery_image_2', NOW()),
+('20d136e7-759b-4bf0-ae36-58e492ee1d3a', 'f98d4cf3-e18d-4d1c-9329-16b6d8f4ed04', 'product', '744', 'gallery_image_3', NOW()),
+('8ebfaa27-6a8d-45b9-b1f7-d4911eb4a025', '247f80de-5b94-47d2-b189-058e2b0b0d45', 'product', '744', 'gallery_image_4', NOW()),
+('b22ce626-3c42-433a-bbc9-cf2284e94c1c', 'b77e538a-2873-40a3-8960-29e12e0892df', 'product', '744', 'gallery_image_5', NOW()),
+('cb4b9e19-b390-4fd0-935f-74e388a6b779', 'f6d2107a-624c-46e2-a85b-566b169e51bc', 'product', '745', 'gallery_image_2', NOW()),
+('2e8c6d9c-4c4b-4ac7-bcb7-3ce7322ea759', '8a41c40d-5b70-4941-8272-9ba949440c03', 'product', '745', 'gallery_image_3', NOW()),
+('442730fa-98a7-4f4b-823b-122ae95c8bc7', '08620b09-3a50-4338-845d-21f6a9b10444', 'product', '745', 'gallery_image_4', NOW()),
+('259eb024-61a6-43bf-851d-afc75bc2ebaf', '68a7aacc-612b-46f3-a84c-f37d235ade0d', 'product', '745', 'gallery_image_5', NOW()),
+('059be84d-e0a3-4c3c-9f26-82ff83d9a893', '555e21f3-cc39-4277-83ae-9b326f1348a0', 'product', '745', 'gallery_image_6', NOW()),
+('f2918333-7138-4c8b-b41d-18ffa1cfa6d2', '469378c0-3413-45d7-b2df-c112363b2c68', 'product', '745', 'gallery_image_7', NOW()),
+('4c037d85-83cf-4d7f-bdc8-4f4ba3521393', '0ac083c5-dff3-4d2c-83fe-e80b901bf13b', 'product', '745', 'gallery_image_8', NOW()),
+('94515920-828a-486f-8ec5-bf8108056f33', 'bdc161be-1ab2-4e2c-9f72-2cba52cc507d', 'product', '746', 'gallery_image_2', NOW()),
+('4ff61a91-8537-44a3-9df1-3429dcb5e18e', 'c42f8b16-ccf9-4e73-97ac-d8ed2aa23d50', 'product', '746', 'gallery_image_3', NOW()),
+('ac8453d0-8bf8-4ba4-be0f-851587927f28', '54b8e8d5-763c-4251-bbb1-9eb77e9f4e9c', 'product', '746', 'gallery_image_4', NOW()),
+('39ea2035-87c4-490c-b034-0efa4df8c86f', 'c58e7233-0b7d-4459-bf2e-ac3895b16b34', 'product', '746', 'gallery_image_5', NOW()),
+('12f4c3a2-42a1-4894-b9b8-4c966ba1656e', 'f01529f6-44e0-464f-ad1f-bf849e3da650', 'product', '746', 'gallery_image_6', NOW()),
+('dc5e1dc7-1e17-441b-af20-4c0259da8250', '840065a5-f13b-446f-a692-4ed1b1ca9b34', 'product', '746', 'gallery_image_7', NOW()),
+('5d64bac7-cc9c-438b-90b9-9a45aeef273f', '6984b031-3d82-4003-b1db-0feb7f228c3d', 'product', '746', 'gallery_image_8', NOW()),
+('a1fdff26-ca80-42b2-9509-b1e448d01726', '91df357b-59b7-42f0-bc63-20a7c58851b2', 'product', '747', 'gallery_image_2', NOW()),
+('6106173e-f1ac-4db8-a8fa-1f1b331860dc', '4100fc87-44a4-4e58-8d33-f8c27ce4317e', 'product', '747', 'gallery_image_3', NOW()),
+('fd55f3d0-2d07-48be-994d-dc3454757095', '1b9adb14-31d3-40cd-b342-6936e2e5437c', 'product', '747', 'gallery_image_4', NOW()),
+('4d89de32-40b1-4440-ac77-16146c96cd5b', 'cabc4ca5-1f42-49bf-bc89-86bafc0a26a8', 'product', '747', 'gallery_image_5', NOW()),
+('05a15031-bc1c-4236-80e7-66d96acee2d1', '825de86f-beab-4870-be48-3d8218996d7a', 'product', '747', 'gallery_image_6', NOW()),
+('94dfb17b-e4a0-4ff5-8a41-b912804c7297', '7a28de6a-7439-4e75-8ebc-f78556dbc682', 'product', '747', 'gallery_image_7', NOW()),
+('2d3ae477-06a5-4a4f-9ea4-b4d1bf52670a', 'd3f6ac2d-0dc4-4aee-9f84-9c73ada2c377', 'product', '747', 'gallery_image_8', NOW()),
+('d20c35a4-adac-427a-8027-619d07e7413b', '1d4c27bf-00d4-4fe0-8138-a2b0d70b8411', 'product', '748', 'gallery_image_2', NOW()),
+('b9cb3c08-fb1c-4fd3-bd86-ffe4e1fa6a9e', 'feb1a0c3-f947-4da5-8af8-ca48e868487c', 'product', '748', 'gallery_image_3', NOW()),
+('3bacd8d5-f68c-4791-a8e3-c25f0b55d2d8', '75d9864f-cbfb-46e7-93d3-42795b25be0b', 'product', '748', 'gallery_image_4', NOW()),
+('5389bfd4-d1e3-49ef-bdcd-58b1dd9acdd0', '0403b6c0-f934-4bd5-965f-1387271b3133', 'product', '748', 'gallery_image_5', NOW()),
+('5d9e5efb-d012-4aa0-aa32-c78f93d1497e', '86117b05-58b7-4a42-bcf1-3a5dee2b0417', 'product', '748', 'gallery_image_6', NOW()),
+('07ab1336-5bc8-406b-b061-74ad11fb4854', '882d375d-a7da-4161-afc4-c257181a47f3', 'product', '749', 'gallery_image_2', NOW()),
+('cda489f9-5179-4ec7-9a2a-88202a5f9a23', '43c9b614-2adb-4aad-b2ff-6c73a84046ff', 'product', '749', 'gallery_image_3', NOW()),
+('fbebf3c0-d070-4c77-bec3-ce233de5ee8c', '4b6d7880-5cde-4ac8-a232-0a9f4ea1de1e', 'product', '749', 'gallery_image_4', NOW()),
+('dd84ff19-f515-479b-8abb-e90e0c03d5d3', '6867e3aa-1c60-4fc9-b0d1-350f0e3914f6', 'product', '749', 'gallery_image_5', NOW()),
+('a80b0552-c7c8-44b2-8a07-e202ca52a3d5', 'ffcb2518-2e96-4a00-b64e-e040e7454aba', 'product', '749', 'gallery_image_6', NOW()),
+('36cd48ee-e39d-4423-8624-0c3edd492dbe', '337aab12-b033-4317-91c7-2d5089484953', 'product', '750', 'gallery_image_2', NOW()),
+('b4c30f10-40c6-4e49-8140-6410c6408103', 'c0e1a9be-be98-4bd8-bd01-5c9909b16315', 'product', '750', 'gallery_image_3', NOW()),
+('eb60cb82-85b3-40b3-b981-faa149ed6b9e', 'b394a177-0ea3-4388-bb32-b13535a4cf9a', 'product', '750', 'gallery_image_4', NOW()),
+('fac72de1-6af1-4716-9188-441576b42ec5', '6450e35a-6b44-4ac2-88cd-940609145824', 'product', '750', 'gallery_image_5', NOW()),
+('5555bffc-b99d-4c96-8ebd-3d98a485cbb3', 'b66a2c3d-562f-4e81-a7b3-3413352a8bcd', 'product', '750', 'gallery_image_6', NOW()),
+('1254c68f-3521-4451-8f84-f831426c9277', 'cae80e18-89f0-4ab8-992b-f7c893d63410', 'product', '750', 'gallery_image_7', NOW()),
+('2d85db27-803e-46d9-9935-848d7ea61005', '7a206698-ad2b-4590-b070-870f469da8e3', 'product', '750', 'gallery_image_8', NOW()),
+('2e9ef3e6-07d9-4fdc-884e-03e5f28bab90', '9a6937d2-db8f-4f5c-9eda-2aeac801c570', 'product', '750', 'gallery_image_9', NOW()),
+('7b15f9fd-9272-4256-851b-bc32c3de6b88', '34a14817-63a3-4ade-a6cd-ab9cf5fe65d9', 'product', '751', 'gallery_image_2', NOW()),
+('f915d092-aed8-4efd-8c4a-9e0533fe461c', '06604db2-ba9f-4fe6-aee2-528d79995d04', 'product', '752', 'gallery_image_2', NOW()),
+('d4eb98e4-8140-4b6a-a3a7-decb1f36adeb', '35418044-dab5-445a-a1b7-28c7f4940e32', 'product', '752', 'gallery_image_3', NOW()),
+('8791f4fe-ecc7-4356-985a-9cd75d78b4e9', '5d79e8c5-1777-47e5-aff9-aa62a54f31f4', 'product', '752', 'gallery_image_4', NOW()),
+('876f7f8a-7501-49e3-8961-ed47d5eeebde', '680cc818-ff9b-483b-b04b-ac445fbfd30f', 'product', '752', 'gallery_image_5', NOW()),
+('f210a1c3-2ab4-4d10-83d5-4075bc4437de', 'a6878dc6-4c69-41fc-a313-37f6e5ad2a1f', 'product', '752', 'gallery_image_6', NOW()),
+('9c05e017-ee86-4dbd-8092-78b03ed2529d', '5de9e666-8ad4-4353-a5eb-fd2d36c2fb02', 'product', '752', 'gallery_image_7', NOW()),
+('3ba720ad-dc8c-4d44-bc54-a3d1a2d2e403', 'aa3d08a9-dc4c-474a-858c-7c298eff4f5a', 'product', '753', 'gallery_image_2', NOW()),
+('bc91e45e-075e-4743-b687-612c9f222c6f', 'a18c1494-28bf-4515-ad3c-197995455c4e', 'product', '753', 'gallery_image_3', NOW()),
+('f66d8c75-1c39-4af6-9e87-927b5803decf', '496bce8b-c29b-419a-b63e-d10fa0dc5d52', 'product', '753', 'gallery_image_4', NOW()),
+('abeebc31-097d-475d-b6c8-19c67dfe321f', '4bf44b97-bcb6-4d24-bf05-f05b245ca3f6', 'product', '754', 'gallery_image_2', NOW()),
+('384781f0-9e29-4340-953b-36ceccd0b4f2', '83066ccd-6d91-4055-85e6-3d6e44c4604b', 'product', '754', 'gallery_image_3', NOW()),
+('019b819c-6f88-4a8d-8e1e-616b110c989c', '426746e6-528e-4ee9-a32d-e38ff0460c57', 'product', '754', 'gallery_image_4', NOW()),
+('5283bae7-5d6f-4cfc-b09d-54a3465364a0', '25953a49-83ae-4711-8427-6861e6def1bb', 'product', '754', 'gallery_image_5', NOW()),
+('dc2a841f-8a13-4e52-80cd-c3034f79b5c4', '2375a830-5aa9-4a97-b37f-57d200a1ca72', 'product', '755', 'gallery_image_2', NOW()),
+('77672ce2-a461-4484-b4d0-38a7368e57a9', 'aa97ee01-af53-4aeb-85e2-a5aefcaeed3b', 'product', '755', 'gallery_image_3', NOW()),
+('51e63c53-49bd-4cdb-b1ca-bbd500f541c2', '5157ac0a-3ca6-4089-8cd1-4b1e2ea63818', 'product', '755', 'gallery_image_4', NOW()),
+('51d5c4e8-c2ea-4074-9ba4-12d8de16cd11', '9b32888f-9c6e-4cb7-853e-460d24191f2b', 'product', '755', 'gallery_image_5', NOW()),
+('2d5fa8e4-dbbd-48e8-93b3-94170d9c6fe5', 'f9a5e9b6-b9b7-4718-8215-6895ee4385b0', 'product', '756', 'gallery_image_2', NOW()),
+('863ad290-5475-4898-b4e7-aab39c036e33', 'a5dfcfad-f031-40ae-adc7-250f637cc97c', 'product', '757', 'gallery_image_2', NOW()),
+('11eb3fe3-2c8b-49aa-a02a-86bb883113aa', '47e4d303-18ea-4cc6-b8e2-884120e7d3f6', 'product', '757', 'gallery_image_3', NOW()),
+('28ab9985-e788-49a3-a2ce-34aedca03518', '24e614d6-e015-4dad-bdfd-db43d12229df', 'product', '757', 'gallery_image_4', NOW()),
+('fdbf0dcd-130a-4c27-8e77-eabba190e11d', 'acada6c4-af93-400b-9d55-2bd0661c3d5e', 'product', '757', 'gallery_image_5', NOW()),
+('018f19c0-be43-4603-835d-0d1ead0d158a', '0388ee58-51c4-4de7-89fb-4176c32f7021', 'product', '757', 'gallery_image_6', NOW()),
+('83f9f1d4-5822-462e-82f5-c1d173bc8727', 'ab96d12e-98fe-4d5e-a509-03d21325d91e', 'product', '758', 'gallery_image_2', NOW()),
+('8451ead1-203c-42d7-b02b-b6555cf6dda7', 'fcafd225-e8ad-4957-bc3d-286be00a5b4f', 'product', '758', 'gallery_image_3', NOW()),
+('59b1a8f4-2030-4874-8b86-84ae81e8a6bc', '5b9c1ce5-2953-4fe4-9a9b-8c6d18b7d3cd', 'product', '758', 'gallery_image_4', NOW()),
+('616ca6b1-fd45-4b91-9328-cc8e97fdf2a9', 'a9a16584-9375-49ee-8493-30b45e54ea7f', 'product', '758', 'gallery_image_5', NOW()),
+('feec4976-457d-48b8-84d6-08f9a242f529', '03539b3c-5394-4982-ab54-a7ea15ebd39a', 'product', '759', 'gallery_image_2', NOW()),
+('08b0c392-c1ba-412a-94a6-08c6bd24af1f', '1aa9319c-8354-44c8-9610-a414cab81744', 'product', '760', 'gallery_image_2', NOW()),
+('63a669ae-bed2-4028-b9d0-8c07c17cd4a2', '518dc6ef-7968-4671-ab7c-07e3e087adb2', 'product', '760', 'gallery_image_3', NOW()),
+('2670d74b-4261-4ea5-a9f1-2b1fea1418be', 'b07b5eb7-10ab-4d74-b956-c8d079038472', 'product', '761', 'gallery_image_2', NOW()),
+('9c58ffc6-e271-49b5-b581-fd8b7d5a09b5', '0b8d88e5-8e7f-4c34-a27a-5f8114a4ef9c', 'product', '762', 'gallery_image_2', NOW()),
+('2a27bde2-08ab-4f91-a17e-b713ce15b8f4', '1a7290da-822c-4075-8a34-34af18dc567b', 'product', '762', 'gallery_image_3', NOW()),
+('c32cfd88-2c2e-4bcb-b6d3-9d7639f16dfd', 'f48010d8-114b-4ba8-beb4-87217567fa45', 'product', '762', 'gallery_image_4', NOW()),
+('f7cf9492-cd5e-4372-8fb5-93feaf446d86', '936af9d3-9b74-4f5e-86c1-7bae6242fb28', 'product', '762', 'gallery_image_5', NOW()),
+('7ea92632-49ce-4b8d-b106-58cd16402a8b', '87d86310-c872-442e-8b7a-be0e9b578411', 'product', '762', 'gallery_image_6', NOW()),
+('54726dc4-afbc-49df-b9ec-2436f985aa7a', '00f5b243-e71d-4cde-a8dd-7c7f9c96d18b', 'product', '763', 'gallery_image_2', NOW()),
+('ac672b27-595c-47c1-8819-cfabd960125d', '11942d14-af12-484d-9b85-61fd715e9c14', 'product', '763', 'gallery_image_3', NOW()),
+('7f456a82-a7ea-49ff-a893-e618fec56366', '3d342a61-46ce-48b1-a3c8-bf06ca2632d6', 'product', '763', 'gallery_image_4', NOW()),
+('89c32deb-e683-452e-944f-561b8cad1da5', 'a3cf7ff3-1f0f-45d8-bfa3-56c77e6b91fe', 'product', '764', 'gallery_image_2', NOW()),
+('5aa66129-8050-476a-ae00-130c032792ca', 'af034c13-e2d9-461a-9158-7d6381a4af60', 'product', '764', 'gallery_image_3', NOW()),
+('ff154d7a-a97e-4fd4-9bf5-9328174c6044', '5dee782b-347c-4c93-9c21-02b1240b4205', 'product', '764', 'gallery_image_4', NOW()),
+('1753afc6-332d-418e-940e-e0a2507eb519', '71ee918c-537e-4c69-97b8-dd596da92a6f', 'product', '764', 'gallery_image_5', NOW()),
+('7c21212b-4cba-4c01-ba2e-62d4f6a9a75f', '4fbc3294-c359-420b-9e4a-59c2532216d5', 'product', '764', 'gallery_image_6', NOW()),
+('54adb37c-a3cc-4574-b27b-326635f66e5c', '867735d5-6101-44b2-afa9-704165532046', 'product', '764', 'gallery_image_7', NOW()),
+('86a79161-45fd-40b5-a51c-817976a6dcb5', '4ecbe2ec-cfeb-4d08-81ab-fa45be2ea18c', 'product', '764', 'gallery_image_8', NOW()),
+('d774bcc5-25a8-4a9d-a8b2-aa0d3756ff6c', '565d2c51-0776-4553-8a2d-79d802e62e78', 'product', '764', 'gallery_image_9', NOW()),
+('4f1c6bf6-93bc-4952-98d9-dfca079135fb', '68e6c5ab-cdc5-42b0-ad7b-ff325f775717', 'product', '765', 'gallery_image_2', NOW()),
+('6b2f472f-2555-43ef-861c-13dc368940e2', '123a0d8b-d876-42fd-a89f-cca293e6a4dc', 'product', '765', 'gallery_image_3', NOW()),
+('e03201c6-00a2-4ce3-afc2-5cba5aa93b01', 'b40386a9-f23c-446a-b3cd-2b3b64c8295d', 'product', '765', 'gallery_image_4', NOW()),
+('0da5e129-2461-435f-a78f-268112bda17d', 'c8834135-4b04-402a-b0c1-9c5e26b45315', 'product', '765', 'gallery_image_5', NOW()),
+('f4e825fb-0122-4c94-a551-41cd3a0de780', '8e0a8fb5-ac42-42bd-ac0d-8a9c953161a0', 'product', '765', 'gallery_image_6', NOW()),
+('481fb10b-734d-47c3-abf1-df622e5ccbad', 'e09cbb5f-b2f8-4062-be8c-3bcba2f229e5', 'product', '765', 'gallery_image_7', NOW()),
+('863bc852-1da4-42c9-87c4-6142d618765c', 'c57c5ad0-ae2f-4632-892d-7fe18d31e7fd', 'product', '765', 'gallery_image_8', NOW()),
+('5e74ebed-ee41-4256-8e52-817a53ffe860', '51aeaf76-6d6e-4dfe-9863-175ab70272a5', 'product', '765', 'gallery_image_9', NOW()),
+('13ce4dc0-7f29-46e1-84ca-a4ec635423d5', 'a8ed44f1-42c0-4927-9a99-e897fb57bb89', 'product', '766', 'gallery_image_2', NOW()),
+('a3fba452-9238-42de-b28d-1fa66067bd39', '246a12af-b840-4c5e-9115-4b9987ac4a73', 'product', '767', 'gallery_image_2', NOW()),
+('fb873052-217b-4906-9f0b-d5334b240f6e', 'c1225f25-94ab-4426-a747-1cdaa2d344a7', 'product', '767', 'gallery_image_3', NOW()),
+('d424df0b-244f-4af6-9fbc-284936e4fcfb', '7f585e9d-15a9-44fe-87a4-30113561641b', 'product', '767', 'gallery_image_4', NOW()),
+('0621a659-c072-40d2-9582-a5e22b291e58', '13f51c17-fbb5-48b6-ae53-2d2ae044d73b', 'product', '767', 'gallery_image_5', NOW()),
+('d867033e-f317-44a1-b115-b0d873c78d47', 'cbb990b0-3115-4901-91e3-99dbf862347a', 'product', '768', 'gallery_image_2', NOW()),
+('a796a193-aba9-48c1-b31a-ca00330b9161', '6369397d-983c-4058-8b6f-90f246093ba7', 'product', '768', 'gallery_image_3', NOW()),
+('ff07702c-ef89-4281-b2e7-4fe3a4d65c4c', 'f53b8159-0e15-4017-98a1-4df153230e0b', 'product', '768', 'gallery_image_4', NOW()),
+('0c436676-750f-4bb6-b97c-a53bc79d568f', 'c0800033-30bc-438e-9890-71fbde1f5ee9', 'product', '768', 'gallery_image_5', NOW()),
+('f0da6a67-8ef4-4cb7-92d0-e2d4bafcee0d', '9625c60a-5eab-49ad-bcca-fc29bb067761', 'product', '768', 'gallery_image_6', NOW()),
+('30d4ed08-ed22-4582-b443-3d9c9cd4a36f', 'c32cb3c0-bc61-4ca9-b614-dc22de4ca32a', 'product', '769', 'gallery_image_2', NOW()),
+('cf70099c-6aa8-4c35-8a88-6a62fe46f906', '5441571d-ac80-4f93-a6ee-c7925d4f42cc', 'product', '770', 'gallery_image_2', NOW()),
+('c0db26de-ec0a-45cb-b76b-4713ee503959', '9824aba5-633a-4d8b-8e25-e6ee5ac962af', 'product', '770', 'gallery_image_3', NOW()),
+('3fb111c3-4425-4bd2-9232-13247b40c658', '277d359f-5428-433b-a84a-017d2869b6e1', 'product', '770', 'gallery_image_4', NOW()),
+('a8a2ee0a-d149-482b-8732-de88e1808635', '78762da7-19e2-4820-a8e1-fa8aa4d0e968', 'product', '770', 'gallery_image_5', NOW()),
+('17c244de-f01d-483a-8d06-d5a96d691bda', 'c3c1da1c-9a9d-48d2-8bed-03274a5f76ae', 'product', '771', 'gallery_image_2', NOW()),
+('be804df6-9f5f-497d-a502-05835e47af13', 'f4e4810f-9ed5-4e7a-9a8f-667d83e18a02', 'product', '771', 'gallery_image_3', NOW()),
+('b4fad7fe-ccab-422e-a971-eac9fdd2cc5c', '2f1bcb82-ee5a-4368-9a0b-b62ef219fa76', 'product', '771', 'gallery_image_4', NOW()),
+('56d9cca0-e60d-4a5f-a583-aaf22f3e2d3f', '5288369f-8933-4c56-b439-66e56df6778e', 'product', '771', 'gallery_image_5', NOW()),
+('66901245-a46d-4d96-8d94-c7a775ba5618', 'ba160eff-7a11-4b8f-b44c-a1a00b19c6d6', 'product', '772', 'gallery_image_2', NOW()),
+('821d40e9-2789-4818-a904-e15afde60465', '0579d0bc-ece8-45d9-a204-5dac7512908c', 'product', '772', 'gallery_image_3', NOW()),
+('bf3c862c-e627-4b5e-88ed-368324c3a71e', 'af742771-d356-434c-9887-44ac413a23d0', 'product', '773', 'gallery_image_2', NOW()),
+('0c94f92c-bb21-4ca4-b72e-f4cd2102403a', '49a22035-704a-4e32-bfac-bd1de8e617a9', 'product', '773', 'gallery_image_3', NOW()),
+('895b2c6a-a553-4804-9252-7371ac2fe983', 'ca6c143d-6e79-4954-8eb1-948354081adc', 'product', '773', 'gallery_image_4', NOW()),
+('623a094a-fc2f-419d-92f7-6cfdf0d8c4dc', 'dc8d8910-3e7f-48ff-a55f-bd3455f5541b', 'product', '773', 'gallery_image_5', NOW()),
+('a94c0d7c-65d2-406a-8b04-75a02c486109', '8c46d46d-8bcd-4c23-a17c-b363ca0a4f85', 'product', '774', 'gallery_image_2', NOW()),
+('f7d7b52a-d2c9-476f-b582-b530bb113cfc', '3475a1cf-81d3-49b8-95c1-9b8c2b56ac3e', 'product', '774', 'gallery_image_3', NOW()),
+('fad15139-b659-42ce-80f0-af47aa4c4d07', '705b55d0-e80a-42f3-b170-f3f5eecf0a01', 'product', '775', 'gallery_image_2', NOW()),
+('fd406ee7-db91-4022-976e-5a7122a2ae35', 'eb57b9e9-1cee-47e5-a595-bd48e6b1da8f', 'product', '775', 'gallery_image_3', NOW()),
+('6252230b-fece-4209-a851-58a3dc86269e', '154b70d8-ca82-4d91-90c1-6c5233dc520f', 'product', '775', 'gallery_image_4', NOW()),
+('5e6222dd-0e63-4396-af87-326676c2d6ce', '545500e4-e589-4872-a7d4-2d668d425514', 'product', '775', 'gallery_image_5', NOW()),
+('16f2829c-103a-47e4-bfc5-65633c07bcd2', '474269bc-1c23-4c6f-9406-a7b3af49b3be', 'product', '775', 'gallery_image_6', NOW()),
+('87abf8c6-4ab7-498a-b895-73c29c1bc135', '2280279d-bf15-4ba3-af4b-009c78a5d48c', 'product', '775', 'gallery_image_7', NOW()),
+('b0c43219-5128-4e86-9328-69961eef34d5', 'c65f0789-8689-4ed6-b375-a365a65542af', 'product', '775', 'gallery_image_8', NOW()),
+('b0cc2ca4-047a-44cd-a4dd-c51203037066', '973d6a43-dedc-4bc3-9b39-df361eda1829', 'product', '775', 'gallery_image_9', NOW()),
+('21d9722d-c81c-409d-ac2d-345a85c83124', 'bba135a7-f013-47f4-b180-69c7bd0880a0', 'product', '775', 'gallery_image_10', NOW()),
+('09f61f8e-0287-4c6a-8d0f-023f5c4b02ef', 'cd93ed61-2674-4ee6-b3c8-d8a72cdb3e7e', 'product', '775', 'gallery_image_11', NOW()),
+('a1c3231b-baf3-4f77-ab51-1c875aef1904', '3eb67291-a3b5-496e-98f1-b758ba1e0250', 'product', '775', 'gallery_image_12', NOW()),
+('1e4261d3-ea03-4a7b-87a9-942f9e6c980a', '1b2302ab-3656-45fe-8cbd-421675b209a3', 'product', '776', 'gallery_image_2', NOW()),
+('5c718814-22de-4e9a-ba42-93a0194e1219', '6d69dae9-1cf2-4338-8426-ae86da4db3ab', 'product', '777', 'gallery_image_2', NOW()),
+('1908d488-e0b2-4e57-b892-4054c15d37d6', '2b3ee9a4-705d-4b67-8743-4d3f54b774ec', 'product', '777', 'gallery_image_3', NOW()),
+('b3dff7b1-3553-4d6f-abaa-8f96be0f75fd', '7d2a5f77-3f43-4e78-bd52-0ae3c48f7749', 'product', '778', 'gallery_image_2', NOW()),
+('4f1bf30e-d426-4123-b28a-8b1820e108e9', '1b3eafa6-889f-4b08-a984-5cfceb80f012', 'product', '779', 'gallery_image_2', NOW()),
+('f8a87103-9a04-4356-8b37-189a074b22bd', '1a464bb8-e59b-471a-bb0c-c8101e493d6a', 'product', '779', 'gallery_image_3', NOW()),
+('6c02d421-c79d-480e-8cd7-aafebad9bea0', 'b3b99f41-7d97-4797-9c93-c09a88b4cc72', 'product', '779', 'gallery_image_4', NOW()),
+('93364f67-c30b-4e0f-a731-4074c60e4db3', '6de541a9-8883-4e68-bf8c-63c2ecbdc631', 'product', '779', 'gallery_image_5', NOW()),
+('3e44ea01-686c-429a-8ecd-3cf226876831', '6846844f-97fe-4dee-a8e7-248f1e810706', 'product', '779', 'gallery_image_6', NOW()),
+('fb364eef-b926-4fde-a9e2-c06a48b52f36', 'c4017f6a-7858-4f64-98b9-a3b54ab393f0', 'product', '779', 'gallery_image_7', NOW()),
+('cb523c54-dcd0-4ae2-8c3c-8f08c123bc25', '55fc3328-9101-45ca-b88a-18fb478807b8', 'product', '780', 'gallery_image_2', NOW()),
+('04ff60d6-fe7d-464f-86fb-c1393f0b3092', '7a1d792d-4c2d-4a96-af8b-8202304153e1', 'product', '780', 'gallery_image_3', NOW()),
+('b638f61b-c216-405f-bc17-bd079d497425', '2ac04b3e-b942-4489-a00c-0d41b81bed54', 'product', '780', 'gallery_image_4', NOW()),
+('4ff94dee-f570-4b60-af13-99d06818bcfe', 'fbdcbc04-ff3c-4f58-945a-4cc6d8a252c0', 'product', '780', 'gallery_image_5', NOW()),
+('2a63941d-06d3-4341-bee3-ac1ce8c0bbe5', '6c0a3826-1b38-453a-b93e-57ac692762bd', 'product', '780', 'gallery_image_6', NOW()),
+('b08c4127-3335-4eb0-af38-db36512d62e5', 'bf1305a0-d159-412e-8144-da5a29262215', 'product', '780', 'gallery_image_7', NOW()),
+('d74fca50-d3bb-43de-8a38-c0dfac1f4042', 'ca22b222-bfb1-40d0-a121-b795e4aa04e8', 'product', '780', 'gallery_image_8', NOW()),
+('719d326c-a946-415e-a698-3a53fa95d767', 'a4863f92-2ec6-453f-80de-a6c0b0d801f5', 'product', '780', 'gallery_image_9', NOW()),
+('857b3172-790d-4b2d-8ca2-08d21ddef7f4', 'e840ed50-6e09-4e8a-b16c-2e2a542974a0', 'product', '780', 'gallery_image_10', NOW()),
+('e2c7477f-4440-4702-a377-f63a5cdd2d56', '8717dfc3-31c4-4128-8339-1cc9ba209801', 'product', '781', 'gallery_image_2', NOW()),
+('39fa3004-da9f-41ff-ac97-e85133c71fee', 'e6745bf6-3854-473e-bfac-6a5680a3d138', 'product', '781', 'gallery_image_3', NOW()),
+('73a8ba04-e3fd-4da8-b464-da359777f352', '4aab9642-7b7f-45c8-b61f-d1ac6398f44e', 'product', '781', 'gallery_image_4', NOW()),
+('85925472-7070-4589-a82e-392a9ef22189', '1a17a421-3b5c-4fb2-a3ac-1306d01a1292', 'product', '781', 'gallery_image_5', NOW()),
+('b7c87193-7bd9-4835-bc0f-4915272415fe', 'ebed7080-39c6-4298-b3d4-88cee682aea7', 'product', '781', 'gallery_image_6', NOW()),
+('81ee44fe-e7c5-4dd6-96d7-b703c7467d71', '1706c5ee-b79c-44bc-967d-8c5a4a4f0a75', 'product', '781', 'gallery_image_7', NOW()),
+('8bf2ad2b-c9dd-4f70-80cb-7acab6d243a8', '76e81d94-d2e0-4524-a7bf-cb596ff2828d', 'product', '782', 'gallery_image_2', NOW()),
+('905eadf9-3f7f-49dd-8e13-f96217f150a3', '935724f8-c977-48d4-911f-33cfa0963b6d', 'product', '782', 'gallery_image_3', NOW()),
+('312daca2-c920-44d4-bab3-78114b983770', 'bd87cb8d-7958-40e4-97f4-1f9bc46e225f', 'product', '783', 'gallery_image_2', NOW()),
+('7383d4ad-659a-41e7-9ab3-b794790629e5', '8255ee78-af0d-4765-8757-aa749b45abdc', 'product', '783', 'gallery_image_3', NOW()),
+('e33794f7-ccc9-4b67-8a5e-0d356533f9b9', 'be94a950-76fd-4135-9762-ba6e4839f643', 'product', '783', 'gallery_image_4', NOW()),
+('2ab61d51-5636-4862-bc9c-3ffa02195efb', 'f326fbe4-d708-4bec-b9e6-af9158bb2655', 'product', '784', 'gallery_image_2', NOW()),
+('8a690073-29e4-4cd3-a016-c92050c0116c', '4be72439-1c46-4e44-8932-96e6d47d5322', 'product', '784', 'gallery_image_3', NOW()),
+('a50cec40-1152-47d6-a323-5283c142d4cd', 'fb442f5e-deb1-4c38-9a27-bdb1939a7d4f', 'product', '784', 'gallery_image_4', NOW()),
+('42a55d90-7069-4875-af8d-dd023caa24e8', '2067ceaf-e23b-4e75-8187-dcf58e31eca4', 'product', '784', 'gallery_image_5', NOW()),
+('9303287d-f51e-47f9-80c7-8b590fba3f93', '9006b99e-1a62-4ecf-90f2-a3db25295f91', 'product', '784', 'gallery_image_6', NOW()),
+('eb012749-a28d-4eab-936a-da0eab59ca2c', '18916846-a032-4433-a3a8-a2c627e0ed9e', 'product', '785', 'gallery_image_2', NOW()),
+('e93c18c5-55c8-475e-bd2c-7a8ddb4d19cd', 'e81cd599-3471-4e4b-aa7d-bc39a544436a', 'product', '786', 'gallery_image_2', NOW()),
+('8ae8fbbd-1d95-4b51-88b0-0d06c90210ad', '0fdfa244-efa4-4f75-96c9-67de605f75ab', 'product', '786', 'gallery_image_3', NOW()),
+('75dad380-27c2-4c53-acbe-1357d96939a6', '91b715ef-2f0f-44b5-986d-0b33ac4291f4', 'product', '786', 'gallery_image_4', NOW()),
+('aa60a910-93a4-45de-a857-b50b6ba28ebb', '72dcf3b3-4186-4b9f-a2d9-a2270152874f', 'product', '786', 'gallery_image_5', NOW()),
+('1d337775-1180-4b26-b7b7-7e4d78617373', '0fdefd2a-b288-4b66-9571-d9e281bee004', 'product', '786', 'gallery_image_6', NOW()),
+('68ff205d-3f10-4739-9712-1134cfaa4882', '627d2ef4-34a5-42f2-8ad0-4423ed00486f', 'product', '786', 'gallery_image_7', NOW()),
+('1ab4b4d8-711a-4e77-add8-dcea5b758c7e', '85159d2a-27ea-4b4a-a103-179345eb8e80', 'product', '786', 'gallery_image_8', NOW()),
+('ff46f4c5-aed2-4b41-813f-1f9cc2e38dca', '32d35382-8763-46c4-81c3-ea958b514e16', 'product', '786', 'gallery_image_9', NOW()),
+('33ca5e2c-9117-4235-8ab0-152206690960', 'd9f46d9f-a050-4efb-9f84-2765efebf645', 'product', '786', 'gallery_image_10', NOW()),
+('ed668ec3-e45c-4ce1-aab6-b3c8df757f4b', '9a8609f3-eb1a-4541-8876-856f9b468b44', 'product', '786', 'gallery_image_11', NOW()),
+('ffc46814-ee4e-41de-ba1a-972bb5951944', '4d21cd21-75d3-46c8-aba8-dc1475c5324a', 'product', '786', 'gallery_image_12', NOW()),
+('a8f7f1ae-b83a-48aa-85b4-d74e1edea375', '493cf859-9487-40b7-8aed-9e245221ff5a', 'product', '786', 'gallery_image_13', NOW()),
+('f7cde366-de42-4aee-ba0e-df5baa06591b', 'ada759b1-7d52-4465-b345-70977ce283fc', 'product', '787', 'gallery_image_2', NOW()),
+('1f550467-8a6e-4e0c-bda7-ad52be6c279f', 'd74df2c6-5e6b-43b0-9d11-34302bb1b59c', 'product', '787', 'gallery_image_3', NOW()),
+('c79b1ea8-6791-4ed9-be8f-28c1f31f4038', 'ec346ecd-e2df-4af6-9cd0-aa5db97de0a6', 'product', '787', 'gallery_image_4', NOW()),
+('7fc3d099-1dc6-48d9-ba6a-b2cd01113a23', '9ba5f731-e7cd-42e6-a268-408a3a078709', 'product', '788', 'gallery_image_2', NOW()),
+('f1e9f0a4-6b6a-4288-b069-a944eec2fcf3', 'a8ccbf7b-3ed7-4f89-b876-fb73b1326ff5', 'product', '788', 'gallery_image_3', NOW()),
+('da3c6187-aa65-4392-b38c-ca367dbcf564', '7e3b7cbb-a4bb-4811-9ba1-d934636c21f8', 'product', '788', 'gallery_image_4', NOW()),
+('c65e1898-d54d-47fc-8d3e-301322f6cd71', 'a91b2434-9910-43a4-919b-5102eaa5cfae', 'product', '788', 'gallery_image_5', NOW()),
+('9dbe7516-3389-4cb4-8944-5e731d784dfa', '57891cb5-996a-409a-bd8e-1801a3211863', 'product', '789', 'gallery_image_2', NOW()),
+('5eb0fab4-6242-4538-b598-edfa67632a48', '9006fef1-e3ba-4eda-9bde-6e6602afdd1c', 'product', '789', 'gallery_image_3', NOW()),
+('bc92694c-72b8-42e1-ae8d-e172c9dba88c', '906a7ed1-5e1f-4693-b580-53da70b09ad7', 'product', '789', 'gallery_image_4', NOW()),
+('3b82c8b2-96c1-4de3-811b-ebb76c42f638', 'aab5fe5a-731e-4702-ad25-3a959d62bc36', 'product', '789', 'gallery_image_5', NOW()),
+('3d9b7b97-9242-4184-bc5f-4abfc6fd1a67', '493c5b15-131d-482e-ac66-725aba846e2f', 'product', '789', 'gallery_image_6', NOW()),
+('c9d76537-e16d-4138-90e5-978bebda223e', '2e18b5f2-fc7c-4810-a841-655eaa08641b', 'product', '789', 'gallery_image_7', NOW()),
+('105bacbe-1779-4e4c-8b9b-e6c661965c94', '4007ed8b-6e66-4f15-8ff6-f734869408d2', 'product', '789', 'gallery_image_8', NOW()),
+('980d647f-4085-453b-8bb5-a3969c8ae2ad', 'ed705626-d694-49cc-a2cb-6b78ff26e9e5', 'product', '789', 'gallery_image_9', NOW()),
+('6167b1b3-0bb2-44c0-a2dd-79c252fe3ec3', 'bf80410f-4654-4bfb-b0da-15c8d68fa2c6', 'product', '789', 'gallery_image_10', NOW()),
+('a54969fa-c434-4a7c-8987-731dc7507e5d', '7f56e7d6-0279-4d29-acfc-08009380953f', 'product', '789', 'gallery_image_11', NOW()),
+('7e8da03e-6440-4a4c-87ea-f491c5e735dc', '1ba8ccc6-04d0-43de-a40d-d2737b20d011', 'product', '789', 'gallery_image_12', NOW()),
+('3bc6243d-0a19-404b-b20f-88b5cfc2ad11', '1a448cb9-6166-41ff-9584-dd2920242752', 'product', '789', 'gallery_image_13', NOW()),
+('698d601d-3704-4d8b-83df-0ba1bce32fec', 'e6da52d3-9bb6-4672-8b82-464debb087e9', 'product', '789', 'gallery_image_14', NOW()),
+('9d03efc8-f24c-4a2e-8480-792dd8c99a4e', 'c3225e28-4f0c-42ae-b55d-3b73238b8417', 'product', '790', 'gallery_image_2', NOW()),
+('48b2fd61-222a-49aa-b169-6096818aed50', '88136662-df44-4252-817e-69f77085836c', 'product', '790', 'gallery_image_3', NOW()),
+('2a9b0a9d-be5a-4304-8857-6aeeb2f0e340', '77cd69df-a9bf-4367-a8dd-6f20fe7e6726', 'product', '790', 'gallery_image_4', NOW()),
+('ba323146-093d-40d8-b4c4-80ff63828de7', 'd298c22b-caaa-4ce6-957b-86b08bfc7e47', 'product', '790', 'gallery_image_5', NOW()),
+('47067302-f644-4ea7-afbd-4b4ab3d75285', '093dc1de-a362-4760-996a-c625f0feca1f', 'product', '790', 'gallery_image_6', NOW()),
+('1843d8f7-1a43-4a94-b4ac-fcfb0bb59e95', '7efdf1a8-b435-4775-81d2-87eaba4ae8ee', 'product', '791', 'gallery_image_2', NOW()),
+('be49029f-abbc-48fa-bf0b-c2c057d1eaa5', 'a7fa6b4e-171e-49cd-9f66-790ce30271c2', 'product', '791', 'gallery_image_3', NOW()),
+('7dfbc6ae-82a9-4bc0-92a0-f3732d01be10', 'ad6acaca-8739-4d65-84eb-711d9d2c3d24', 'product', '791', 'gallery_image_4', NOW()),
+('0afc1d45-29e5-43f7-9e71-965ff57f1627', '707be0db-1405-4bd8-ad5b-ff01b92a7245', 'product', '792', 'gallery_image_2', NOW()),
+('f8c29bf6-8666-4d05-9aa9-616946dae935', 'be07f1c1-ec48-4455-9f38-aa4212f87e60', 'product', '792', 'gallery_image_3', NOW()),
+('0fb27a15-1596-4cfc-b996-9ea8aeda85e5', 'e7234b05-66bf-4d79-8fcb-165edbbaa34e', 'product', '792', 'gallery_image_4', NOW()),
+('593d40c7-48c6-426a-9181-3c73b0bf9e67', '69236fb6-163b-4612-9f8f-7158db26f4e0', 'product', '792', 'gallery_image_5', NOW()),
+('4c921ac9-d2f2-4896-904c-d486d700c810', '007b7593-8c57-4b4c-afb9-e33f8a0f0f14', 'product', '793', 'gallery_image_2', NOW()),
+('1dfe3c60-053e-4db2-81ea-ea48f92f1c3c', '2ac28cf6-a1b1-4225-a1b6-4392377a2a32', 'product', '793', 'gallery_image_3', NOW()),
+('8c406318-e0f2-4cd2-94a2-32046b0f05e1', 'e219dc16-ba96-4a89-afcb-2b91d21ab4d0', 'product', '793', 'gallery_image_4', NOW()),
+('efede109-63da-4c2b-bce9-2ad1c392aa8b', '958c14ac-f0bb-4b46-a6c0-cc1b6b52eac3', 'product', '793', 'gallery_image_5', NOW()),
+('576358c4-d767-4f0b-81ea-ed8bdcda4b55', '2ab3df40-5bff-4210-aa9b-e5e0d782d91e', 'product', '793', 'gallery_image_6', NOW()),
+('5d31ab58-aa3f-499f-8313-88c075386384', '9001953d-0e9f-408d-9448-c90449caf6d1', 'product', '794', 'gallery_image_2', NOW()),
+('d5535eff-4083-493e-bd28-4cb7d94050a0', 'a94f7ed6-5c6c-4386-b361-dd0437cb1455', 'product', '794', 'gallery_image_3', NOW()),
+('46d5edd9-169b-4643-a129-83ba4243f124', '4177ffe5-5a83-4a64-817d-dcfa9d615064', 'product', '795', 'gallery_image_2', NOW()),
+('adfc466d-423b-4a38-8184-485d765aac22', '2a9408f2-f9bf-4855-af88-c39267056289', 'product', '795', 'gallery_image_3', NOW()),
+('38d3cf28-5e50-413e-b2c8-07b33ab0eaa2', 'b93acdd3-69dc-43d5-a62e-700efa478d52', 'product', '795', 'gallery_image_4', NOW()),
+('09d6417d-846e-42a6-9d7c-edd3948522bc', 'a131dd04-3a3b-45bc-bc87-26c2183fc84d', 'product', '795', 'gallery_image_5', NOW()),
+('619af8f9-3ad5-4f33-b8f4-5670c2938ac3', '18a8b1e7-2b24-4104-9439-d8746e76e019', 'product', '796', 'gallery_image_2', NOW()),
+('5383b8db-7e3f-404e-bc54-111f5858c358', '2db04571-bfd6-46da-908a-265ab5dcb2a1', 'product', '796', 'gallery_image_3', NOW()),
+('9de8d341-8096-4650-9309-6e3dd56b9868', '424e8047-6939-4f38-9105-6fa93aeb5866', 'product', '796', 'gallery_image_4', NOW()),
+('2a924fed-0a63-4949-b928-67312d20f95c', '2017d09b-924d-44be-83b2-ccbb1a777b4e', 'product', '797', 'gallery_image_2', NOW()),
+('d72e73ea-2b85-496d-a66a-2c186cd81f9e', 'b18b98d2-e27d-4470-b545-939606e0554d', 'product', '797', 'gallery_image_3', NOW()),
+('04087ee2-70ad-4abd-b169-3d3572d62b49', '3dfc7f06-c236-4ded-8de5-b5ddab6318e3', 'product', '797', 'gallery_image_4', NOW()),
+('ad3b808c-79a2-451e-92cd-06d44e685eba', 'bc71dcf6-0ef2-41e7-a4fe-b7063fc5d84e', 'product', '797', 'gallery_image_5', NOW()),
+('d95476d0-bc29-4f20-9580-3c4eb6dfc8e1', '843da9c7-6797-4299-8d66-425690e0b854', 'product', '797', 'gallery_image_6', NOW()),
+('da069d45-626a-495f-8670-bc4bc8feb9af', '9a5c61c1-4abb-4c0f-b5f9-6df630c04b5d', 'product', '798', 'gallery_image_2', NOW()),
+('e032c80b-496a-44be-a40b-b00d00ff4064', '0fe36ef8-782e-41a9-9fbc-9500ea5de041', 'product', '798', 'gallery_image_3', NOW()),
+('21c241f1-f06b-4942-baf1-7ccd908556a6', '1bca82c0-74a9-44d5-af24-504bf4797339', 'product', '798', 'gallery_image_4', NOW()),
+('4317b0d7-c43a-4ddf-8aaf-c2d7f2f592c5', '411b06ad-3d77-4406-9852-e9dc4fe24f6d', 'product', '798', 'gallery_image_5', NOW()),
+('ac477cbd-c2b5-429a-89f6-85fb0cb05878', '684b9e2e-21c8-4e86-bffc-dc7759d131f8', 'product', '798', 'gallery_image_6', NOW()),
+('8f791ffc-491b-48cd-b429-85cc9317a696', 'cde65f10-cf35-4909-8f78-3a9856fb696f', 'product', '798', 'gallery_image_7', NOW()),
+('ce57607a-f904-479e-b55f-bb55d993d70e', '39682d3a-ad1e-41fe-af67-ca22ac86da41', 'product', '798', 'gallery_image_8', NOW()),
+('9211f233-7fc8-4e79-9849-b495d9b6946d', '15ef21d0-a780-4bc7-b6d6-9c7b478d1be8', 'product', '799', 'gallery_image_2', NOW()),
+('8543b040-eab8-4b24-b5c4-561c08657f66', '23547a02-9053-40e6-b5fc-69f97d237efd', 'product', '799', 'gallery_image_3', NOW()),
+('073d2f1f-f38d-47f5-989b-c02a3a2c9517', '88e4e5e0-74c5-4053-9aa9-ef848fd439bb', 'product', '799', 'gallery_image_4', NOW()),
+('4f25afeb-dd31-4cf9-a719-fc6b54488510', 'c15acfe1-0775-4a66-bee2-c35c02456ca9', 'product', '799', 'gallery_image_5', NOW()),
+('1b7c3aed-bc49-465b-87c2-9313f2203c39', 'b0f81580-21d6-4d78-9c6f-81e8f60240fc', 'product', '800', 'gallery_image_2', NOW()),
+('3c49b872-f296-4dea-9e1e-292c3b9198e4', '9600e80f-1992-4eb8-94f8-221d937302f6', 'product', '800', 'gallery_image_3', NOW()),
+('ded3bf65-f238-4298-898e-d48f2b209f3c', '278ba4c0-b81f-4238-8ef6-6dd299c64dcc', 'product', '801', 'gallery_image_2', NOW()),
+('1fcc451c-4b90-4137-b9dc-f61c4201a8a2', 'c2feaef5-a444-47af-bc2b-9f4ffeb2d3f7', 'product', '801', 'gallery_image_3', NOW()),
+('354f638f-8db4-459f-b293-b0992a49a8f8', 'a4a96183-b2bd-4279-b9fc-21cf8bf9d35c', 'product', '801', 'gallery_image_4', NOW()),
+('ab5a4f3f-fb53-48be-8e6d-4564a9599241', '91aab104-8acf-438d-9828-39a54a42833e', 'product', '801', 'gallery_image_5', NOW()),
+('67c92a8f-0e5a-4121-a8ce-cdcd8552a799', '13e7b03b-1931-4dfe-a03a-3cdc4b7c2dd0', 'product', '801', 'gallery_image_6', NOW()),
+('6769e6b8-6b93-432a-b6e2-10ca32a11a7b', '9aa87418-b121-43c4-be90-ae903159c1ad', 'product', '801', 'gallery_image_7', NOW()),
+('c89a166c-bde5-4675-816f-645fce418e7e', '9905dc49-5a84-4281-8f29-2d87d7ba4daa', 'product', '802', 'gallery_image_2', NOW()),
+('5ef8e76b-8b7c-46ff-95f7-7860361d6c1b', 'd7e32b4e-ebc6-4640-aa80-094b54c515ce', 'product', '802', 'gallery_image_3', NOW()),
+('17b5ec7d-2b65-4b67-b882-5845c4adbf64', 'e5cf0b43-706e-48a0-ac59-024fa03149f6', 'product', '802', 'gallery_image_4', NOW()),
+('3429eead-2950-49df-bc02-a378f943810c', '10df62e2-8d82-46c9-b520-c62d126b7b5a', 'product', '802', 'gallery_image_5', NOW()),
+('14cc9941-dff4-4079-a80e-b3e00a0cf936', 'f85fc2f8-3ade-423e-b968-64e6d4e09571', 'product', '802', 'gallery_image_6', NOW()),
+('ce07b0ad-c934-475d-8ed6-1af9d26837cf', '627340b1-3f02-4417-99a2-355bc20b0c3d', 'product', '802', 'gallery_image_7', NOW()),
+('e812c284-384d-4e99-ac1a-c0c9a885876a', 'd056eb4a-04cf-43b7-9125-a109e7f84639', 'product', '802', 'gallery_image_8', NOW()),
+('0a33f8f0-48a9-4fe8-bd96-e2362d6a56a8', '0ebfd9ce-4a68-4b36-b68e-99c4b1aae73d', 'product', '802', 'gallery_image_9', NOW()),
+('712b3242-fdf0-4e85-8ce2-4b1dca5c7d80', 'bfa05e92-0605-456d-b7e7-f9e971601d2b', 'product', '802', 'gallery_image_10', NOW()),
+('22705698-a8b4-4478-a305-c3337fa72c5f', 'b808b6cc-fd8c-47e1-9cf5-42f8ea1d59a5', 'product', '803', 'gallery_image_2', NOW()),
+('3447ace5-438f-4ab8-9e0a-78ca24da1a59', 'c02b5a1e-2656-419a-9a27-bb39fd44da76', 'product', '803', 'gallery_image_3', NOW()),
+('1b7cab03-6089-45dd-8cef-378c64dd1927', 'e7d82c36-8bb2-47d6-bfda-2f982307c353', 'product', '803', 'gallery_image_4', NOW()),
+('43be1fcf-836a-49a5-b6c4-ba96bc3e80a3', '71839a49-f956-450a-bb2f-5846390f5479', 'product', '803', 'gallery_image_5', NOW()),
+('6995a37d-1c59-4835-bab8-cad9415052c2', 'eea48350-3955-45ca-b11b-161bc250c61f', 'product', '803', 'gallery_image_6', NOW()),
+('114db8e4-63a4-4fda-a6e5-de0b7cc8fce2', '553c23af-aada-47cd-9bbc-88b7d01b09eb', 'product', '803', 'gallery_image_7', NOW()),
+('855dc403-62d0-4316-af83-446bffc9876e', '149d3326-38fd-4977-b27b-84c181fc0bcc', 'product', '804', 'gallery_image_2', NOW()),
+('41604942-233e-4102-921a-d7242b238f48', 'd65985ea-0217-477a-8601-fcab4e5695c2', 'product', '804', 'gallery_image_3', NOW()),
+('decd0e9a-4573-44e5-8337-adab77bccca9', 'c20bbe9a-47f3-409f-9743-d833e6a25fd4', 'product', '804', 'gallery_image_4', NOW()),
+('1b097193-995f-4a00-98bb-c9763de4de73', '7fdfc96b-b839-4815-8a24-4afae2a90d40', 'product', '804', 'gallery_image_5', NOW()),
+('ed3a8682-19dd-49fb-b7e3-25c2d3b85348', 'f11355d3-189c-4b77-a001-e85223f1904f', 'product', '804', 'gallery_image_6', NOW()),
+('d5600f40-7cd1-430c-97fc-fbe59cd17ce1', 'a50e6e8a-c371-473b-b557-9569b9ec341d', 'product', '805', 'gallery_image_2', NOW()),
+('2e646fc7-d200-42d7-b216-5a407523427e', '71271cb7-54f6-4828-afe6-e131d77a2146', 'product', '806', 'gallery_image_2', NOW()),
+('fd1de477-0e2a-4926-ba71-cd985e66a251', '121799e3-727e-41fb-b4c5-28060940d5fb', 'product', '806', 'gallery_image_3', NOW()),
+('7960f05d-049f-4ad8-b86d-213a0d324562', '8c611259-0329-4a23-b1b2-f8527297a2fa', 'product', '806', 'gallery_image_4', NOW()),
+('1b3fe095-5173-40b1-a969-38ea0e29b80e', '428381cc-70ce-48e4-b614-d27389de4b4a', 'product', '807', 'gallery_image_2', NOW()),
+('ee635b7b-219d-467a-af81-0939c9deb21a', 'cd074f36-03e0-4f01-a90b-5fdf3322a441', 'product', '807', 'gallery_image_3', NOW()),
+('0b748d44-db68-40c0-baa7-417262807d67', 'b3d7f052-787f-4623-a0fd-f6d394cdb5ae', 'product', '807', 'gallery_image_4', NOW()),
+('fef58ebc-5e34-40e3-86d8-01b11693e091', '24e2667b-2663-4233-8a77-b6eee49a5891', 'product', '807', 'gallery_image_5', NOW()),
+('e0d8cefa-5da3-4626-94c9-56d08a641ad6', '422cd5db-109f-4519-99c2-e424a1df51c9', 'product', '808', 'gallery_image_2', NOW()),
+('75708c16-91a7-417d-a710-6e31ffe219f4', '7e5dba27-36e6-4aea-b546-e2d4f1a1aa11', 'product', '808', 'gallery_image_3', NOW()),
+('083e08b1-e063-430a-9697-c70a68cf8f75', '215d66fd-a4e8-46a7-a0d5-e1d9ab2cd71c', 'product', '809', 'gallery_image_2', NOW()),
+('15df220f-d9e8-4792-a1cc-0e8561408722', '6025c468-025f-4cc4-b2fe-f3e4f1d80873', 'product', '809', 'gallery_image_3', NOW()),
+('a82826f1-3ecd-450b-802a-64facf8c7b44', '23b8d795-a1e2-45dd-8aab-d9f325fde469', 'product', '809', 'gallery_image_4', NOW()),
+('bac6491b-003c-4ac5-b95d-3064727f99cf', '3de4b783-1177-475a-86fa-a799adf48dfe', 'product', '809', 'gallery_image_5', NOW()),
+('68090926-1c78-4ffd-bdd4-a7557ce05a0f', '20823490-8e06-45df-ac29-ff94104c52cf', 'product', '809', 'gallery_image_6', NOW()),
+('dcfa1c13-180f-4da0-a187-611fc8a094ea', '50d0508b-499f-4ca9-bf3b-b191109b5e9f', 'product', '809', 'gallery_image_7', NOW()),
+('57dc6f72-2580-4d3a-92c6-58104ed9f084', '0dee8698-4d32-468b-99f0-edc8774f44ab', 'product', '809', 'gallery_image_8', NOW()),
+('00eeac92-4aa5-4990-9ae9-26b60f164728', '5ab92894-82e4-4de7-9035-e2e08ebb274f', 'product', '809', 'gallery_image_9', NOW()),
+('db59918b-c510-47fb-89be-062e15d9bc60', '3fa8a7f5-1e22-4976-8c63-90fefbe7a925', 'product', '809', 'gallery_image_10', NOW()),
+('cfeffa13-e50d-4949-b6b7-58b5e0cdcec4', '19c3c6f1-dc79-4964-ae5f-41390ff47db6', 'product', '810', 'gallery_image_2', NOW()),
+('6cf54707-742b-4e5d-89f8-55d0243660f6', 'c622b402-6fdc-4e3f-8b56-f0aed513f38f', 'product', '810', 'gallery_image_3', NOW()),
+('a6861da8-dcfa-4764-93f3-7cee45126683', 'b48edba5-fb3f-4da4-a60c-9ebc634956f7', 'product', '810', 'gallery_image_4', NOW()),
+('daa82b4d-bbc5-40ed-a917-515d78895175', 'f23211e2-326f-460c-824c-be62cb47008d', 'product', '811', 'gallery_image_2', NOW()),
+('34a02d8f-66c6-4cab-a4a5-bf35a4531368', '64099539-e8c7-40ce-b7dd-ef0c5d91a173', 'product', '812', 'gallery_image_2', NOW()),
+('f1c5d47e-0197-403f-b088-d3bc6b5ca538', 'adbaee74-6c17-443a-9ba1-4f0c888c17e2', 'product', '812', 'gallery_image_3', NOW()),
+('cb243add-2160-4ac5-b59b-d955fdfd5125', '8eaed14e-9f74-4e71-a5ee-fbc889f007c1', 'product', '812', 'gallery_image_4', NOW()),
+('66016ce0-3cc0-4b7d-948a-1061dbe53534', 'acdbec9d-c249-4982-8837-cdcfe68312b6', 'product', '813', 'gallery_image_2', NOW()),
+('d110d4a6-fba6-4bf2-8aa0-d39b7a68e1b7', 'f6b2318d-b385-4c32-8399-ea654659d541', 'product', '813', 'gallery_image_3', NOW()),
+('aa11be68-2348-421f-a9e1-3e9b3a8a220c', 'b2b94bd9-fb31-4ad8-ab56-4b91c91b6b66', 'product', '813', 'gallery_image_4', NOW()),
+('9e23f61d-b4f1-443b-8328-ac7fc7117ba8', 'd62caa80-31fa-4ca2-95f9-e83fd0f35d0c', 'product', '813', 'gallery_image_5', NOW()),
+('e327333e-c179-4527-9336-834eb2c1b835', 'e6125c51-b733-4ddf-9362-57bc145441eb', 'product', '814', 'gallery_image_2', NOW()),
+('2c448200-44e2-4b8d-8f6f-f7ce9bab4376', 'b21e6304-a27a-44b7-ba9a-deb591bedc8c', 'product', '814', 'gallery_image_3', NOW()),
+('cdfb4436-209a-4ae6-885c-0ceca8ef4cdd', 'da0800eb-d9d9-4462-a8b1-7aaf97cae3cc', 'product', '814', 'gallery_image_4', NOW()),
+('b92482cf-7b1f-4b68-8f25-12169dfb8fbf', '1ad5d166-1d80-4619-8327-e72e3e3e80be', 'product', '814', 'gallery_image_5', NOW()),
+('b37c7d82-b003-4d84-8929-09a8b4009226', 'f5a71ef3-5cfa-45dc-9a10-f6b240b7fcfb', 'product', '814', 'gallery_image_6', NOW()),
+('0ca87eba-9947-443a-a7f1-55d5332f9641', '0ec9d196-df78-40b4-af77-5a68dc6a536a', 'product', '815', 'gallery_image_2', NOW()),
+('bdb9a803-fc6c-4339-8033-7e4998768d0b', '8121fa32-2326-419e-9281-c9ae2f46be2f', 'product', '815', 'gallery_image_3', NOW()),
+('b9202690-7bd1-490b-be8a-4951f2677640', 'e82e2118-6aae-468e-a6ca-3f33a604a5a0', 'product', '816', 'gallery_image_2', NOW()),
+('03aac2c9-eb7f-4802-b80a-e62e595e052b', 'b6cd4758-20cf-4c18-bf2e-163417c34959', 'product', '816', 'gallery_image_3', NOW()),
+('6a833167-d929-4b95-bee7-74553fdd45cb', 'f76dcd76-4034-44ca-ab86-c0c4d35a8d69', 'product', '816', 'gallery_image_4', NOW()),
+('66121489-48f2-41b4-8a8a-f8362720874e', 'd1017652-5397-4150-a906-ed1819921588', 'product', '816', 'gallery_image_5', NOW()),
+('b39d0219-2c6b-43a0-8126-f43bf642c2c8', '527cf2aa-bfcd-4b16-9172-23d6f255e9a4', 'product', '817', 'gallery_image_2', NOW()),
+('dfa12df0-0485-41b0-be36-faa1fe11a8c5', '89d5cc96-710c-4659-9cfb-bb09adaa0c09', 'product', '817', 'gallery_image_3', NOW()),
+('030515ba-275b-4c71-9c4c-e2b3b94c456f', 'f4673bfd-8fef-44a8-a325-df9ea63c2a28', 'product', '817', 'gallery_image_4', NOW()),
+('dfa6f030-5376-43fb-aac6-b44d1085c673', 'e933b869-f0ae-4505-a687-e4315ffa3f47', 'product', '818', 'gallery_image_2', NOW()),
+('570508eb-c499-4faf-8025-05f3dfcafc2c', '7a0a0840-9f58-4247-b7de-74ea71bc60d7', 'product', '818', 'gallery_image_3', NOW()),
+('512fd5e2-77d2-487d-be6f-2b4aa769cc98', '2e983713-7442-4869-96c0-902ce458a7b4', 'product', '818', 'gallery_image_4', NOW()),
+('b274486e-adbb-4421-82e8-f132c1a9e061', '131b728c-dae7-45ec-b68e-40bbb84a607a', 'product', '819', 'gallery_image_2', NOW()),
+('8666b7c3-5f7b-43df-8569-d2a303bcd598', 'd4b1c8bb-c8a7-4752-885c-ee8791f38185', 'product', '819', 'gallery_image_3', NOW()),
+('7589fd50-20f9-4fcd-a724-1d6df2d745c6', '4aac3507-33cf-4b2e-8901-7cd9f5f83e47', 'product', '819', 'gallery_image_4', NOW()),
+('9900c5cf-b9a0-4cc5-a0d6-f342e39e1503', '5ab4cb69-ab20-4a5c-a926-73b3459701d3', 'product', '819', 'gallery_image_5', NOW()),
+('21191255-b1a5-40ee-aa1a-c614cf9c9d93', 'b71fedfe-8ca8-458a-9d8f-e11af8db7e24', 'product', '819', 'gallery_image_6', NOW()),
+('9102f086-29e4-4add-83cf-cddbb44f77ed', '1f40f7d5-8568-4f67-8c31-e3c20b172fba', 'product', '820', 'gallery_image_2', NOW()),
+('286db7bc-484e-4927-9d47-c4184552cc36', 'e4c903ae-2991-46e0-abba-678fe2a2f135', 'product', '820', 'gallery_image_3', NOW()),
+('ad770618-f872-460a-880f-0c9b80cbc808', 'f9626694-55dd-4073-90cf-7723a56aa07a', 'product', '820', 'gallery_image_4', NOW()),
+('153e8a0c-38f6-4607-86a2-79f6fcc28d88', '774985b1-6aab-4b96-9e2a-6f01b6109d6e', 'product', '821', 'gallery_image_2', NOW()),
+('7f5514b9-3da4-4120-894a-81fe719cfa28', '0b4528cd-4db1-4c31-af10-af671e25b67b', 'product', '821', 'gallery_image_3', NOW()),
+('c113a7ea-7f33-4cd5-bbda-2abd270efa12', '8556ac88-d11b-42fe-9409-7646911f4672', 'product', '821', 'gallery_image_4', NOW()),
+('a668388c-c2a1-4622-931b-3ab577488183', '388cb69f-e8a4-43b2-91dc-339b8f1a6cea', 'product', '821', 'gallery_image_5', NOW()),
+('53b9d2cb-3dcf-4dee-8fc5-39595d3ccc4b', 'b57d912a-7d4d-4c8f-b0a2-c0ffcc9e969e', 'product', '821', 'gallery_image_6', NOW()),
+('4b3d32f1-7ac2-4300-a3f5-ae71e0774a2d', '9d8a05e5-cc6a-4499-b6ee-abc559844f3a', 'product', '821', 'gallery_image_7', NOW()),
+('cdd27b29-027c-48ac-ab98-274b25be262e', 'ab476e66-3803-425a-9d5c-89446b7c716c', 'product', '821', 'gallery_image_8', NOW()),
+('c46e1348-7ee9-482b-bd18-dd7a80679be7', '42e05e19-8a06-48d2-9ca6-2773bd33477b', 'product', '821', 'gallery_image_9', NOW()),
+('693f395c-9b29-4e2a-b257-e3871b3a5876', 'd00d236b-7e76-4a87-8abc-131e8ca20b6e', 'product', '821', 'gallery_image_10', NOW()),
+('e702e79c-b488-4c67-bc43-293dd0fff2d5', '3676053b-5bb7-4152-bf97-c0f798dca6b7', 'product', '822', 'gallery_image_2', NOW()),
+('e839c5ce-3c1e-44f5-93c8-39f7300a9e1f', '6f69a4d3-240c-4776-af79-c2dea78b56bd', 'product', '822', 'gallery_image_3', NOW()),
+('00f49e9d-5d1c-420c-a897-08819d100870', '5bb7a5b5-115e-450a-a892-e7d667f19ffc', 'product', '822', 'gallery_image_4', NOW()),
+('e0cb3d83-9fa2-4d66-b19d-553eb6e91ce3', 'a067299c-96fd-4951-9a89-cb01d5f424b4', 'product', '823', 'gallery_image_2', NOW()),
+('596bd630-69aa-4642-bad6-e43b2e7c7c78', '56a34025-45d0-40b8-94bc-e9d598987a24', 'product', '824', 'gallery_image_2', NOW()),
+('9b13938b-0a93-4043-ab4f-db232d4cbabb', '05551dd6-b4e3-40e5-a507-d6503e34b232', 'product', '824', 'gallery_image_3', NOW()),
+('54591487-a8dc-40c4-bfca-c52007bc5d48', '04b73ec0-e072-401e-b9cf-f4b725cc0d0c', 'product', '824', 'gallery_image_4', NOW()),
+('bb71a95e-77bf-4153-8d7a-2c5b62737133', '1fb4eaa2-23bf-424c-b151-82635603b14a', 'product', '824', 'gallery_image_5', NOW()),
+('42616da7-780c-4d6f-b3c7-74e709f52735', 'd4030e31-9ead-47ca-8d0b-8a8e65d4f3bd', 'product', '824', 'gallery_image_6', NOW()),
+('20bcf367-5343-48a2-a020-4acf0ec21684', '21a7c80d-e08f-4bf0-b9e8-41e213f48944', 'product', '825', 'gallery_image_2', NOW()),
+('ae5cf231-2af3-4f38-914b-78c6ee052408', 'b981a312-d9fa-40e2-a664-857c0301bf5f', 'product', '826', 'gallery_image_2', NOW()),
+('b55dce65-58d1-461b-8ff3-2100ada9dd72', '5d43862d-3e83-40e7-933b-0d5ea3c3efe7', 'product', '826', 'gallery_image_3', NOW()),
+('475261ce-5abf-45b5-b912-b0756614c44a', 'c4382d5d-e8a2-4403-8a23-032a65f7b813', 'product', '826', 'gallery_image_4', NOW()),
+('fa49c324-ec2c-4a69-8ae7-71d9f3d28914', 'd7079017-2c14-4913-8707-c189365933e2', 'product', '826', 'gallery_image_5', NOW()),
+('05f4d39c-383c-4f55-903d-bfc36d328865', '5069175b-2329-4b5e-b452-48b75cd36285', 'product', '826', 'gallery_image_6', NOW()),
+('81232c83-053a-4cb9-9a00-544c349e7fb6', '5a012384-3dea-4c7b-83f3-8895ff462b18', 'product', '826', 'gallery_image_7', NOW()),
+('a6cb8381-ef15-4b99-a493-a1366851df1c', '6153541b-1f7c-4ce0-9bbd-69eb29d25210', 'product', '826', 'gallery_image_8', NOW()),
+('0c235adc-54cc-4ba6-9a30-ffd7bca5c18d', 'a7267a34-e0ce-4fab-b453-f83806b286ee', 'product', '826', 'gallery_image_9', NOW()),
+('e3ef3236-55dc-4924-8e6d-ffe31ed6d9bd', '91e149bb-6201-4e21-989d-1c4850744264', 'product', '826', 'gallery_image_10', NOW()),
+('82a6311e-5c8e-4963-9bd8-5350bde6124e', 'fbbf2538-309a-4e6a-b61c-927e5b62e640', 'product', '826', 'gallery_image_11', NOW()),
+('56df6e44-c7a0-4264-9b03-970e0c8264af', '2409bb09-9f97-4788-bdf6-f123d0f740a6', 'product', '826', 'gallery_image_12', NOW()),
+('998fce5f-d943-45f3-9c37-a6a6aac90c24', '35a425c9-e003-40fa-9aaa-abf602bf09eb', 'product', '826', 'gallery_image_13', NOW()),
+('b1764b93-8510-41c7-a800-95df29f45a55', '7b4e5c63-4f1c-473b-96a7-56a20ba763c1', 'product', '826', 'gallery_image_14', NOW()),
+('c0abb754-6938-4fc8-81fa-db5b64e2401a', 'ac1920de-5f58-42a6-8137-3a94dbf84fa1', 'product', '827', 'gallery_image_2', NOW()),
+('f4414e6f-cbeb-4a74-bc91-d4b7879f592a', '420c3a4e-8221-486f-9fd3-d1a5347c651c', 'product', '827', 'gallery_image_3', NOW()),
+('f88fe866-99fb-405a-ae14-4c828f79fac0', 'fb5ec5df-cab8-4aa5-b590-8487cd746956', 'product', '827', 'gallery_image_4', NOW()),
+('1766d1b8-c5ef-42e6-a6c8-5debf67c923a', '91bf0b6a-cbe0-4db2-b4cc-efc4d424cf92', 'product', '828', 'gallery_image_2', NOW()),
+('afd86bd2-60b7-4958-91e0-6a956eac34f1', '3730b4e5-9640-4847-96db-d4503a27165c', 'product', '828', 'gallery_image_3', NOW()),
+('39f72744-df75-4c34-90b0-02159fbbd2f5', '4bf206be-2d92-45f9-a1ca-2c6a7f993c1f', 'product', '828', 'gallery_image_4', NOW()),
+('918b63a6-43e4-4378-b166-808034108d56', '13a957e7-4473-4ddd-b187-5657d079e483', 'product', '828', 'gallery_image_5', NOW()),
+('cd560341-3b4b-4ea3-9f82-34eadbc22da4', 'd4041055-7b36-42ea-88a3-32ce206b9edc', 'product', '829', 'gallery_image_2', NOW()),
+('38581e1e-8bdf-4b06-b944-04ad6bfe173c', '4a4c808d-aefb-424c-8147-3d4e8fe3aec8', 'product', '829', 'gallery_image_3', NOW()),
+('e70af00e-752a-4b36-949e-0ccfe6e84e50', 'bff85717-1f99-4d00-a972-0160a555ba2e', 'product', '829', 'gallery_image_4', NOW()),
+('83064408-2a66-418e-a665-5a7571b1b6e5', 'df4a4782-c096-44c0-8986-13f95da11525', 'product', '829', 'gallery_image_5', NOW()),
+('8516894f-42e8-4a8e-9adf-24c250321160', '314cd18a-803a-4637-b061-6287638df018', 'product', '829', 'gallery_image_6', NOW()),
+('e3af5ad9-1084-4f2a-bfec-12f92c661379', '7f368cf6-614a-4c94-91a0-2be0d5834ead', 'product', '830', 'gallery_image_2', NOW()),
+('6fd25899-e0c7-44f4-b03b-0efa00b6d6c5', 'f758e86d-a59b-4c43-9383-f4603227797b', 'product', '830', 'gallery_image_3', NOW()),
+('53214d44-95b2-4459-862f-4e68d4de020a', 'bf8a4aa9-fcfc-4954-92fd-01d66c8c0fb4', 'product', '830', 'gallery_image_4', NOW()),
+('894816af-e6c7-43bb-ac90-62a5ca6c04e9', '1bde3fdb-05db-46d7-a1b8-405758fbe773', 'product', '830', 'gallery_image_5', NOW()),
+('6480dc55-3bf5-4ed2-ab7c-a435eb3fb8b6', '1a405038-eca6-4c18-bac2-6f4e7cae1c0d', 'product', '830', 'gallery_image_6', NOW()),
+('dc995740-c12c-4ff2-827b-1c0c3d3ebfac', '3102114a-7784-434f-b339-9ce460cf7b58', 'product', '831', 'gallery_image_2', NOW()),
+('6c8a91f0-52fa-42e5-acdb-139221357e86', 'dc56f797-e3cc-4858-9dcf-8ccf60edb575', 'product', '831', 'gallery_image_3', NOW()),
+('adc597d2-649d-4f6f-9eee-9a595c33ef47', 'ead56aa4-a6df-4c1d-ab49-914d507a9154', 'product', '831', 'gallery_image_4', NOW()),
+('f52f7571-14bf-4a8a-ae25-ffce6b15e61d', '1885c33c-e281-4620-ba48-1916415ba5bb', 'product', '832', 'gallery_image_2', NOW()),
+('248d3eee-a3da-4d9a-aa32-33e4801a5d16', '2c245364-426b-4a02-9d82-b888d0f13cf7', 'product', '833', 'gallery_image_2', NOW()),
+('c3ac6d4b-3cd3-4b9b-bcc0-d8f4fc627a0c', 'bd6c79e2-d606-476c-9700-bb4f82b55320', 'product', '833', 'gallery_image_3', NOW()),
+('dcb23881-d3ca-4fb9-b3cb-3c72ceb011aa', '29c6a8b9-4be7-42f6-90ee-3e2b520f0298', 'product', '833', 'gallery_image_4', NOW()),
+('0f20b452-9b64-4a88-91e1-0d20301cdb9f', '17c338da-41d1-4521-94a4-f1502a3415e5', 'product', '833', 'gallery_image_5', NOW()),
+('a39a88b9-6c9e-4699-b6b8-11696660898f', '2404ccb8-9d18-4018-829e-6e5d371545da', 'product', '833', 'gallery_image_6', NOW()),
+('4c04d367-4368-44ad-9bca-79176265d03b', 'c1e42730-ccd8-446c-a9eb-ec6bc2e67881', 'product', '833', 'gallery_image_7', NOW()),
+('4c8f63ba-b489-4c0d-8937-aa3654791fde', '801ad57b-6e75-4f83-ad20-ac0e5cb568d4', 'product', '834', 'gallery_image_2', NOW()),
+('38b6d165-85ac-4354-9a23-553ea9373d68', 'd226ac7e-2a43-420e-a4ac-f274b3904a90', 'product', '834', 'gallery_image_3', NOW()),
+('52a9919f-6634-40b2-af63-75c931078472', '7ca484c7-49c4-4a38-9f30-a3f932c33c8d', 'product', '834', 'gallery_image_4', NOW()),
+('d52f4214-688d-406c-b01a-b376956b96ea', '58918d90-fef5-4be5-846f-a9c3d7e19d03', 'product', '835', 'gallery_image_2', NOW()),
+('04cf1b71-2752-44db-bd2b-089a795fad87', '03391fa5-9c64-40f9-b8d0-2233010ee75f', 'product', '835', 'gallery_image_3', NOW()),
+('a73d2a3c-0cf2-4849-aa1f-4e5a3915f48f', 'af33d0b2-db3e-4e2f-a1f5-3b913c89d12d', 'product', '835', 'gallery_image_4', NOW()),
+('35eebe5f-6a39-41b0-aa01-d0aa559035b8', '4b131e21-8d22-473b-8801-03f6a59efb2c', 'product', '835', 'gallery_image_5', NOW()),
+('6a77106f-721b-4bfd-b287-cce0504bfbb2', 'e18d3822-c446-43de-b2c4-422120aa022a', 'product', '835', 'gallery_image_6', NOW()),
+('d5c13fbf-d391-4016-9315-47effb102ab8', '7f819181-49b3-47ab-bb4a-1486e1a9ce3a', 'product', '836', 'gallery_image_2', NOW()),
+('8b2e0343-cd3c-43fb-918f-7ca931c06657', 'b07fcde2-c3f9-41db-9cae-9336962ab211', 'product', '836', 'gallery_image_3', NOW()),
+('4f0ef605-daa0-4f91-a188-b114cd087a1e', '3499eb6d-6483-43e9-8c5a-c132978cefc1', 'product', '836', 'gallery_image_4', NOW()),
+('3eadb6b7-98d5-4650-9b81-25543c2d84b0', 'be28f1e3-448b-44e6-a71a-1bbd412bbad4', 'product', '836', 'gallery_image_5', NOW()),
+('a5efadb3-3336-4e7e-ac06-6a14597414a8', '7db6ed0a-578a-4252-9145-1c0dee9cb4ff', 'product', '836', 'gallery_image_6', NOW()),
+('c85b4f15-5b7d-42d2-bccf-703695e90b0c', '6ad659b3-fb99-4c49-896d-ebcd336cc98c', 'product', '837', 'gallery_image_2', NOW()),
+('1e2acbd5-f8cb-4adb-a213-428dd982c39d', 'b7662b4a-3850-4322-8f2a-e2c7191f6b61', 'product', '837', 'gallery_image_3', NOW()),
+('fa94f41e-72fd-4844-9402-59111351f6dd', '4430f1ae-07a9-4914-a01f-00ff51cb8e35', 'product', '837', 'gallery_image_4', NOW()),
+('0507b37b-f423-416b-926e-dc8c87b2b2f9', '4dac4ec7-8b76-4710-92c1-ea0c1ba5c5ca', 'product', '837', 'gallery_image_5', NOW()),
+('25acab32-de86-43b6-b825-a6ff98c34889', '7578de5a-09a7-4cd7-950a-f8fd3adee72f', 'product', '837', 'gallery_image_6', NOW()),
+('9c172e2a-128e-42ca-8a3f-50e6e3c32ab9', '41a5df83-c0c5-41aa-b0dc-6b22caca3385', 'product', '837', 'gallery_image_7', NOW()),
+('c75bb757-603a-45db-9573-7330cc87c199', 'fd53a983-ce4b-4436-9f81-95b7ff89145c', 'product', '838', 'gallery_image_2', NOW()),
+('8e835cdc-e2b8-43e3-b5a4-5d73a4de99c3', 'abdc9cdd-2b76-4012-9f8d-fd93d15f81a3', 'product', '838', 'gallery_image_3', NOW()),
+('8546a563-f292-4f39-bd63-79cfde904479', '1a2c9306-d5b3-48bd-919f-7d6a164ae79a', 'product', '838', 'gallery_image_4', NOW()),
+('1f50dfda-ed8d-49d5-b78a-459724fb387e', 'dc2972a6-0948-432e-8600-823ce411bfce', 'product', '839', 'gallery_image_2', NOW()),
+('818eb2d3-401d-480e-90f6-0c35e774d2c1', '7e690066-b738-4c64-9753-39035869a9d4', 'product', '839', 'gallery_image_3', NOW()),
+('1af604e1-6068-4856-b5e9-ad1d0da6a3e2', '303a1573-64d1-4e76-aa78-cd032511730c', 'product', '839', 'gallery_image_4', NOW()),
+('5143e928-6a64-4683-9610-b8f857f91f31', '5a2efdcd-025c-43fa-932c-f9539aa3f825', 'product', '839', 'gallery_image_5', NOW()),
+('e5d8e8fe-7ecf-4353-ba00-ae21796b0c44', 'f7611654-2f3e-4de7-bec9-1ab5852c558a', 'product', '839', 'gallery_image_6', NOW()),
+('ab28a8af-fd76-43da-9cc5-2e09f265bbf1', '02646bca-2c54-410d-b975-2fc69fd28f93', 'product', '840', 'gallery_image_2', NOW()),
+('59cf2970-37ea-4c82-ae38-f45545834bb0', '4ee46100-6bf8-41b6-b582-cf7525a53f3d', 'product', '840', 'gallery_image_3', NOW()),
+('2424735f-6d9e-4281-94af-fbbfc24e7227', '7f2a3b1c-0544-4ce2-955f-9f4b7135df3e', 'product', '840', 'gallery_image_4', NOW()),
+('aa961d70-760b-479d-ad46-fb3b27f10072', 'df4e28ca-177e-4c32-8843-de548c945e51', 'product', '840', 'gallery_image_5', NOW()),
+('3c2649d0-e3dc-4059-99c2-f171cb4628c3', 'f29c2db0-0f06-4b63-a56f-122541d0646d', 'product', '840', 'gallery_image_6', NOW()),
+('7828f644-3214-4f96-af76-c73fb93069f5', 'a22ec32d-0853-4fc6-bae4-088cd09255f7', 'product', '841', 'gallery_image_2', NOW()),
+('33c90628-50e6-4bf1-9a20-9e0313ec015b', 'b741cec4-27ab-42d4-9f24-0084b106074d', 'product', '841', 'gallery_image_3', NOW()),
+('7e7eae7d-06de-41ab-88dc-27821223f9a2', '4ede7f14-3fb2-451a-9e87-788131f50716', 'product', '841', 'gallery_image_4', NOW()),
+('f3edf4ef-8763-415f-8392-3b89dcd6524e', '90440468-9b7f-4327-bb6a-f6e5799748a8', 'product', '842', 'gallery_image_2', NOW()),
+('ce0bdfba-bad7-44c3-a501-35b6caf0bce2', '0fab5a1d-b1e7-4437-819d-c5cca898747e', 'product', '842', 'gallery_image_3', NOW()),
+('e2867ce5-ec03-404b-a544-48e77d4b1b55', 'c78ea5cc-797b-4e12-8b5d-5a38047c0d0b', 'product', '842', 'gallery_image_4', NOW()),
+('4f6013e3-d3e4-4b90-bac4-6baf425e8258', '7c6dbf23-02ed-42b5-adfc-6e25954db5ac', 'product', '842', 'gallery_image_5', NOW()),
+('d333e12d-e293-48e7-8ad7-fbe8a5e6e582', 'afda3531-7e6d-4d76-8ba7-6404f2709b5c', 'product', '842', 'gallery_image_6', NOW()),
+('c0475a58-5fba-42d0-b9ec-412e39d3bae5', '3ab3023b-c056-40a5-84ba-3d73e24e622c', 'product', '842', 'gallery_image_7', NOW()),
+('cb2a83e5-c891-4619-ad86-2a6c42c3788d', 'e8d191e7-5dd4-4bad-a029-a1658a18c29c', 'product', '843', 'gallery_image_2', NOW()),
+('e0d09e6c-24db-4f60-aafc-60b344ca48d4', '0df078c9-9bad-40a8-ba29-72973bc02552', 'product', '843', 'gallery_image_3', NOW()),
+('4d102209-62d3-4930-b31e-0998f8ca73a0', 'c8580d1c-81e5-4e6d-bf49-378b45b1bb78', 'product', '843', 'gallery_image_4', NOW()),
+('6783b8ed-2855-460a-97e6-4a18454b1a94', '500500f7-59f3-43aa-b4d6-b1e0787fb77b', 'product', '843', 'gallery_image_5', NOW()),
+('09dba70f-e062-49e7-bd4b-145fc35a9965', '739c8e10-866e-4fde-8ef9-96df1f893690', 'product', '844', 'gallery_image_2', NOW()),
+('fb6eaa4b-0517-4aa7-8ca4-4b934defd585', '61896e71-06a7-4e4a-a29e-527143db164c', 'product', '844', 'gallery_image_3', NOW()),
+('f127185d-cec3-4714-9d03-a89c053f4175', '7ff9c509-5ac3-4e1f-ada0-04aca9006a83', 'product', '844', 'gallery_image_4', NOW()),
+('8d3474c8-fecd-48f2-be29-41b7f56ba384', '52e055a6-ba5b-4deb-a524-6c1905f1434d', 'product', '845', 'gallery_image_2', NOW()),
+('38a86f97-63d0-4b7a-a3d8-bac5321b4f1d', '07bf4a99-5d55-4844-9889-760e501cab2d', 'product', '845', 'gallery_image_3', NOW()),
+('fc51c5fe-07ee-4df0-8301-0862d2510b01', 'f39b6bde-4fdc-461f-80a3-ebc417caf69c', 'product', '845', 'gallery_image_4', NOW()),
+('f168200c-5c6b-4bcc-8154-3a4806d96e7a', 'acefe274-34f0-4326-9e79-0d0048060a28', 'product', '846', 'gallery_image_2', NOW()),
+('1d474d52-4f56-4846-8e64-405e7c30e3f6', '7d16dd0f-1f1a-4373-8980-bcff120ffe7f', 'product', '846', 'gallery_image_3', NOW()),
+('da7eefcf-3fe0-407a-8dab-6adc3a193b58', '2da79d8c-803d-41df-9c99-86cf32bc70b8', 'product', '846', 'gallery_image_4', NOW()),
+('c418981c-c8eb-46e6-9293-6b705995ecc7', '511b25ce-907e-447c-a9b5-ec46c3bbdef3', 'product', '846', 'gallery_image_5', NOW()),
+('be3a64bb-8cc4-4470-8040-381f3197923f', 'c3777ca5-b6e3-41c7-92d2-36e1428eb806', 'product', '846', 'gallery_image_6', NOW()),
+('de310b64-fbda-451c-845f-6d524004023e', '21eb829f-b029-405e-9c76-ba8678cdccc4', 'product', '846', 'gallery_image_7', NOW()),
+('8614b5af-e0d9-441e-9703-c9b135e35abf', '2129a40b-0ff9-4a8a-b6c5-523999567990', 'product', '847', 'gallery_image_2', NOW()),
+('14e85d3d-481b-4217-8269-392a986006a7', 'ce79fec4-234e-4200-a32d-cb8fde5634b6', 'product', '847', 'gallery_image_3', NOW()),
+('fe8012e4-59c5-49f0-9a1a-615d5f20405b', 'e5e6981c-8561-4ccf-b705-fac986adb912', 'product', '847', 'gallery_image_4', NOW()),
+('74e9cb3c-0dfb-40ce-ae3f-e2cf16c4979c', '26c98d5b-5bbc-4b84-85cf-879d72e3c8ee', 'product', '848', 'gallery_image_2', NOW()),
+('00bee9bf-5aeb-4056-806f-c1125a90ffe7', 'cf5e07fe-63f6-4f58-8eff-4c5ad757efa1', 'product', '848', 'gallery_image_3', NOW()),
+('fe794cb1-bece-4739-8e46-4bc583c96b17', '7a3cc40f-53f6-4443-a59f-ccd4d5c3e128', 'product', '848', 'gallery_image_4', NOW()),
+('9568ceee-8f04-4f66-b18c-03942ef03570', 'e685e6f3-a113-444c-9b13-09fbda268872', 'product', '848', 'gallery_image_5', NOW()),
+('c78396a2-26ae-48a6-a1c8-8fc17b5602ac', '0da75b38-dbab-41af-96ec-486a19e6992c', 'product', '848', 'gallery_image_6', NOW()),
+('f4a1fb11-909c-46f2-9964-72f623c62429', '5b5d8fdc-df51-4690-8c69-e007d4f6619f', 'product', '848', 'gallery_image_7', NOW()),
+('cc5dd2a1-1f04-41f2-9f95-ae996b31dc06', 'e89e9fcb-bc74-4310-813b-c9337a65bad7', 'product', '848', 'gallery_image_8', NOW()),
+('131590c7-a984-44c1-a97c-66718470350b', 'c6f30f45-9756-421c-9439-9a4ba08e4603', 'product', '849', 'gallery_image_2', NOW()),
+('71f092ac-b298-4631-b440-14cf7611896f', '1824889e-d13a-4c52-9031-63af01357b34', 'product', '849', 'gallery_image_3', NOW()),
+('d45cb2ba-0274-47d6-9f09-b11ca70e1941', '134e30b6-ccdd-4b30-8b7e-59192babf96c', 'product', '849', 'gallery_image_4', NOW()),
+('fd837a42-a5d1-46cb-a393-60400420538e', '8ab8d53f-95a1-4b70-b6f9-ea10c22a4e15', 'product', '849', 'gallery_image_5', NOW()),
+('9d06086a-ba17-41cd-872a-676f83a2a996', '0142c67e-27ec-44e9-ba76-08b35c0524fe', 'product', '849', 'gallery_image_6', NOW()),
+('1bb0386b-d3ac-4d72-a897-7b8255d5bb41', '5e8147b3-8e5d-48fe-a581-d2147940f39f', 'product', '849', 'gallery_image_7', NOW()),
+('11d8c86a-91d2-4b32-bf11-f4f4ad66b41a', 'b84c1d40-8760-492f-b30f-836556096b88', 'product', '849', 'gallery_image_8', NOW()),
+('1527160e-f7b5-4d6d-b659-214f744e3e51', '20604d78-4483-4827-90cc-0e533435ea7b', 'product', '849', 'gallery_image_9', NOW()),
+('75becdbc-c310-4339-be63-106e4572d4dd', '00d02eef-86d1-4e6b-868e-0b04d49d94c3', 'product', '849', 'gallery_image_10', NOW()),
+('10dffaa6-62f1-427b-90f8-5b2f44af8318', '250fab1f-296f-4e88-abe9-f589600df5eb', 'product', '849', 'gallery_image_11', NOW()),
+('3a6f8df1-e845-4bd4-85f8-98d0aa42782a', '5007cd70-9aa5-49d8-a76e-e4da07808483', 'product', '850', 'gallery_image_2', NOW()),
+('7989b2c2-6ab9-407b-91d3-1772a8e06e4b', '86f70315-84aa-45e4-8388-655425b8a935', 'product', '850', 'gallery_image_3', NOW()),
+('87078a0f-f381-43a0-917a-58e49646ed5d', '8debc8bb-97f0-4ef2-8e72-0cba4e314334', 'product', '850', 'gallery_image_4', NOW()),
+('32b5117e-9f56-463f-b835-da5e95fd5840', '23d54f3a-81ba-498f-81ec-92459c5ac491', 'product', '851', 'gallery_image_2', NOW()),
+('ade66a87-29aa-467c-9c43-00d599dfb27d', 'e5a3e076-2ad8-459a-8b4c-9606bb58987c', 'product', '851', 'gallery_image_3', NOW()),
+('e23a4748-6182-4ff4-b20f-bb067ce1c469', '6b655fcc-649a-460b-86ea-a29b409695d6', 'product', '851', 'gallery_image_4', NOW()),
+('2e4313ce-0186-444d-8916-dd92fe58621e', '64d8023d-2cb6-4748-91c9-b200a737967f', 'product', '851', 'gallery_image_5', NOW()),
+('ae548c03-9181-4ce1-8d5b-74820ba216a2', 'c8ef3fc8-2e45-46be-90aa-c9ad32e23ee6', 'product', '851', 'gallery_image_6', NOW()),
+('e9101778-d194-48dc-82db-c807549c56ba', 'a8b9dadd-5f02-407d-bc37-400e197c1a10', 'product', '852', 'gallery_image_2', NOW()),
+('302e56e0-302b-4e9e-a29d-0a587ff6ddf6', '0da5ab87-98e4-4ec9-96a9-c181e0360de7', 'product', '852', 'gallery_image_3', NOW()),
+('98408aed-f568-48cd-8e1f-8aaa4161adf8', '6283b961-548a-4c00-b28c-4e1528ec67d6', 'product', '852', 'gallery_image_4', NOW()),
+('a8786c6c-dbae-4cf7-b94c-0d4d5363e8a0', '9b3aeb0b-ae6b-4d43-b136-4e076a33d85c', 'product', '852', 'gallery_image_5', NOW()),
+('3cb4e550-cf70-4d07-bf1d-c4eacea5dd38', 'e79b6406-8d9f-4140-b5bc-44f3e4ee789e', 'product', '852', 'gallery_image_6', NOW()),
+('9f822117-be67-4217-8c47-0c132ba914bc', '38739dcc-2c90-45b0-8929-57b1f1bacfbc', 'product', '852', 'gallery_image_7', NOW()),
+('b0341b47-7995-426a-b0af-a01697b95ed2', '3ec4b6be-1475-45a6-9a2b-7919371f39cf', 'product', '852', 'gallery_image_8', NOW()),
+('ab9c7634-5d6a-40d3-8b97-6911509ecde8', 'bc7b4e53-3b86-4ecc-8283-818595ed441c', 'product', '853', 'gallery_image_2', NOW()),
+('7625eec0-24a2-455d-9d4d-e8f17dfdf267', '2cdf2fde-8a4a-40a1-9bdb-1e3cb7bcc3cb', 'product', '853', 'gallery_image_3', NOW()),
+('dd63e098-a4ea-41ff-ad98-5224ff2c82c4', 'afea33f7-085c-4c23-9ad4-fe6eadfbf3e2', 'product', '853', 'gallery_image_4', NOW()),
+('1006e123-3a79-4495-bfdc-111745acaac9', '800ed3a4-b264-4c3c-9422-95ebbee42821', 'product', '853', 'gallery_image_5', NOW()),
+('1069a7fc-deee-498b-beab-70a4e3cbb263', '3cb10f2e-c1b5-449b-9ff1-221040e25205', 'product', '853', 'gallery_image_6', NOW()),
+('e2bf0b9f-9a8e-4036-b87f-f1ba4a1145ef', '735f7ad9-08e6-42c9-97b0-56098f823860', 'product', '853', 'gallery_image_7', NOW()),
+('5bdcac28-c041-4e55-af16-8cea4c68cf11', '7432f150-9ec5-47f8-ac41-6b0da7a3a09b', 'product', '854', 'gallery_image_2', NOW()),
+('c1ffefeb-1931-439e-a893-0c7047a4df49', '57b3610e-1d12-4a90-8204-a3bd960b9db7', 'product', '854', 'gallery_image_3', NOW()),
+('391a5ab9-23ea-4f48-b5cd-e42db3871481', 'd2ef15c1-ca56-4b1e-974a-94432c9ca0c2', 'product', '854', 'gallery_image_4', NOW()),
+('fd0cae0b-9740-4fbf-96bb-ed756605b52c', '054b4d3b-5dcb-4403-80e6-ca237bf44cda', 'product', '854', 'gallery_image_5', NOW()),
+('01fb51cb-0fbb-4fc7-b14b-e2aee10066a8', 'ee0d4523-c8c1-477f-9393-6fcc90810048', 'product', '854', 'gallery_image_6', NOW()),
+('10eb0ece-8f8c-4c10-9a30-197a5ba1e6c0', '55b6e9a7-73b4-43e2-9cd2-41ba4e0bfb6e', 'product', '854', 'gallery_image_7', NOW()),
+('8a1bbfcd-749b-4aed-9434-d7f476968151', '9ec89d64-77bf-44ef-9c3b-3acb41b48d48', 'product', '854', 'gallery_image_8', NOW()),
+('f0d0343f-7bad-4fd4-b06d-661f1c1def5d', '6d28087a-85a6-480d-9104-73dfb292c763', 'product', '854', 'gallery_image_9', NOW()),
+('ca3b872c-beea-4908-bdb2-18febca12c99', '22c7fcaa-24ab-4b61-a7a0-a099b31a81fc', 'product', '855', 'gallery_image_2', NOW()),
+('73028d9f-715b-414b-89f9-6b8845880046', 'bb54d16d-fb5d-44f8-8fe2-82f1d08a6d39', 'product', '855', 'gallery_image_3', NOW()),
+('53b827ca-9e96-48ad-b581-112aca038b58', 'eb568cef-5f98-406e-81aa-b74b65130376', 'product', '855', 'gallery_image_4', NOW()),
+('7364e29d-e5b8-4684-9fcc-2c1ccabe7e89', 'd9cc61b0-057c-4e24-959b-9fb7637e0a22', 'product', '856', 'gallery_image_2', NOW()),
+('f90c6625-f774-41f7-9687-3ab5ab544f67', '89614466-63a2-4383-a0bc-df086b782acb', 'product', '856', 'gallery_image_3', NOW()),
+('e893dd9d-98a0-4ece-b193-4a98aa2fa85a', '1c38a4df-6cee-4f82-8942-99050aee1774', 'product', '856', 'gallery_image_4', NOW()),
+('b2dbca08-8d24-45b9-bce9-bdbe86f9f408', 'b055418e-8d63-4303-9908-ff9ae16919ce', 'product', '856', 'gallery_image_5', NOW()),
+('294d293e-a87a-4201-a7d9-0ff5564683ca', 'a041b3f8-7cd3-41dd-8dac-9f1272c2d1b8', 'product', '857', 'gallery_image_2', NOW()),
+('c083cb29-bc6f-4321-9c5e-a1de83de476a', 'c1c6e8a4-c5cc-49cc-828e-89928e2a7134', 'product', '857', 'gallery_image_3', NOW()),
+('2a3d5a3b-f7d6-4af6-b9f0-749d05af76b6', '593f6855-bb0b-4c5e-bfdd-6f3b8f0ef2a4', 'product', '857', 'gallery_image_4', NOW()),
+('e4c177f0-955c-4762-9f2d-7fded798cdd4', '296b8250-2166-4ce0-b3f1-6219054cfe87', 'product', '857', 'gallery_image_5', NOW()),
+('2939ee8c-c0b2-4fb8-b1ab-c3a17d427c7d', '712de2ce-7aef-4609-8d97-fe8ddeb822d8', 'product', '858', 'gallery_image_2', NOW()),
+('5b19ff14-2306-4e9b-b5c8-02423a7da1a2', '51051ab7-99fd-424b-9509-07fb5f3d81f6', 'product', '858', 'gallery_image_3', NOW()),
+('e462238c-1f82-4c7d-be91-c465205ca133', 'f7be1cd3-951d-400f-87f8-6ed6db6ec3e5', 'product', '858', 'gallery_image_4', NOW()),
+('ef47f1e9-2288-4b2d-8142-f8e1ca945cf3', '1c1af61e-0833-4779-a6b8-5e47a9b8cb6b', 'product', '858', 'gallery_image_5', NOW()),
+('c27e63d7-8d2b-42e8-bae5-f5122133fdaa', 'e9f3c122-fc56-40f0-8277-85942c466d64', 'product', '859', 'gallery_image_2', NOW()),
+('a2338535-69d4-4b55-9fcb-226d1ba4ea49', '807263f9-160c-4f32-bdf9-6f2cb0a58919', 'product', '859', 'gallery_image_3', NOW()),
+('7c169061-1b0f-4753-aea1-e6cb5583192b', '7944e8e3-fa14-4474-bf19-deba5b1557e4', 'product', '859', 'gallery_image_4', NOW()),
+('e36ec2d5-d20f-4103-a92d-37fe65272e94', 'fba102d2-7146-4335-8e57-9ed02b920d96', 'product', '859', 'gallery_image_5', NOW()),
+('47fd4a05-6a42-45fe-87de-e2da96979ebd', '4f4227ad-4efc-4ef6-a750-b873939263f5', 'product', '859', 'gallery_image_6', NOW()),
+('4470eb63-c147-427d-9908-83171e31cc30', '87c489fb-9e19-4b70-b2a1-c7734cd062e6', 'product', '860', 'gallery_image_2', NOW()),
+('dda567d3-817d-45f5-875f-19a430a9e359', '23a4614d-1086-4294-a2da-0fddfa4a6ce3', 'product', '860', 'gallery_image_3', NOW()),
+('22214376-7489-4d6c-a411-e0867bfa0700', 'fd75e31d-6483-4a1d-b28a-cafcff94822d', 'product', '861', 'gallery_image_2', NOW()),
+('0d6f6dce-212b-47a9-9317-d178688fe702', '9f607005-fc35-43b8-9f31-ff15424ffbbf', 'product', '861', 'gallery_image_3', NOW()),
+('123c959e-38de-40c6-ad5e-dc9ac00f69c7', '927e7ed8-78c1-4ad3-8208-441b73574d87', 'product', '861', 'gallery_image_4', NOW()),
+('02446f3b-405c-4c7e-88fb-457675370256', '67cc9676-111a-41ee-8cb6-d058ec3c0a3a', 'product', '862', 'gallery_image_2', NOW()),
+('d849f241-45ae-40bf-a8b5-31b49a07c199', '92252aa9-f33c-486f-8efa-339f29437b93', 'product', '862', 'gallery_image_3', NOW()),
+('0603297e-3529-476c-94c1-3f7a40b78974', '47cd840d-5072-4f9f-9aca-0b6d344d66b3', 'product', '862', 'gallery_image_4', NOW()),
+('ef5e57e0-108c-40aa-883d-eb6f068eb67c', '82b1d9c3-754c-4437-b16e-3b8790e91ff6', 'product', '862', 'gallery_image_5', NOW()),
+('c1ea8a22-bdfb-4327-9602-26a23b3db061', 'cc95bc46-6f55-48e4-8e27-922cbb7c7d0a', 'product', '862', 'gallery_image_6', NOW()),
+('ec68983d-6565-4448-954b-194692dc32a7', '74e2c45a-0e0b-49d5-8cd8-e826513a7f26', 'product', '862', 'gallery_image_7', NOW()),
+('09a15eb4-7231-4f86-a45e-b4025e58e23a', '62fc2596-2d40-40c1-bd44-d46eb78c6408', 'product', '862', 'gallery_image_8', NOW()),
+('0b7625c2-55b7-4fff-bceb-6c301586b635', 'c826338a-df03-4713-ac87-875f429839de', 'product', '863', 'gallery_image_2', NOW()),
+('e366e8f1-15ff-4517-b132-7cfba61ff7d3', '57301c8d-fe66-46f9-b495-1b4e1e3a3367', 'product', '864', 'gallery_image_2', NOW()),
+('3871afda-a45c-42ac-8a04-3e5375661ba4', 'ade48e1e-9ab9-4b88-a241-6563d9691cb9', 'product', '864', 'gallery_image_3', NOW()),
+('0d27415a-dfc9-431a-8a2a-ffbb909ebfdc', '1d93ced2-b087-4ef0-b542-60dcd161e483', 'product', '864', 'gallery_image_4', NOW()),
+('99321a20-a755-436b-96ee-3ddcf00adfc9', 'd0a550e2-4b50-417c-828e-d6aa365b91bc', 'product', '865', 'gallery_image_2', NOW()),
+('b98a7c59-87bb-4afe-b6c3-932cde261ee6', 'e697da36-2853-4d92-bb4a-a70e3b955b46', 'product', '866', 'gallery_image_2', NOW()),
+('6614876a-4c6a-4962-a3c0-69c51ebe1ebb', '967c5b87-a426-455b-9fc7-f927660bbc9c', 'product', '866', 'gallery_image_3', NOW()),
+('e0911225-822a-4344-84b4-a98317f35e08', '64a1815d-0d53-4936-8d87-e91d51b82a57', 'product', '867', 'gallery_image_2', NOW()),
+('cd0882b9-c979-45f6-b5e1-7f52a24496c1', 'e91109da-b20f-4d4f-96f1-a65ac1ba7883', 'product', '867', 'gallery_image_3', NOW()),
+('b852d7ff-37ce-4f42-926c-553028421039', '105647a9-6ef3-4308-90b7-b68154475a7e', 'product', '867', 'gallery_image_4', NOW()),
+('09b64249-7588-4cb0-82a1-19d4df2e7181', '3b8ed47b-6118-4a6f-bda1-d0f4fd6a080e', 'product', '867', 'gallery_image_5', NOW()),
+('385cc2fd-c6f7-4201-aa38-2ca2a6c8b212', '83669ca8-71bd-4806-b4c8-01353bced053', 'product', '867', 'gallery_image_6', NOW()),
+('074f71d5-2a7f-41e7-8ee4-9b951d4033cb', '3f76ab09-21b6-4f60-acea-06c6edbdadde', 'product', '867', 'gallery_image_7', NOW()),
+('77f7c55e-4493-4e6d-82db-948c66d6a6f6', 'd09ad3f1-2623-4576-9971-cad7dc9587aa', 'product', '868', 'gallery_image_2', NOW()),
+('f50e49fe-4b15-4b39-8127-58506b19def8', '7e24a75f-4ab2-42df-938d-759ee2498936', 'product', '868', 'gallery_image_3', NOW()),
+('81cd9189-491e-4408-8ff4-58fd5936e7a7', '1f2ea758-559d-43a5-b8b5-9044098d5845', 'product', '868', 'gallery_image_4', NOW()),
+('313fd5fc-9ec1-4998-bce7-1f2fdc5ac961', '9660512d-e85d-4ded-9fc6-864ccbd59868', 'product', '869', 'gallery_image_2', NOW()),
+('b9de248a-fc54-4132-a50f-bce1e91aeba9', '37628cdc-22bb-4e95-9b6c-7fdcab389be0', 'product', '869', 'gallery_image_3', NOW()),
+('0d3959ee-79c7-4715-8360-b4e77d170f8b', '791bfc76-fa59-4d35-aa5e-feda128ea8d5', 'product', '869', 'gallery_image_4', NOW()),
+('9cc6a08e-8106-4af8-904e-651cdec2fda7', 'fc570760-e855-4275-b12e-3947cd1eb1bc', 'product', '869', 'gallery_image_5', NOW()),
+('1aedc4c5-83b9-48a6-bbd0-5abd12b85fa3', '6f8beba3-5a89-40c5-8d1d-210f177d1489', 'product', '869', 'gallery_image_6', NOW()),
+('b66d9de3-14cd-4f7e-918d-1e87fbbe30f8', '61c67402-68b0-408d-bc50-1cf445657cfc', 'product', '870', 'gallery_image_2', NOW()),
+('74105a3d-4cef-4e5d-8f13-b487297cfdd4', 'fdf4da42-b6a2-4557-95e5-07884ca96340', 'product', '870', 'gallery_image_3', NOW()),
+('f1edbe76-1c17-4adf-8524-e06f03d72b6b', '69ee6881-731f-47e8-919e-16630afbe858', 'product', '870', 'gallery_image_4', NOW()),
+('603c3429-da07-4179-844f-0cb3e8684f59', 'f463d387-924a-4494-a39b-5fbee1f2f524', 'product', '870', 'gallery_image_5', NOW()),
+('242a153c-63ef-493d-88e0-a8f561e75dd3', '7c9ac096-4e7e-4f43-a826-efa85ee3dcfd', 'product', '870', 'gallery_image_6', NOW()),
+('2e9acdbb-8a5b-4eac-8477-67b34fa25911', '2518320a-9150-4980-92bc-99b6abab5471', 'product', '870', 'gallery_image_7', NOW()),
+('5155a21e-5712-47ee-a32c-960967bdb850', 'a1c36010-f09b-4713-a0f0-2757f7368f9c', 'product', '870', 'gallery_image_8', NOW()),
+('fdcace10-c7ed-4c6a-b986-2c0df9661897', 'd8ac312f-12c1-475c-8317-f8c50648d328', 'product', '870', 'gallery_image_9', NOW()),
+('92adaf2d-40df-43bc-bbe2-939df1994a6d', 'f2aa9bc5-6747-46a4-af59-0c1ff78b4743', 'product', '870', 'gallery_image_10', NOW()),
+('61e2a9f8-d457-4c4a-ab89-05a1e2fd724f', 'f691120a-22c4-4913-ae86-6b1851b900ec', 'product', '871', 'gallery_image_2', NOW()),
+('051de1e1-aa04-4151-8dec-af59f2df7f05', '9f413056-5a0a-4639-89cf-1864210106bf', 'product', '871', 'gallery_image_3', NOW()),
+('21ca2f20-47b6-48f5-921b-1dc998b24589', '05ba0c90-b0ac-4aea-85cb-902a61f645ba', 'product', '871', 'gallery_image_4', NOW()),
+('0ec4c64d-8fea-4805-a4d8-1e50bf055fae', '8013cfe6-a683-4ed3-85c9-45e748ab19b3', 'product', '872', 'gallery_image_2', NOW()),
+('98328c9e-bea6-4d21-a9fd-a9d81c79f3a2', '5615c59d-9c83-4529-a877-6cfada7f0f95', 'product', '873', 'gallery_image_2', NOW()),
+('35ddb1eb-8036-47bf-8206-181c6bab6ddc', '26b8f79f-be17-4b05-9faa-d54f25c6792a', 'product', '873', 'gallery_image_3', NOW()),
+('33f80132-9e94-4ad2-85da-764e4126c162', '630b3e8f-8976-4fcd-a27e-c858ed3b3d8b', 'product', '873', 'gallery_image_4', NOW()),
+('7694bf39-ac27-46f9-8cb5-215a38007a76', '224e8304-ab58-430d-8ce9-660d2c3b147d', 'product', '874', 'gallery_image_2', NOW()),
+('2a32a69c-2f94-41d8-ae6b-0d6e0c796d62', 'fbf2522d-1f0e-4747-8261-a9e976737494', 'product', '874', 'gallery_image_3', NOW()),
+('b9ce9202-8e04-4e30-88b7-f60c210d7b8b', '5b4eaeab-c071-4211-995d-2d879ad08632', 'product', '874', 'gallery_image_4', NOW()),
+('4d87ba1f-3306-4c59-baed-b671b4716892', 'd94d80bb-98ce-4609-be57-4779518b353f', 'product', '874', 'gallery_image_5', NOW()),
+('42b46831-966d-49a0-ad15-41bffd6541a1', '0cc42dd1-2578-4945-9d42-6ff390219f62', 'product', '874', 'gallery_image_6', NOW()),
+('8bdd67b0-5291-41eb-be15-addb5a0426b3', '2d475101-83f6-41f8-a4a0-698cd32476aa', 'product', '875', 'gallery_image_2', NOW()),
+('8289f541-8d20-4b46-b952-7004016ce007', '108b4582-210a-4a2e-bab2-c5a964369a57', 'product', '875', 'gallery_image_3', NOW()),
+('81853c38-2587-4e71-b693-a1d3493ed916', '6b687b1e-532c-41a3-b763-75005de8b829', 'product', '875', 'gallery_image_4', NOW()),
+('a8b5ee08-7703-487f-a6a1-3dc230c35f17', 'f0bc85fb-0a0c-443d-b5cc-f50778044b9e', 'product', '875', 'gallery_image_5', NOW()),
+('90257e0a-7ffc-4c5e-b224-66c201267f80', 'd132ac6e-0a3f-47fb-9883-b80dea7274c9', 'product', '876', 'gallery_image_2', NOW()),
+('c67ad3ce-c1aa-4af4-9378-9d4b82c37d96', '9d38429f-4b93-432b-91df-46c3c6885185', 'product', '876', 'gallery_image_3', NOW()),
+('1b2909be-d7a7-4f48-9d8f-927de40872b2', '83e01ea5-36e5-4a68-9af1-c2b93b1da192', 'product', '876', 'gallery_image_4', NOW()),
+('eab2ab29-7205-4d59-8472-5cfa8c425c56', '836ba739-16d5-40b0-8cc4-22c0cadc2125', 'product', '876', 'gallery_image_5', NOW()),
+('ac24f121-f101-4f8b-94c7-5be27d6ff6a9', '8f027dff-823d-49ba-adb4-0e153ad29f74', 'product', '876', 'gallery_image_6', NOW()),
+('72c7b5d9-6571-4a52-9338-cd634466bc73', 'fbb15ac2-86f3-45bc-acd4-f18c670ca647', 'product', '877', 'gallery_image_2', NOW()),
+('b677eff1-f822-41f5-bcf7-06fe9aee60e5', '87c8f3a7-bfe5-40f8-9c08-e2fa6aa99421', 'product', '877', 'gallery_image_3', NOW()),
+('40c98d14-a74c-496e-8913-6fc337346e30', 'b64795eb-80d9-456c-ae79-2022f2f1dbaa', 'product', '877', 'gallery_image_4', NOW()),
+('fed35dc2-be44-4cc6-ac84-b02e47329cd1', 'd94586ce-bf33-4161-bba0-44a863409ecc', 'product', '877', 'gallery_image_5', NOW()),
+('b34d1f60-fa0a-4397-ae52-bedef0c597eb', '2e36f94d-3451-4ddf-a822-626e20df86ff', 'product', '877', 'gallery_image_6', NOW()),
+('422964b9-53a8-411e-8240-37e11a46a20d', '7522dca8-3ec6-4f52-b314-e07ffd2eb5f9', 'product', '877', 'gallery_image_7', NOW()),
+('004b7072-0b41-4d86-9043-c89cef76944f', 'b26e785b-5913-4d08-9a8d-6d0ba211c85a', 'product', '878', 'gallery_image_2', NOW()),
+('504dc9c2-eedb-4125-ae00-9a50a645ce08', 'eb6a73b6-5a30-43c0-9bcb-294d9bc1e288', 'product', '878', 'gallery_image_3', NOW()),
+('4fdd2de1-7177-40f3-a3b9-3d4842b13366', '6f9b48fc-86c3-4456-99c0-24d95564fc8a', 'product', '878', 'gallery_image_4', NOW()),
+('971c0896-d356-4a48-b451-c8161052232f', 'd8ee9633-3873-4e70-8a24-37ba99f1928c', 'product', '878', 'gallery_image_5', NOW()),
+('69e837e5-d969-4ffe-ae68-e3f60ebcb7e2', 'e97dd0f2-183e-4006-9893-a4e8046eadcc', 'product', '878', 'gallery_image_6', NOW()),
+('af85349a-4f6b-4c9d-bc3a-d61fa32c7b79', '80686688-fc2a-47a2-9247-30284db0f66a', 'product', '879', 'gallery_image_2', NOW()),
+('0228f779-bab5-41ba-ad45-86af9b3767c6', 'a8e8bd9d-967c-4b80-a99c-14cd98069439', 'product', '880', 'gallery_image_2', NOW()),
+('65ff371e-d6aa-4a73-8e16-ae765dd0df72', '00c03830-4324-4bf8-96c2-0a2a4657cdd4', 'product', '881', 'gallery_image_2', NOW()),
+('f980cee2-a26b-45d7-a0ae-55204ebe4fc0', 'fd064e02-6ba9-4aec-aa94-629bc2841ea3', 'product', '881', 'gallery_image_3', NOW()),
+('365cd6a4-c69b-48cc-a3a0-e33266b1d966', '14c9dd9b-3e69-4733-bdc2-0e8ef7958e07', 'product', '881', 'gallery_image_4', NOW()),
+('3d031c4a-12b4-4a93-9b4f-8348bf9c5b93', '4633dcf2-6843-4070-83da-a55c7001f05a', 'product', '881', 'gallery_image_5', NOW()),
+('b90dc979-f5ca-4d51-b0e9-d4ee5b314ed1', 'b759b91f-8e2c-4a17-a4d0-c75057786bef', 'product', '881', 'gallery_image_6', NOW()),
+('e5234dfa-0bd1-4644-9a36-72e976458421', 'faab5ea7-e233-400d-a3a1-259f1ad8baa0', 'product', '882', 'gallery_image_2', NOW()),
+('8e28b413-eba2-41f9-8dbd-a6dea36de937', 'd28bb9b2-98da-499f-9361-4e54361f3c3b', 'product', '882', 'gallery_image_3', NOW()),
+('79ac42ca-c368-4f7a-8df6-66654babcad7', 'a4e793f4-c662-4030-9e0d-843b6409b89f', 'product', '883', 'gallery_image_2', NOW()),
+('00ffdfc8-3ea8-4f4d-8d9e-2c491565546f', '79e60cf1-683b-4d9c-ab9a-904c62ba0cd2', 'product', '883', 'gallery_image_3', NOW()),
+('320fc98a-dcb0-4d99-9f39-5b6d51c3878c', '1741da08-872a-470d-b106-631c11919114', 'product', '883', 'gallery_image_4', NOW()),
+('81dc4e6f-1405-47b5-80e0-ca06b88828f4', '1951e25a-43f1-4d96-964b-6fbd4a99af1c', 'product', '883', 'gallery_image_5', NOW()),
+('3f60a5ba-98a1-410d-9433-c9d6c5e7cd85', 'd8e5b23e-481c-4e48-94ad-f439529c7a2e', 'product', '883', 'gallery_image_6', NOW()),
+('15eff897-442e-493c-8f87-99c8d508b5e1', 'ced7bc3b-6cb2-42f9-9b93-8e1afdd53e8d', 'product', '883', 'gallery_image_7', NOW()),
+('9e34f56d-fd87-417b-accc-f3b465f35851', 'e4af219f-17b4-478f-82dd-90aca4011be9', 'product', '883', 'gallery_image_8', NOW()),
+('07b06f67-8fc2-431d-9fdf-ba190b4f128d', '50cef07c-b7e9-4461-93ac-abdc40b0b53a', 'product', '883', 'gallery_image_9', NOW()),
+('6eccc8e1-cb0e-4cf7-ad61-f6ae65975d08', 'e7622d11-fbab-420d-a2ef-46b3d7e90e63', 'product', '884', 'gallery_image_2', NOW()),
+('6d95d825-e537-4fd9-9dc6-02f21145ce5d', 'ac8d5752-9719-4d73-988c-0083ff42eb1a', 'product', '885', 'gallery_image_2', NOW()),
+('3c99b1d4-fa6c-4d9a-b4e6-6957867272c3', 'e995e1aa-6852-4236-bbcb-0fcff9e77e5d', 'product', '885', 'gallery_image_3', NOW()),
+('2a68089a-5275-4a33-a656-81d8cd062769', 'd4ddbff4-adcd-4296-ab0b-55955a179777', 'product', '886', 'gallery_image_2', NOW()),
+('42caf266-3a94-4fee-995b-a593e46b9dc4', '718e1c3e-e6c2-4404-801f-d48fee038ba0', 'product', '886', 'gallery_image_3', NOW()),
+('4609c6a0-eb30-4419-81eb-239f88dd9d84', '6d2a5fa2-f62d-4d55-b4d4-499cbacda58b', 'product', '886', 'gallery_image_4', NOW()),
+('3e87f847-4f3d-43e3-a356-fca3fd69aad8', '87decabc-8e7a-4a2b-8ff7-8efd1e9c27ca', 'product', '886', 'gallery_image_5', NOW()),
+('d0e658b1-cf6f-42c2-adb6-d095d5d59e0d', '727d5760-550c-4671-9617-cbd043c743d0', 'product', '886', 'gallery_image_6', NOW()),
+('445a6e9e-f5f9-4c3a-aa09-bad6cbb1cc79', 'b12031c2-e106-488a-be62-dd8de193e5e5', 'product', '887', 'gallery_image_2', NOW()),
+('4af2a401-4c4d-418c-b158-51772ba8a55a', 'fe199a7b-28e8-4fed-81e6-a8d8c7e82c25', 'product', '887', 'gallery_image_3', NOW()),
+('0d57dc46-65a6-4ec0-b00a-d6d7b41cc025', 'c1c39380-4283-4ef6-aae1-b93f7cdddcc3', 'product', '887', 'gallery_image_4', NOW()),
+('1658acbe-28d2-4eb1-81e4-10d5dbe9e939', 'da9efb74-f743-4c18-8a30-ec63c105a5fa', 'product', '888', 'gallery_image_2', NOW()),
+('c3bc1ce3-79a7-404e-a7e3-d06b06f244dd', '82511e6f-8cba-4b63-954a-866b7bf0845b', 'product', '888', 'gallery_image_3', NOW()),
+('8cda7ada-9a06-4076-90df-d88e02a37642', '8351de06-cf71-447d-8d30-a946106c0804', 'product', '888', 'gallery_image_4', NOW()),
+('43515010-6e38-4b12-878a-90b1e84ceab0', '30f4ad9d-833b-40e9-b43d-85fe090e1d4f', 'product', '888', 'gallery_image_5', NOW()),
+('904711f9-d9f3-46e7-9cf5-b2d70b6b99a8', 'c9b5c6a9-2bb7-4cbf-9089-b0e7ad56331e', 'product', '889', 'gallery_image_2', NOW()),
+('f974b156-6aa9-4526-9e6b-21563b5544fb', 'ca9871b4-b3a2-42a0-aa52-8fb37584b933', 'product', '890', 'gallery_image_2', NOW()),
+('b9c3c583-eac2-487e-a877-becb1d2892ff', '8204b70f-cc34-45e0-b8ee-7ab2040a7c76', 'product', '890', 'gallery_image_3', NOW()),
+('25c31b5f-6930-40f1-9977-96fb8f3f9447', 'be03079d-1249-413b-8619-c3a27ab9ec45', 'product', '890', 'gallery_image_4', NOW()),
+('11c443be-5c86-4465-8923-02ba97454c3e', 'd25854a9-4aac-409e-b8de-f4b6e0fe9380', 'product', '890', 'gallery_image_5', NOW()),
+('141f8fbc-26aa-4f1e-bf64-9a89b8edaf82', '482d69e7-0d1f-4c2b-81e0-4b91bcc59a32', 'product', '891', 'gallery_image_2', NOW()),
+('acdc0a32-346d-4c2d-93ae-47e0b10a0202', '68e40f0d-1960-4cd3-89d5-c70a72e6f3e1', 'product', '891', 'gallery_image_3', NOW()),
+('f1cb153d-0ce6-416b-99cb-519b48b21754', 'd31e6875-db01-40f5-b41d-784625ae3696', 'product', '891', 'gallery_image_4', NOW()),
+('9fbf18ee-0f85-4e01-a18c-4a2b077812d4', '0dd7819d-92a5-4da0-bd97-00841b4dc639', 'product', '892', 'gallery_image_2', NOW()),
+('c835e88f-b9c3-4054-b991-e9fb64d742ed', '8db11e78-339e-4d0c-9ede-023c59683b26', 'product', '892', 'gallery_image_3', NOW()),
+('4e96889e-527e-40ef-909f-a0756d04818e', 'f37631d9-b18c-4b0b-82c8-58e5485b5297', 'product', '892', 'gallery_image_4', NOW()),
+('048bc15d-31f5-4897-8aa1-4663041a19f5', '1fe03f61-6e5d-4d56-be30-78470bf96396', 'product', '892', 'gallery_image_5', NOW()),
+('9286a899-2424-4de9-b41f-957e06a78450', '7b927be4-d18a-49ef-9220-b8574f8dc338', 'product', '892', 'gallery_image_6', NOW()),
+('d3e7a3a3-2893-4c2e-bfdc-f5ebabc30ec9', '3a089ce8-9d27-46ca-8793-3651dbdcd131', 'product', '893', 'gallery_image_2', NOW()),
+('7a983964-82dd-41ac-8022-fda6e0d26e47', '8ab98d80-8e5f-4734-afdc-25f0daa6970c', 'product', '893', 'gallery_image_3', NOW()),
+('d91c22b7-ad79-4ec1-b76f-3bc9113be8a5', '8f76bbe6-3084-43a6-808f-a51f50417418', 'product', '893', 'gallery_image_4', NOW()),
+('c8a45a1a-3564-491d-a69b-e0993aaf4be7', 'dc1378a4-91e8-483a-bc65-b6ad0413ed0d', 'product', '894', 'gallery_image_2', NOW()),
+('7b7aedbc-21a8-4bf7-bc42-62a545c16d39', '46034ad8-9914-47f0-9cc3-a087b99086a3', 'product', '894', 'gallery_image_3', NOW()),
+('01e274d5-f0c0-4008-967f-7bf598ddd535', '98710892-e5fd-42f5-8f5b-d27e636097c1', 'product', '894', 'gallery_image_4', NOW()),
+('60e67674-f966-44f9-81be-c18f3c892af3', '8cde551f-402a-4caa-8f63-2c07404c72b9', 'product', '895', 'gallery_image_2', NOW()),
+('071daaa7-b0f0-45e7-8806-2343c3eb0e10', 'ac3d5ddd-459e-4ec5-85e7-143a4f63780e', 'product', '895', 'gallery_image_3', NOW()),
+('2cf06929-c52e-42f2-bc50-594b36a60274', '9e40cdc7-070f-4e1c-85b5-1f8137e107d5', 'product', '896', 'gallery_image_2', NOW()),
+('b0658e8a-8567-4d58-b2f4-7bd44b50bb61', '2020903f-65e5-452a-a9d9-129a4d5319b2', 'product', '896', 'gallery_image_3', NOW()),
+('1195a517-7bab-494d-a4dd-8e67d841d4c1', 'fc8dedfb-8ef7-4003-b7c1-b544ddeac76c', 'product', '897', 'gallery_image_2', NOW()),
+('c9263d84-67a2-409d-aae4-492fe423e7ee', 'b5988dfb-0d33-485d-b2c8-4e2f4132add5', 'product', '897', 'gallery_image_3', NOW()),
+('50d1442b-d39a-4954-8df8-eccd567854cb', '5cd63cb9-b906-48a7-bb80-401144bafb8a', 'product', '897', 'gallery_image_4', NOW()),
+('2d5f9016-4cb1-4730-8df1-19fedfb847db', '9f28029e-40c2-4636-9ea8-cc3df33deb85', 'product', '898', 'gallery_image_2', NOW()),
+('cfef9748-e400-402b-a449-a59d62a36af4', 'dfbf8286-7a76-4970-96ec-c176dd9b00a3', 'product', '898', 'gallery_image_3', NOW()),
+('22820b4c-9994-4a62-a257-7be1b43ecdbe', 'aa79bf8b-0efa-4133-80e3-bd8a7d31b8cc', 'product', '898', 'gallery_image_4', NOW()),
+('91357a0b-2b1f-4bd5-8d16-9d7942888b68', '9b3bce48-b5e3-4d14-aaec-90a86eb447a5', 'product', '898', 'gallery_image_5', NOW()),
+('30ccd23c-03a7-4def-9820-37c2335c86c8', '8a851625-bc71-4c36-a0b9-75f7c4648a59', 'product', '898', 'gallery_image_6', NOW()),
+('5f4246ca-b680-40c7-a02b-b0a79436483b', '67a83513-99ea-454d-8665-fe00679aa7bd', 'product', '899', 'gallery_image_2', NOW()),
+('69c5d2a8-f1cd-45d9-9540-7d2f07638619', 'cdbf04b5-2610-469b-92f4-35861956ec55', 'product', '899', 'gallery_image_3', NOW()),
+('9cf04a45-10dd-4c8d-a84c-780f708b4ce6', '5e695a9b-3514-4f7b-b137-98228ae344dd', 'product', '899', 'gallery_image_4', NOW()),
+('cb7573ee-2cf6-4039-95fa-dd835694ff2a', '6a473267-4332-4b26-b559-128c3decf8da', 'product', '899', 'gallery_image_5', NOW()),
+('a4b6b2bd-b678-4fdd-91ff-f027f21e67e8', 'b1dea252-b288-48d8-82d0-188fefbe0a6a', 'product', '899', 'gallery_image_6', NOW()),
+('b1be6c24-ffbb-44c1-a689-4bdce26f8e01', '9b21d395-5658-41ef-a6ed-c5657f623239', 'product', '899', 'gallery_image_7', NOW()),
+('481de810-d768-4758-8bc5-fb56ad9c3354', '71324f1b-59b1-4223-9251-792b5435d3f6', 'product', '900', 'gallery_image_2', NOW()),
+('eb059c69-576a-4bef-9043-ec49e3b911f1', '4b071aa2-175c-46ea-ac4e-7da681606e0e', 'product', '900', 'gallery_image_3', NOW()),
+('b1d08b70-6c0e-48bc-b247-23244ae17f44', '75fe3026-2043-41d1-9f5b-a2db06c08d7b', 'product', '900', 'gallery_image_4', NOW()),
+('53ea03e1-1c13-4421-8a35-23318e275cba', 'a0c9587d-9d68-4ea7-87b1-56fa05256b91', 'product', '901', 'gallery_image_2', NOW()),
+('52b79287-73cd-47e3-9ce6-d0353ee0149a', '453ef54f-ad19-4eff-8da9-3322866b0b36', 'product', '902', 'gallery_image_2', NOW()),
+('9432b51c-3f1e-4493-8f6f-3a7d388dc088', '00c196be-6688-4972-b224-6a96bc268fa5', 'product', '903', 'gallery_image_2', NOW()),
+('1e2561dc-47df-4d3d-837a-4fb6aba8706d', 'f1febeea-cf88-4311-a3c1-c86e55d9867c', 'product', '903', 'gallery_image_3', NOW()),
+('0b51ef1b-c729-4f86-a1d3-095b6656aa0e', '203e8c29-321b-4e62-9df9-b4809212be7c', 'product', '904', 'gallery_image_2', NOW()),
+('5a522aa4-2022-4614-a25c-ee6831eefd65', '3156cb3b-26f3-44d2-8288-71f3aa553b0b', 'product', '904', 'gallery_image_3', NOW()),
+('9c615188-88bd-4ccf-a700-19ed5ff254fe', '5a146ca2-4750-4b25-8454-704dbdaf5783', 'product', '904', 'gallery_image_4', NOW()),
+('7f808ba3-d9dc-4085-b2fe-467e398ef415', '8cb705f9-6c4e-4102-8d0f-a6f36e21c808', 'product', '904', 'gallery_image_5', NOW()),
+('b4756aff-67da-4d2a-9d50-945bedfb1f9e', 'e440386a-5591-47cb-b98f-0fe1f61a3b71', 'product', '905', 'gallery_image_2', NOW()),
+('3a177344-273a-4132-9a7d-a5b2079e9ac7', '12eb4abe-986e-49a5-9123-a1b0452ab6e6', 'product', '905', 'gallery_image_3', NOW()),
+('2c68df52-b591-4a21-a003-66c14350f812', '2469df26-49fa-45fd-8cef-3ba530cd0e2c', 'product', '905', 'gallery_image_4', NOW()),
+('4dd77bef-2f85-4640-b5c3-c9771fbef7ce', '023e19df-444a-442a-8e57-9a580daf86ff', 'product', '906', 'gallery_image_2', NOW()),
+('4032f545-c827-4125-b961-7bf769a5fce5', 'a94c761b-fbef-4456-9583-34c45863d5c2', 'product', '906', 'gallery_image_3', NOW()),
+('b0c6189e-983f-495e-9989-afc1a6536100', 'a8c480f5-e7dc-4355-9961-75a0523cdade', 'product', '906', 'gallery_image_4', NOW()),
+('cf93d478-129a-4fe6-835f-f52fd7f1d965', '90d2dc57-51a5-4355-a2c0-8937bf585f8b', 'product', '906', 'gallery_image_5', NOW()),
+('c64ee715-3ccf-4667-9c6d-0d2601192f16', '9ea5f3c0-b8e3-4256-9add-a9270f5d6ceb', 'product', '907', 'gallery_image_2', NOW()),
+('1fc2aa53-fd48-4c46-8234-df3b7619421c', '1a4bd230-061d-444c-8794-f016952963e9', 'product', '907', 'gallery_image_3', NOW()),
+('ca2b9787-05fb-4583-a762-ea2e6e05a286', '791191d4-fe53-4ba7-977b-bd3a2244d5c3', 'product', '907', 'gallery_image_4', NOW()),
+('d37674ff-5822-4944-8ff5-856618c002a2', 'f5a58128-dfbe-410c-8489-48a07f74e02c', 'product', '907', 'gallery_image_5', NOW()),
+('2601e6e7-61c6-4003-878b-e52d18fea69d', '92e6c665-df7a-460c-bbd4-3b0dea1975a2', 'product', '908', 'gallery_image_2', NOW()),
+('806ba77c-d9e3-4082-b974-04f744f3e53e', 'ed4b93e0-c1bf-4aab-9877-a233f55ad437', 'product', '908', 'gallery_image_3', NOW()),
+('51fdb74d-3f3f-41b4-a008-efa716e76d7a', '0a9bac1b-10f0-487b-a76b-4356eb5d8684', 'product', '908', 'gallery_image_4', NOW()),
+('91594c12-5c60-4043-b3e6-48e6e2ca36dc', '0f94bc60-0865-4936-8ac6-9fc780f7b77a', 'product', '908', 'gallery_image_5', NOW()),
+('9000278a-fb2e-42eb-b01f-8f184d6fd681', '0ae0a3a8-a82f-4c8c-be71-2c756cef2d5a', 'product', '908', 'gallery_image_6', NOW()),
+('1db440c2-0228-4732-b5ec-453f22137625', 'c32dbb4d-ceba-4ffe-908a-5dc89b7af082', 'product', '909', 'gallery_image_2', NOW()),
+('6fbba13a-8baf-4fed-adc8-cb6a1722df61', '8330b2a4-92e7-44c5-8b5c-f4621d40ffe9', 'product', '910', 'gallery_image_2', NOW()),
+('5be6bc97-b727-413f-878b-3bfae08e2a38', '481b18b6-1f95-4962-ad02-a29ff26f9a35', 'product', '911', 'gallery_image_2', NOW()),
+('88bc8246-0bc2-4e42-8e91-7776ff8ba649', '6018c338-d1bf-449f-ae61-0a6e8dca86a3', 'product', '912', 'gallery_image_2', NOW()),
+('eae55960-8f68-47e6-ad1a-9d097b649a36', '4938b828-5b44-4266-b618-ceaf7eae7dd1', 'product', '912', 'gallery_image_3', NOW()),
+('3f76ebc6-3386-4d0f-b047-7b3d4be73d4e', '64d7adb5-a95a-4ede-a9b0-4ed924153b79', 'product', '912', 'gallery_image_4', NOW()),
+('e495b107-969b-4800-9a87-f2f35a138b54', 'f1d99916-c4ed-423f-aa24-a0b4d7dc056e', 'product', '912', 'gallery_image_5', NOW()),
+('7c0a6749-dc8b-49a2-abd8-881b0ec47186', '23b647e4-94de-42ff-a956-205ef11a52df', 'product', '912', 'gallery_image_6', NOW()),
+('ee9fe0e4-3a3a-413d-a45b-9ab85d709306', '88ee581e-e1e6-4d05-bb82-8a2264ace43b', 'product', '913', 'gallery_image_2', NOW()),
+('737af374-f941-4719-a425-10218652208c', 'd2ac9adc-9acd-400b-9013-9f7b8dd13126', 'product', '914', 'gallery_image_2', NOW()),
+('d08d1570-030b-49b3-ab76-54fdb362fd32', '6139c42d-1562-4c8b-8912-db832050a309', 'product', '914', 'gallery_image_3', NOW()),
+('1682ba81-ef43-44d8-9844-9d9761418357', 'aaa9151d-3d31-478a-9c7d-036a76d14018', 'product', '914', 'gallery_image_4', NOW()),
+('b19ea35f-7b5f-4692-8a5e-b4ce2e72fbe6', '4f07e71d-5102-4a84-a5fa-d9cfc8ebb904', 'product', '915', 'gallery_image_2', NOW()),
+('14906e1c-9b92-43d2-b2b6-9d7b04332ca2', '839a263b-eb07-40ff-8437-ba52a80c1fe9', 'product', '915', 'gallery_image_3', NOW()),
+('d94e3726-e06e-47fc-970e-0731e0acae75', '28c22fe7-69a4-4d7e-ab29-601a281a9513', 'product', '916', 'gallery_image_2', NOW()),
+('2a3be06d-6e28-4590-8649-8eabd997c1c8', '6ea99078-d6b7-4fa3-b37d-ef13450e2f3d', 'product', '916', 'gallery_image_3', NOW()),
+('0022a346-675d-4163-8e49-9a75f88de488', '61b6de81-61ac-4d46-b104-0b831a0ad367', 'product', '916', 'gallery_image_4', NOW()),
+('16b13b85-59c2-46b0-a7d7-6152265af699', '2ba856c0-ff9f-4772-8a0f-18d4d47184e9', 'product', '917', 'gallery_image_2', NOW()),
+('422cfb67-19b5-4e9e-8d0d-dfdc921cc684', '92e014d7-b39a-4036-b5b5-ee12400b507b', 'product', '918', 'gallery_image_2', NOW()),
+('b32965dd-07f6-41c9-9b70-714be6fd704f', '1de8492e-147c-4d36-bd1a-27969f874203', 'product', '918', 'gallery_image_3', NOW()),
+('244dd122-23ba-48c8-94c5-5656d91f1e97', 'b6210ef3-cc7f-474b-a7d0-43be239b6d22', 'product', '918', 'gallery_image_4', NOW()),
+('e26ed95b-f764-4031-84ce-9a890720a863', 'a5503003-544a-4580-8478-9c4f12a39f4d', 'product', '919', 'gallery_image_2', NOW()),
+('5b85dcad-7acc-4cdb-ab5a-95d30bc27c61', '550092aa-bf4d-42a1-9703-cb657446f1c0', 'product', '920', 'gallery_image_2', NOW()),
+('c83c0961-5f1e-4fb8-ab16-f961be67d5c7', 'b9ad9b42-13d4-404a-9600-b1ebede6524f', 'product', '920', 'gallery_image_3', NOW()),
+('b8b38473-defe-40ee-8af6-b9ea1781b7d1', 'c2284b01-3509-41f4-bad2-063bce0cc952', 'product', '920', 'gallery_image_4', NOW()),
+('da6cb816-117c-492e-95a0-f8c8c29a6ad5', 'c82939e0-3362-44c7-bb17-03e8ea5bf7d5', 'product', '920', 'gallery_image_5', NOW()),
+('2bd4405e-dab1-4528-9fa7-2887784cc36a', '1de45843-a021-48b5-9e3d-faea72800743', 'product', '921', 'gallery_image_2', NOW()),
+('027eddb6-4bd6-4abf-ac36-609a22d6666d', 'c00fa6bb-178c-462e-b498-64bf5d26f426', 'product', '921', 'gallery_image_3', NOW()),
+('43ccbad9-0d2d-4aec-8a0b-7cd881b9b2e9', 'cfe53803-199a-4277-a181-eb6ba02bd073', 'product', '921', 'gallery_image_4', NOW()),
+('5d27d05d-4de8-489d-a607-291546ef4348', 'fce93429-c8cf-4412-8e94-e4e4849b54b9', 'product', '921', 'gallery_image_5', NOW()),
+('b614c711-f9a5-45eb-88cb-b74e590ae969', '361eea67-e746-48ec-8b84-3c3c0f65e799', 'product', '922', 'gallery_image_2', NOW()),
+('4bd6f1a2-1e3f-4b0b-81d5-f160389efc8e', 'd08b29a8-273a-4533-b60d-3f89c4bec9b2', 'product', '922', 'gallery_image_3', NOW()),
+('8a371d75-c13b-4901-ab4b-222d5b34099e', 'a04ffbcd-7eb3-4802-940c-03651ed50c0b', 'product', '922', 'gallery_image_4', NOW()),
+('740dabde-2917-442a-9571-789da3ba74eb', 'ec8fc318-4f2e-4805-9043-12556910c93b', 'product', '922', 'gallery_image_5', NOW()),
+('da7153e3-ad25-4f57-8c71-ef6d5f6fa904', 'a7e9592c-6222-4cd7-b12c-e4773170d755', 'product', '922', 'gallery_image_6', NOW()),
+('c4f20ace-d957-4b35-8896-9823b99c28c9', '58ba6d67-2bc8-4e96-9532-432db060f51f', 'product', '922', 'gallery_image_7', NOW()),
+('c45a5535-c118-45f4-b176-81c230c65e82', 'efe7c805-a035-4288-a45c-7bbd94c6aa7b', 'product', '922', 'gallery_image_8', NOW()),
+('c6fd47a0-4da2-445e-bdd1-b0bd95cf5e68', '0c7a1204-b8ed-4c06-a8a8-eb23b84167cb', 'product', '923', 'gallery_image_2', NOW()),
+('b00e363b-9b9c-4edf-90ee-c3a9514af146', '741f591b-1bbd-4c6b-8211-ac2d1803685c', 'product', '924', 'gallery_image_2', NOW()),
+('dfd7016f-7850-42ce-b6ea-51a84902d17b', '9db06b1a-52d6-4850-be42-49fb1efcfdc6', 'product', '924', 'gallery_image_3', NOW()),
+('6b535e97-9965-42df-aaf4-87a86c58b80d', 'b51f4654-c217-4693-88b7-4dff7fe1014e', 'product', '924', 'gallery_image_4', NOW()),
+('29d65655-4dcf-469f-8058-1e90f7a011ef', '1420cbf1-dbe1-446b-99a8-a85c8a25475e', 'product', '924', 'gallery_image_5', NOW()),
+('988e56b6-fd40-405e-b4fd-18cff974418b', 'd6c1d15b-a734-471b-91b5-b8a8ebc109d4', 'product', '924', 'gallery_image_6', NOW()),
+('b365b9b2-d8e8-4a76-9e60-66b23ad56577', '4cd11967-0823-4c30-81d9-12d9431bff6c', 'product', '925', 'gallery_image_2', NOW()),
+('d1a0147c-06e3-492a-882e-bffc849168ed', 'c3e23e8f-fc24-42fa-b263-86289a28b8ab', 'product', '925', 'gallery_image_3', NOW()),
+('25a3dc63-e0df-4165-8b86-fa7e81c423cc', 'f53f8e75-028e-4c26-af0e-ee363ce23ecb', 'product', '925', 'gallery_image_4', NOW()),
+('a202b07d-012a-4d2f-8255-df0eae37ecbf', 'f790fc54-f6b4-4205-a381-b5b4e4632228', 'product', '925', 'gallery_image_5', NOW()),
+('9fc3731b-89f7-4e7a-a014-7c2d0133b666', '42cb476f-0ae9-4f5c-8de1-7aa6ff17d5d9', 'product', '925', 'gallery_image_6', NOW()),
+('9659f16e-b0b7-42a3-a20a-f37dd3fa527f', 'ae18351f-b75b-49ac-9ff2-c539726915bd', 'product', '925', 'gallery_image_7', NOW()),
+('7df2af71-bd51-48b4-88da-a902173f37a0', '93d361b5-69f4-4574-b82f-58ca3d3753a6', 'product', '925', 'gallery_image_8', NOW()),
+('b95f1926-3f03-4cb3-886c-4e1d720d5b82', '129c71e9-028f-4043-a3b4-5ba95ebb2f1b', 'product', '925', 'gallery_image_9', NOW()),
+('06962228-b2f3-496f-97ff-8a9a6c4b77af', '92bf2ad6-a178-4c50-81df-c4a2c38acdd8', 'product', '926', 'gallery_image_2', NOW()),
+('c1f311af-6b76-4fc0-a3bd-b61b02e06218', 'dc780662-4bd1-4ee0-abdf-7c963cb6a0f8', 'product', '926', 'gallery_image_3', NOW()),
+('2b5994b5-6fa1-418d-bb3a-a1088155e4cb', '962969f6-03ff-443f-bb2b-fc546f338ada', 'product', '926', 'gallery_image_4', NOW()),
+('8dca4a58-ae9c-47e5-8f6b-f7c53cc92337', 'f2cd04c2-528a-4077-934b-8ebfcb112b91', 'product', '927', 'gallery_image_2', NOW()),
+('e96cbebb-961c-4306-8c4c-ed07d9dabdc1', '38114988-1e5f-494b-9439-e1ce2268bf01', 'product', '927', 'gallery_image_3', NOW()),
+('5cbc493b-a586-44b0-9628-3aa14a0df615', '8bc64f18-4772-4082-a7aa-4dd1d7419224', 'product', '927', 'gallery_image_4', NOW()),
+('12a1f619-68ff-45f1-bf78-e8aa413e83d7', '9ed04a1d-8a83-47a2-ab6c-c2410772a937', 'product', '927', 'gallery_image_5', NOW()),
+('1177a3f7-5537-42ec-9bca-850bada914ae', '2b6c4bf9-66d2-4fd4-b3c3-83af6a5e84b5', 'product', '928', 'gallery_image_2', NOW()),
+('fa85f617-1f01-4e42-b18e-e4e1b6635241', '357944a5-047d-4b44-bfd5-a3ed7a009e39', 'product', '928', 'gallery_image_3', NOW()),
+('d72172cb-63f0-4cad-9fb0-03fffea334c1', '99d9bc37-b8f0-4a85-ada3-e719b5be35ce', 'product', '929', 'gallery_image_2', NOW()),
+('e7f833e1-12d6-44aa-82c1-a00f1fa67c75', '15f0db0e-2899-4962-8702-f0f1da90adb9', 'product', '929', 'gallery_image_3', NOW()),
+('49aa7c27-af46-4711-b39a-b3d3ad9d7a79', 'f9c6b986-6106-495a-9be7-f6ed7566899a', 'product', '929', 'gallery_image_4', NOW()),
+('ef3ffa2a-6e70-48d7-b8fc-97bcc28e9b78', '07af3f35-9075-41c0-b61f-954ec88f21e0', 'product', '930', 'gallery_image_2', NOW()),
+('802f3f10-4796-41de-bd04-3cb563b655ac', '2833dc00-25a9-40da-bf73-99b40324cb89', 'product', '930', 'gallery_image_3', NOW()),
+('691f7cc3-916e-412f-b309-a82b7fbd167d', 'c2872ebc-c1c4-4a39-9e7d-dae74b377833', 'product', '930', 'gallery_image_4', NOW()),
+('b3d172fd-2ebb-442e-98c4-72542da86f4d', '6df91b23-a3b8-4fd0-ba3a-846ac66f3de1', 'product', '930', 'gallery_image_5', NOW()),
+('6877ef3a-31df-489a-b916-01ad35ea01d5', '59599336-ce56-400c-aafe-819c063ac177', 'product', '930', 'gallery_image_6', NOW()),
+('9cb11999-4fd7-4dea-b56e-63876db1dcb3', 'aa51d809-259d-4398-93fb-938a4a78ff38', 'product', '930', 'gallery_image_7', NOW()),
+('b190e5bc-7611-4ff5-af8a-4c3035b4f690', '99402984-f57c-42df-aa13-71bc96e3049e', 'product', '931', 'gallery_image_2', NOW()),
+('55995f26-f87d-4935-9de4-7666906b6e4e', 'b886df27-01b3-4410-983b-1938a50c9508', 'product', '931', 'gallery_image_3', NOW()),
+('e0a22397-81da-47ae-8c09-d710aff61163', 'd221e669-3b83-413b-86e1-c270683883a5', 'product', '931', 'gallery_image_4', NOW()),
+('bcab6d9c-ad2a-4cb5-9c92-96730c997b57', '05e5c295-ad1b-41d0-bb11-69fd65638ff4', 'product', '931', 'gallery_image_5', NOW()),
+('85f46443-a34c-4659-b437-236d4fb52d88', '903f2c73-997e-467d-a679-94d11d4ee079', 'product', '931', 'gallery_image_6', NOW()),
+('571d481b-c92c-4156-ba08-055bf85deee0', '6066a7c5-3ead-42e0-8bfa-54914b2fa2ac', 'product', '932', 'gallery_image_2', NOW()),
+('ad2fb3fe-d068-4df2-be41-2e97504ef11c', 'c58a3355-fe93-4056-ade4-68a7c322de35', 'product', '932', 'gallery_image_3', NOW()),
+('cdc87445-ddd3-428b-9be4-4ef3296232b7', '3ffb2e1f-950e-4c3a-84b7-687a5c022eeb', 'product', '933', 'gallery_image_2', NOW()),
+('efaf9f34-4462-402b-9ace-cebf48565c48', 'c3eb6768-f0d2-4535-941a-9928c26713de', 'product', '934', 'gallery_image_2', NOW()),
+('560da20e-01ec-4c2b-9c0f-587b9b312db0', 'b80c3d1b-9d47-422b-baca-5cc0c2f3e9f1', 'product', '935', 'gallery_image_2', NOW()),
+('15d780f3-3ab3-4932-b174-15b2e0ce33bd', 'f1824616-93c0-4169-a705-dfdd575ffb16', 'product', '935', 'gallery_image_3', NOW()),
+('f134e570-cb54-41c4-b9ea-2d4e03134665', '988e34db-2513-4865-843f-c7870f7d695c', 'product', '935', 'gallery_image_4', NOW()),
+('6c1ec241-6640-4766-b943-8d518883d973', 'ce878103-db73-4e4e-b234-fa9ef36a26a5', 'product', '935', 'gallery_image_5', NOW()),
+('aeec2c16-c912-489b-afd4-077ad00ee113', 'a17ca3a2-d5a3-40e5-adc4-022a85b59b88', 'product', '936', 'gallery_image_2', NOW()),
+('010fbeb9-4c09-4327-a681-66246659b3d3', '628140f5-0422-4dd1-ad71-2b1d676f077f', 'product', '937', 'gallery_image_2', NOW()),
+('1fcfb24f-9034-48f1-a5ad-37229bde2141', '102ebda1-6924-4827-9aec-3c77ea85d4ff', 'product', '937', 'gallery_image_3', NOW()),
+('21abed2e-62b2-471b-b912-6215ed886def', '972de67a-3f77-4a45-902f-f779b01df023', 'product', '938', 'gallery_image_2', NOW()),
+('058f37a3-0681-4d5c-8c5c-446d9b04b1a1', '0acbd4fe-dacd-4847-9ff6-5ce23cd886d0', 'product', '938', 'gallery_image_3', NOW()),
+('62772a71-f26a-4892-93e3-367e5b086cfc', 'f7f4506a-2581-41ab-b2d3-3d61f462b787', 'product', '939', 'gallery_image_2', NOW()),
+('9d1c3981-b401-4971-84a2-de656638763d', 'bc51b95b-2ce2-4157-b227-746fcdc3ec37', 'product', '939', 'gallery_image_3', NOW()),
+('1babe483-b438-4610-b827-e847d8e8421a', '30c8d82c-98f6-4386-afee-57ae1fe52ceb', 'product', '939', 'gallery_image_4', NOW()),
+('1d645d52-20d1-4873-b7e1-e9a634fbe4b6', '7b5a2055-3056-4939-b7b8-312f5dba4c79', 'product', '940', 'gallery_image_2', NOW()),
+('717ad840-f8c8-4874-a9c5-1b520a33f52e', 'b84d8677-1f59-4acb-b187-770c34b92c40', 'product', '940', 'gallery_image_3', NOW()),
+('89e4ddf1-2378-4448-89e8-cd16b9774e24', 'd9409b1c-9e06-4da2-aa22-d4d0c46b5b3c', 'product', '940', 'gallery_image_4', NOW()),
+('35906961-02a5-467b-86cd-098912573900', 'e84fb3d1-5a0d-4c51-b1f4-b180a80ec4e5', 'product', '940', 'gallery_image_5', NOW()),
+('f54f98ca-bd6f-468a-a043-6320590ff02a', '7b916f3e-6118-4dda-9481-c4f55d95e078', 'product', '940', 'gallery_image_6', NOW()),
+('bf10f5bb-c3a7-4250-b177-08b90abed61f', '74eade15-c201-4a15-a3e2-b696750e1da7', 'product', '941', 'gallery_image_2', NOW()),
+('0c3ee592-bd08-4387-99c2-45f885d713c9', 'e48234d9-713e-4d55-9c5f-03f49594edd1', 'product', '941', 'gallery_image_3', NOW()),
+('541f17a0-6dd0-43d1-aae3-0632a2f687d0', 'e1bf1c7e-6e24-48c0-8465-b03f3a9a6b13', 'product', '941', 'gallery_image_4', NOW()),
+('dfe01380-b282-4257-88c6-2d1e33746829', 'dcb6cc04-9af9-4a30-8404-f4bf92517026', 'product', '941', 'gallery_image_5', NOW()),
+('b43a1e49-44a9-4d16-a26a-71674b6f645b', '543cb0d2-17a3-46f4-82e1-ad8efcfe8e7c', 'product', '941', 'gallery_image_6', NOW()),
+('af894df3-0e43-4dd6-8c78-0ad1aa0cf1e3', '895bb695-8c43-45c1-9037-74517220f52b', 'product', '942', 'gallery_image_2', NOW()),
+('9b2a8230-271e-41df-aa3d-77879710d223', '09b3f1e5-af9e-4e2a-9081-f548b62af36e', 'product', '942', 'gallery_image_3', NOW()),
+('43844547-c4e5-45c2-b2e3-014930c3e0ca', 'f145af94-03b3-4126-9566-95cb6836f2f6', 'product', '942', 'gallery_image_4', NOW()),
+('4e4c67ea-77c6-43dd-aa13-6def4bd981e7', '90ae8d56-fe95-49c0-9c58-1527049bf9b1', 'product', '942', 'gallery_image_5', NOW()),
+('0ae459eb-0f0d-4523-9004-4c8362f0846e', '852e26fa-b87f-4098-ae32-2438a589bf52', 'product', '942', 'gallery_image_6', NOW()),
+('5c8a5a38-4bd4-4e15-bb69-494c7cd45bd9', '1f41543a-09df-4bdc-b04c-6d96db76206b', 'product', '943', 'gallery_image_2', NOW()),
+('da8b4fb1-7372-4a44-97ab-04801d1914ff', '6d2cbe18-62ce-4095-823d-34393b93bc21', 'product', '944', 'gallery_image_2', NOW()),
+('ce0e7321-c0a5-470a-bb1b-9ce3f6b46126', '98dc1024-0658-4b4f-8905-5c06c7b87a06', 'product', '944', 'gallery_image_3', NOW()),
+('943c69bb-f76a-4abf-8b74-3fec6deaa41e', '74ee9df6-fbbe-48b0-b770-5cb5e5e55186', 'product', '945', 'gallery_image_2', NOW()),
+('305a135d-47e5-405c-8718-d275b6e61a87', '51672708-9856-4a9a-a93c-a584952d157a', 'product', '945', 'gallery_image_3', NOW()),
+('88320ef9-a1e4-4f4c-9f46-b1e5d73e6743', 'ef48539b-3c40-480b-9a84-6bb439b198e8', 'product', '945', 'gallery_image_4', NOW()),
+('650278c8-3344-4ffa-86fa-3fe8b8e4b9e0', '3a9e37c3-3e2f-4b4c-a143-b3386a292dc2', 'product', '945', 'gallery_image_5', NOW()),
+('8fc9c792-bf81-420c-8aaf-6e3ae6e3b112', '793110d0-5aeb-4f31-8494-016885e372a5', 'product', '945', 'gallery_image_6', NOW()),
+('bfcd6792-5884-4acf-9f70-4ebc00f5048e', 'd9f18417-eed5-4e48-86ca-448b21f61e54', 'product', '945', 'gallery_image_7', NOW()),
+('3cebb7ff-73d5-47e9-9a75-3e8a40112242', 'faf6e24c-b2a4-43ea-afd4-7473a14ab0ce', 'product', '946', 'gallery_image_2', NOW()),
+('5f675bbf-855a-41e3-9eb6-e9fa3a711301', '5792ea3a-a1b4-4285-8472-f986269fbe72', 'product', '946', 'gallery_image_3', NOW()),
+('7890dfde-976b-4559-b4dd-76b389e54416', '14acbf11-235d-4eed-91bf-265db95682b4', 'product', '946', 'gallery_image_4', NOW()),
+('8bf75de7-4bb8-4701-bf49-8729996cacab', '11df072f-ab1a-4ee0-8bcf-6ea3f9eb76d5', 'product', '947', 'gallery_image_2', NOW()),
+('9a39af8a-47c4-497b-af53-58c87a5fd810', 'b5f3df60-64c6-4537-8d46-cc9a9f4652ae', 'product', '947', 'gallery_image_3', NOW()),
+('4a79a262-235c-4eab-b262-4c1a76924939', '3e1bab9e-7d5c-4a0f-bf2b-13be5ce1701f', 'product', '947', 'gallery_image_4', NOW()),
+('080d931e-0604-4f26-89cc-89876c203f66', '4d8f764e-f347-4cf3-962b-04b60aa303a8', 'product', '947', 'gallery_image_5', NOW()),
+('c41f55e4-e718-4f08-9047-0672bc63ffea', 'caa8e886-c450-43b7-8a13-aa6136524367', 'product', '948', 'gallery_image_2', NOW()),
+('fc67744d-23f6-4ce4-bdef-512f4ed59fb2', 'c68ae5c7-27ce-45d1-901a-8fcd4be7d7bd', 'product', '948', 'gallery_image_3', NOW()),
+('151a06d0-4ebb-410f-b0a2-a07bf4f2041d', 'ce00567c-7a5c-410b-8b45-21bf490b45e4', 'product', '948', 'gallery_image_4', NOW()),
+('c3a74566-6ddc-42b5-b373-5f076cfa6806', '9aaf9485-5eb9-4230-aa04-a6eacb6631c5', 'product', '948', 'gallery_image_5', NOW()),
+('f6feb1c5-78b9-43a2-8283-98ffb20c85ee', 'a3001858-cb3f-4e27-ba26-57f3963f4073', 'product', '949', 'gallery_image_2', NOW()),
+('594bc29c-07d5-489e-8a82-2aea7dcfc8e5', '4b89fce2-56a5-4478-8d16-6875356ce578', 'product', '949', 'gallery_image_3', NOW()),
+('4e7c1fff-ac94-4915-b741-df93f236f24a', '5a33668a-32e3-4c8b-9c35-fc6c9db5ebef', 'product', '949', 'gallery_image_4', NOW()),
+('d4ce40d9-6000-4ff7-b7db-ed3ec1a9f38c', 'a5ba655b-3361-4d0a-b34d-471c0d4b2d94', 'product', '949', 'gallery_image_5', NOW()),
+('fa2e5566-24b7-40da-9097-1e0466c5916f', '4fb13f42-75c1-455a-83dd-3841ce6dbbcc', 'product', '949', 'gallery_image_6', NOW()),
+('8b8ebbc4-9549-4221-b9bd-22493e6a5f28', 'ffc55d5e-ca72-40cb-9cbb-9f631bdd8549', 'product', '949', 'gallery_image_7', NOW()),
+('6b59cae3-afb1-4df8-a3ba-7ee143446a51', '87a31017-18ef-457f-ba11-28c38d066fcb', 'product', '949', 'gallery_image_8', NOW()),
+('725ddcc7-bba9-4d5a-97f9-8a48c0c8e4c3', 'b5ffb64c-d94f-4b52-8524-ac7fa3eefb4b', 'product', '950', 'gallery_image_2', NOW()),
+('1fe9b21e-24b1-49c1-ab5f-b306375f0939', '31f74439-3d2c-4059-99e8-1e361ece7bfd', 'product', '950', 'gallery_image_3', NOW()),
+('1bcc1176-e316-4918-bc8e-9c87ef90fe41', '2a0e9097-7cda-4335-9bb0-ed81c5e23c0d', 'product', '950', 'gallery_image_4', NOW()),
+('abe19580-dc8b-4699-9b8e-c4fe7fe893ac', '7ff55c25-bac9-4e5c-bb23-4cc2116cb4eb', 'product', '951', 'gallery_image_2', NOW()),
+('6fca3481-1a0b-44a8-9e81-605fdd2cb4ac', '2b8287d7-a390-4829-a8d5-f5b0b9ae827f', 'product', '951', 'gallery_image_3', NOW()),
+('ce2db4db-cd9b-4b62-a57b-d72866b5a3b5', '74e6ffdb-0afa-4efb-a678-fae2b34b3836', 'product', '951', 'gallery_image_4', NOW()),
+('0e50c7af-f10e-4e37-9f23-d40130d84b37', '609ac918-9b85-4f39-a264-7145bbfaa556', 'product', '952', 'gallery_image_2', NOW()),
+('b2ef1d97-b413-4c66-82db-cbbc9b7add44', '3a8ae045-2fd1-44da-acb2-bb6f0e13a3f6', 'product', '952', 'gallery_image_3', NOW()),
+('24d17430-56b4-4550-88b6-1813a3c9723f', '0e4c2aba-46d6-4678-921c-6ec8ccccc782', 'product', '953', 'gallery_image_2', NOW()),
+('21282ec9-908d-4b65-bdac-61d326a666fe', 'ad2cdf4f-206e-4413-810e-4ac0fc1ad820', 'product', '953', 'gallery_image_3', NOW()),
+('781d4654-edce-4102-9922-6645275a8950', 'b7d58458-b183-420c-8c87-7f934a0109a1', 'product', '953', 'gallery_image_4', NOW()),
+('0ff9d601-015a-4d60-a4b5-cd658051fbd2', '89a72321-415a-42ac-a7e4-3ed4b2a02641', 'product', '953', 'gallery_image_5', NOW()),
+('8d77e282-01ef-43aa-a605-c95a05b5b5ba', 'd5b62e3a-57cf-4f3f-82b7-6e596e542dd3', 'product', '953', 'gallery_image_6', NOW()),
+('0555ddd2-5d8f-4901-b09c-bcc22282585f', '78cd5e13-a574-4ea2-94ab-40555b811d21', 'product', '953', 'gallery_image_7', NOW()),
+('dcaa176b-2c61-40f3-98b4-0be9d45f8694', 'ebbb2c2a-9a4a-444a-ad68-39e9fd497282', 'product', '953', 'gallery_image_8', NOW()),
+('caebd7db-c759-4d51-b2da-4341026df052', '53f8e96d-b89d-409b-adf3-1478d81718f8', 'product', '953', 'gallery_image_9', NOW()),
+('c95088b1-e522-4d27-be9a-d70f6838c310', '72bc8bf3-496b-43c1-995c-f657a2bf3814', 'product', '953', 'gallery_image_10', NOW()),
+('58c6541b-ae58-41c9-8c55-b40b1003839f', '353ed9dc-bb6e-46c7-a0c4-417f0cc673e2', 'product', '954', 'gallery_image_2', NOW()),
+('180d4784-5628-4921-b4af-aadebc0a1f32', 'b6059cc6-ea22-4b72-ac51-0301f0882465', 'product', '954', 'gallery_image_3', NOW()),
+('97ecf51c-c62b-4f25-9bf3-983d0df773ee', '7f788786-cf46-4ede-885a-29a638b967af', 'product', '954', 'gallery_image_4', NOW()),
+('c6b5c86b-c737-4f6e-bb2b-c9724e7c70b0', '78f0bd6c-44cc-49cd-a99d-14c90cf897ef', 'product', '954', 'gallery_image_5', NOW()),
+('c816c870-5b3b-4853-afee-df6bb8d7d1c7', '2492088a-ff98-4e43-a382-751c123e4214', 'product', '954', 'gallery_image_6', NOW()),
+('ed3d83cf-0ebb-402c-aa00-b86bcc9aa310', 'b5e79991-8eb3-4e99-92f0-7c7240bcf07e', 'product', '955', 'gallery_image_2', NOW()),
+('917cf64a-ff58-44aa-b296-31709ee4d524', '7dc80488-e433-437f-9820-d81af81a400f', 'product', '955', 'gallery_image_3', NOW()),
+('7d549e96-c9fc-4e36-86bc-7c423a0f04fa', '7d37dfd3-c9d1-4256-8ba5-7dbd1185584e', 'product', '955', 'gallery_image_4', NOW()),
+('88db3fe2-3d9d-4542-97b2-be4077c2998f', '4c307af1-8403-4d17-9e6d-602ee654524c', 'product', '955', 'gallery_image_5', NOW()),
+('ee7ddaa5-d421-4e5c-8611-946ef36b8ab3', '57ca94e7-f777-498d-8633-0c34fc08ed48', 'product', '955', 'gallery_image_6', NOW()),
+('77cae27b-8aaf-496c-81e5-450e8b56807c', 'f1ea5506-edbe-470c-b097-2ea0840a17d5', 'product', '955', 'gallery_image_7', NOW()),
+('762ba1d7-8b76-474a-948d-ed708df65eb5', '5d441d7e-2211-4e6d-a7f7-806d49b24bee', 'product', '955', 'gallery_image_8', NOW()),
+('25cc120e-218a-4304-b149-d0fee4782e34', '6efc8922-a2eb-4d34-8d97-65a4537ce9eb', 'product', '956', 'gallery_image_2', NOW()),
+('ec882259-2b37-499a-8bf1-2a96f3ee8fc9', 'a5bdf52c-3e65-40f2-9ee1-90243bd03306', 'product', '956', 'gallery_image_3', NOW()),
+('ffc9c76c-e99c-4886-9a28-d9767bcaf7c3', 'dc1ad700-165e-4c0c-8e75-e5efd84dcb04', 'product', '956', 'gallery_image_4', NOW()),
+('74a3979c-e534-4288-832b-4fcf1a0c7168', 'a1b17a2a-da39-4e16-be95-4a2f3e26a479', 'product', '956', 'gallery_image_5', NOW()),
+('a0860cd9-c7a3-4a06-ac25-82b47839d5ef', '903e580e-736f-491e-926e-7e8cbb4ceb15', 'product', '956', 'gallery_image_6', NOW()),
+('84e10f0d-50ed-49db-87e4-157fece85c4c', '9bd28bbf-4bef-46ec-851b-6d74c8bd8568', 'product', '956', 'gallery_image_7', NOW()),
+('084e1494-6944-4b48-8a6c-dc2c13ddf39e', 'a49f8471-de72-4c03-aa3b-0ed30d668e81', 'product', '956', 'gallery_image_8', NOW()),
+('e1f0cad5-9ad7-4f48-9cda-1ffb820205cb', '41764b6f-50e4-45a2-812a-aa680980b9c0', 'product', '956', 'gallery_image_9', NOW()),
+('9b8b8aef-639e-4f2b-a019-00f2fb2b65b8', '2ec59885-f9e6-4ade-acd4-74c5459c3407', 'product', '956', 'gallery_image_10', NOW()),
+('2de22f8b-d43b-46d6-9d08-ebd2bce1351b', 'aef9ddb1-76f6-434e-b8d3-3262ee40152b', 'product', '956', 'gallery_image_11', NOW()),
+('5b33e3c4-0828-4fc2-ac76-0d2afb2b5ef1', '3c27987d-6bb9-43a3-81f2-ed7d5b3131e6', 'product', '957', 'gallery_image_2', NOW()),
+('22114036-569b-4a62-a469-8b5aa7b5447a', '1f1f3844-126f-4dc6-ad61-7c8a6083ce81', 'product', '957', 'gallery_image_3', NOW()),
+('d13ee145-c723-4408-ba7b-744d0a1034b6', 'e2d62540-bfb6-4c64-8750-411454998c36', 'product', '957', 'gallery_image_4', NOW()),
+('212a9d26-830c-4e34-90cf-0a268b4f3b27', '5655f5ce-7e1b-42d7-a34f-e582d1d57f02', 'product', '958', 'gallery_image_2', NOW()),
+('3704892f-fa84-4e30-970a-7ecea77b320d', 'a44556ac-8c69-4ac1-98eb-45486c3cae74', 'product', '958', 'gallery_image_3', NOW()),
+('9047fddd-d1d3-4292-89db-a461d4cd7a3c', '376966da-6bba-4f57-84d2-fcf789b5e2d3', 'product', '959', 'gallery_image_2', NOW()),
+('8c6a63a8-093b-4edd-8ecb-bcda94f2e1d8', '0c9d4c05-ff0d-4f36-9d56-c5545b576ed6', 'product', '959', 'gallery_image_3', NOW()),
+('90eff489-c36c-427b-90b4-6532b6381279', 'ec51bdd4-f8ec-4e1d-a511-b3be111a7a27', 'product', '960', 'gallery_image_2', NOW()),
+('8534b20b-b2cf-408b-bd25-828cdad22c07', '9e0f729e-a254-4283-aa4d-ee8bc112d9e5', 'product', '960', 'gallery_image_3', NOW()),
+('d00df363-5ed6-43bc-a483-a2c85089eb8f', '32e6031f-4f5e-42e0-a3c6-68e407e74f77', 'product', '960', 'gallery_image_4', NOW()),
+('0de6a8be-ec0d-424b-9114-2812aac53c05', '60622859-585b-4001-ba53-80bf03ea2213', 'product', '961', 'gallery_image_2', NOW()),
+('be138e96-cea5-44c1-b7a1-db4c72ade0a1', '77a4fcce-28de-4500-aeaa-2272bd654466', 'product', '961', 'gallery_image_3', NOW()),
+('7ce79ece-f702-4928-a867-ec7b0b52de2b', '68af91f1-b5c2-4a9f-9ab9-2cbad1e240d4', 'product', '961', 'gallery_image_4', NOW()),
+('0bd71c97-09d8-4385-9a09-b74e1cc60d14', 'caae4c3e-1d78-4111-8af7-5475ea9fb39d', 'product', '961', 'gallery_image_5', NOW()),
+('6743e8ee-ff2d-4a70-a370-2db330439a7a', '1495e86b-3ab5-4cd1-b1fa-f5b7c04dec70', 'product', '961', 'gallery_image_6', NOW()),
+('9b73e4c9-d9aa-4bf1-abf4-adfb9ede6216', '13fde5fc-2846-49b5-95da-0f8bc2e2a573', 'product', '961', 'gallery_image_7', NOW()),
+('aebbc32b-ef05-477f-b913-ef80ca46331f', 'e264f3eb-9da7-4065-b036-e177119e2e09', 'product', '961', 'gallery_image_8', NOW()),
+('50cd9bbb-a77a-4c35-bdd0-c52b5a14df08', '1cdd2260-9af5-4bca-a02c-38d676113433', 'product', '961', 'gallery_image_9', NOW()),
+('32bab582-c69d-4479-88b0-3602f191f2bb', '62b3303b-cf3b-4ac4-b29d-de917fd39c87', 'product', '961', 'gallery_image_10', NOW()),
+('e52e7c4c-2eea-44db-b96f-a0c8322a001c', 'dc364bfd-739d-4c23-ac60-5de5db39c4f4', 'product', '961', 'gallery_image_11', NOW()),
+('014b35e3-25e3-4bde-8402-09291308e9b4', '4678f6ba-31d6-42de-ad5b-b727d6d5f046', 'product', '961', 'gallery_image_12', NOW()),
+('113c58c5-df6d-4f66-a8a2-c249b2221eb2', '16345247-4c3b-4195-95f2-5b289ec4b222', 'product', '961', 'gallery_image_13', NOW()),
+('eceb7d1c-4698-49cb-8301-e5bdd2d45647', 'cc46647d-641b-48e4-bf5c-32e766d94f1d', 'product', '961', 'gallery_image_14', NOW()),
+('16031094-aa0a-43cc-897c-386d908aa320', 'c6b027ad-1d92-42e1-977a-562d2d9156e4', 'product', '961', 'gallery_image_15', NOW());
 
 -- ======================================
 -- 📂 Categories
@@ -39,34 +2155,34 @@ INSERT INTO categories (slug, name, display_order, is_active, show_in_menu) VALU
 -- ======================================
 -- 🏷️ Brands
 -- ======================================
-INSERT INTO brands (slug, name, is_active, featured, logo_url, banner_url, banner_url_2) VALUES 
-    ('acid-rain-world', 'Acid Rain World', true, true, 'brand_images/logos/acid-rain-logo.png', 'brand_images/banners/acid-rain-world-home-banner.jpg', 'brand_images/banners/acid-rain-world-banner.jpg');
-INSERT INTO brands (slug, name, is_active, featured, logo_url, banner_url, banner_url_2) VALUES 
-    ('acid-rain-world-b2five', 'Acid Rain World B2FIVE', true, true, 'brand_images/logos/acid-rain-logo.png', 'brand_images/banners/acid-rain-world-home-banner.jpg', 'brand_images/banners/acid-rain-world-banner.jpg');
-INSERT INTO brands (slug, name, is_active, featured, logo_url, banner_url, banner_url_2) VALUES 
-    ('emily-the-strange', 'Emily the Strange', true, true, 'brand_images/logos/emily-the-strange-logo.png', 'brand_images/banners/emily-the-strange-home-banner.jpg', 'brand_images/banners/emily-the-strange-banner.jpg');
+INSERT INTO brands (slug, name, is_active, featured, logo_url, banner_url, banner_url_2, logo_media_id, banner_media_id, banner_media_id_2) VALUES 
+    ('acid-rain-world', 'Acid Rain World', true, true, 'brand_images/logos/acid-rain-logo.png', 'brand_images/banners/acid-rain-world-home-banner.jpg', 'brand_images/banners/acid-rain-world-banner.jpg', '11111111-1111-1111-1111-111111111111', 'a1111111-1111-1111-1111-111111111112', 'a2222222-2222-2222-2222-222222222223');
+INSERT INTO brands (slug, name, is_active, featured, logo_url, banner_url, banner_url_2, logo_media_id, banner_media_id, banner_media_id_2) VALUES 
+    ('acid-rain-world-b2five', 'Acid Rain World B2FIVE', true, true, 'brand_images/logos/acid-rain-logo.png', 'brand_images/banners/acid-rain-world-home-banner.jpg', 'brand_images/banners/acid-rain-world-banner.jpg', '11111111-1111-1111-1111-111111111111', 'a1111111-1111-1111-1111-111111111112', 'a2222222-2222-2222-2222-222222222223');
+INSERT INTO brands (slug, name, is_active, featured, logo_url, banner_url, banner_url_2, logo_media_id, banner_media_id, banner_media_id_2) VALUES 
+    ('emily-the-strange', 'Emily the Strange', true, true, 'brand_images/logos/emily-the-strange-logo.png', 'brand_images/banners/emily-the-strange-home-banner.jpg', 'brand_images/banners/emily-the-strange-banner.jpg', '22222222-2222-2222-2222-222222222222', 'a3333333-3333-3333-3333-333333333334', 'a4444444-4444-4444-4444-444444444445');
 INSERT INTO brands (slug, name, is_active) VALUES 
     ('futurama', 'Futurama', true);
 INSERT INTO brands (slug, name, is_active) VALUES 
     ('millinillions', 'MILLINILLIONS', true);
-INSERT INTO brands (slug, name, is_active, logo_url) VALUES 
-    ('macross', 'Macross', true, 'brand_images/logos/macross-logo.png');
-INSERT INTO brands (slug, name, is_active, featured, banner_url, banner_url_2) VALUES 
-    ('miyo-s-mystic-musings', 'Miyo''s Mystic Musings', true, true, 'brand_images/banners/miyos-mystic-musings-home-banner.jpg', 'brand_images/banners/miyos-mystic-musings-banner.jpg');
+INSERT INTO brands (slug, name, is_active, logo_url, logo_media_id) VALUES 
+    ('macross', 'Macross', true, 'brand_images/logos/macross-logo.png', '33333333-3333-3333-3333-333333333333');
+INSERT INTO brands (slug, name, is_active, featured, banner_url, banner_url_2, banner_media_id, banner_media_id_2) VALUES 
+    ('miyo-s-mystic-musings', 'Miyo''s Mystic Musings', true, true, 'brand_images/banners/miyos-mystic-musings-home-banner.jpg', 'brand_images/banners/miyos-mystic-musings-banner.jpg', 'a5555555-5555-5555-5555-555555555556', 'a6666666-6666-6666-6666-666666666667');
 INSERT INTO brands (slug, name, is_active) VALUES 
     ('mospeada', 'Mospeada', true);
-INSERT INTO brands (slug, name, is_active, featured, logo_url, banner_url, banner_url_2) VALUES 
-    ('naruto', 'Naruto', true, true, 'brand_images/logos/naruto-shippuden-logo.png', 'brand_images/banners/naruto-home-banner.jpg', 'brand_images/banners/naruto-banner.jpg');
-INSERT INTO brands (slug, name, is_active, featured, logo_url, banner_url, banner_url_2) VALUES 
-    ('robotech', 'Robotech', true, true, 'brand_images/logos/robotech-logo.webp', 'brand_images/banners/robotech-home-banner.jpg', 'brand_images/banners/robotech-banner.jpg');
+INSERT INTO brands (slug, name, is_active, featured, logo_url, banner_url, banner_url_2, logo_media_id, banner_media_id, banner_media_id_2) VALUES 
+    ('naruto', 'Naruto', true, true, 'brand_images/logos/naruto-shippuden-logo.png', 'brand_images/banners/naruto-home-banner.jpg', 'brand_images/banners/naruto-banner.jpg', '44444444-4444-4444-4444-444444444444', 'a7777777-7777-7777-7777-777777777778', 'a8888888-8888-8888-8888-888888888889');
+INSERT INTO brands (slug, name, is_active, featured, logo_url, banner_url, banner_url_2, logo_media_id, banner_media_id, banner_media_id_2) VALUES 
+    ('robotech', 'Robotech', true, true, 'brand_images/logos/robotech-logo.webp', 'brand_images/banners/robotech-home-banner.jpg', 'brand_images/banners/robotech-banner.jpg', '55555555-5555-5555-5555-555555555555', 'a9999999-9999-9999-9999-999999999990', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaab');
 INSERT INTO brands (slug, name, is_active) VALUES 
     ('sanrio', 'Sanrio', true);
 INSERT INTO brands (slug, name, is_active) VALUES 
     ('skelanimals', 'Skelanimals', true);
 INSERT INTO brands (slug, name, is_active) VALUES 
     ('tulipop', 'Tulipop', true);
-INSERT INTO brands (slug, name, is_active, featured, logo_url, banner_url, banner_url_2) VALUES 
-    ('voltron', 'Voltron', true, true, 'brand_images/logos/voltron-logo.png', 'brand_images/banners/voltron-home-banner.jpg', 'brand_images/banners/voltron-banner.jpg');
+INSERT INTO brands (slug, name, is_active, featured, logo_url, banner_url, banner_url_2, logo_media_id, banner_media_id, banner_media_id_2) VALUES 
+    ('voltron', 'Voltron', true, true, 'brand_images/logos/voltron-logo.png', 'brand_images/banners/voltron-home-banner.jpg', 'brand_images/banners/voltron-banner.jpg', '66666666-6666-6666-6666-666666666666', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaac', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaad');
 
 -- ======================================
 -- 🛍️ Products
@@ -20019,2690 +22135,11 @@ INSERT INTO product_categories (product_id, category_id)
 SELECT 961, id FROM categories WHERE slug = 'pre-orders';
 
 -- ======================================
--- 🖼️ Product Images
 -- ======================================
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (700, 'https://www.toynamishop.com/product_images/h/789/hypnotoad_01_121012__91095__49166.jpg', 'Futurama Hypnotoad Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (701, 'https://www.toynamishop.com/product_images/g/187/risk_img_5909__10260__45072.jpg', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (701, 'https://www.toynamishop.com/product_images/i/999/risk_img_5914__47946__77428.jpg', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (701, 'https://www.toynamishop.com/product_images/w/198/risk_img_5911__84199__30181.jpg', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (701, 'https://www.toynamishop.com/product_images/j/988/risk_img_5916__74682__97238.jpg', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (701, 'https://www.toynamishop.com/product_images/c/369/risk_img_5931__12022__08787.jpg', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (701, 'https://www.toynamishop.com/product_images/x/220/risk_img_5932__65407__61537.jpg', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (701, 'https://www.toynamishop.com/product_images/u/158/risk_img_5933__75841__16493.jpg', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (701, 'https://www.toynamishop.com/product_images/v/028/the_canmans_risk_oleum2__31361__11427.jpg', 'COMIKAZE 2013 Exclusive: Canmans RISK-OLEUM', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (702, 'https://www.toynamishop.com/product_images/h/204/skelanimal_dc_deluxe_plush_04__20381__85634.jpg', 'Skelanimals DC Robin Pen 10" Deluxe Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (702, 'https://www.toynamishop.com/product_images/b/277/skelanimal_dc_deluxe_plush_05__89376__64879.jpg', 'Skelanimals DC Robin Pen 10" Deluxe Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (703, 'https://www.toynamishop.com/product_images/l/055/Skelanimals_backpack_diego_deluxe_encore__90498__52621.jpg', 'Skelanimals Deluxe Backpack Diego (Bat)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (704, 'https://www.toynamishop.com/product_images/k/223/DSC_0352__44102__61584.jpg', 'B2Five K6 Jungle Stronghold ST2K', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (704, 'https://www.toynamishop.com/product_images/s/786/DSC_0359__00393__28674.jpg', 'B2Five K6 Jungle Stronghold ST2K', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (704, 'https://www.toynamishop.com/product_images/d/139/DSC_0371__86838__77529.jpg', 'B2Five K6 Jungle Stronghold ST2K', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (704, 'https://www.toynamishop.com/product_images/k/220/DSC_0403__89600__01229.jpg', 'B2Five K6 Jungle Stronghold ST2K', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (704, 'https://www.toynamishop.com/product_images/i/398/DSC_0407__39949__83372.jpg', 'B2Five K6 Jungle Stronghold ST2K', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (704, 'https://www.toynamishop.com/product_images/l/067/DSC_0401__13181__77929.jpg', 'B2Five K6 Jungle Stronghold ST2K', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (705, 'https://www.toynamishop.com/product_images/x/305/sol_009__78175__71832.jpg', 'Acid Rain Sol Commander [Re-run] 2017', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (705, 'https://www.toynamishop.com/product_images/l/908/sol_010__36518__43797.jpg', 'Acid Rain Sol Commander [Re-run] 2017', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (705, 'https://www.toynamishop.com/product_images/d/906/sol_012__64185__99412.jpg', 'Acid Rain Sol Commander [Re-run] 2017', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (705, 'https://www.toynamishop.com/product_images/f/563/sol_011__08160__30985.jpg', 'Acid Rain Sol Commander [Re-run] 2017', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (706, 'https://www.toynamishop.com/product_images/w/673/stronghold_m_001__26351__39440.jpg', 'Acid Rain Stronghold (Marine)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (706, 'https://www.toynamishop.com/product_images/x/168/stronghold_m_002__13047__20801.jpg', 'Acid Rain Stronghold (Marine)', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (706, 'https://www.toynamishop.com/product_images/q/734/stronghold_m_006__18375__84784.jpg', 'Acid Rain Stronghold (Marine)', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (706, 'https://www.toynamishop.com/product_images/h/866/stronghold_m_005__75735__87247.jpg', 'Acid Rain Stronghold (Marine)', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (706, 'https://www.toynamishop.com/product_images/b/776/stronghold_m_007__45237__30161.jpg', 'Acid Rain Stronghold (Marine)', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (706, 'https://www.toynamishop.com/product_images/n/092/stronghold_m_003__90822__87311.jpg', 'Acid Rain Stronghold (Marine)', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (707, 'https://www.toynamishop.com/product_images/z/084/itachi-4-inch_01__41623__15852.jpg', 'Naruto Shippuden Poseable Action Figure - Itachi', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (707, 'https://www.toynamishop.com/product_images/i/611/itachi-4-inch_06__07556__42972.jpg', 'Naruto Shippuden Poseable Action Figure - Itachi', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (707, 'https://www.toynamishop.com/product_images/t/597/itachi-4-inch_02__67233__10622.jpg', 'Naruto Shippuden Poseable Action Figure - Itachi', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (707, 'https://www.toynamishop.com/product_images/t/621/shippuden_4-inch-figures_series1_0061__94574__84455.jpg', 'Naruto Shippuden Poseable Action Figure - Itachi', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (707, 'https://www.toynamishop.com/product_images/v/905/shippuden_4-inch-figures_series1_0054__73157__76876.jpg', 'Naruto Shippuden Poseable Action Figure - Itachi', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (707, 'https://www.toynamishop.com/product_images/r/597/shippuden_4-inch-figures_series1_0058__69969__34242.jpg', 'Naruto Shippuden Poseable Action Figure - Itachi', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (708, 'https://www.toynamishop.com/product_images/y/856/micronian_roy_fokker_battloid_01__11920__52794.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - ROY FOKKER VOLUME 3', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (708, 'https://www.toynamishop.com/product_images/q/743/micronian_roy_fokker_guardian_01__78472__20330.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - ROY FOKKER VOLUME 3', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (708, 'https://www.toynamishop.com/product_images/r/099/micronian_roy_fokker_fighter_01__71122__74908.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - ROY FOKKER VOLUME 3', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (708, 'https://www.toynamishop.com/product_images/c/237/ROBOTECH_MICRONIAN-PILOTS_VOL3_ROY-FOKKER__76780__79975.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - ROY FOKKER VOLUME 3', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (709, 'https://www.toynamishop.com/product_images/w/382/Robotech_SD-Figurines_Series-2.0_01__05216__31727.jpg', 'Robotech New Generation Super Deformed Blind Box Figurines', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (709, 'https://www.toynamishop.com/product_images/g/835/Robotech_SD_Figurines__84006__27364.jpg', 'Robotech New Generation Super Deformed Blind Box Figurines', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (709, 'https://www.toynamishop.com/product_images/w/698/IMG_5143__56905__08699.jpg', 'Robotech New Generation Super Deformed Blind Box Figurines', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (710, 'https://www.toynamishop.com/product_images/q/526/Bleach_series_2_Renji_1__25439__50275.jpg', 'Deluxe 6" PVC Statue: Renji', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (710, 'https://www.toynamishop.com/product_images/d/644/Bleach_series_2_Renji_2__79770__05193.jpg', 'Deluxe 6" PVC Statue: Renji', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (710, 'https://www.toynamishop.com/product_images/t/146/BLEACH_collection-2_renji-and-toshiro__52394__67731.jpg', 'Deluxe 6" PVC Statue: Renji', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (711, 'https://www.toynamishop.com/product_images/i/948/product_239__72856__59437.jpg', 'Tulipop Vinyl Keychain - Gloomy', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (711, 'https://www.toynamishop.com/product_images/q/579/unspecified3__46604__60071.jpg', 'Tulipop Vinyl Keychain - Gloomy', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (712, 'https://www.toynamishop.com/product_images/g/850/macross_milia_vf-1J_valkyrie__24720__03700.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1J Milia Valkyrie', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (712, 'https://www.toynamishop.com/product_images/n/187/vf-1j_miriya_battroid_01__41707__84438.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1J Milia Valkyrie', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (712, 'https://www.toynamishop.com/product_images/u/881/vf-1j_miriya_gerwalk_01__38441__14990.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1J Milia Valkyrie', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (712, 'https://www.toynamishop.com/product_images/c/495/vf-1j_miriya_valkyrie_01__44905__83493.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1J Milia Valkyrie', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (712, 'https://www.toynamishop.com/product_images/o/032/vf-1j_miriya_battroid_02__02096__03225.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1J Milia Valkyrie', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (713, 'https://www.toynamishop.com/product_images/z/764/robotech_T-Shirts_2022-04__40184__61697.jpg', 'Robotech VF-1S Skull Leader Shirt', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (713, 'https://www.toynamishop.com/product_images/a/478/Screenshot_62__61127__20264.png', 'Robotech VF-1S Skull Leader Shirt', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (713, 'https://www.toynamishop.com/product_images/p/738/Screenshot_63__68468__55352.png', 'Robotech VF-1S Skull Leader Shirt', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (714, 'https://www.toynamishop.com/product_images/i/293/281861301_171313945331846_5214368172004617510_n__79874__52546.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K07C Monster Child', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (714, 'https://www.toynamishop.com/product_images/b/213/283112887_171313925331848_2990295889090771686_n__59092__59403.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K07C Monster Child', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (714, 'https://www.toynamishop.com/product_images/t/492/283291822_171313955331845_962294454815982383_n__92448__51970.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K07C Monster Child', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (715, 'https://www.toynamishop.com/product_images/g/278/futurama_plush_s2_kiff__13894__54861.jpg', 'Futurama Kif Kroker Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (716, 'https://www.toynamishop.com/product_images/l/045/marcy_backpack__17433__64519.jpg', 'Skelanimals Deluxe Backpack Marcy (Monkey)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (716, 'https://www.toynamishop.com/product_images/v/257/marcy_backpack02__61506__78122.jpg', 'Skelanimals Deluxe Backpack Marcy (Monkey)', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (717, 'https://www.toynamishop.com/product_images/g/571/naruto_six_paths_bust_01__42049__39641.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (717, 'https://www.toynamishop.com/product_images/h/819/naruto_six_paths_bust_07__00758__74162.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (717, 'https://www.toynamishop.com/product_images/e/177/naruto_six_paths_bust_09__04793__16955.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (717, 'https://www.toynamishop.com/product_images/u/123/naruto_six_paths_bust_05__98423__94231.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (717, 'https://www.toynamishop.com/product_images/a/089/naruto_six_paths_bust_08__82699__25209.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (717, 'https://www.toynamishop.com/product_images/n/253/naruto_six_paths_bust_04__15890__82175.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (717, 'https://www.toynamishop.com/product_images/t/019/naruto_six_paths_bust_02__37884__55767.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (717, 'https://www.toynamishop.com/product_images/o/148/naruto_six_paths_bust_06__49614__00284.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (717, 'https://www.toynamishop.com/product_images/c/232/naruto_six_paths_bust_03__13629__31495.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust', false, 10);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (717, 'https://www.toynamishop.com/product_images/h/321/naruto_six_paths_bust_02_pq__21095__72335.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust', false, 11);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (718, 'https://www.toynamishop.com/product_images/w/997/unkl_DC_COMICS_UniPo_all__48587__84416.jpg', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (718, 'https://www.toynamishop.com/product_images/d/492/unkl_dccomics_unipo_theflash__18997__11125.jpg', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (718, 'https://www.toynamishop.com/product_images/a/924/unkl_dccomics_unipo_superman__06690__21181.jpg', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (718, 'https://www.toynamishop.com/product_images/g/762/unkl_dccomics_unipo_harleyquinn__44670__04911.jpg', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (718, 'https://www.toynamishop.com/product_images/y/006/unkl_dccomics_unipo_joker__84632__59759.jpg', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (718, 'https://www.toynamishop.com/product_images/h/364/unkl_dccomics_unipo_batman__93842__52319.jpg', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (718, 'https://www.toynamishop.com/product_images/b/906/unkl_dccomics_unipo_mrfreeze__25005__74299.jpg', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (718, 'https://www.toynamishop.com/product_images/d/444/unkl_DC_COMICS_UniPo_pq__52640__01556.jpg', 'UNKL DC Heroes & Villains Blind Box Collection - Full Tray of 12', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (719, 'https://www.toynamishop.com/product_images/c/748/product_242__55816__14726.jpg', 'Tulipop Vinyl Keychain - Miss Maddy', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (719, 'https://www.toynamishop.com/product_images/j/817/product_241__95795__35363.jpg', 'Tulipop Vinyl Keychain - Miss Maddy', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (719, 'https://www.toynamishop.com/product_images/k/439/unspecified4__71253__87727.jpg', 'Tulipop Vinyl Keychain - Miss Maddy', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (720, 'https://www.toynamishop.com/product_images/r/546/futurama_plush_s2_morbo__96521__94154.jpg', 'Futurama Morbo Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (721, 'https://www.toynamishop.com/product_images/t/987/mythic-minis_little-embers__83569__07475.jpg', 'Little Embers Blind Box Figurine', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (721, 'https://www.toynamishop.com/product_images/a/014/little_ember_blind_box__11836__79439.jpg', 'Little Embers Blind Box Figurine', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (721, 'https://www.toynamishop.com/product_images/o/211/little_embers__s1_display_tray__10557__89312.jpg', 'Little Embers Blind Box Figurine', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (722, 'https://www.toynamishop.com/product_images/i/966/micronian_max_sterling_battloid_01__18693__59299.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MAX STERLING VOLUME4', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (722, 'https://www.toynamishop.com/product_images/e/154/micronian_max_sterling_fighter_01__11307__59710.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MAX STERLING VOLUME4', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (722, 'https://www.toynamishop.com/product_images/o/116/micronian_max_sterling_guardian_01__58630__42390.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MAX STERLING VOLUME4', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (722, 'https://www.toynamishop.com/product_images/n/797/ROBOTECH_MICRONIAN-PILOTS_VOL4_MAX-STERLING__96044__52716.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MAX STERLING VOLUME4', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (723, 'https://www.toynamishop.com/product_images/h/142/IMG_0015_whitebackground__63368__80897.jpg', 'Acid Rain Sand Infantry', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (723, 'https://www.toynamishop.com/product_images/e/728/IMG_0016__74844__75530.JPG', 'Acid Rain Sand Infantry', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (723, 'https://www.toynamishop.com/product_images/w/657/IMG_0017__03896__78011.JPG', 'Acid Rain Sand Infantry', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (723, 'https://www.toynamishop.com/product_images/b/350/IMG_0021__85878__48534.JPG', 'Acid Rain Sand Infantry', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (724, 'https://www.toynamishop.com/product_images/a/619/robotech_T-Shirts_2022-03__16671__04129.jpg', 'Robotech VF-1J Rick Hunter Shirt', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (724, 'https://www.toynamishop.com/product_images/y/382/Screenshot_62__83102__97132.png', 'Robotech VF-1J Rick Hunter Shirt', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (724, 'https://www.toynamishop.com/product_images/s/406/Screenshot_63__95660__36142.png', 'Robotech VF-1J Rick Hunter Shirt', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (725, 'https://www.toynamishop.com/product_images/o/806/robotech-1-100_VF-1D-Trainer-exclusive__11203__26745.jpg', 'Comic Con 2016 Exclusive: Robotech VF-1D (VT-102)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (726, 'https://www.toynamishop.com/product_images/a/323/DSC_0119__40170__97010.jpg', 'B2Five 88th Sand Deluxe', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (726, 'https://www.toynamishop.com/product_images/y/649/DSC_0115__86700__85618.jpg', 'B2Five 88th Sand Deluxe', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (726, 'https://www.toynamishop.com/product_images/b/066/DSC_0156__92584__58810.jpg', 'B2Five 88th Sand Deluxe', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (727, 'https://www.toynamishop.com/product_images/t/785/hypnotoad_MG_5316__02473__73807.jpg', 'Futurama Hypnotoad Coin Bank', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (727, 'https://www.toynamishop.com/product_images/b/884/hypnotoad_MG_5313__23802__32542.jpg', 'Futurama Hypnotoad Coin Bank', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (727, 'https://www.toynamishop.com/product_images/a/757/hypnotoad_coin_bank_pq__27968__76606.jpg', 'Futurama Hypnotoad Coin Bank', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (728, 'https://www.toynamishop.com/product_images/o/317/pain-4-inch__02__57188__44868.jpg', 'Naruto Shippuden Poseable Action Figure - Pain', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (728, 'https://www.toynamishop.com/product_images/d/476/pain-4-inch__03__53395__56716.jpg', 'Naruto Shippuden Poseable Action Figure - Pain', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (728, 'https://www.toynamishop.com/product_images/k/941/pain_4inch_01__45800__07516.jpg', 'Naruto Shippuden Poseable Action Figure - Pain', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (728, 'https://www.toynamishop.com/product_images/p/066/pain_4inch_04__21824__24369.jpg', 'Naruto Shippuden Poseable Action Figure - Pain', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (728, 'https://www.toynamishop.com/product_images/r/628/pain_4inch_05__21986__49979.jpg', 'Naruto Shippuden Poseable Action Figure - Pain', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (729, 'https://www.toynamishop.com/product_images/p/505/281923824_171313761998531_1033459954187083704_n__73062__29728.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K08 Lightning', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (729, 'https://www.toynamishop.com/product_images/s/033/282236708_171313771998530_5466034254031672446_n__13752__49075.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K08 Lightning', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (729, 'https://www.toynamishop.com/product_images/a/532/283765273_171313801998527_1739465539036996834_n__40751__81229.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K08 Lightning', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (730, 'https://www.toynamishop.com/product_images/t/586/NEW_2018_shippuden_4-inch-figures_series1__62849__44867.jpg', 'Naruto Shippuden Poseable Action Figures (Set of 3)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (730, 'https://www.toynamishop.com/product_images/k/294/shippuden_4-inch-figures_series1_set_of_3__07281__25691.jpg', 'Naruto Shippuden Poseable Action Figures (Set of 3)', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (730, 'https://www.toynamishop.com/product_images/v/383/naruto-4-inch__08__51173__76077.jpg', 'Naruto Shippuden Poseable Action Figures (Set of 3)', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (730, 'https://www.toynamishop.com/product_images/l/385/itachi-4-inch_01__55814__31610.jpg', 'Naruto Shippuden Poseable Action Figures (Set of 3)', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (730, 'https://www.toynamishop.com/product_images/e/111/kakashi-4-inch_03__52173__38683.jpg', 'Naruto Shippuden Poseable Action Figures (Set of 3)', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (731, 'https://www.toynamishop.com/product_images/z/404/stronghold_s_007__62418__10135.jpg', 'Acid Rain Stronghold (Sand)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (731, 'https://www.toynamishop.com/product_images/o/288/stronghold_s_008__32665__81057.jpg', 'Acid Rain Stronghold (Sand)', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (731, 'https://www.toynamishop.com/product_images/c/433/stronghold_s_001__20432__36327.jpg', 'Acid Rain Stronghold (Sand)', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (731, 'https://www.toynamishop.com/product_images/k/665/stronghold_s_003__32839__79918.jpg', 'Acid Rain Stronghold (Sand)', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (731, 'https://www.toynamishop.com/product_images/y/199/stronghold_s_004__08746__14478.jpg', 'Acid Rain Stronghold (Sand)', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (732, 'https://www.toynamishop.com/product_images/t/256/supersonic_x_hellokitty_clip-on__17502__86197.jpg', 'Comic Con 2016 Exclusive: Gold Sonic x Hello Kitty Clip On Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (733, 'https://www.toynamishop.com/product_images/m/048/macross_standard_valkyrie__41901__42588.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1A Valkyrie', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (733, 'https://www.toynamishop.com/product_images/r/742/vf-1a_batroid_01__52325__65900.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1A Valkyrie', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (733, 'https://www.toynamishop.com/product_images/a/709/vf-1a_gerwalk_01__92466__58174.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1A Valkyrie', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (733, 'https://www.toynamishop.com/product_images/r/989/vf-1a_fighter_01__61468__56799.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1A Valkyrie', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (733, 'https://www.toynamishop.com/product_images/g/816/vf-1a_batroid_02__16879__67188.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1A Valkyrie', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (734, 'https://www.toynamishop.com/product_images/t/200/blanka_hellokitty_plush01__23123__48653.jpg', 'COMIKAZE 2013 Exclusive: Hello Kitty Blanka Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (734, 'https://www.toynamishop.com/product_images/j/838/blanka_hellokitty_plush02__97021__36870.jpg', 'COMIKAZE 2013 Exclusive: Hello Kitty Blanka Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (734, 'https://www.toynamishop.com/product_images/b/603/blanka_hellokitty_plush03__46552__48895.jpg', 'COMIKAZE 2013 Exclusive: Hello Kitty Blanka Plush', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (734, 'https://www.toynamishop.com/product_images/q/681/street_fighter_x_sanrio_blanka_plush__54517__27346.jpg', 'COMIKAZE 2013 Exclusive: Hello Kitty Blanka Plush', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (735, 'https://www.toynamishop.com/product_images/b/951/product_238__12654__93576.jpg', 'Tulipop Vinyl Keychain - Fred', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (735, 'https://www.toynamishop.com/product_images/f/706/product_237__41310__27508.jpg', 'Tulipop Vinyl Keychain - Fred', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (736, 'https://www.toynamishop.com/product_images/p/043/little-nessies_iridescent-edition_01__15196__81322.jpg', 'Little Nessies Limited Edition Iridescent Figurines Set-Convention Exclusive!', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (737, 'https://www.toynamishop.com/product_images/b/846/little_embers_plush_flames_01__48166__04673.jpg', 'Little Embers Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (737, 'https://www.toynamishop.com/product_images/p/170/little_embers_plush_soot_01__64099__18321.jpg', 'Little Embers Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (737, 'https://www.toynamishop.com/product_images/j/290/little_embers_plush_cinder_01__62851__97017.jpg', 'Little Embers Plush', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (737, 'https://www.toynamishop.com/product_images/d/327/little_embers_plush_sparks_01__38381__85309.jpg', 'Little Embers Plush', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (737, 'https://www.toynamishop.com/product_images/o/101/little_embers_plush_ash_01__21886__81123.jpg', 'Little Embers Plush', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (738, 'https://www.toynamishop.com/product_images/h/795/skelanimals_dcheroes_girls-of-gotham-city_05__38695__59895.jpg', 'Skelanimals / DC Heroes Harley Quinn Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (738, 'https://www.toynamishop.com/product_images/z/626/skelanimals_dcheroes_girls-of-gotham-city_06__27430__10010.jpg', 'Skelanimals / DC Heroes Harley Quinn Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (738, 'https://www.toynamishop.com/product_images/s/682/skelanimals_dc_gogc_plush__14296__36538.jpg', 'Skelanimals / DC Heroes Harley Quinn Plush', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (739, 'https://www.toynamishop.com/product_images/o/180/RebornTrooper_white_backdrop__76988__21971.jpg', 'Acid Rain Reborn Trooper', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (739, 'https://www.toynamishop.com/product_images/o/810/pose_02__54268__07757.JPG', 'Acid Rain Reborn Trooper', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (739, 'https://www.toynamishop.com/product_images/v/117/pose_03__68503__70350.JPG', 'Acid Rain Reborn Trooper', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (740, 'https://www.toynamishop.com/product_images/d/139/micronian_miriya_battloid_01__09134__20510.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MIRIYA STERLING VOLUME 5', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (740, 'https://www.toynamishop.com/product_images/e/885/micronian_miriya_fighter_01__86515__08549.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MIRIYA STERLING VOLUME 5', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (740, 'https://www.toynamishop.com/product_images/p/742/micronian_miriya_guardian_01__79796__08068.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MIRIYA STERLING VOLUME 5', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (740, 'https://www.toynamishop.com/product_images/d/623/ROBOTECH_MICRONIAN-PILOTS_VOL5_MIRIYA__54717__33982.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - MIRIYA STERLING VOLUME 5', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (741, 'https://www.toynamishop.com/product_images/j/997/futurama_hats_nibbler001__92957__09020.jpg', 'Futurama Nibbler Knit Hat', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (741, 'https://www.toynamishop.com/product_images/p/405/futurama_hats_nibbler002__88507__04673.jpg', 'Futurama Nibbler Knit Hat', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (742, 'https://www.toynamishop.com/product_images/r/272/n3S-t_JU__61902__23044.jpg', 'B2Five Robotech Mospeada Transformable Cyclone - Rand', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (742, 'https://www.toynamishop.com/product_images/x/962/hFfak6XI__16064__76292.jpg', 'B2Five Robotech Mospeada Transformable Cyclone - Rand', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (742, 'https://www.toynamishop.com/product_images/w/525/KEPJEcjA__88577__03453.jpg', 'B2Five Robotech Mospeada Transformable Cyclone - Rand', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (742, 'https://www.toynamishop.com/product_images/s/098/ER9xKMe8__13370__95370.jpg', 'B2Five Robotech Mospeada Transformable Cyclone - Rand', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (743, 'https://www.toynamishop.com/product_images/e/125/DSC_0589__98898__50121.JPG', 'B2Five Marine Sieger Stronghold ST2M', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (743, 'https://www.toynamishop.com/product_images/g/335/DSC_0584__37742__26193.JPG', 'B2Five Marine Sieger Stronghold ST2M', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (743, 'https://www.toynamishop.com/product_images/j/086/DSC_0594__88318__18621.JPG', 'B2Five Marine Sieger Stronghold ST2M', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (743, 'https://www.toynamishop.com/product_images/j/143/DSC_0599__19575__85539.JPG', 'B2Five Marine Sieger Stronghold ST2M', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (743, 'https://www.toynamishop.com/product_images/y/373/DSC_0580__21988__95015.JPG', 'B2Five Marine Sieger Stronghold ST2M', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (744, 'https://www.toynamishop.com/product_images/d/941/macross-battlepod_vinyl01__18441__32194.jpg', 'Macross Zentradi (Regault) Tactical Battlepod Vinyl Figure', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (744, 'https://www.toynamishop.com/product_images/p/418/macross_battlepod02__26797__03676.jpg', 'Macross Zentradi (Regault) Tactical Battlepod Vinyl Figure', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (744, 'https://www.toynamishop.com/product_images/r/940/IMG_4112__22292__13696.jpg', 'Macross Zentradi (Regault) Tactical Battlepod Vinyl Figure', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (744, 'https://www.toynamishop.com/product_images/v/991/IMG_4111__93841__35433.jpg', 'Macross Zentradi (Regault) Tactical Battlepod Vinyl Figure', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (745, 'https://www.toynamishop.com/product_images/a/967/acid_rain_sdcc2015_exclusive__28588__16164.jpg', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (745, 'https://www.toynamishop.com/product_images/q/790/IMG_0004__12612__58566.JPG', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (745, 'https://www.toynamishop.com/product_images/s/607/IMG_0008__59259__93703.JPG', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (745, 'https://www.toynamishop.com/product_images/x/363/IMG_0007__63150__14948.JPG', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (745, 'https://www.toynamishop.com/product_images/p/603/IMG_0013__14907__39268.JPG', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (745, 'https://www.toynamishop.com/product_images/p/071/IMG_0015__47570__87963.JPG', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (745, 'https://www.toynamishop.com/product_images/t/094/IMG_0016__54223__82627.JPG', 'Comic Con 2015 Exclusive - Acid Rain Green Jeep + Green Sol Commander', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (746, 'https://www.toynamishop.com/product_images/c/179/IMG_0017__20028__51424.JPG', 'Acid Rain AMM Prospector', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (746, 'https://www.toynamishop.com/product_images/m/246/IMG_0002__05155__70646.JPG', 'Acid Rain AMM Prospector', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (746, 'https://www.toynamishop.com/product_images/d/849/IMG_0001__84270__27435.JPG', 'Acid Rain AMM Prospector', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (746, 'https://www.toynamishop.com/product_images/g/951/IMG_0009__80433__96958.JPG', 'Acid Rain AMM Prospector', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (746, 'https://www.toynamishop.com/product_images/o/009/IMG_0010__84783__76526.JPG', 'Acid Rain AMM Prospector', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (746, 'https://www.toynamishop.com/product_images/g/479/IMG_0014__59361__88736.JPG', 'Acid Rain AMM Prospector', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (746, 'https://www.toynamishop.com/product_images/a/629/IMG_0016__01417__94520.JPG', 'Acid Rain AMM Prospector', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (747, 'https://www.toynamishop.com/product_images/z/950/robotech_action-figures_02__45660__73240.jpg', 'Robotech Poseable Action Figures (Set of 5)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (747, 'https://www.toynamishop.com/product_images/f/326/robotech_action-figures_01__74125__29268.jpg', 'Robotech Poseable Action Figures (Set of 5)', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (747, 'https://www.toynamishop.com/product_images/m/153/robotech_action_figures_Rick-Hunter_02__26132__95415.jpg', 'Robotech Poseable Action Figures (Set of 5)', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (747, 'https://www.toynamishop.com/product_images/u/530/robotech_action_figures_roy_fokker_01__78059__66880.jpg', 'Robotech Poseable Action Figures (Set of 5)', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (747, 'https://www.toynamishop.com/product_images/o/343/robotech_action_figures_miriya__95300__30660.jpg', 'Robotech Poseable Action Figures (Set of 5)', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (747, 'https://www.toynamishop.com/product_images/e/758/robotech_action_figures_max_sterling__56394__23056.jpg', 'Robotech Poseable Action Figures (Set of 5)', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (747, 'https://www.toynamishop.com/product_images/o/485/robotech_action_figures_minmei_01__39177__09264.jpg', 'Robotech Poseable Action Figures (Set of 5)', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (748, 'https://www.toynamishop.com/product_images/f/153/futurama_destructor_gender_bender_exclusive__57552__23935.jpg', 'SDCC 2013 Exclusive: Futurama Destructor Gender Bender Box Set', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (748, 'https://www.toynamishop.com/product_images/e/824/futurama_destructor_gender_bender_exclusive_genderbender__06843__54804.jpg', 'SDCC 2013 Exclusive: Futurama Destructor Gender Bender Box Set', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (748, 'https://www.toynamishop.com/product_images/y/672/futurama_destructor_gender_bender_exclusive_destructor__65973__84963.jpg', 'SDCC 2013 Exclusive: Futurama Destructor Gender Bender Box Set', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (748, 'https://www.toynamishop.com/product_images/q/762/futurama_destructor_gender_bender_box__74215__15825.jpg', 'SDCC 2013 Exclusive: Futurama Destructor Gender Bender Box Set', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (748, 'https://www.toynamishop.com/product_images/l/014/futurama_destructor_gender_bender_box_set_01__42974__90182.jpg', 'SDCC 2013 Exclusive: Futurama Destructor Gender Bender Box Set', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (749, 'https://www.toynamishop.com/product_images/l/239/gaara_4inch_01__12882__35965.jpg', 'Naruto Shippuden Poseable Action Figure - Gaara', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (749, 'https://www.toynamishop.com/product_images/x/228/gaara_4-inch_02__78410__73553.jpg', 'Naruto Shippuden Poseable Action Figure - Gaara', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (749, 'https://www.toynamishop.com/product_images/l/881/gaara_4inch_03__06631__78532.jpg', 'Naruto Shippuden Poseable Action Figure - Gaara', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (749, 'https://www.toynamishop.com/product_images/v/377/gaara_4inch_04__91383__90635.jpg', 'Naruto Shippuden Poseable Action Figure - Gaara', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (749, 'https://www.toynamishop.com/product_images/p/702/gaara_4inch_05__06796__89742.jpg', 'Naruto Shippuden Poseable Action Figure - Gaara', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (750, 'https://www.toynamishop.com/product_images/s/839/speeder_mk2_004__63680__76689.jpg', 'Acid Rain Speeder MK.II (Sand)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (750, 'https://www.toynamishop.com/product_images/l/577/speeder_mk2_002__02017__72945.jpg', 'Acid Rain Speeder MK.II (Sand)', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (750, 'https://www.toynamishop.com/product_images/z/331/speeder_mk2_003__33228__57514.jpg', 'Acid Rain Speeder MK.II (Sand)', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (750, 'https://www.toynamishop.com/product_images/i/429/speeder_mk2_006__67146__63225.jpg', 'Acid Rain Speeder MK.II (Sand)', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (750, 'https://www.toynamishop.com/product_images/j/302/speeder_mk2_007__88675__33068.jpg', 'Acid Rain Speeder MK.II (Sand)', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (750, 'https://www.toynamishop.com/product_images/z/105/speeder_mk2_009__69478__85515.jpg', 'Acid Rain Speeder MK.II (Sand)', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (750, 'https://www.toynamishop.com/product_images/v/753/speeder_mk2_012__65865__30832.jpg', 'Acid Rain Speeder MK.II (Sand)', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (750, 'https://www.toynamishop.com/product_images/u/531/speeder_mk2_010__81642__55159.jpg', 'Acid Rain Speeder MK.II (Sand)', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (751, 'https://www.toynamishop.com/product_images/v/450/skelanimal_vinyl_series2_marcy__37908__64643.jpg', 'Skelanimals Marcy the Monkey Vinyl Figure', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (752, 'https://www.toynamishop.com/product_images/b/407/macross_vintage_collection__69141__51319.jpg', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (752, 'https://www.toynamishop.com/product_images/o/930/macross_hikaru_valkyrie__73769__50142.jpg', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (752, 'https://www.toynamishop.com/product_images/p/402/macross_roy-focker_valkyrie__62223__21959.jpg', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (752, 'https://www.toynamishop.com/product_images/u/822/macross_max_vf-1j_valkyrie__58992__13610.jpg', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (752, 'https://www.toynamishop.com/product_images/t/073/macross_milia_vf-1J_valkyrie__56529__43288.jpg', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (752, 'https://www.toynamishop.com/product_images/q/831/macross_standard_valkyrie__02200__93548.jpg', 'Macross Saga: Retro Transformable 1/100 Series - Complete Set of 5', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (753, 'https://www.toynamishop.com/product_images/j/692/skelanimals_dcheroes_girls-of-gotham-city_01__31115__94272.jpg', 'Skelanimals / DC Heroes Poison Ivy Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (753, 'https://www.toynamishop.com/product_images/z/299/skelanimals_dcheroes_girls-of-gotham-city_02__93115__68226.jpg', 'Skelanimals / DC Heroes Poison Ivy Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (753, 'https://www.toynamishop.com/product_images/l/797/skelanimals_dc_gogc_plush__18336__91937.jpg', 'Skelanimals / DC Heroes Poison Ivy Plush', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (754, 'https://www.toynamishop.com/product_images/h/777/macross_shogun-warriors_VF-1J_01__39122__34230.jpg', 'Macross Hikaru Ichijyo''''s Shogun Warrior VF-1J', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (754, 'https://www.toynamishop.com/product_images/g/982/macross_shogun-warriors_VF-1J_02__91885__18268.jpg', 'Macross Hikaru Ichijyo''''s Shogun Warrior VF-1J', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (754, 'https://www.toynamishop.com/product_images/q/357/macross_shogun-warriors_VF-1J_03__43835__02276.jpg', 'Macross Hikaru Ichijyo''''s Shogun Warrior VF-1J', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (754, 'https://www.toynamishop.com/product_images/j/219/macross_shogun-warriors_VF-1J_04__07233__40600.jpg', 'Macross Hikaru Ichijyo''''s Shogun Warrior VF-1J', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (755, 'https://www.toynamishop.com/product_images/w/983/robotech-1-100_VF-1D-Trainer_super-veritech-armor_01__71570__78626.jpg', 'Robotech 1/100 Scale Transformable VF-1D Super Veritech', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (755, 'https://www.toynamishop.com/product_images/w/353/robotech-1-100_VF-1D-Trainer_super-veritech-armor_04__49462__55218.jpg', 'Robotech 1/100 Scale Transformable VF-1D Super Veritech', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (755, 'https://www.toynamishop.com/product_images/t/277/robotech-1-100_VF-1D-Trainer_super-veritech-armor_05__72065__96263.jpg', 'Robotech 1/100 Scale Transformable VF-1D Super Veritech', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (755, 'https://www.toynamishop.com/product_images/l/692/robotech-1-100_VF-1D-Trainer_super-veritech-armor-2__49643__55477.jpg', 'Robotech 1/100 Scale Transformable VF-1D Super Veritech', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (756, 'https://www.toynamishop.com/product_images/n/900/Angel_of_Death_BW_version_Toynamishop__28473__14668.jpg', 'Angel of Death (B&W version)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (757, 'https://www.toynamishop.com/product_images/s/144/little-foots_collection__89752__30780.jpg', 'Little Foots Blind Box Figurine', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (757, 'https://www.toynamishop.com/product_images/a/997/little_foots_05__40580__01526.jpg', 'Little Foots Blind Box Figurine', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (757, 'https://www.toynamishop.com/product_images/m/615/little_foots_09__59635__30750.jpg', 'Little Foots Blind Box Figurine', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (757, 'https://www.toynamishop.com/product_images/c/992/little_foots_16__99727__14258.jpg', 'Little Foots Blind Box Figurine', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (757, 'https://www.toynamishop.com/product_images/z/145/little_foots_01__75756__84357.jpg', 'Little Foots Blind Box Figurine', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (758, 'https://www.toynamishop.com/product_images/m/750/CYeXrKN8__51048__91196.jpg', 'B2Five Robotech Mospeada Transformable Cyclone - Scott Bernard', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (758, 'https://www.toynamishop.com/product_images/s/390/m3CBymV4__36477__34519.jpg', 'B2Five Robotech Mospeada Transformable Cyclone - Scott Bernard', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (758, 'https://www.toynamishop.com/product_images/x/806/7o34H_rc__42888__11504.jpg', 'B2Five Robotech Mospeada Transformable Cyclone - Scott Bernard', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (758, 'https://www.toynamishop.com/product_images/b/938/C_gIZGkk__24386__61985.jpg', 'B2Five Robotech Mospeada Transformable Cyclone - Scott Bernard', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (759, 'https://www.toynamishop.com/product_images/w/595/skelanimal_vinyl_series2_diego__60373__65479.jpg', 'Skelanimals Diego the Bat Vinyl Figure', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (760, 'https://www.toynamishop.com/product_images/r/772/skelanimal_blind-box_pack-2016__00854__18303.jpg', 'Skelanimals Blind Box Series 3 Figurine', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (760, 'https://www.toynamishop.com/product_images/i/728/skelanimal_blind-box_pack-20162__58404__40869.jpg', 'Skelanimals Blind Box Series 3 Figurine', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (761, 'https://www.toynamishop.com/product_images/y/277/Angel_of_Death_2_Toynamishop__93803__20674.jpg', 'Angel of Death (Color version)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (762, 'https://www.toynamishop.com/product_images/p/022/DSC_0554__01061__24710.JPG', 'B2Five 88th Sand Laurel LA4S4', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (762, 'https://www.toynamishop.com/product_images/a/683/DSC_0546__62882__32372.JPG', 'B2Five 88th Sand Laurel LA4S4', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (762, 'https://www.toynamishop.com/product_images/b/852/DSC_0527__06569__63320.JPG', 'B2Five 88th Sand Laurel LA4S4', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (762, 'https://www.toynamishop.com/product_images/s/615/DSC_0540__16125__25874.JPG', 'B2Five 88th Sand Laurel LA4S4', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (762, 'https://www.toynamishop.com/product_images/z/795/DSC_0559__38319__17119.JPG', 'B2Five 88th Sand Laurel LA4S4', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (763, 'https://www.toynamishop.com/product_images/u/614/skelanimals_dcheroes_girls-of-gotham-city_03__97381__26804.jpg', 'Skelanimals / DC Heroes Batgirl Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (763, 'https://www.toynamishop.com/product_images/a/187/skelanimals_dcheroes_girls-of-gotham-city_04__58787__65115.jpg', 'Skelanimals / DC Heroes Batgirl Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (763, 'https://www.toynamishop.com/product_images/w/045/skelanimals_dc_gogc_plush__21341__89334.jpg', 'Skelanimals / DC Heroes Batgirl Plush', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (764, 'https://www.toynamishop.com/product_images/r/613/dc_skelanimals_vinyl_figurines_all1__89276__71221.jpg', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (764, 'https://www.toynamishop.com/product_images/g/098/skelanimal_dc_heroes_3_inch_vinyl_harleyquinn__03988__16364.jpg', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (764, 'https://www.toynamishop.com/product_images/i/125/skelanimal_dc_heroes_3_inch_vinyl_batman__93048__71169.jpg', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (764, 'https://www.toynamishop.com/product_images/r/802/skelanimal_dc_heroes_3_inch_vinyl_wonderwoman__34812__95379.jpg', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (764, 'https://www.toynamishop.com/product_images/v/972/skelanimal_dc_heroes_3_inch_vinyl_robin__94555__63944.jpg', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (764, 'https://www.toynamishop.com/product_images/h/117/skelanimal_dc_heroes_3_inch_vinyl_superman__78692__40451.jpg', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (764, 'https://www.toynamishop.com/product_images/d/657/dc_skelanimals_vinyl_figurines_all__21938__78681.jpg', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (764, 'https://www.toynamishop.com/product_images/q/915/skelanimal_dc_heroes_3_inch_vinyl_assortment__13076__42055.jpg', 'Skelanimals DC Heroes 3" Vinyl Figures Assortment', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (765, 'https://www.toynamishop.com/product_images/m/411/robotech-x-eepmon_12-1280x960__24166__62376.jpg', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (765, 'https://www.toynamishop.com/product_images/z/738/Aviator_Flight_Jacket__71370__88657.jpg', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (765, 'https://www.toynamishop.com/product_images/z/244/robotech-x-eepmon_11-1280x960__37980__82286.jpg', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (765, 'https://www.toynamishop.com/product_images/z/604/robotech-x-eepmon_2-1280x960__90629__14893.jpg', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (765, 'https://www.toynamishop.com/product_images/t/378/robotech-x-eepmon_8-1280x960__05817__00629.jpg', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (765, 'https://www.toynamishop.com/product_images/b/553/robotech-x-eepmon_10-1280x960__69199__33038.jpg', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (765, 'https://www.toynamishop.com/product_images/f/617/robotech-x-eepmon_3-1280x960__05143__42567.jpg', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (765, 'https://www.toynamishop.com/product_images/n/545/robotech-x-eepmon_13-1280x960__50361__67190.jpg', 'Robotech X eepmon - VF-1J Rick Hunter Aviator Flight Jacket', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (766, 'https://www.toynamishop.com/product_images/c/949/robotech_1_100_30th_anniversary_series_2_vf_1j_GBP_1_shadow_heavy_armor__80387__57153.jpg', 'Comic Con 2015 Exclusive: Robotech GBP-1 - Stealth Fighter - Heavy Armor', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (767, 'https://www.toynamishop.com/product_images/t/440/badtz_maru_ryu_plush01__73607__44480.jpg', 'SDCC 2013 Exclusive: Badtz Maru Ryu Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (767, 'https://www.toynamishop.com/product_images/s/396/badtz_maru_ryu_plush03__32030__02584.jpg', 'SDCC 2013 Exclusive: Badtz Maru Ryu Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (767, 'https://www.toynamishop.com/product_images/r/838/badtz_maru_ryu_plush02__56015__21364.jpg', 'SDCC 2013 Exclusive: Badtz Maru Ryu Plush', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (767, 'https://www.toynamishop.com/product_images/e/883/street_fighter_x_sanrio_badtzmaru_ryu_plush__63586__03358.jpg', 'SDCC 2013 Exclusive: Badtz Maru Ryu Plush', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (768, 'https://www.toynamishop.com/product_images/i/338/sasuke_4inch_03__26202__29908.jpg', 'Naruto Shippuden Poseable Action Figure - Sasuke', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (768, 'https://www.toynamishop.com/product_images/x/147/sasuke_4inch_02__86833__65501.jpg', 'Naruto Shippuden Poseable Action Figure - Sasuke', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (768, 'https://www.toynamishop.com/product_images/x/027/sasuke_4inch_01__53299__62812.jpg', 'Naruto Shippuden Poseable Action Figure - Sasuke', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (768, 'https://www.toynamishop.com/product_images/v/611/sasuke_4inch_04__92654__32676.jpg', 'Naruto Shippuden Poseable Action Figure - Sasuke', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (768, 'https://www.toynamishop.com/product_images/i/125/sasuke_4inch_05__30268__18315.jpg', 'Naruto Shippuden Poseable Action Figure - Sasuke', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (769, 'https://www.toynamishop.com/product_images/v/583/emily-Bendy_excluosive_01__94129__75733.jpg', 'Emily the Strange 6" Bendy Figure Convention Exclusive', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (770, 'https://www.toynamishop.com/product_images/w/001/1-100-scale_super-veritech__rick-hunter_battloid__05459__75924.jpg', 'Robotech 1/100 Rick Hunter VF-1J Super Veritech', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (770, 'https://www.toynamishop.com/product_images/x/046/1-100-scale_super-veritech__rick-hunter_guardian__89462__35006.jpg', 'Robotech 1/100 Rick Hunter VF-1J Super Veritech', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (770, 'https://www.toynamishop.com/product_images/l/609/1-100-scale_super-veritech__rick-hunter_fighter__75957__58975.jpg', 'Robotech 1/100 Rick Hunter VF-1J Super Veritech', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (770, 'https://www.toynamishop.com/product_images/y/504/robotech_1-100_VF-1J_rick_hunter_super_veritech_armor__83382__69739.jpg', 'Robotech 1/100 Rick Hunter VF-1J Super Veritech', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (771, 'https://www.toynamishop.com/product_images/r/666/Godzilla_plush_01__42645__52730.jpg', 'Godzilla 1989 - Limited Edition Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (771, 'https://www.toynamishop.com/product_images/t/099/Godzilla_plush_05__64391__74646.jpg', 'Godzilla 1989 - Limited Edition Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (771, 'https://www.toynamishop.com/product_images/l/482/Godzilla_plush_02__18396__26602.jpg', 'Godzilla 1989 - Limited Edition Plush', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (771, 'https://www.toynamishop.com/product_images/c/343/Godzilla_plush_03__04586__49369.jpg', 'Godzilla 1989 - Limited Edition Plush', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (772, 'https://www.toynamishop.com/product_images/k/338/naruto_sage-mode_pvc-statue_2__43077__35058.jpg', '6" Sage Mode Naruto with Scroll Exclusive', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (772, 'https://www.toynamishop.com/product_images/s/954/naruto_sage-mode_pvc-statue__17408__63899.jpg', '6" Sage Mode Naruto with Scroll Exclusive', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (773, 'https://www.toynamishop.com/product_images/p/649/HvWIhifw__22822__78616.jpg', 'B2Five Robotech Mospeada Transformable Cyclone - Lance Belmont', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (773, 'https://www.toynamishop.com/product_images/l/396/7qu76EBM__20424__23972.jpg', 'B2Five Robotech Mospeada Transformable Cyclone - Lance Belmont', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (773, 'https://www.toynamishop.com/product_images/b/760/C-AHv7zg__03663__28315.jpg', 'B2Five Robotech Mospeada Transformable Cyclone - Lance Belmont', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (773, 'https://www.toynamishop.com/product_images/o/250/FGzbSLPg__66392__26871.jpg', 'B2Five Robotech Mospeada Transformable Cyclone - Lance Belmont', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (774, 'https://www.toynamishop.com/product_images/j/859/TCDTLxgQ__51762__49605.png', 'Little Burnt Embers Special Edition Figurines Set - 2022 CONVENTION EXCLUSIVE', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (774, 'https://www.toynamishop.com/product_images/l/136/IMG_0692__52096__01051.jpg', 'Little Burnt Embers Special Edition Figurines Set - 2022 CONVENTION EXCLUSIVE', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (775, 'https://www.toynamishop.com/product_images/d/127/Robotech_action_Figures_series2_0000_group__66651__51728.jpg', 'Robotech Poseable Action Figures Series 2 (Set of 5)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (775, 'https://www.toynamishop.com/product_images/w/053/Robotech_action_Figures_series2_0000s_0001_rick__92847__72850.jpg', 'Robotech Poseable Action Figures Series 2 (Set of 5)', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (775, 'https://www.toynamishop.com/product_images/d/315/Robotech_action_Figures_series2_0005_rick-hunter__package_front__03314__86843.jpg', 'Robotech Poseable Action Figures Series 2 (Set of 5)', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (775, 'https://www.toynamishop.com/product_images/a/359/Robotech_action_Figures_series2_0000s_0003_lisa__19227__94474.jpg', 'Robotech Poseable Action Figures Series 2 (Set of 5)', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (775, 'https://www.toynamishop.com/product_images/i/425/Robotech_action_Figures_series2_0004_lisa-hayes__package_front__55085__86843.jpg', 'Robotech Poseable Action Figures Series 2 (Set of 5)', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (775, 'https://www.toynamishop.com/product_images/c/123/Robotech_action_Figures_series2_0000s_0000_captain__71034__01390.jpg', 'Robotech Poseable Action Figures Series 2 (Set of 5)', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (775, 'https://www.toynamishop.com/product_images/u/627/Robotech_action_Figures_series2_0002_captain-gloval__package_front__25686__48102.jpg', 'Robotech Poseable Action Figures Series 2 (Set of 5)', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (775, 'https://www.toynamishop.com/product_images/n/791/Robotech_action_Figures_series2_0000s_0002_claudia__48297__12239.jpg', 'Robotech Poseable Action Figures Series 2 (Set of 5)', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (775, 'https://www.toynamishop.com/product_images/b/398/Robotech_action_Figures_series2_0003_claudia-grant__package_front__02955__87851.jpg', 'Robotech Poseable Action Figures Series 2 (Set of 5)', false, 10);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (775, 'https://www.toynamishop.com/product_images/r/271/Robotech_action_Figures_series2_0000s_0004_ben__09265__89239.jpg', 'Robotech Poseable Action Figures Series 2 (Set of 5)', false, 11);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (775, 'https://www.toynamishop.com/product_images/u/815/Robotech_action_Figures_series2_0001_ben-dixon__package_front__29585__51323.jpg', 'Robotech Poseable Action Figures Series 2 (Set of 5)', false, 12);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (776, 'https://www.toynamishop.com/product_images/r/585/1080x1080_Embers_kyanite_plush_2024__21536__74293.jpg', 'Kyanite Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (777, 'https://www.toynamishop.com/product_images/c/197/bloody_bunny_plush01__21530__60827.jpg', 'Bloody Bunny 7-inch Mini Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (777, 'https://www.toynamishop.com/product_images/o/822/bloody_bunny_plush_pq__37101__49901.jpg', 'Bloody Bunny 7-inch Mini Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (778, 'https://www.toynamishop.com/product_images/r/090/CC2016_bonita-6-inch-plush__72438__59579.jpg', 'Comic Con 2016 Exclusive: Skelanimals Bonita Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (779, 'https://www.toynamishop.com/product_images/p/032/20190331_170218__90595__02019.jpg', 'Acid Rain Sofi', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (779, 'https://www.toynamishop.com/product_images/o/113/20190331_165329__23884__58845.jpg', 'Acid Rain Sofi', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (779, 'https://www.toynamishop.com/product_images/q/083/20190331_165633__84159__88366.jpg', 'Acid Rain Sofi', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (779, 'https://www.toynamishop.com/product_images/r/497/20190331_162135__89149__61105.jpg', 'Acid Rain Sofi', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (779, 'https://www.toynamishop.com/product_images/j/536/20190331_164308__42812__73889.jpg', 'Acid Rain Sofi', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (779, 'https://www.toynamishop.com/product_images/f/785/20190331_163015__43973__69129.jpg', 'Acid Rain Sofi', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (780, 'https://www.toynamishop.com/product_images/i/588/raptor_001__90588__97654.jpg', 'Acid Rain Raptor (Speeder MK.I)(Marine)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (780, 'https://www.toynamishop.com/product_images/j/036/raptor_004__65101__33812.jpg', 'Acid Rain Raptor (Speeder MK.I)(Marine)', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (780, 'https://www.toynamishop.com/product_images/q/540/raptor_002__74814__91922.jpg', 'Acid Rain Raptor (Speeder MK.I)(Marine)', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (780, 'https://www.toynamishop.com/product_images/u/526/raptor_006__63382__30728.jpg', 'Acid Rain Raptor (Speeder MK.I)(Marine)', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (780, 'https://www.toynamishop.com/product_images/b/924/raptor_008__82197__45965.jpg', 'Acid Rain Raptor (Speeder MK.I)(Marine)', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (780, 'https://www.toynamishop.com/product_images/o/133/raptor_010__49272__54346.jpg', 'Acid Rain Raptor (Speeder MK.I)(Marine)', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (780, 'https://www.toynamishop.com/product_images/j/192/raptor_009__39209__16199.jpg', 'Acid Rain Raptor (Speeder MK.I)(Marine)', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (780, 'https://www.toynamishop.com/product_images/s/621/raptor_012__77513__98788.jpg', 'Acid Rain Raptor (Speeder MK.I)(Marine)', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (780, 'https://www.toynamishop.com/product_images/y/213/raptor_011__29647__44071.jpg', 'Acid Rain Raptor (Speeder MK.I)(Marine)', false, 10);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (781, 'https://www.toynamishop.com/product_images/q/252/content2__72196__95871.jpg', 'Acid Rain Space Prisoner', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (781, 'https://www.toynamishop.com/product_images/h/579/pose_01__69975__76991.JPG', 'Acid Rain Space Prisoner', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (781, 'https://www.toynamishop.com/product_images/o/468/pose_03__16414__69222.JPG', 'Acid Rain Space Prisoner', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (781, 'https://www.toynamishop.com/product_images/z/937/pose_05__82866__49376.JPG', 'Acid Rain Space Prisoner', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (781, 'https://www.toynamishop.com/product_images/o/138/pose_06__08453__97717.JPG', 'Acid Rain Space Prisoner', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (781, 'https://www.toynamishop.com/product_images/k/988/pose_08__72659__95049.jpg', 'Acid Rain Space Prisoner', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (782, 'https://www.toynamishop.com/product_images/t/377/sasuke_vs_itachi_03__04900__61094.jpg', 'Naruto Shippuden Exclusive Two-Pack Set: Sasuke vs. Itachi', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (782, 'https://www.toynamishop.com/product_images/b/234/sasuke_vs_itachi_01__67982__50205.jpg', 'Naruto Shippuden Exclusive Two-Pack Set: Sasuke vs. Itachi', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (783, 'https://www.toynamishop.com/product_images/y/604/Toynami_2024_Voltron_T-SHIRT__31111__97666.jpg', '40th Anniversary Voltron Shirt SDCC Exclusive', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (783, 'https://www.toynamishop.com/product_images/s/787/Screenshot_62__74710__54771.png', '40th Anniversary Voltron Shirt SDCC Exclusive', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (783, 'https://www.toynamishop.com/product_images/m/373/Screenshot_63__43921__18188.png', '40th Anniversary Voltron Shirt SDCC Exclusive', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (784, 'https://www.toynamishop.com/product_images/c/617/skelanimal_dc_heroes_plush_HarleyQuinn_sdcc2013_02__74575__92978.jpg', 'SDCC 2013 Exclusive: DC Heroes Skelanimals Harley Quinn Mini Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (784, 'https://www.toynamishop.com/product_images/o/901/harleyquinn_marcy_02__81406__54572.jpg', 'SDCC 2013 Exclusive: DC Heroes Skelanimals Harley Quinn Mini Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (784, 'https://www.toynamishop.com/product_images/x/571/harleyquinn_marcy_03__15824__72730.jpg', 'SDCC 2013 Exclusive: DC Heroes Skelanimals Harley Quinn Mini Plush', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (784, 'https://www.toynamishop.com/product_images/n/394/harleyquinn_marcy_04__89384__98966.jpg', 'SDCC 2013 Exclusive: DC Heroes Skelanimals Harley Quinn Mini Plush', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (784, 'https://www.toynamishop.com/product_images/p/754/skelanimal_dc_heroes_plush_HarleyQuinn_sdcc2013__19637__07601.jpg', 'SDCC 2013 Exclusive: DC Heroes Skelanimals Harley Quinn Mini Plush', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (785, 'https://www.toynamishop.com/product_images/z/990/Robotech_Minmay_6_inch_doll_SDCC16__15951__71074.jpg', 'Comic Con 2016 Exclusive: Robotech Tineez Minmay Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (786, 'https://www.toynamishop.com/product_images/j/551/voltron_super_poseable_figure_01__97140__16038.jpg', 'Super Poseable Die Cast Voltron', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (786, 'https://www.toynamishop.com/product_images/l/169/voltron_super_poseable_figure_02__17686__04587.jpg', 'Super Poseable Die Cast Voltron', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (786, 'https://www.toynamishop.com/product_images/y/659/voltron_super_poseable_figure_03__93901__37704.jpg', 'Super Poseable Die Cast Voltron', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (786, 'https://www.toynamishop.com/product_images/h/409/voltron_super_poseable_figure_05__62986__18648.jpg', 'Super Poseable Die Cast Voltron', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (786, 'https://www.toynamishop.com/product_images/g/689/voltron_super_poseable_figure_04__52553__46710.jpg', 'Super Poseable Die Cast Voltron', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (786, 'https://www.toynamishop.com/product_images/b/134/voltron_super_poseable_figure5__98532__46776.jpg', 'Super Poseable Die Cast Voltron', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (786, 'https://www.toynamishop.com/product_images/e/818/voltron_super_poseable_figure6__26897__19690.jpg', 'Super Poseable Die Cast Voltron', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (786, 'https://www.toynamishop.com/product_images/k/263/voltron_super_deformed_poseable_figure__95976__74553.jpg', 'Super Poseable Die Cast Voltron', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (786, 'https://www.toynamishop.com/product_images/z/526/voltron_super_poseable_figure4__10394__28032.jpg', 'Super Poseable Die Cast Voltron', false, 10);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (786, 'https://www.toynamishop.com/product_images/h/354/voltron_super_poseable_figure2__60396__97432.jpg', 'Super Poseable Die Cast Voltron', false, 11);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (786, 'https://www.toynamishop.com/product_images/o/137/voltron_super_poseable_figure3__54481__55188.jpg', 'Super Poseable Die Cast Voltron', false, 12);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (786, 'https://www.toynamishop.com/product_images/y/736/voltron_super_poseable_figure1__16092__46323.jpg', 'Super Poseable Die Cast Voltron', false, 13);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (787, 'https://www.toynamishop.com/product_images/l/153/fav-08a__55569__03821.jpg', 'Acid Rain Stealth Camelbot HR12e', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (787, 'https://www.toynamishop.com/product_images/l/705/fav-08b__75835__88809.jpg', 'Acid Rain Stealth Camelbot HR12e', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (787, 'https://www.toynamishop.com/product_images/r/804/fav-08c__92937__77185.jpg', 'Acid Rain Stealth Camelbot HR12e', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (788, 'https://www.toynamishop.com/product_images/m/490/1-100-scale_super-veritech__0026-Recovered__25746__34469.jpg', 'Robotech 1/100 Max Sterling VF-1J Super Veritech', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (788, 'https://www.toynamishop.com/product_images/x/987/1-100-scale_super-veritech__max-sterling_guardian__16601__76462.jpg', 'Robotech 1/100 Max Sterling VF-1J Super Veritech', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (788, 'https://www.toynamishop.com/product_images/z/081/1-100-scale_super-veritech__max-sterling_fighter__70670__64324.jpg', 'Robotech 1/100 Max Sterling VF-1J Super Veritech', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (788, 'https://www.toynamishop.com/product_images/z/216/robotech_1-100_VF-1J_max_sterling_super_veritech_armor__54162__10568.jpg', 'Robotech 1/100 Max Sterling VF-1J Super Veritech', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (789, 'https://www.toynamishop.com/product_images/z/378/naruto_mininja-figurines_ASSORTMENT1__28410__39042.jpg', 'Naruto Shippuden Mininja Figurines - Series 1', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (789, 'https://www.toynamishop.com/product_images/f/861/x8QTmNYk__45745__80198.jpg', 'Naruto Shippuden Mininja Figurines - Series 1', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (789, 'https://www.toynamishop.com/product_images/u/577/WVEZ6Flk__21578__86087.jpg', 'Naruto Shippuden Mininja Figurines - Series 1', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (789, 'https://www.toynamishop.com/product_images/z/768/0E_vyEB0__79183__27759.jpg', 'Naruto Shippuden Mininja Figurines - Series 1', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (789, 'https://www.toynamishop.com/product_images/b/292/Mi4GqF3w__99071__44052.jpg', 'Naruto Shippuden Mininja Figurines - Series 1', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (789, 'https://www.toynamishop.com/product_images/t/993/qs8Ko8Lg__88157__50068.jpg', 'Naruto Shippuden Mininja Figurines - Series 1', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (789, 'https://www.toynamishop.com/product_images/m/927/kibaKjmA__34438__33818.jpg', 'Naruto Shippuden Mininja Figurines - Series 1', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (789, 'https://www.toynamishop.com/product_images/z/635/a5h7laps__21724__44942.jpg', 'Naruto Shippuden Mininja Figurines - Series 1', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (789, 'https://www.toynamishop.com/product_images/w/594/Pcez8zOw__41773__98634.jpg', 'Naruto Shippuden Mininja Figurines - Series 1', false, 10);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (789, 'https://www.toynamishop.com/product_images/v/640/leilbzq4__29424__13109.jpg', 'Naruto Shippuden Mininja Figurines - Series 1', false, 11);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (789, 'https://www.toynamishop.com/product_images/r/324/xOXKpzEc__34964__38292.jpg', 'Naruto Shippuden Mininja Figurines - Series 1', false, 12);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (789, 'https://www.toynamishop.com/product_images/w/467/9CLIsGbU__61229__95719.jpg', 'Naruto Shippuden Mininja Figurines - Series 1', false, 13);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (789, 'https://www.toynamishop.com/product_images/e/517/jFfFl5cQ__60048__87068.jpg', 'Naruto Shippuden Mininja Figurines - Series 1', false, 14);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (790, 'https://www.toynamishop.com/product_images/w/685/naruto_shippuden_6inch_pvc_sasuke_01__19790__74388.jpg', 'Deluxe 6" PVC Statue: Sasuke', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (790, 'https://www.toynamishop.com/product_images/e/221/naruto_shippuden_6inch_pvc_sasuke_02__33005__14006.jpg', 'Deluxe 6" PVC Statue: Sasuke', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (790, 'https://www.toynamishop.com/product_images/r/344/naruto_shippuden_6inch_pvc_sasuke_03__91800__09322.jpg', 'Deluxe 6" PVC Statue: Sasuke', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (790, 'https://www.toynamishop.com/product_images/g/553/naruto_shippuden_6inch_pvc_sasuke_04__10297__26182.jpg', 'Deluxe 6" PVC Statue: Sasuke', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (790, 'https://www.toynamishop.com/product_images/c/839/naruto_shippuden_6inch_pvc_sasuke_05__47797__24127.jpg', 'Deluxe 6" PVC Statue: Sasuke', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (791, 'https://www.toynamishop.com/product_images/y/096/naruto_4inch_s3_deidara_03__08185__64556.jpg', 'Naruto Shippuden Poseable Action Figure - Deidara', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (791, 'https://www.toynamishop.com/product_images/v/979/naruto_4inch_s3_deidara_01___64576__40228.jpg', 'Naruto Shippuden Poseable Action Figure - Deidara', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (791, 'https://www.toynamishop.com/product_images/k/647/naruto_4inch_s3_deidara_02__89957__19879.jpg', 'Naruto Shippuden Poseable Action Figure - Deidara', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (792, 'https://www.toynamishop.com/product_images/x/917/troll_hunter_bular01__02044__70199.jpg', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (792, 'https://www.toynamishop.com/product_images/n/646/troll_hunter_bular03__66313__16702.jpg', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (792, 'https://www.toynamishop.com/product_images/c/792/troll_hunter_signature__77675__17000.jpg', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (792, 'https://www.toynamishop.com/product_images/e/245/troll_hunter_bular3__59776__41290.jpg', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (793, 'https://www.toynamishop.com/product_images/r/360/HKxSF_Series_1_figurines_set1_3__00212__87368.jpg', 'Sanrio x Street Fighter 2-Player Figurine Assortment', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (793, 'https://www.toynamishop.com/product_images/o/707/HKxSF_Series_1_figurines_set2__28652__76407.jpg', 'Sanrio x Street Fighter 2-Player Figurine Assortment', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (793, 'https://www.toynamishop.com/product_images/t/341/HKxSF_Series_1_figurines_set1__75332__51235.jpg', 'Sanrio x Street Fighter 2-Player Figurine Assortment', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (793, 'https://www.toynamishop.com/product_images/s/781/HKxSF_Series_1_figurines_set3__68490__86433.jpg', 'Sanrio x Street Fighter 2-Player Figurine Assortment', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (793, 'https://www.toynamishop.com/product_images/b/433/HKxSF_figurines_series1_pq__06456__50019.jpg', 'Sanrio x Street Fighter 2-Player Figurine Assortment', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (794, 'https://www.toynamishop.com/product_images/j/869/acid-rain_b2five_stealth-chapel_sdcc18-exclusive_3__33814__10393.jpg', 'Acid Rain B2Five Stealth Chapel HETT 600e Exclusive', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (794, 'https://www.toynamishop.com/product_images/e/938/acid-rain_b2five_stealth-chapel_sdcc18-exclusive2__34720__23739.jpg', 'Acid Rain B2Five Stealth Chapel HETT 600e Exclusive', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (795, 'https://www.toynamishop.com/product_images/i/562/FAV-A122_IG-02__85095__60925.jpg', 'Hellbender Infantry FAV-A122', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (795, 'https://www.toynamishop.com/product_images/n/938/FAV-A122_IG-08__68412__43585.jpg', 'Hellbender Infantry FAV-A122', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (795, 'https://www.toynamishop.com/product_images/d/369/FAV-A122_IG-05__79850__79702.jpg', 'Hellbender Infantry FAV-A122', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (795, 'https://www.toynamishop.com/product_images/q/220/FAV-A122_IG-04__52468__94857.jpg', 'Hellbender Infantry FAV-A122', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (796, 'https://www.toynamishop.com/product_images/t/336/fav-09a__58415__06822.jpg', 'Acid Rain Ajax Hoplitai', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (796, 'https://www.toynamishop.com/product_images/z/047/fav-09b__71566__57482.jpg', 'Acid Rain Ajax Hoplitai', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (796, 'https://www.toynamishop.com/product_images/c/072/fav-09c__14217__52899.jpg', 'Acid Rain Ajax Hoplitai', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (797, 'https://www.toynamishop.com/product_images/p/914/NARUTO__68961__07971.jpg', 'Deluxe 6" PVC Statue: Naruto', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (797, 'https://www.toynamishop.com/product_images/q/750/naruto_pvcfigures_naruto_01__07097__28086.jpg', 'Deluxe 6" PVC Statue: Naruto', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (797, 'https://www.toynamishop.com/product_images/h/510/naruto_pvcfigures_naruto_03__62824__63978.jpg', 'Deluxe 6" PVC Statue: Naruto', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (797, 'https://www.toynamishop.com/product_images/l/878/naruto_pvc_figure_box_front__49376__57328.jpg', 'Deluxe 6" PVC Statue: Naruto', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (797, 'https://www.toynamishop.com/product_images/f/003/naruto_pvc_figure_box_back__22258__40221.jpg', 'Deluxe 6" PVC Statue: Naruto', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (798, 'https://www.toynamishop.com/product_images/v/561/TOYNAMI_robotech_combo_sets_1-5__81459__46217.jpg', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (798, 'https://www.toynamishop.com/product_images/b/250/TOYNAMI_robotech_combo_sets_1-5_action_figures__96451__14664.jpg', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (798, 'https://www.toynamishop.com/product_images/p/705/TOYNAMI_robotech_combo_set_max_vf-1j__67722__33680.jpg', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (798, 'https://www.toynamishop.com/product_images/n/741/TOYNAMI_robotech_combo_set_miriya_vf-1j__74995__64973.jpg', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (798, 'https://www.toynamishop.com/product_images/v/483/TOYNAMI_robotech_combo_set_roy_vf-1s__94764__07386.jpg', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (798, 'https://www.toynamishop.com/product_images/w/261/TOYNAMI_robotech_combo_set_ben_dixon_vf-1a__47055__68531.jpg', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (798, 'https://www.toynamishop.com/product_images/f/358/TOYNAMI_robotech_combo_set_rick_hunter_vf-1j__83002__49319.jpg', 'Robotech Veritech Fighter Transformable 1/100 scale + 4.25" Pilot Action Figures Set of 5', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (799, 'https://www.toynamishop.com/product_images/r/369/1-100-scale_super-veritech__miriya_battloid__23110__09885.jpg', 'Robotech 1/100 Miriya VF-1J Super Veritech', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (799, 'https://www.toynamishop.com/product_images/h/028/1-100-scale_super-veritech__miriya_guardian__65793__22541.jpg', 'Robotech 1/100 Miriya VF-1J Super Veritech', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (799, 'https://www.toynamishop.com/product_images/r/407/1-100-scale_super-veritech__miriya_fighter__48688__57931.jpg', 'Robotech 1/100 Miriya VF-1J Super Veritech', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (799, 'https://www.toynamishop.com/product_images/b/396/robotech_1-100_VF-1J_miriya_super_veritech_armor__97231__32621.jpg', 'Robotech 1/100 Miriya VF-1J Super Veritech', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (800, 'https://www.toynamishop.com/product_images/u/088/hello-sanrio_SDCC-2018-EXCLUSIVE_capsule-diorama_03__06740__73419.jpg', 'Hello Sanrio Exclusive Two-Pack Set - Hello Kitty & Pompompurin', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (800, 'https://www.toynamishop.com/product_images/y/563/hello-sanrio_SDCC-2018-EXCLUSIVE_capsule-diorama__92637__75284.jpg', 'Hello Sanrio Exclusive Two-Pack Set - Hello Kitty & Pompompurin', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (801, 'https://www.toynamishop.com/product_images/f/029/hello_sannrio_capsule_banner-1__50755__85473.jpg', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (801, 'https://www.toynamishop.com/product_images/t/207/hello-sanrio_my-melody_03__88549__48195.jpg', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (801, 'https://www.toynamishop.com/product_images/q/930/hello-sanrio_hello-kitty_01__40464__74646.jpg', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (801, 'https://www.toynamishop.com/product_images/z/941/hello-sanrio_chococat_01__20812__23843.jpg', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (801, 'https://www.toynamishop.com/product_images/b/500/hello-sanrio_keroppi_01__01411__68676.jpg', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (801, 'https://www.toynamishop.com/product_images/b/522/hello-sanrio_badtz-maru_01__54591__72781.jpg', 'Hello Sanrio 4" Capsule Diorama Assortment (5 Pack)', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (802, 'https://www.toynamishop.com/product_images/h/603/hypnotoad_package_3__49465__64905.jpg', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (802, 'https://www.toynamishop.com/product_images/c/477/futurama_hypnotoadvinyl_06__60252__53823.JPG', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (802, 'https://www.toynamishop.com/product_images/k/679/hypnotoad_tineez_figurine__16418__32100.jpg', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (802, 'https://www.toynamishop.com/product_images/r/543/futurama_hypnotoadvinyl_03__69238__87803.jpg', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (802, 'https://www.toynamishop.com/product_images/s/046/futurama_hypnotoadvinyl_box02__19098__82903.jpg', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (802, 'https://www.toynamishop.com/product_images/p/698/futurama_hypnotoadvinyl_01__58731__90915.jpg', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (802, 'https://www.toynamishop.com/product_images/q/858/futurama_hypnotoadvinyl_04__05615__54637.jpg', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (802, 'https://www.toynamishop.com/product_images/q/093/futurama_hypnotoadvinyl_02__88146__08586.jpg', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (802, 'https://www.toynamishop.com/product_images/j/208/futurama_hypnotoadvinyl_05__06949__15841.jpg', 'SDCC 2013 Exclusive: Futurama Hypnotoad Vinyl Figure', false, 10);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (803, 'https://www.toynamishop.com/product_images/j/969/20190331_170614__29186__22524.jpg', 'Acid Rain EOS Raider', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (803, 'https://www.toynamishop.com/product_images/s/070/20190331_152637__46499__54775.jpg', 'Acid Rain EOS Raider', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (803, 'https://www.toynamishop.com/product_images/k/692/20190331_153533__87007__65772.jpg', 'Acid Rain EOS Raider', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (803, 'https://www.toynamishop.com/product_images/p/428/20190331_154630__05728__29759.jpg', 'Acid Rain EOS Raider', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (803, 'https://www.toynamishop.com/product_images/r/455/20190331_204323__30008__03107.jpg', 'Acid Rain EOS Raider', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (803, 'https://www.toynamishop.com/product_images/a/581/20190331_155240__17240__59596.jpg', 'Acid Rain EOS Raider', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (804, 'https://www.toynamishop.com/product_images/t/883/naruto_shippuden_6inch_pvc_gaara_01__57149__50030.jpg', 'Deluxe 6" PVC Statue: Gaara', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (804, 'https://www.toynamishop.com/product_images/c/161/naruto_shippuden_6inch_pvc_gaara_02__75694__32378.jpg', 'Deluxe 6" PVC Statue: Gaara', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (804, 'https://www.toynamishop.com/product_images/q/728/naruto_shippuden_6inch_pvc_gaara_03__37130__55429.jpg', 'Deluxe 6" PVC Statue: Gaara', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (804, 'https://www.toynamishop.com/product_images/x/313/naruto_shippuden_6inch_pvc_gaara_04__81794__86099.jpg', 'Deluxe 6" PVC Statue: Gaara', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (804, 'https://www.toynamishop.com/product_images/o/603/naruto_shippuden_6inch_pvc_gaara_06__08888__60270.jpg', 'Deluxe 6" PVC Statue: Gaara', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (805, 'https://www.toynamishop.com/product_images/u/675/hello_kitty_street_fighter_keychains_mobile_charm3__80718__16445.jpg', 'Sanrio x Street Fighter Key Chains Assortment', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (806, 'https://www.toynamishop.com/product_images/o/179/IMG_8930_legal__60511__95815.jpg', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette & Jim Figure COMBO', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (806, 'https://www.toynamishop.com/product_images/w/218/troll_hunter_bular03__73931__72440.jpg', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette & Jim Figure COMBO', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (806, 'https://www.toynamishop.com/product_images/p/730/troll_hunter_signature__78436__30320.jpg', 'Comic Con 2016 Exclusive: Trollhunters Bular Maquette & Jim Figure COMBO', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (807, 'https://www.toynamishop.com/product_images/i/275/FAV-A121_IG-02__01763__53769.jpg', 'Spencer FAV-A121', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (807, 'https://www.toynamishop.com/product_images/e/401/FAV-A121_IG-08__86010__59663.jpg', 'Spencer FAV-A121', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (807, 'https://www.toynamishop.com/product_images/b/928/FAV-A121_IG-03__88334__35206.jpg', 'Spencer FAV-A121', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (807, 'https://www.toynamishop.com/product_images/y/904/FAV-A121_IG-05__18684__59190.jpg', 'Spencer FAV-A121', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (808, 'https://www.toynamishop.com/product_images/p/466/angel-birds_VF-1A__35293__32151.jpg', 'Robotech Angel Bird Exclusive', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (808, 'https://www.toynamishop.com/product_images/z/532/angel-birds_VF-1A_2__36979__50361.jpg', 'Robotech Angel Bird Exclusive', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (809, 'https://www.toynamishop.com/product_images/e/832/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_08__69970__26691.jpg', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (809, 'https://www.toynamishop.com/product_images/a/892/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_02__92284__33381.jpg', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (809, 'https://www.toynamishop.com/product_images/z/240/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_05__51212__62181.jpg', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (809, 'https://www.toynamishop.com/product_images/k/141/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_01__59895__06588.jpg', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (809, 'https://www.toynamishop.com/product_images/j/271/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_06__31507__07698.jpg', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (809, 'https://www.toynamishop.com/product_images/v/050/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_03__57950__25705.jpg', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (809, 'https://www.toynamishop.com/product_images/t/775/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_04__20917__80875.jpg', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (809, 'https://www.toynamishop.com/product_images/l/044/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_07__45275__81576.jpg', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (809, 'https://www.toynamishop.com/product_images/z/216/Robotech_Battlecry_Rick-Hunter_VF-1J_Combo-exlusive_contents_09__93034__87721.jpg', 'Rick Hunter Transformable 1/100 VF-1J Battle Cry w/ Figure 2021 CONVENTION EXCLUSIVE', false, 10);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (810, 'https://www.toynamishop.com/product_images/b/160/fav-12c__18053__70954.jpg', 'Acid Rain Sand Antbike AB7s', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (810, 'https://www.toynamishop.com/product_images/t/523/fav-12b__05519__69111.jpg', 'Acid Rain Sand Antbike AB7s', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (810, 'https://www.toynamishop.com/product_images/j/137/fav-12d__52017__33367.jpg', 'Acid Rain Sand Antbike AB7s', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (811, 'https://www.toynamishop.com/product_images/q/292/hello_kitty_street_fighter_keychains_mobile_phone_plug__30542__44892.jpg', 'Sanrio x Street Fighter Mobile Plugs Assortment', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (812, 'https://www.toynamishop.com/product_images/c/706/ACID-RAIN_LAUREL_GHOST_7_01__66749__87833.jpg', 'Acid Rain Laurel Ghost 7', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (812, 'https://www.toynamishop.com/product_images/m/923/ACID-RAIN_LAUREL_GHOST_7_03__74108__50202.jpg', 'Acid Rain Laurel Ghost 7', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (812, 'https://www.toynamishop.com/product_images/l/032/ACID-RAIN_LAUREL_GHOST_7_02__81414__31495.jpg', 'Acid Rain Laurel Ghost 7', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (813, 'https://www.toynamishop.com/product_images/g/927/B00YHYFSTS.MAIN.jpg__54744__38830.jpg', 'Robotech 30th Anniversary 1/100 Roy Fokker GBP-1 Heavy Armor Veritech', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (813, 'https://www.toynamishop.com/product_images/l/129/B00YHYFSTS.PT01.jpg__72757__68149.jpg', 'Robotech 30th Anniversary 1/100 Roy Fokker GBP-1 Heavy Armor Veritech', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (813, 'https://www.toynamishop.com/product_images/t/885/B00YHYFSTS.PT02.jpg__90747__70838.jpg', 'Robotech 30th Anniversary 1/100 Roy Fokker GBP-1 Heavy Armor Veritech', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (813, 'https://www.toynamishop.com/product_images/q/480/B00YHYFSTS.PT03.jpg__47098__31448.jpg', 'Robotech 30th Anniversary 1/100 Roy Fokker GBP-1 Heavy Armor Veritech', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (814, 'https://www.toynamishop.com/product_images/p/114/KAKASHI__14350__04819.jpg', 'Deluxe 6" PVC Statue: Kakashi', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (814, 'https://www.toynamishop.com/product_images/k/583/naruto_pvcfigures_kakashi_02__32582__82376.jpg', 'Deluxe 6" PVC Statue: Kakashi', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (814, 'https://www.toynamishop.com/product_images/b/437/naruto_pvcfigures_kakashi_01__34967__69335.jpg', 'Deluxe 6" PVC Statue: Kakashi', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (814, 'https://www.toynamishop.com/product_images/k/453/naruto_kakashi_pvc_figure_box_front__86538__74682.jpg', 'Deluxe 6" PVC Statue: Kakashi', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (814, 'https://www.toynamishop.com/product_images/h/088/naruto_kakashi_pvc_figure_box_back__45015__31122.jpg', 'Deluxe 6" PVC Statue: Kakashi', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (815, 'https://www.toynamishop.com/product_images/l/888/2018-CONVENTION-EXCLUSIVE_POCHACCO-CHOCOCAT_02__29895__85966.jpg', 'Hello Sanrio Exclusive Two-Pack Set - Pochacco & Chococat', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (815, 'https://www.toynamishop.com/product_images/y/921/2018-CONVENTION-EXCLUSIVE_POCHACCO-CHOCOCAT__09470__75693.jpg', 'Hello Sanrio Exclusive Two-Pack Set - Pochacco & Chococat', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (816, 'https://www.toynamishop.com/product_images/h/589/street_fighte_x_sanrio_chun_li_coinbank01__04455__13811.jpg', 'Comic Con 2014 Exclusive: Hello Kitty Chun-Li Coin Bank', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (816, 'https://www.toynamishop.com/product_images/t/058/street_fighte_x_sanrio_chun_li_coinbank02__39369__67932.jpg', 'Comic Con 2014 Exclusive: Hello Kitty Chun-Li Coin Bank', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (816, 'https://www.toynamishop.com/product_images/k/741/street_fighte_x_sanrio_chun_li_coinbank03__79351__28038.jpg', 'Comic Con 2014 Exclusive: Hello Kitty Chun-Li Coin Bank', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (816, 'https://www.toynamishop.com/product_images/a/514/street_fighte_x_sanrio_chun_li_coinbank__11134__86158.jpg', 'Comic Con 2014 Exclusive: Hello Kitty Chun-Li Coin Bank', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (817, 'https://www.toynamishop.com/product_images/y/636/Tulipop-Deluxe-Plush_miss-maddy01__88662__68932.jpg', 'Miss Maddy Deluxe Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (817, 'https://www.toynamishop.com/product_images/i/924/04maddy_plush__67811__99279.jpg', 'Miss Maddy Deluxe Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (817, 'https://www.toynamishop.com/product_images/r/111/missmaddy_plush_deluxe-01__22216__14366.jpg', 'Miss Maddy Deluxe Plush', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (818, 'https://www.toynamishop.com/product_images/g/736/10986515_av2__19471__89139.jpg', 'Naruto Shippuden Mininja Blind Box Figure', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (818, 'https://www.toynamishop.com/product_images/w/736/mininja_series-1_blindbox_01__22150__28180.jpg', 'Naruto Shippuden Mininja Blind Box Figure', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (818, 'https://www.toynamishop.com/product_images/k/670/Naruto-shippuden_2017_mininja_Series-1-blindbox__46460__56665.jpg', 'Naruto Shippuden Mininja Blind Box Figure', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (819, 'https://www.toynamishop.com/product_images/m/248/voltron_30th_anniversary_edition_complete_set_02__29956__10937.jpg', '30th Anniversary Voltron Gift Set', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (819, 'https://www.toynamishop.com/product_images/w/197/voltron_30th_anniversary_edition_robot_form01__57485__85390.jpg', '30th Anniversary Voltron Gift Set', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (819, 'https://www.toynamishop.com/product_images/a/209/voltron_30th_anniversary_edition_complete_set__51501__03121.jpg', '30th Anniversary Voltron Gift Set', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (819, 'https://www.toynamishop.com/product_images/q/916/voltron_30th_anniversary_edition_light_up_weapons_platform__62905__52235.jpg', '30th Anniversary Voltron Gift Set', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (819, 'https://www.toynamishop.com/product_images/t/372/toynami_voltron_30th_anniversary_set_ad__68848__87318.jpg', '30th Anniversary Voltron Gift Set', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (820, 'https://www.toynamishop.com/product_images/y/936/Pose_Heat_Getter_1_Official_Photos_ENG_00-Kv01__17734__18660.jpg', 'METAL HEAT Series Getter 1 Action Figure', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (820, 'https://www.toynamishop.com/product_images/y/360/Pose_Heat_Getter_1_Official_Photos_ENG_03-xFull_Gear__45847__90126.jpg', 'METAL HEAT Series Getter 1 Action Figure', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (820, 'https://www.toynamishop.com/product_images/t/319/Pose_Heat_Getter_1_Official_Photos_ENG_00-Kv02__93523__43245.jpg', 'METAL HEAT Series Getter 1 Action Figure', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (821, 'https://www.toynamishop.com/product_images/o/852/naruto_epic_scale_hashirama_01__54325__29207.jpg', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (821, 'https://www.toynamishop.com/product_images/e/191/naruto_epic_scale_hashirama_11__79187__87245.jpg', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (821, 'https://www.toynamishop.com/product_images/c/382/naruto_epic_scale_hashirama_14__06609__10836.jpg', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (821, 'https://www.toynamishop.com/product_images/u/961/naruto_epic_scale_hashirama_12__40940__27809.jpg', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (821, 'https://www.toynamishop.com/product_images/t/271/naruto_epic_scale_hashirama_13__47897__53512.jpg', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (821, 'https://www.toynamishop.com/product_images/q/058/naruto_epic_scale_hashirama_08__03245__67819.jpg', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (821, 'https://www.toynamishop.com/product_images/g/353/naruto_epic_scale_hashirama_09__35595__91177.jpg', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (821, 'https://www.toynamishop.com/product_images/r/861/naruto_epic_scale_hashirama_04__92777__25115.jpg', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (821, 'https://www.toynamishop.com/product_images/k/547/naruto_epic_scale_hashirama_10__68925__31813.jpg', 'Hashirama Senju "God of Shinobi" Epic Scale Statue', false, 10);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (822, 'https://www.toynamishop.com/product_images/x/723/FAV-SP01--SDCC__43559__04477.jpg', 'Acid Rain Green Commander 2019 SDCC Exclusive', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (822, 'https://www.toynamishop.com/product_images/r/027/FAV-SP01--02__24752__82117.jpg', 'Acid Rain Green Commander 2019 SDCC Exclusive', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (822, 'https://www.toynamishop.com/product_images/e/578/FAV-SP01-__34754__68510.jpg', 'Acid Rain Green Commander 2019 SDCC Exclusive', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (823, 'https://www.toynamishop.com/product_images/x/440/little-nessies_final__55610__69608.jpg', 'Little Nessies Blind Box Figurine', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (824, 'https://www.toynamishop.com/product_images/z/807/Space_scientist_White_background__41501__74290.jpg', 'Acid Rain Space Scientist', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (824, 'https://www.toynamishop.com/product_images/t/914/IMG_0004__32540__60356.JPG', 'Acid Rain Space Scientist', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (824, 'https://www.toynamishop.com/product_images/o/297/IMG_0005__70525__52841.JPG', 'Acid Rain Space Scientist', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (824, 'https://www.toynamishop.com/product_images/q/858/IMG_0008__00612__27324.JPG', 'Acid Rain Space Scientist', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (824, 'https://www.toynamishop.com/product_images/o/777/IMG_0014__03232__92922.JPG', 'Acid Rain Space Scientist', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (825, 'https://www.toynamishop.com/product_images/z/571/mega-man_keychain__92763__63447.jpg', 'Mega Man: Fully Charged Clip-On Exclusive', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (826, 'https://www.toynamishop.com/product_images/i/025/b82f0e4e-34ac-fa78-ee34-83ee888f05ea__99147__50745.jpg', 'Naruto Shippuden Mininja Figurines - Series 2', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (826, 'https://www.toynamishop.com/product_images/l/749/wzSGpX9Y__54737__94489.png', 'Naruto Shippuden Mininja Figurines - Series 2', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (826, 'https://www.toynamishop.com/product_images/a/532/KVyPp83k__25710__30208.png', 'Naruto Shippuden Mininja Figurines - Series 2', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (826, 'https://www.toynamishop.com/product_images/v/286/Hc6kvfGE__03250__17780.png', 'Naruto Shippuden Mininja Figurines - Series 2', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (826, 'https://www.toynamishop.com/product_images/i/177/dlOnJI8k__66429__72853.png', 'Naruto Shippuden Mininja Figurines - Series 2', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (826, 'https://www.toynamishop.com/product_images/s/715/IwJDQZPg__81587__41129.png', 'Naruto Shippuden Mininja Figurines - Series 2', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (826, 'https://www.toynamishop.com/product_images/c/549/6AZaiFt4__41113__12886.png', 'Naruto Shippuden Mininja Figurines - Series 2', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (826, 'https://www.toynamishop.com/product_images/h/733/PUMOB8x0__89811__10556.png', 'Naruto Shippuden Mininja Figurines - Series 2', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (826, 'https://www.toynamishop.com/product_images/n/643/CeBBOkBQ__69811__20013.png', 'Naruto Shippuden Mininja Figurines - Series 2', false, 10);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (826, 'https://www.toynamishop.com/product_images/i/187/kh6_DI1s__61928__64835.png', 'Naruto Shippuden Mininja Figurines - Series 2', false, 11);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (826, 'https://www.toynamishop.com/product_images/z/877/CeQ9BHfM__93933__99118.png', 'Naruto Shippuden Mininja Figurines - Series 2', false, 12);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (826, 'https://www.toynamishop.com/product_images/t/704/OSzN7gB8__12029__73145.png', 'Naruto Shippuden Mininja Figurines - Series 2', false, 13);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (826, 'https://www.toynamishop.com/product_images/z/703/uh5raaKQ__96158__45889.png', 'Naruto Shippuden Mininja Figurines - Series 2', false, 14);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (827, 'https://www.toynamishop.com/product_images/k/778/FAV-A-04_PRODUCT_SHOT_5__69713__93924.jpg', 'Acid Rain Sand Bunker Set', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (827, 'https://www.toynamishop.com/product_images/c/182/FAV-A-04_PRODUCT_SHOT_1_-_Copy__96294__14079.jpg', 'Acid Rain Sand Bunker Set', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (827, 'https://www.toynamishop.com/product_images/s/860/FAV-A-04_PRODUCT_SHOT_3__25463__87613.jpg', 'Acid Rain Sand Bunker Set', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (828, 'https://www.toynamishop.com/product_images/f/078/B00YHYI8EU.MAIN.jpg__61335__36068.jpg', 'Robotech 30th Anniversary 1/100 Rick Hunter GBP-1J Heavy Armor Veritech', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (828, 'https://www.toynamishop.com/product_images/p/579/B00YHYI8EU.PT01.jpg__01566__33278.jpg', 'Robotech 30th Anniversary 1/100 Rick Hunter GBP-1J Heavy Armor Veritech', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (828, 'https://www.toynamishop.com/product_images/h/932/B00YHYI8EU.PT02.jpg__88743__82592.jpg', 'Robotech 30th Anniversary 1/100 Rick Hunter GBP-1J Heavy Armor Veritech', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (828, 'https://www.toynamishop.com/product_images/k/851/B00YHYI8EU.PT03.jpg__55440__13710.jpg', 'Robotech 30th Anniversary 1/100 Rick Hunter GBP-1J Heavy Armor Veritech', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (829, 'https://www.toynamishop.com/product_images/c/292/macross_calibre_wings_f14_max04__15969__34385.jpg', 'Macross Calibre Wings 1:72 F-14 UN Spacy MAX TYPE', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (829, 'https://www.toynamishop.com/product_images/x/092/macross_calibre_wings_f14_max01__77505__09709.jpg', 'Macross Calibre Wings 1:72 F-14 UN Spacy MAX TYPE', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (829, 'https://www.toynamishop.com/product_images/j/267/macross_calibre_wings_f14_max02__98001__08109.jpg', 'Macross Calibre Wings 1:72 F-14 UN Spacy MAX TYPE', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (829, 'https://www.toynamishop.com/product_images/q/884/macross_calibre_wings_f14_max03__11926__75561.jpg', 'Macross Calibre Wings 1:72 F-14 UN Spacy MAX TYPE', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (829, 'https://www.toynamishop.com/product_images/n/543/macross_calibre_wings_f14_max05__58609__20141.jpg', 'Macross Calibre Wings 1:72 F-14 UN Spacy MAX TYPE', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (830, 'https://www.toynamishop.com/product_images/v/565/hamz_unipo_plush_sdcc2013_01__96943__77641.jpg', 'UNKL Hamz Critter Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (830, 'https://www.toynamishop.com/product_images/q/594/hamz_unipo_plush_sdcc2013__29035__70155.jpg', 'UNKL Hamz Critter Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (830, 'https://www.toynamishop.com/product_images/u/308/hamz_hazmapo_plush_02__15300__02056.jpg', 'UNKL Hamz Critter Plush', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (830, 'https://www.toynamishop.com/product_images/d/382/hamz_hazmapo_plush_01__11115__30344.jpg', 'UNKL Hamz Critter Plush', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (830, 'https://www.toynamishop.com/product_images/x/973/hamz_hazmapo_plush_03__65952__29567.jpg', 'UNKL Hamz Critter Plush', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (831, 'https://www.toynamishop.com/product_images/d/482/skelanimals_plush_cute_as_hell_diego4__57580__78243.jpg', 'Comic Con 2014 Exclusive: Skelanimals "Cute-As-Hell" Diego Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (831, 'https://www.toynamishop.com/product_images/y/509/skelanimals_plush_cute_as_hell_diego3__57536__51966.jpg', 'Comic Con 2014 Exclusive: Skelanimals "Cute-As-Hell" Diego Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (831, 'https://www.toynamishop.com/product_images/w/015/skelanimals_plush_cute_as_hell_diego2__38786__99070.jpg', 'Comic Con 2014 Exclusive: Skelanimals "Cute-As-Hell" Diego Plush', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (832, 'https://www.toynamishop.com/product_images/p/228/naruto-shippuden_sage-mode-Naruto__75432__39915.jpg', 'Comic Con 2017 Exclusive: Sage Mode Naruto Figurine', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (833, 'https://www.toynamishop.com/product_images/t/101/IMG_0019__09603__95774.JPG', 'Acid Rain Laurel Airbourne', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (833, 'https://www.toynamishop.com/product_images/x/108/IMG_0007__62338__12625.JPG', 'Acid Rain Laurel Airbourne', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (833, 'https://www.toynamishop.com/product_images/v/345/IMG_0008__34363__65297.JPG', 'Acid Rain Laurel Airbourne', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (833, 'https://www.toynamishop.com/product_images/t/801/IMG_0015__56161__37715.JPG', 'Acid Rain Laurel Airbourne', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (833, 'https://www.toynamishop.com/product_images/m/811/IMG_0017__94059__73648.JPG', 'Acid Rain Laurel Airbourne', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (833, 'https://www.toynamishop.com/product_images/d/657/IMG_0018_copy__00053__66874.jpg', 'Acid Rain Laurel Airbourne', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (834, 'https://www.toynamishop.com/product_images/w/081/Tulipop-Deluxe-Plush_Gloomy01__83391__90650.jpg', 'Gloomy Deluxe Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (834, 'https://www.toynamishop.com/product_images/c/796/04gloomy_plush__67620__60762.jpg', 'Gloomy Deluxe Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (834, 'https://www.toynamishop.com/product_images/u/855/gloomy_plush_deluxe-04__46303__51148.jpg', 'Gloomy Deluxe Plush', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (835, 'https://www.toynamishop.com/product_images/d/362/little_nimbus_special_edition__68571__50326.jpg', 'Little Nimbus Special Edition Figurines Set - 2021 CONVENTION EXCLUSIVE', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (835, 'https://www.toynamishop.com/product_images/z/946/little_nimbus_special_edition__01__48806__42638.jpg', 'Little Nimbus Special Edition Figurines Set - 2021 CONVENTION EXCLUSIVE', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (835, 'https://www.toynamishop.com/product_images/d/037/little_nimbus_special_edition__03__00725__44417.jpg', 'Little Nimbus Special Edition Figurines Set - 2021 CONVENTION EXCLUSIVE', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (835, 'https://www.toynamishop.com/product_images/n/276/little_nimbus_special_edition__02__17206__43600.jpg', 'Little Nimbus Special Edition Figurines Set - 2021 CONVENTION EXCLUSIVE', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (835, 'https://www.toynamishop.com/product_images/d/844/little_nimbus_special_edition__04__43573__38885.jpg', 'Little Nimbus Special Edition Figurines Set - 2021 CONVENTION EXCLUSIVE', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (836, 'https://www.toynamishop.com/product_images/t/194/voltron_30th_anniversary_jumbo_lion_robot_01__75868__06086.jpg', '30th Anniversary Voltron Jumbo Lion Force Vinyl', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (836, 'https://www.toynamishop.com/product_images/n/563/voltron_30th_anniversary_jumbo_lion_robot_04__99745__26135.jpg', '30th Anniversary Voltron Jumbo Lion Force Vinyl', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (836, 'https://www.toynamishop.com/product_images/f/576/voltron_30th_anniversary_jumbo_lion_robot_03__64871__19481.jpg', '30th Anniversary Voltron Jumbo Lion Force Vinyl', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (836, 'https://www.toynamishop.com/product_images/e/403/voltron_30th_anniversary_jumbo_lion_robot_02__80493__20291.jpg', '30th Anniversary Voltron Jumbo Lion Force Vinyl', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (836, 'https://www.toynamishop.com/product_images/v/904/voltron_30th_anniversary_jumbo_lion_robot_newsletter__98043__26756.jpg', '30th Anniversary Voltron Jumbo Lion Force Vinyl', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (837, 'https://www.toynamishop.com/product_images/c/315/Cover__54626__04956.jpg', 'Acid Rain B2Five Agurts Beaver WF4w', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (837, 'https://www.toynamishop.com/product_images/k/886/V_form2__84023__61844.jpg', 'Acid Rain B2Five Agurts Beaver WF4w', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (837, 'https://www.toynamishop.com/product_images/i/779/worker__89808__26380.jpg', 'Acid Rain B2Five Agurts Beaver WF4w', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (837, 'https://www.toynamishop.com/product_images/k/323/combine2__56774__60145.jpg', 'Acid Rain B2Five Agurts Beaver WF4w', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (837, 'https://www.toynamishop.com/product_images/v/063/all_parts__26426__68328.jpg', 'Acid Rain B2Five Agurts Beaver WF4w', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (837, 'https://www.toynamishop.com/product_images/e/272/b2five_agurts_beaver_wf4w_11__66045__46429.jpg', 'Acid Rain B2Five Agurts Beaver WF4w', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (838, 'https://www.toynamishop.com/product_images/p/859/FAV-A-05_PRODUCT_SHOT_5__32479__41935.jpg', 'Acid Rain Sand Tactical Engineer', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (838, 'https://www.toynamishop.com/product_images/m/450/FAV-A-05_PRODUCT_SHOT_2__91159__90377.jpg', 'Acid Rain Sand Tactical Engineer', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (838, 'https://www.toynamishop.com/product_images/g/895/FAV-A-05_PRODUCT_SHOT_4__26104__09240.jpg', 'Acid Rain Sand Tactical Engineer', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (839, 'https://www.toynamishop.com/product_images/e/797/ICHIGO__70849__42729.jpg', 'Deluxe 6" PVC Statue: Ichigo', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (839, 'https://www.toynamishop.com/product_images/z/839/bleach_6inch_ichigo_02__44008__32631.jpg', 'Deluxe 6" PVC Statue: Ichigo', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (839, 'https://www.toynamishop.com/product_images/l/114/bleach_6inch_ichigo_01__72894__58000.jpg', 'Deluxe 6" PVC Statue: Ichigo', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (839, 'https://www.toynamishop.com/product_images/b/884/bleach_ichigo_action_figure_box_front__22046__04588.jpg', 'Deluxe 6" PVC Statue: Ichigo', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (839, 'https://www.toynamishop.com/product_images/h/567/bleach_ichigo_action_figure_box_back__12185__35722.jpg', 'Deluxe 6" PVC Statue: Ichigo', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (840, 'https://www.toynamishop.com/product_images/d/710/Robotech_YR-052F_Cyclone_10__09584__52495.jpg', 'PRE-ORDER DEPOSIT: The New Generation YR-052F Transformable Cyclone', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (840, 'https://www.toynamishop.com/product_images/x/336/Robotech_YR-052F_Cyclone_02__79872__33480.jpg', 'PRE-ORDER DEPOSIT: The New Generation YR-052F Transformable Cyclone', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (840, 'https://www.toynamishop.com/product_images/x/195/Robotech_YR-052F_Cyclone_01__73278__12981.jpg', 'PRE-ORDER DEPOSIT: The New Generation YR-052F Transformable Cyclone', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (840, 'https://www.toynamishop.com/product_images/t/115/Robotech_YR-052F_Cyclone_09__77256__29451.jpg', 'PRE-ORDER DEPOSIT: The New Generation YR-052F Transformable Cyclone', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (840, 'https://www.toynamishop.com/product_images/m/737/Robotech_YR-052F_Cyclone_08__28144__49287.jpg', 'PRE-ORDER DEPOSIT: The New Generation YR-052F Transformable Cyclone', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (841, 'https://www.toynamishop.com/product_images/x/882/BW0_02_01__19488__08749.jpg', 'Comic Con 2017 Exclusive: B2Five Stealth MK1e set', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (841, 'https://www.toynamishop.com/product_images/c/968/BW0_02_02__37745__74769.JPG', 'Comic Con 2017 Exclusive: B2Five Stealth MK1e set', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (841, 'https://www.toynamishop.com/product_images/j/186/BW0_02_03__85274__32716.JPG', 'Comic Con 2017 Exclusive: B2Five Stealth MK1e set', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (842, 'https://www.toynamishop.com/product_images/v/714/IMG_NEW__91314__96118.jpg', 'Acid Rain Forseti Viking Shield', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (842, 'https://www.toynamishop.com/product_images/b/569/IMG_0011__94154__95347.JPG', 'Acid Rain Forseti Viking Shield', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (842, 'https://www.toynamishop.com/product_images/d/255/IMG_0013__38477__73443.JPG', 'Acid Rain Forseti Viking Shield', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (842, 'https://www.toynamishop.com/product_images/j/643/IMG_0019__58020__64932.JPG', 'Acid Rain Forseti Viking Shield', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (842, 'https://www.toynamishop.com/product_images/e/778/IMG_0018__66215__35606.JPG', 'Acid Rain Forseti Viking Shield', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (842, 'https://www.toynamishop.com/product_images/u/091/IMG_0017__03544__75812.JPG', 'Acid Rain Forseti Viking Shield', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (843, 'https://www.toynamishop.com/product_images/e/401/B00YHYX2SW.MAIN.jpg__41141__39517.jpg', 'Robotech 30th Anniversary 1/100 Max Sterling GBP-1J Heavy Armor Veritech', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (843, 'https://www.toynamishop.com/product_images/k/947/B00YHYX2SW.PT03.jpg__53566__10463.jpg', 'Robotech 30th Anniversary 1/100 Max Sterling GBP-1J Heavy Armor Veritech', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (843, 'https://www.toynamishop.com/product_images/r/029/B00YHYX2SW.PT01.jpg__50919__49533.jpg', 'Robotech 30th Anniversary 1/100 Max Sterling GBP-1J Heavy Armor Veritech', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (843, 'https://www.toynamishop.com/product_images/o/097/B00YHYX2SW.PT02.jpg__00440__94540.jpg', 'Robotech 30th Anniversary 1/100 Max Sterling GBP-1J Heavy Armor Veritech', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (844, 'https://www.toynamishop.com/product_images/s/386/robotech_SD_figurines_sdcc01__97150__87027.jpg', 'Comic Con 2014 Exclusive: Robotech Chibi Skull Leader VF-1S in Military Gray', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (844, 'https://www.toynamishop.com/product_images/j/051/robotech_SD_figurines_sdcc03__27009__87083.jpg', 'Comic Con 2014 Exclusive: Robotech Chibi Skull Leader VF-1S in Military Gray', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (844, 'https://www.toynamishop.com/product_images/g/914/robotech_SD_figurines_sdcc02__26698__38021.jpg', 'Comic Con 2014 Exclusive: Robotech Chibi Skull Leader VF-1S in Military Gray', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (845, 'https://www.toynamishop.com/product_images/i/447/Tulipop-Deluxe-Plush_bubble01__99243__83537.jpg', 'Bubble Deluxe Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (845, 'https://www.toynamishop.com/product_images/y/546/04bubble__88076__18338.jpg', 'Bubble Deluxe Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (845, 'https://www.toynamishop.com/product_images/e/659/bubble_plush_deluxe-03__20587__56067.jpg', 'Bubble Deluxe Plush', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (846, 'https://www.toynamishop.com/product_images/i/869/macross_calibre_wings_f14_miriya04__28900__37270.jpg', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (846, 'https://www.toynamishop.com/product_images/q/562/macross_calibre_wings_f14_miriya01__34470__58893.jpg', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (846, 'https://www.toynamishop.com/product_images/f/785/macross_calibre_wings_f14_miriya02__07647__83522.jpg', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (846, 'https://www.toynamishop.com/product_images/v/409/macross_calibre_wings_f14_miriya03__76232__45883.jpg', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (846, 'https://www.toynamishop.com/product_images/c/964/macross_calibre_wings_f14_miriya05__70727__83045.jpg', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (846, 'https://www.toynamishop.com/product_images/x/813/macross_calibre_wings_miriya_sterling_f14_banner__36328__53068.jpg', 'Macross Calibre Wings 1:72 F-14 UN Spacy MILIA TYPE', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (847, 'https://www.toynamishop.com/product_images/j/695/FAV-A-06_PRODUCT_SHOT_5__69952__20434.jpg', 'Acid Rain Sand Armored Trailer Set', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (847, 'https://www.toynamishop.com/product_images/u/241/FAV-A-06_PRODUCT_SHOT_2__67434__77878.jpg', 'Acid Rain Sand Armored Trailer Set', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (847, 'https://www.toynamishop.com/product_images/d/855/FAV-A-06_PRODUCT_SHOT_3__30697__15186.jpg', 'Acid Rain Sand Armored Trailer Set', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (848, 'https://www.toynamishop.com/product_images/h/927/alexpardee_img_5918__04434__18516.jpg', 'SDCC 2011 Exclusive: Canman Alex Pardee', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (848, 'https://www.toynamishop.com/product_images/t/161/alexpardee_img_5928__67127__59488.jpg', 'SDCC 2011 Exclusive: Canman Alex Pardee', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (848, 'https://www.toynamishop.com/product_images/c/750/alexpardee_img_5930__48091__60165.jpg', 'SDCC 2011 Exclusive: Canman Alex Pardee', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (848, 'https://www.toynamishop.com/product_images/o/530/alexpardee_img_5929__28707__83064.jpg', 'SDCC 2011 Exclusive: Canman Alex Pardee', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (848, 'https://www.toynamishop.com/product_images/r/975/alexpardee_img_5920__78335__57617.jpg', 'SDCC 2011 Exclusive: Canman Alex Pardee', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (848, 'https://www.toynamishop.com/product_images/p/027/alexpardee_img_5922__68964__32238.jpg', 'SDCC 2011 Exclusive: Canman Alex Pardee', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (848, 'https://www.toynamishop.com/product_images/y/018/alexpardee_img_5924__43264__81418.jpg', 'SDCC 2011 Exclusive: Canman Alex Pardee', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (849, 'https://www.toynamishop.com/product_images/h/830/naruto_six_paths_bust_01__38330__88337.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (849, 'https://www.toynamishop.com/product_images/p/333/naruto_six_paths_bust_07__88537__41097.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (849, 'https://www.toynamishop.com/product_images/v/367/naruto_six_paths_bust_09__39921__10083.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (849, 'https://www.toynamishop.com/product_images/m/054/naruto_six_paths_bust_05__57705__42292.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (849, 'https://www.toynamishop.com/product_images/z/866/naruto_six_paths_bust_08__67197__14567.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (849, 'https://www.toynamishop.com/product_images/p/913/naruto_six_paths_bust_04__40476__30986.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (849, 'https://www.toynamishop.com/product_images/s/967/naruto_six_paths_bust_02__20861__17293.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (849, 'https://www.toynamishop.com/product_images/e/873/naruto_six_paths_bust_06__41972__04919.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (849, 'https://www.toynamishop.com/product_images/d/532/naruto_six_paths_bust_03__48478__99582.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', false, 10);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (849, 'https://www.toynamishop.com/product_images/h/563/naruto_six_paths_bust_02_pq__70396__32208.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (DEPOSIT ONLY)', false, 11);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (850, 'https://www.toynamishop.com/product_images/o/445/FAV-SP18-order-FN_01__35350__11498.jpg', 'Acid Rain Valdo - 2021 CONVENTION EXCLUSIVE', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (850, 'https://www.toynamishop.com/product_images/k/106/FAV-SP18-order-FN_02__00672__80995.jpg', 'Acid Rain Valdo - 2021 CONVENTION EXCLUSIVE', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (850, 'https://www.toynamishop.com/product_images/j/484/FAV-SP18-order-FN_03__28017__77462.jpg', 'Acid Rain Valdo - 2021 CONVENTION EXCLUSIVE', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (851, 'https://www.toynamishop.com/product_images/r/012/White_background__07788__85581.JPG', 'Acid Rain Flame Trooper', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (851, 'https://www.toynamishop.com/product_images/n/907/pose_01__48192__56152.JPG', 'Acid Rain Flame Trooper', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (851, 'https://www.toynamishop.com/product_images/z/430/pose_02__33883__99467.JPG', 'Acid Rain Flame Trooper', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (851, 'https://www.toynamishop.com/product_images/o/682/pose_06__47761__64186.JPG', 'Acid Rain Flame Trooper', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (851, 'https://www.toynamishop.com/product_images/e/013/pose_04__13347__35052.JPG', 'Acid Rain Flame Trooper', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (852, 'https://www.toynamishop.com/product_images/j/177/Amphista2__40593__57423.jpg', 'Acid Rain Amphista', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (852, 'https://www.toynamishop.com/product_images/k/991/IMG_0009__80851__11594.JPG', 'Acid Rain Amphista', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (852, 'https://www.toynamishop.com/product_images/m/353/IMG_0011__02847__43652.JPG', 'Acid Rain Amphista', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (852, 'https://www.toynamishop.com/product_images/l/005/IMG_0020__87191__63843.JPG', 'Acid Rain Amphista', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (852, 'https://www.toynamishop.com/product_images/m/309/IMG_0021__14591__49752.JPG', 'Acid Rain Amphista', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (852, 'https://www.toynamishop.com/product_images/t/200/IMG_0024__54010__61198.JPG', 'Acid Rain Amphista', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (852, 'https://www.toynamishop.com/product_images/h/923/IMG_0025__02915__35081.JPG', 'Acid Rain Amphista', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (853, 'https://www.toynamishop.com/product_images/x/105/shogun_warriors_godzilla_03__34714__78586.jpg', 'Shogun Warriors 1964 Godzilla Jumbo', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (853, 'https://www.toynamishop.com/product_images/e/596/shogun_warriors_godzilla_06__93652__52113.jpg', 'Shogun Warriors 1964 Godzilla Jumbo', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (853, 'https://www.toynamishop.com/product_images/d/985/shogun_warriors_godzilla_07__23098__38106.jpg', 'Shogun Warriors 1964 Godzilla Jumbo', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (853, 'https://www.toynamishop.com/product_images/g/984/shogun_warriors_godzilla_04__91127__13031.jpg', 'Shogun Warriors 1964 Godzilla Jumbo', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (853, 'https://www.toynamishop.com/product_images/v/515/shogun_warriors_godzilla_05__12572__47142.jpg', 'Shogun Warriors 1964 Godzilla Jumbo', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (853, 'https://www.toynamishop.com/product_images/q/350/shogun_warrior_godzilla_02__28585__21902.jpg', 'Shogun Warriors 1964 Godzilla Jumbo', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (854, 'https://www.toynamishop.com/product_images/j/449/voltron_40th_anniversary_18__28411__61290.jpg', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collector''''s Set', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (854, 'https://www.toynamishop.com/product_images/t/687/voltron_40th_anniversary_19__46340__10159.jpg', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collector''''s Set', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (854, 'https://www.toynamishop.com/product_images/b/125/voltron_40th_anniversary_20__61467__10035.jpg', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collector''''s Set', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (854, 'https://www.toynamishop.com/product_images/o/186/voltron_40th_anniversary_07__22559__61096.jpg', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collector''''s Set', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (854, 'https://www.toynamishop.com/product_images/r/547/voltron_40th_anniversary_06__34167__40720.jpg', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collector''''s Set', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (854, 'https://www.toynamishop.com/product_images/r/426/voltron_40th_anniversary_22__50828__19371.jpg', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collector''''s Set', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (854, 'https://www.toynamishop.com/product_images/g/837/voltron_40th_anniversary_23__48148__05893.jpg', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collector''''s Set', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (854, 'https://www.toynamishop.com/product_images/n/339/voltron_40th_anniversary_21__48962__76487.jpg', 'PRE-ORDER DEPOSIT: Voltron 40th Anniversary Collector''''s Set', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (855, 'https://www.toynamishop.com/product_images/x/464/Tulipop-Deluxe-Plush_fred01__69550__91372.jpg', 'Fred Deluxe Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (855, 'https://www.toynamishop.com/product_images/e/455/04fred__18686__68038.jpg', 'Fred Deluxe Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (855, 'https://www.toynamishop.com/product_images/u/768/fred_plush_deluxe-02__19285__26475.jpg', 'Fred Deluxe Plush', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (856, 'https://www.toynamishop.com/product_images/v/342/unkl_DC_COMICS_batman_10inch01__84989__91006.jpg', 'Comic Con 2014 Exclusive: UNKL 10" UniPo Batman', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (856, 'https://www.toynamishop.com/product_images/l/396/unkl_DC_COMICS_batman_10inch02__27413__94760.jpg', 'Comic Con 2014 Exclusive: UNKL 10" UniPo Batman', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (856, 'https://www.toynamishop.com/product_images/x/827/unkl_DC_COMICS_batman_10inch03__83449__14877.jpg', 'Comic Con 2014 Exclusive: UNKL 10" UniPo Batman', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (856, 'https://www.toynamishop.com/product_images/n/493/unkl_DC_COMICS_batman_10inch__13437__44995.jpg', 'Comic Con 2014 Exclusive: UNKL 10" UniPo Batman', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (857, 'https://www.toynamishop.com/product_images/i/157/RUKIA__21058__48379.jpg', 'Deluxe 6" PVC Statue: Rukia', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (857, 'https://www.toynamishop.com/product_images/n/590/bleach_6inch_rukia_03__73276__50334.jpg', 'Deluxe 6" PVC Statue: Rukia', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (857, 'https://www.toynamishop.com/product_images/o/869/bleach_rukia_action_figure_box_front__85564__33594.jpg', 'Deluxe 6" PVC Statue: Rukia', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (857, 'https://www.toynamishop.com/product_images/w/511/bleach_rukia_action_figure_box_back__55883__29932.jpg', 'Deluxe 6" PVC Statue: Rukia', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (858, 'https://www.toynamishop.com/product_images/k/466/B013RKEG0Y.MAIN.jpg__47824__97524.jpg', 'Altimite DX Transforming Voltron', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (858, 'https://www.toynamishop.com/product_images/f/703/B013RKEG0Y.BACK.jpg__59725__39170.jpg', 'Altimite DX Transforming Voltron', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (858, 'https://www.toynamishop.com/product_images/j/597/B013RKEG0Y.PT01.jpg__71314__57529.jpg', 'Altimite DX Transforming Voltron', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (858, 'https://www.toynamishop.com/product_images/s/125/B013RKEG0Y.PT02.jpg__07050__08864.jpg', 'Altimite DX Transforming Voltron', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (859, 'https://www.toynamishop.com/product_images/u/750/fav-13d__43457__75676.jpg', 'Acid Rain Field Vanguard', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (859, 'https://www.toynamishop.com/product_images/i/910/fav-13b__36595__99196.jpg', 'Acid Rain Field Vanguard', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (859, 'https://www.toynamishop.com/product_images/j/531/fav-13c__47003__75320.jpg', 'Acid Rain Field Vanguard', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (859, 'https://www.toynamishop.com/product_images/t/329/acid_rain_field_vanguard_11__39990__91721.jpg', 'Acid Rain Field Vanguard', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (859, 'https://www.toynamishop.com/product_images/o/889/acid_rain_field_vanguard_12__25003__77495.jpg', 'Acid Rain Field Vanguard', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (860, 'https://www.toynamishop.com/product_images/m/225/mospeada_cyclone_ride_armor_stick_03__97307__04880.jpg', 'Mospeada Cyclone Limited Edition Vinyl Figure - STICK', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (860, 'https://www.toynamishop.com/product_images/w/128/mospeada_cyclone_ride_armor_stick_06__68197__10187.jpg', 'Mospeada Cyclone Limited Edition Vinyl Figure - STICK', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (861, 'https://www.toynamishop.com/product_images/l/708/FAV-SP19-order-FN_01__85057__93501.jpg', 'Acid Rain Nana (Neo Atlantis Mascot) - 2021 Convention Exclusive', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (861, 'https://www.toynamishop.com/product_images/u/455/FAV-SP19-order-FN_02__26057__10094.jpg', 'Acid Rain Nana (Neo Atlantis Mascot) - 2021 Convention Exclusive', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (861, 'https://www.toynamishop.com/product_images/m/036/FAV-SP19-order-FN_03__97724__36282.jpg', 'Acid Rain Nana (Neo Atlantis Mascot) - 2021 Convention Exclusive', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (862, 'https://www.toynamishop.com/product_images/r/188/IMG_0017__38505__35210.JPG', 'Acid Rain Laurel Corpse', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (862, 'https://www.toynamishop.com/product_images/j/818/IMG_0004__14903__14550.JPG', 'Acid Rain Laurel Corpse', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (862, 'https://www.toynamishop.com/product_images/j/821/IMG_0002__22911__11891.JPG', 'Acid Rain Laurel Corpse', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (862, 'https://www.toynamishop.com/product_images/p/865/IMG_0006__84941__33674.JPG', 'Acid Rain Laurel Corpse', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (862, 'https://www.toynamishop.com/product_images/o/490/IMG_0007__80401__29481.JPG', 'Acid Rain Laurel Corpse', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (862, 'https://www.toynamishop.com/product_images/m/068/IMG_0008__63582__85553.JPG', 'Acid Rain Laurel Corpse', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (862, 'https://www.toynamishop.com/product_images/d/897/IMG_0009__68856__73654.JPG', 'Acid Rain Laurel Corpse', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (863, 'https://www.toynamishop.com/product_images/e/262/VF-1D_CONVENTION-EXCLUSIVE_2__12849__14044.jpg', 'Macross Calibre Wings 1:72 F-14 VF-1D Convention Exclusive', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (864, 'https://www.toynamishop.com/product_images/j/681/unkl_10_inch_spongebob01__67058__71028.jpg', 'Comic Con 2014 Exclusive: UNKL 10" UniPo SpongeBob', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (864, 'https://www.toynamishop.com/product_images/t/817/unkl_10_inch_spongebob02__12630__34217.jpg', 'Comic Con 2014 Exclusive: UNKL 10" UniPo SpongeBob', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (864, 'https://www.toynamishop.com/product_images/b/581/unkl_10_inch_spongebob__72597__72091.jpg', 'Comic Con 2014 Exclusive: UNKL 10" UniPo SpongeBob', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (865, 'https://www.toynamishop.com/product_images/z/308/PAIN_VS_NARUTO_DELUXE_COMBO_PACK__95963__14366.jpg', 'Naruto Shippuden Exclusive Two-Pack Set: Sage Mode Naruto vs. Pain', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (866, 'https://www.toynamishop.com/product_images/y/005/mospeada_cyclone_ride_armor_ray_05__06916__24331.jpg', 'Mospeada Cyclone Limited Edition Vinyl Figure - RAY', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (866, 'https://www.toynamishop.com/product_images/x/011/mospeada_cyclone_ride_armor_ray_07__56137__73863.jpg', 'Mospeada Cyclone Limited Edition Vinyl Figure - RAY', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (867, 'https://www.toynamishop.com/product_images/h/927/FAV-A01_PROMO_3__92565__76023.jpg', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (867, 'https://www.toynamishop.com/product_images/m/026/FAV-A01_PROMO_2__96206__20093.jpg', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (867, 'https://www.toynamishop.com/product_images/m/257/FAV-A-01_PRODUCT_SHOT_4__95144__87963.jpg', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (867, 'https://www.toynamishop.com/product_images/k/589/FAV-A-01_PRODUCT_SHOT_3__24903__86193.jpg', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (867, 'https://www.toynamishop.com/product_images/m/214/FAV-A-01_PRODUCT_SHOT_2__73396__29899.jpg', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (867, 'https://www.toynamishop.com/product_images/c/645/FAV-A-01_PRODUCT_SHOT_1__67681__07144.jpg', 'Acid Rain FAV Series Bucks Team Wildebeest WB3b', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (868, 'https://www.toynamishop.com/product_images/n/267/Tulipop_Fred_coin-bank_01__82208__13633.jpg', 'FRED Vinyl Coin Bank', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (868, 'https://www.toynamishop.com/product_images/c/900/Tulipop_Fred_coin-bank_02-1__21635__33872.jpg', 'FRED Vinyl Coin Bank', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (868, 'https://www.toynamishop.com/product_images/a/923/Tulipop_Fred-Coin-Bank-box-1__26991__86714.jpg', 'FRED Vinyl Coin Bank', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (869, 'https://www.toynamishop.com/product_images/f/385/P1301483__23379__75418.jpg', 'Macross Calibre Wings 1:72 VF-1S Valkyrie Fighter', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (869, 'https://www.toynamishop.com/product_images/x/993/P1301485__79399__80210.jpg', 'Macross Calibre Wings 1:72 VF-1S Valkyrie Fighter', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (869, 'https://www.toynamishop.com/product_images/l/106/CA72RB06-1__40200__54764.jpg', 'Macross Calibre Wings 1:72 VF-1S Valkyrie Fighter', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (869, 'https://www.toynamishop.com/product_images/m/609/CA72RB06-2__90290__36866.jpg', 'Macross Calibre Wings 1:72 VF-1S Valkyrie Fighter', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (869, 'https://www.toynamishop.com/product_images/l/880/1__01327__97031.jpg', 'Macross Calibre Wings 1:72 VF-1S Valkyrie Fighter', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (870, 'https://www.toynamishop.com/product_images/a/278/godzilla_statue_01__37648__85276.jpg', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (870, 'https://www.toynamishop.com/product_images/e/317/godzilla_statue_07__96020__06812.jpg', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (870, 'https://www.toynamishop.com/product_images/y/084/godzilla_statue_02__71767__88756.jpg', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (870, 'https://www.toynamishop.com/product_images/g/691/godzilla_statue_06__32175__08339.jpg', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (870, 'https://www.toynamishop.com/product_images/l/098/godzilla_statue_05__73871__07244.jpg', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (870, 'https://www.toynamishop.com/product_images/c/998/godzilla_statue_04__61481__56632.jpg', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (870, 'https://www.toynamishop.com/product_images/e/851/godzilla_statue_08__96871__24008.jpg', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (870, 'https://www.toynamishop.com/product_images/n/251/godzilla_statue_03__06134__77592.jpg', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (870, 'https://www.toynamishop.com/product_images/p/093/godzilla_statue_09__78273__21933.jpg', 'Godzilla 1989 - Limited Edition Statue - Polystone Resin', false, 10);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (871, 'https://www.toynamishop.com/product_images/n/350/canman_blank_01__57387__58315.jpg', 'The Canmans Blank Canman', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (871, 'https://www.toynamishop.com/product_images/z/561/canman_blank_02__92475__79371.jpg', 'The Canmans Blank Canman', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (871, 'https://www.toynamishop.com/product_images/x/178/canman_blank_03__10620__70240.jpg', 'The Canmans Blank Canman', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (872, 'https://www.toynamishop.com/product_images/p/025/Tulipop_tineez_mini_plush_Fred__35443__99947.jpg', 'Tulipop Fred Tineez Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (873, 'https://www.toynamishop.com/product_images/w/261/FAV-SP20-order-FN_01__87756__42567.jpg', 'Acid Rain Halogen Jeep - 2021 Convention Exclusive', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (873, 'https://www.toynamishop.com/product_images/o/082/FAV-SP20-order-FN_02__59925__85883.jpg', 'Acid Rain Halogen Jeep - 2021 Convention Exclusive', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (873, 'https://www.toynamishop.com/product_images/t/351/FAV-SP20-order-FN_03__80505__55578.jpg', 'Acid Rain Halogen Jeep - 2021 Convention Exclusive', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (874, 'https://www.toynamishop.com/product_images/v/483/IMG_0001__51706__18795.JPG', 'Acid Rain Laurel Rescue', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (874, 'https://www.toynamishop.com/product_images/h/917/IMG_0016__45006__00550.JPG', 'Acid Rain Laurel Rescue', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (874, 'https://www.toynamishop.com/product_images/q/187/IMG_0019__59659__23721.JPG', 'Acid Rain Laurel Rescue', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (874, 'https://www.toynamishop.com/product_images/f/131/IMG_0018__88526__04949.JPG', 'Acid Rain Laurel Rescue', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (874, 'https://www.toynamishop.com/product_images/a/364/IMG_0012__62242__24319.JPG', 'Acid Rain Laurel Rescue', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (875, 'https://www.toynamishop.com/product_images/x/847/FEy4HJnaMAEndjX__08917__14178.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K01 WENENU', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (875, 'https://www.toynamishop.com/product_images/v/167/FEy4HJmagAE333z__41909__42485.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K01 WENENU', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (875, 'https://www.toynamishop.com/product_images/m/174/FEy4HJlaMAEf3MK__79285__92896.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K01 WENENU', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (875, 'https://www.toynamishop.com/product_images/b/418/FEy4HJlagAUcrwz__16175__55614.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K01 WENENU', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (876, 'https://www.toynamishop.com/product_images/e/191/DSC_0520__55510__69000.JPG', 'B2Five R711 Laurel LA3R', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (876, 'https://www.toynamishop.com/product_images/p/940/DSC_0485__45606__47045.JPG', 'B2Five R711 Laurel LA3R', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (876, 'https://www.toynamishop.com/product_images/g/433/DSC_0491__78676__06968.JPG', 'B2Five R711 Laurel LA3R', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (876, 'https://www.toynamishop.com/product_images/w/729/DSC_0502__10105__50857.JPG', 'B2Five R711 Laurel LA3R', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (876, 'https://www.toynamishop.com/product_images/n/021/DSC_0508__87163__16481.JPG', 'B2Five R711 Laurel LA3R', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (877, 'https://www.toynamishop.com/product_images/v/074/little-embers_blind-box-series-2__83794__49787.jpg', 'Little Embers SERIES 2 Blind Box Figurine', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (877, 'https://www.toynamishop.com/product_images/d/344/little_embers_Series2_04__22864__24147.jpg', 'Little Embers SERIES 2 Blind Box Figurine', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (877, 'https://www.toynamishop.com/product_images/j/871/little_embers_Series2_01__06832__59813.jpg', 'Little Embers SERIES 2 Blind Box Figurine', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (877, 'https://www.toynamishop.com/product_images/n/723/little_embers_Series2_07__64462__10673.jpg', 'Little Embers SERIES 2 Blind Box Figurine', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (877, 'https://www.toynamishop.com/product_images/m/507/little_embers_Series2_14__99701__07831.jpg', 'Little Embers SERIES 2 Blind Box Figurine', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (877, 'https://www.toynamishop.com/product_images/d/569/little_embers_Series2_10__14284__77703.jpg', 'Little Embers SERIES 2 Blind Box Figurine', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (878, 'https://www.toynamishop.com/product_images/q/981/P1017753__17041__34643.jpg', 'Macross Calibre Wings 1:72 VF-1S Fighter Valkyrie STEALTH - 2020 CONVENTION EXCLUSIVE PRE-ORDER', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (878, 'https://www.toynamishop.com/product_images/r/642/P1017704__75821__10366.jpg', 'Macross Calibre Wings 1:72 VF-1S Fighter Valkyrie STEALTH - 2020 CONVENTION EXCLUSIVE PRE-ORDER', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (878, 'https://www.toynamishop.com/product_images/r/092/P1017700__53047__72123.jpg', 'Macross Calibre Wings 1:72 VF-1S Fighter Valkyrie STEALTH - 2020 CONVENTION EXCLUSIVE PRE-ORDER', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (878, 'https://www.toynamishop.com/product_images/c/468/P1017706__30382__77796.jpg', 'Macross Calibre Wings 1:72 VF-1S Fighter Valkyrie STEALTH - 2020 CONVENTION EXCLUSIVE PRE-ORDER', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (878, 'https://www.toynamishop.com/product_images/l/009/P1017751__17934__21493.jpg', 'Macross Calibre Wings 1:72 VF-1S Fighter Valkyrie STEALTH - 2020 CONVENTION EXCLUSIVE PRE-ORDER', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (879, 'https://www.toynamishop.com/product_images/w/928/Tulipop_tineez_mini_plush_Miss_Maddy_10_inch__71979__11301.jpg', 'Tulipop Miss Maddy Tineez Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (880, 'https://www.toynamishop.com/product_images/e/502/robotech-limited-edition-poster_SDCC2018__09370__59497.jpg', 'Robotech Defense Force Poster - 2018 SDCC Exclusive', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (881, 'https://www.toynamishop.com/product_images/p/466/Robotech_YR-052F_Cyclone_10__36244__36116.jpg', 'PREORDER REQUIRED: The New Generation YR-052F Transformable Cyclone (FINAL PAYMENT)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (881, 'https://www.toynamishop.com/product_images/x/514/Robotech_YR-052F_Cyclone_02__95747__42531.jpg', 'PREORDER REQUIRED: The New Generation YR-052F Transformable Cyclone (FINAL PAYMENT)', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (881, 'https://www.toynamishop.com/product_images/y/624/Robotech_YR-052F_Cyclone_01__40467__46125.jpg', 'PREORDER REQUIRED: The New Generation YR-052F Transformable Cyclone (FINAL PAYMENT)', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (881, 'https://www.toynamishop.com/product_images/t/794/Robotech_YR-052F_Cyclone_09__73402__57361.jpg', 'PREORDER REQUIRED: The New Generation YR-052F Transformable Cyclone (FINAL PAYMENT)', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (881, 'https://www.toynamishop.com/product_images/p/820/Robotech_YR-052F_Cyclone_08__58557__59053.jpg', 'PREORDER REQUIRED: The New Generation YR-052F Transformable Cyclone (FINAL PAYMENT)', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (882, 'https://www.toynamishop.com/product_images/c/937/futurama_robot_santa_collection__54317__06589.jpg', 'Futurama "Robot Santa Build-A-Bot" Action Figure Set', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (882, 'https://www.toynamishop.com/product_images/s/884/futurama_robot_santa_collection2__76349__28626.jpg', 'Futurama "Robot Santa Build-A-Bot" Action Figure Set', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (883, 'https://www.toynamishop.com/product_images/o/618/voltron_40th_anniversary_18__49687__55983.jpg', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collector''''s Set', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (883, 'https://www.toynamishop.com/product_images/v/788/voltron_40th_anniversary_19__80862__36003.jpg', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collector''''s Set', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (883, 'https://www.toynamishop.com/product_images/p/761/voltron_40th_anniversary_20__29751__43832.jpg', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collector''''s Set', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (883, 'https://www.toynamishop.com/product_images/d/495/voltron_40th_anniversary_07__81955__39392.jpg', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collector''''s Set', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (883, 'https://www.toynamishop.com/product_images/k/988/voltron_40th_anniversary_06__75102__23800.jpg', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collector''''s Set', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (883, 'https://www.toynamishop.com/product_images/x/184/voltron_40th_anniversary_22__80445__44289.jpg', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collector''''s Set', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (883, 'https://www.toynamishop.com/product_images/b/626/voltron_40th_anniversary_23__15577__81196.jpg', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collector''''s Set', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (883, 'https://www.toynamishop.com/product_images/y/833/voltron_40th_anniversary_21__58000__53477.jpg', 'PREORDER DEPOSIT REQUIRED: Voltron 40th Anniversary Collector''''s Set', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (884, 'https://www.toynamishop.com/product_images/s/550/Tulipop_tineez_bubble_01__09651__69091.jpg', 'Tulipop Bubble Tineez Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (885, 'https://www.toynamishop.com/product_images/t/636/FAV-C01-order-FN_01__94443__42108.jpg', 'Acid Rain Shadow of Assamite - 2021 Convention Exclusive', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (885, 'https://www.toynamishop.com/product_images/z/937/FAV-C01-order-FN_02__29462__71049.jpg', 'Acid Rain Shadow of Assamite - 2021 Convention Exclusive', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (886, 'https://www.toynamishop.com/product_images/d/462/macross_hikaru_valkyrie__50398__65781.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1J Ichijo Valkyrie', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (886, 'https://www.toynamishop.com/product_images/a/327/macross_hikaru_valkyrie_01__15774__01285.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1J Ichijo Valkyrie', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (886, 'https://www.toynamishop.com/product_images/f/890/macross_hikaru_valkyrie_04__73934__80309.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1J Ichijo Valkyrie', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (886, 'https://www.toynamishop.com/product_images/f/643/macross_hikaru_valkyrie_03__15930__63932.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1J Ichijo Valkyrie', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (886, 'https://www.toynamishop.com/product_images/p/876/macross_hikaru_valkyrie_02__05728__89341.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1J Ichijo Valkyrie', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (887, 'https://www.toynamishop.com/product_images/i/420/MIK-02-order-01__36696__94837.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K02 Tao-Sor', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (887, 'https://www.toynamishop.com/product_images/q/512/MIK-02-order-04__43942__77370.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K02 Tao-Sor', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (887, 'https://www.toynamishop.com/product_images/c/411/MIK-02-order-03__67343__28965.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K02 Tao-Sor', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (888, 'https://www.toynamishop.com/product_images/k/104/IMG_NEW__75784__73717.jpg', 'Acid Rain Laurel Worker', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (888, 'https://www.toynamishop.com/product_images/t/628/c2da99f0-3eaa-4b05-b43b-548ef7b0302d__12983__08555.jpg', 'Acid Rain Laurel Worker', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (888, 'https://www.toynamishop.com/product_images/r/858/4f26e8fc-beae-456c-83fa-9e5d4b82e93f__38961__82018.jpg', 'Acid Rain Laurel Worker', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (888, 'https://www.toynamishop.com/product_images/s/828/ba04311e-e1fc-4980-bf77-9b30a32c3130__55089__18880.jpg', 'Acid Rain Laurel Worker', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (889, 'https://www.toynamishop.com/product_images/y/238/Tulipop_tineez_mini_plush_Gloomy__41396__88020.jpg', 'Tulipop Gloomy Tineez Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (890, 'https://www.toynamishop.com/product_images/z/621/futurama_tineez1_2_package__89125__60885.jpg', 'Futurama Tineez Series 1.2 Mini-Figure 3-pack', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (890, 'https://www.toynamishop.com/product_images/m/029/futurama_tineez1_2_alternate_universe_zoidberg_01__88370__44047.jpg', 'Futurama Tineez Series 1.2 Mini-Figure 3-pack', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (890, 'https://www.toynamishop.com/product_images/b/185/futurama_tineez1_2_bumblebee_bender_01__94930__34504.jpg', 'Futurama Tineez Series 1.2 Mini-Figure 3-pack', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (890, 'https://www.toynamishop.com/product_images/c/355/futurama_tineez1_2_robot_devil_01__37598__00518.jpg', 'Futurama Tineez Series 1.2 Mini-Figure 3-pack', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (891, 'https://www.toynamishop.com/product_images/z/818/main__93022__86347.jpg', 'Mospeada Legioss AFC-01Z (Red)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (891, 'https://www.toynamishop.com/product_images/c/005/img_02__93983__80111.jpg', 'Mospeada Legioss AFC-01Z (Red)', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (891, 'https://www.toynamishop.com/product_images/o/918/img01__80115__04443.jpg', 'Mospeada Legioss AFC-01Z (Red)', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (892, 'https://www.toynamishop.com/product_images/t/546/DSC_0454__76468__84229.jpg', 'B2Five K6 Jungle Speeder MK1K', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (892, 'https://www.toynamishop.com/product_images/q/409/DSC_0447__11645__43772.jpg', 'B2Five K6 Jungle Speeder MK1K', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (892, 'https://www.toynamishop.com/product_images/f/285/DSC_0444__76218__71722.jpg', 'B2Five K6 Jungle Speeder MK1K', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (892, 'https://www.toynamishop.com/product_images/s/385/DSC_0462__35095__58910.jpg', 'B2Five K6 Jungle Speeder MK1K', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (892, 'https://www.toynamishop.com/product_images/p/886/DSC_0463__26147__96935.jpg', 'B2Five K6 Jungle Speeder MK1K', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (893, 'https://www.toynamishop.com/product_images/g/521/Little_Ember_Iridescent_Pearl_Edition__94354__49574.jpg', 'Little Ember Iridescent Pearl Edition', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (893, 'https://www.toynamishop.com/product_images/n/280/little-embers_pearlescent-edition__88910__62145.jpg', 'Little Ember Iridescent Pearl Edition', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (893, 'https://www.toynamishop.com/product_images/d/379/little-embers_pearlescent-edition2__00496__57364.jpg', 'Little Ember Iridescent Pearl Edition', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (894, 'https://www.toynamishop.com/product_images/t/253/FAV-A02-PIC_6__07686__10060.jpg', 'Acid Rain Field Flakbike FB7f', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (894, 'https://www.toynamishop.com/product_images/j/225/FAV-A02-PIC_1__18039__51132.jpg', 'Acid Rain Field Flakbike FB7f', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (894, 'https://www.toynamishop.com/product_images/p/132/FAV-A02-PIC_2__40634__54466.jpg', 'Acid Rain Field Flakbike FB7f', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (895, 'https://www.toynamishop.com/product_images/i/028/a598e3ea-23b3-403f-875a-ef3faf048c81__56039__15087.jpg', 'Naruto Sage Mode Epic Scale Statue', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (895, 'https://www.toynamishop.com/product_images/r/312/39e51ef6-e2bf-4687-a843-d38fde5d858b__54992__41610.jpg', 'Naruto Sage Mode Epic Scale Statue', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (896, 'https://www.toynamishop.com/product_images/w/706/10822903_hi__81052__86046.jpg', 'Tulipop Blind Boxes Figure with Diorama', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (896, 'https://www.toynamishop.com/product_images/u/353/10822903_av2__89097__04392.jpg', 'Tulipop Blind Boxes Figure with Diorama', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (897, 'https://www.toynamishop.com/product_images/j/716/robotech_new_gen_alpha_t-shirt__78249__43919.jpg', 'Robotech New Generation Mars Base Alpha Shirt', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (897, 'https://www.toynamishop.com/product_images/o/581/Screenshot_62__88692__70901.png', 'Robotech New Generation Mars Base Alpha Shirt', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (897, 'https://www.toynamishop.com/product_images/e/964/Screenshot_63__76679__30400.png', 'Robotech New Generation Mars Base Alpha Shirt', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (898, 'https://www.toynamishop.com/product_images/k/825/Robotech_YR-052F_Cyclone_10__31264__17851.jpg', 'The New Generation YR-052F Transformable Cyclone', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (898, 'https://www.toynamishop.com/product_images/v/052/Robotech_YR-052F_Cyclone_02__04086__60242.jpg', 'The New Generation YR-052F Transformable Cyclone', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (898, 'https://www.toynamishop.com/product_images/z/366/Robotech_YR-052F_Cyclone_01__46441__34352.jpg', 'The New Generation YR-052F Transformable Cyclone', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (898, 'https://www.toynamishop.com/product_images/n/236/Robotech_YR-052F_Cyclone_09__10054__05470.jpg', 'The New Generation YR-052F Transformable Cyclone', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (898, 'https://www.toynamishop.com/product_images/q/007/Robotech_YR-052F_Cyclone_08__22526__05019.jpg', 'The New Generation YR-052F Transformable Cyclone', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (899, 'https://www.toynamishop.com/product_images/r/891/naruto_shippuden_4inch_Kurama_Link_Mode_05__53795__78605.jpg', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (899, 'https://www.toynamishop.com/product_images/m/814/naruto_shippuden_4inch_Kurama_Link_Mode_01__60665__19906.jpg', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (899, 'https://www.toynamishop.com/product_images/u/906/naruto_shippuden_4inch_Kurama_Link_Mode_04__79179__20118.jpg', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (899, 'https://www.toynamishop.com/product_images/r/718/naruto_shippuden_4inch_Kurama_Link_Mode_02__91449__47736.jpg', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (899, 'https://www.toynamishop.com/product_images/a/750/naruto_shippuden_4inch_Kurama_Link_Mode_03__91714__67150.jpg', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (899, 'https://www.toynamishop.com/product_images/e/530/naruto_shippuden_4inch_Kurama_Link_Mode_06__08633__05120.jpg', 'Naruto Kurama Link Mode 2020 CONVENTION EXCLUSIVE', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (900, 'https://www.toynamishop.com/product_images/c/383/MIK-03-order-1__62891__26458.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K03 Tiger Bill', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (900, 'https://www.toynamishop.com/product_images/v/531/MIK-03-order-4__78002__77812.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K03 Tiger Bill', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (900, 'https://www.toynamishop.com/product_images/u/702/MIK-03-order-3__73303__58657.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K03 Tiger Bill', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (901, 'https://www.toynamishop.com/product_images/e/885/skelanimal_DotD_mini_plush_kit_01__77227__02595.jpg', 'Skelanimals Day of the Dead Kit (Cat) Mini Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (902, 'https://www.toynamishop.com/product_images/o/336/little_nimbus_figurines__08082__17867.jpg', 'Little Nimbus Blind Box Figurine', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (903, 'https://www.toynamishop.com/product_images/z/585/10822905_av2__10799__77191.jpg', 'Sonic x Sanrio Blind Box Figure', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (903, 'https://www.toynamishop.com/product_images/i/810/10822905_hi__38370__36548.jpg', 'Sonic x Sanrio Blind Box Figure', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (904, 'https://www.toynamishop.com/product_images/y/091/Legioss_Typ_AFC-01I_1__90557__00068.jpg', 'Mospeada Legioss AFC-01I (Green)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (904, 'https://www.toynamishop.com/product_images/s/252/Legioss_Typ_AFC-01I_2__95653__99953.jpg', 'Mospeada Legioss AFC-01I (Green)', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (904, 'https://www.toynamishop.com/product_images/q/997/Legioss_Typ_AFC-01I_5__66878__96505.jpg', 'Mospeada Legioss AFC-01I (Green)', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (904, 'https://www.toynamishop.com/product_images/a/542/KAHEN_LEGIOSS_TYPE-JOTA_02__03862__00983.jpg', 'Mospeada Legioss AFC-01I (Green)', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (905, 'https://www.toynamishop.com/product_images/n/800/FAV-A-03-PIC-6__64585__24724.jpg', 'Acid Rain Field Wildebeest WB3f', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (905, 'https://www.toynamishop.com/product_images/c/016/FAV-A-03-PIC-3__20380__16029.jpg', 'Acid Rain Field Wildebeest WB3f', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (905, 'https://www.toynamishop.com/product_images/h/435/FAV-A-03-PIC-5__51148__70316.jpg', 'Acid Rain Field Wildebeest WB3f', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (906, 'https://www.toynamishop.com/product_images/g/412/MACROSS_shogun_warriors_VF-1S__29967__70625.jpg', 'Macross Skull Leader Shogun Warrior VF-1S SDCC 2023 Exclusive', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (906, 'https://www.toynamishop.com/product_images/e/625/MACROSS_shogun_warriors_VF-1S_01__36854__72075.jpg', 'Macross Skull Leader Shogun Warrior VF-1S SDCC 2023 Exclusive', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (906, 'https://www.toynamishop.com/product_images/l/818/MACROSS_shogun_warriors_VF-1S_02__55825__75476.jpg', 'Macross Skull Leader Shogun Warrior VF-1S SDCC 2023 Exclusive', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (906, 'https://www.toynamishop.com/product_images/v/976/MACROSS_shogun-warriors_VF-1S_03__39202__62553.jpg', 'Macross Skull Leader Shogun Warrior VF-1S SDCC 2023 Exclusive', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (907, 'https://www.toynamishop.com/product_images/o/204/rick-hunter_battloid_01__19590__50822.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - RICK HUNTER VOLUME 1', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (907, 'https://www.toynamishop.com/product_images/z/614/micronian_rick_hunter_fighter_01__93909__90360.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - RICK HUNTER VOLUME 1', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (907, 'https://www.toynamishop.com/product_images/r/425/micronian_rick_hunter_guardian_01__43564__63319.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - RICK HUNTER VOLUME 1', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (907, 'https://www.toynamishop.com/product_images/r/943/ROBOTECH_MICRONIAN-PILOTS_VOL1_RICK-HUNTER__05571__57439.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - RICK HUNTER VOLUME 1', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (908, 'https://www.toynamishop.com/product_images/x/348/chaple6__15237__75246.jpg', 'B2Five K6 Jungle Chapel HTT600k', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (908, 'https://www.toynamishop.com/product_images/p/097/chaple10__27438__96976.jpg', 'B2Five K6 Jungle Chapel HTT600k', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (908, 'https://www.toynamishop.com/product_images/p/386/chaple4__32401__91259.jpg', 'B2Five K6 Jungle Chapel HTT600k', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (908, 'https://www.toynamishop.com/product_images/p/081/chaple5__75677__73328.jpg', 'B2Five K6 Jungle Chapel HTT600k', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (908, 'https://www.toynamishop.com/product_images/d/978/chaple8__41425__27394.jpg', 'B2Five K6 Jungle Chapel HTT600k', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (909, 'https://www.toynamishop.com/product_images/c/859/futurama_plush_robot_devil_01__69006__39231.jpg', 'SDCC 2011 Exclusive: Futurama Robot Devil Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (910, 'https://www.toynamishop.com/product_images/y/966/skelanimal_DotD_mini_plush_diego_01__33637__09069.jpg', 'Skelanimals Day of the Dead Diego (Bat) Mini Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (911, 'https://www.toynamishop.com/product_images/r/004/Toynami-07_little_burnt_embers__83909__40297.jpg', 'Little Burnt Embers', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (912, 'https://www.toynamishop.com/product_images/f/655/macross_roy-focker_valkyrie__38255__21243.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1S Roy Focker Valkyrie', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (912, 'https://www.toynamishop.com/product_images/p/061/macross_roy-focker_valkyrie_01__09489__62367.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1S Roy Focker Valkyrie', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (912, 'https://www.toynamishop.com/product_images/g/247/macross_roy-focker_valkyrie_03__29028__11614.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1S Roy Focker Valkyrie', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (912, 'https://www.toynamishop.com/product_images/t/577/macross_roy-focker_valkyrie_04__68017__38860.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1S Roy Focker Valkyrie', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (912, 'https://www.toynamishop.com/product_images/x/058/macross_roy-focker_valkyrie_02__45742__51922.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1S Roy Focker Valkyrie', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (913, 'https://www.toynamishop.com/product_images/y/261/LIttle_Embers_Enamel_pins__74447__90426.jpg', 'Little Embers Blind Box Enamel Pin', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (914, 'https://www.toynamishop.com/product_images/c/924/MIK-04-order-1__31815__37669.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K04 Ryukin', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (914, 'https://www.toynamishop.com/product_images/a/399/MIK-04-order-4__90189__62570.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K04 Ryukin', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (914, 'https://www.toynamishop.com/product_images/t/943/MIK-04-order-3__14031__24058.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K04 Ryukin', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (915, 'https://www.toynamishop.com/product_images/v/563/Sonic_x_Hello_Kitty__07518__27900.jpg', 'Sonic x Hello Kitty 10 inch Deluxe Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (915, 'https://www.toynamishop.com/product_images/a/146/11064189_hi__70009__22939.jpg', 'Sonic x Hello Kitty 10 inch Deluxe Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (916, 'https://www.toynamishop.com/product_images/n/462/Picture1__63958__48423.jpg', 'Little BURNT Embers Series 2 Blind Box Figurine', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (916, 'https://www.toynamishop.com/product_images/x/669/little_burnt_embers_s2_16__94058__62565.jpg', 'Little BURNT Embers Series 2 Blind Box Figurine', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (916, 'https://www.toynamishop.com/product_images/b/331/little_burnt_embers_s2_15__06984__27743.jpg', 'Little BURNT Embers Series 2 Blind Box Figurine', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (917, 'https://www.toynamishop.com/product_images/a/201/skelanimal_DotD_mini_plush_maxx_01__04251__29854.jpg', 'Skelanimals Day of the Dead Maxx (Bulldog) Mini Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (918, 'https://www.toynamishop.com/product_images/k/766/macross_zentradibattlepod_07__33599__18849.jpg', '2010 SDCC Exclusive: Macross Vinyl Figure Zentradi (Regault) Tactical Battlepod', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (918, 'https://www.toynamishop.com/product_images/k/340/macross_zentradibattlepod_08__85241__13665.jpg', '2010 SDCC Exclusive: Macross Vinyl Figure Zentradi (Regault) Tactical Battlepod', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (918, 'https://www.toynamishop.com/product_images/j/329/macross_zentradibattlepod_09__89701__32069.jpg', '2010 SDCC Exclusive: Macross Vinyl Figure Zentradi (Regault) Tactical Battlepod', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (919, 'https://www.toynamishop.com/product_images/r/358/LIttle_Embers_Rubber-Keychains__92542__52816.jpg', 'Little Embers Figure Keychain', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (920, 'https://www.toynamishop.com/product_images/s/250/Macross_VF-1J_t-shirt__07461__30855.jpg', 'Macross VF-1J Vermilion Squad Shirt', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (920, 'https://www.toynamishop.com/product_images/f/882/robotech_T-Shirts_2022-01__07702__26120.jpg', 'Macross VF-1J Vermilion Squad Shirt', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (920, 'https://www.toynamishop.com/product_images/n/644/Screenshot_62__36252__76080.png', 'Macross VF-1J Vermilion Squad Shirt', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (920, 'https://www.toynamishop.com/product_images/k/087/Screenshot_63__34480__79138.png', 'Macross VF-1J Vermilion Squad Shirt', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (921, 'https://www.toynamishop.com/product_images/j/981/2__16715__96825.jpg', 'B2Five Moose Laurel LA3b', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (921, 'https://www.toynamishop.com/product_images/k/046/12__52196__53629.jpg', 'B2Five Moose Laurel LA3b', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (921, 'https://www.toynamishop.com/product_images/h/001/13__83325__91855.jpg', 'B2Five Moose Laurel LA3b', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (921, 'https://www.toynamishop.com/product_images/f/523/all_parts__45705__83041.jpg', 'B2Five Moose Laurel LA3b', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (922, 'https://www.toynamishop.com/product_images/i/025/CA72RB0708-1__62958__32719.jpg', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (922, 'https://www.toynamishop.com/product_images/f/458/CA72RB0708-2__07423__66655.jpg', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (922, 'https://www.toynamishop.com/product_images/q/580/P1011814__52385__20301.jpg', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (922, 'https://www.toynamishop.com/product_images/g/268/P1011811__15034__48898.jpg', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (922, 'https://www.toynamishop.com/product_images/h/997/P1011819__16943__21443.jpg', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (922, 'https://www.toynamishop.com/product_images/f/657/P1011812__44985__97876.jpg', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (922, 'https://www.toynamishop.com/product_images/z/918/P1011815__61247__65305.jpg', 'Macross Calibre Wings Max & Miriya 1:72 VF-1J Fighter Valkyrie Gift Set', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (923, 'https://www.toynamishop.com/product_images/e/463/skelanimal_DotD_mini_plush_jae_01__86611__99741.jpg', 'Skelanimals Day of the Dead Jae (Wolf) Mini Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (924, 'https://www.toynamishop.com/product_images/m/570/Phantom-Team-A__55592__88869.jpg', 'Acid Rain Phantom Team A - [Mirage + Eclipse]', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (924, 'https://www.toynamishop.com/product_images/k/941/IMG_0001__63115__49788.JPG', 'Acid Rain Phantom Team A - [Mirage + Eclipse]', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (924, 'https://www.toynamishop.com/product_images/u/292/IMG_0002__41085__71303.JPG', 'Acid Rain Phantom Team A - [Mirage + Eclipse]', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (924, 'https://www.toynamishop.com/product_images/k/938/IMG_0003__50833__47621.JPG', 'Acid Rain Phantom Team A - [Mirage + Eclipse]', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (924, 'https://www.toynamishop.com/product_images/g/048/IMG_0020__73783__73746.JPG', 'Acid Rain Phantom Team A - [Mirage + Eclipse]', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (925, 'https://www.toynamishop.com/product_images/v/597/voltron_40th_anniversary_18__18028__57272.jpg', 'Voltron 40th Anniversary Collector''''s Set', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (925, 'https://www.toynamishop.com/product_images/v/061/voltron_40th_anniversary_19__69666__73340.jpg', 'Voltron 40th Anniversary Collector''''s Set', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (925, 'https://www.toynamishop.com/product_images/o/212/voltron_40th_anniversary_20__51761__13869.jpg', 'Voltron 40th Anniversary Collector''''s Set', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (925, 'https://www.toynamishop.com/product_images/j/725/voltron_40th_anniversary_07__33112__70363.jpg', 'Voltron 40th Anniversary Collector''''s Set', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (925, 'https://www.toynamishop.com/product_images/y/454/voltron_40th_anniversary_06__56863__85204.jpg', 'Voltron 40th Anniversary Collector''''s Set', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (925, 'https://www.toynamishop.com/product_images/b/506/voltron_40th_anniversary_22__88122__38267.jpg', 'Voltron 40th Anniversary Collector''''s Set', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (925, 'https://www.toynamishop.com/product_images/r/373/voltron_40th_anniversary_23__76514__64085.jpg', 'Voltron 40th Anniversary Collector''''s Set', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (925, 'https://www.toynamishop.com/product_images/e/033/voltron_40th_anniversary_21__64645__50461.jpg', 'Voltron 40th Anniversary Collector''''s Set', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (926, 'https://www.toynamishop.com/product_images/m/893/MIK-05-order-1__26289__44112.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K05 Rainbow Yume', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (926, 'https://www.toynamishop.com/product_images/y/472/MIK-05-order-4__16738__27061.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K05 Rainbow Yume', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (926, 'https://www.toynamishop.com/product_images/h/294/MIK-05-order-3__31845__32512.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K05 Rainbow Yume', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (927, 'https://www.toynamishop.com/product_images/x/101/micronian_ben_dixon_battloid_01__46483__16642.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - BEN DIXON VOLUME 2', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (927, 'https://www.toynamishop.com/product_images/l/840/micronian_ben_dixon_fighter_01__70389__04653.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - BEN DIXON VOLUME 2', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (927, 'https://www.toynamishop.com/product_images/u/711/micronian_ben_dixon_guardian_01__10520__93052.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - BEN DIXON VOLUME 2', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (927, 'https://www.toynamishop.com/product_images/i/900/ROBOTECH_MICRONIAN-PILOTS_VOL2_BEN-DIXON-1__94517__71691.jpg', 'Robotech VF-1 Transformable Veritech Fighter with Micronian Pilot - BEN DIXON VOLUME 2', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (928, 'https://www.toynamishop.com/product_images/v/906/Amy_x_My_Melody__90406__72821.jpg', 'Amy x My Melody 10 inch Deluxe Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (928, 'https://www.toynamishop.com/product_images/a/655/11064193_av1__57577__38640.jpg', 'Amy x My Melody 10 inch Deluxe Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (929, 'https://www.toynamishop.com/product_images/j/854/Robotech_Shogun-Warriors_VF-1S__66994__67763.jpg', 'Robotech Roy Fokker''''s Shogun Warrior VF-1S', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (929, 'https://www.toynamishop.com/product_images/x/758/Robotech_Shogun-Warriors_VF-1S_01__16011__86941.jpg', 'Robotech Roy Fokker''''s Shogun Warrior VF-1S', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (929, 'https://www.toynamishop.com/product_images/x/573/Robotech_Shogun-Warriors_VF-1S_03__49088__75357.jpg', 'Robotech Roy Fokker''''s Shogun Warrior VF-1S', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (930, 'https://www.toynamishop.com/product_images/t/509/bucks1__70933__11376.jpg', 'B2Five Bucks Team Trooper Set', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (930, 'https://www.toynamishop.com/product_images/o/071/bucks2__22633__50614.jpg', 'B2Five Bucks Team Trooper Set', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (930, 'https://www.toynamishop.com/product_images/k/064/bucks3__40013__98065.jpg', 'B2Five Bucks Team Trooper Set', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (930, 'https://www.toynamishop.com/product_images/b/602/bucks9__41786__06868.jpg', 'B2Five Bucks Team Trooper Set', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (930, 'https://www.toynamishop.com/product_images/t/716/bucks10__21362__86522.jpg', 'B2Five Bucks Team Trooper Set', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (930, 'https://www.toynamishop.com/product_images/k/884/bucks7__69734__61700.jpg', 'B2Five Bucks Team Trooper Set', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (931, 'https://www.toynamishop.com/product_images/z/753/macross_max_vf-1j_valkyrie__74864__36162.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1J Max Jenius Valkyrie', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (931, 'https://www.toynamishop.com/product_images/c/234/vf-1j_max_battroid_01__34362__81898.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1J Max Jenius Valkyrie', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (931, 'https://www.toynamishop.com/product_images/d/496/vf-1j_max_gerwalk_01__77897__78457.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1J Max Jenius Valkyrie', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (931, 'https://www.toynamishop.com/product_images/t/331/vf-1j_max_valkyrie_01__77473__63787.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1J Max Jenius Valkyrie', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (931, 'https://www.toynamishop.com/product_images/z/056/vf-1j_max_battroid_02__11250__44843.jpg', 'Macross Saga: Retro Transformable 1/100 VF-1J Max Jenius Valkyrie', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (932, 'https://www.toynamishop.com/product_images/b/451/skelanimal_pvc_series_3_092810_08__24729__32417.jpg', 'Skelanimals Series 3 Vinyl Figure Set of 3', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (932, 'https://www.toynamishop.com/product_images/t/361/skelanimal_pvc_figurines_series_3__41084__32140.jpg', 'Skelanimals Series 3 Vinyl Figure Set of 3', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (933, 'https://www.toynamishop.com/product_images/i/397/Little_Glowing_Embers__39512__57013.jpg', 'Little Glowing Embers Blind Box Figurine', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (934, 'https://www.toynamishop.com/product_images/x/542/skelanimal_DotD_mini_plush_jack_01__36701__10348.jpg', 'Skelanimals Day of the Dead Jack (Rabbit) Mini Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (935, 'https://www.toynamishop.com/product_images/q/974/macross_VF-1S_t-shirt__24885__44400.jpg', 'Macross VF-1S Skull Squad Shirt', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (935, 'https://www.toynamishop.com/product_images/b/599/robotech_T-Shirts_2022-02__20629__61001.jpg', 'Macross VF-1S Skull Squad Shirt', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (935, 'https://www.toynamishop.com/product_images/o/477/Screenshot_62__29131__10611.png', 'Macross VF-1S Skull Squad Shirt', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (935, 'https://www.toynamishop.com/product_images/j/536/Screenshot_63__20072__93007.png', 'Macross VF-1S Skull Squad Shirt', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (936, 'https://www.toynamishop.com/product_images/p/903/Skelanimals_backpack_kit_deluxe_encore__03296__18468.jpg', 'Skelanimals Deluxe Backpack Kit (Cat)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (937, 'https://www.toynamishop.com/product_images/w/092/Knuckles_x_Badtz_Maru__79563__89654.jpg', 'Knuckles x Badtz-Maru 10 inch Deluxe Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (937, 'https://www.toynamishop.com/product_images/r/904/11064191_av1__63931__88048.jpg', 'Knuckles x Badtz-Maru 10 inch Deluxe Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (938, 'https://www.toynamishop.com/product_images/z/818/skelanimals_dc_heroes_dark_knight_exclusive02__29158__83118.jpg', 'SDCC 2012 Exclusive: DC Comics x Skelanimals The Dark Knight Rises Batman Jae Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (938, 'https://www.toynamishop.com/product_images/z/900/skelanimals_dc_heroes_dark_knight_exclusive01__41350__42487.jpg', 'SDCC 2012 Exclusive: DC Comics x Skelanimals The Dark Knight Rises Batman Jae Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (939, 'https://www.toynamishop.com/product_images/o/155/283462469_171315495331691_4609032428240053035_n__94300__58541.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K06 Boss K', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (939, 'https://www.toynamishop.com/product_images/c/397/281869831_171315505331690_6491266588225028275_n__16823__93998.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K06 Boss K', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (939, 'https://www.toynamishop.com/product_images/p/261/283304236_171315515331689_4046402623354121850_n__28552__00075.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K06 Boss K', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (940, 'https://www.toynamishop.com/product_images/k/175/ALL___42949__77661.jpg', 'B2Five Abaddon Trooper Set', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (940, 'https://www.toynamishop.com/product_images/v/549/1__19277__83743.jpg', 'B2Five Abaddon Trooper Set', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (940, 'https://www.toynamishop.com/product_images/p/069/9__76030__76347.jpg', 'B2Five Abaddon Trooper Set', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (940, 'https://www.toynamishop.com/product_images/f/346/5__40195__47375.jpg', 'B2Five Abaddon Trooper Set', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (940, 'https://www.toynamishop.com/product_images/p/354/7__12441__91642.jpg', 'B2Five Abaddon Trooper Set', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (941, 'https://www.toynamishop.com/product_images/s/617/emily_bendy_figure_01__98707__59345.jpg', 'Emily the Strange 6" Bendy Figure', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (941, 'https://www.toynamishop.com/product_images/b/255/emily_bendy_figure_02__87763__56449.jpg', 'Emily the Strange 6" Bendy Figure', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (941, 'https://www.toynamishop.com/product_images/b/990/emily_bendy_figure_04__69395__88774.jpg', 'Emily the Strange 6" Bendy Figure', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (941, 'https://www.toynamishop.com/product_images/t/092/emily_bendy_figure_03__02496__95839.jpg', 'Emily the Strange 6" Bendy Figure', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (941, 'https://www.toynamishop.com/product_images/e/755/emily_bendy_figure_05__93270__94564.jpg', 'Emily the Strange 6" Bendy Figure', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (942, 'https://www.toynamishop.com/product_images/x/200/Phantom-Team-B__96125__73882.jpg', 'Acid Rain Phantom Team B - [Parhelion + Aurora]', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (942, 'https://www.toynamishop.com/product_images/s/226/IMG_0052__22775__15056.JPG', 'Acid Rain Phantom Team B - [Parhelion + Aurora]', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (942, 'https://www.toynamishop.com/product_images/f/849/IMG_0044__48090__04629.JPG', 'Acid Rain Phantom Team B - [Parhelion + Aurora]', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (942, 'https://www.toynamishop.com/product_images/q/062/IMG_0035__70466__46669.JPG', 'Acid Rain Phantom Team B - [Parhelion + Aurora]', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (942, 'https://www.toynamishop.com/product_images/k/959/IMG_0051__99112__90650.JPG', 'Acid Rain Phantom Team B - [Parhelion + Aurora]', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (943, 'https://www.toynamishop.com/product_images/h/525/skelanimal_vinyl_series2_maxx__11034__66934.jpg', 'Skelanimals Maxx the Bulldog Vinyl Figure', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (944, 'https://www.toynamishop.com/product_images/a/783/Tails_x_Chococat__01332__43681.jpg', 'Tails x Chococat 10 inch Deluxe Plush', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (944, 'https://www.toynamishop.com/product_images/z/710/11064195_av1__69053__38532.jpg', 'Tails x Chococat 10 inch Deluxe Plush', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (945, 'https://www.toynamishop.com/product_images/a/186/naruto-4-inch__08__44513__81433.jpg', 'Naruto Shippuden Poseable Action Figure - Naruto', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (945, 'https://www.toynamishop.com/product_images/l/933/naruto-4-inch_02__16731__36558.jpg', 'Naruto Shippuden Poseable Action Figure - Naruto', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (945, 'https://www.toynamishop.com/product_images/t/503/naruto-4-inch_03__96929__01196.jpg', 'Naruto Shippuden Poseable Action Figure - Naruto', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (945, 'https://www.toynamishop.com/product_images/j/805/shippuden_4-inch-figures_series1_0045__48474__63645.jpg', 'Naruto Shippuden Poseable Action Figure - Naruto', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (945, 'https://www.toynamishop.com/product_images/d/674/shippuden_4-inch-figures_series1_0046__27163__06592.jpg', 'Naruto Shippuden Poseable Action Figure - Naruto', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (945, 'https://www.toynamishop.com/product_images/x/519/shippuden_4-inch-figures_series1_0048__84735__17430.jpg', 'Naruto Shippuden Poseable Action Figure - Naruto', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (946, 'https://www.toynamishop.com/product_images/g/412/283755790_171315341998373_3594315868801986188_n__93451__14302.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K07A Monster Child', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (946, 'https://www.toynamishop.com/product_images/z/128/281766779_171315365331704_5355448836561394613_n__57547__98523.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K07A Monster Child', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (946, 'https://www.toynamishop.com/product_images/w/184/283246888_171315318665042_4205698843941398574_n__83500__85341.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K07A Monster Child', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (947, 'https://www.toynamishop.com/product_images/o/742/cyclone_t-shirt__57647__09693.jpg', 'Mospeada Cyclone Ride Armor Shirt', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (947, 'https://www.toynamishop.com/product_images/k/147/robotech_T-Shirts_2022-05__50080__16555.jpg', 'Mospeada Cyclone Ride Armor Shirt', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (947, 'https://www.toynamishop.com/product_images/k/552/Screenshot_62__80801__57235.png', 'Mospeada Cyclone Ride Armor Shirt', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (947, 'https://www.toynamishop.com/product_images/e/683/Screenshot_63__22912__69369.png', 'Mospeada Cyclone Ride Armor Shirt', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (948, 'https://www.toynamishop.com/product_images/g/499/robotech_shogun-warriors_VF-1J_01__68917__32619.jpg', 'Robotech Rick Hunter''''s Shogun Warrior VF-1J', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (948, 'https://www.toynamishop.com/product_images/y/992/robotech_shogun-warriors_VF-1J_02__91925__51599.jpg', 'Robotech Rick Hunter''''s Shogun Warrior VF-1J', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (948, 'https://www.toynamishop.com/product_images/x/192/robotech_shogun-warriors_VF-1J_03__53432__57389.jpg', 'Robotech Rick Hunter''''s Shogun Warrior VF-1J', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (948, 'https://www.toynamishop.com/product_images/z/946/robotech_shogun-warriors_VF-1J__83414__84892.jpg', 'Robotech Rick Hunter''''s Shogun Warrior VF-1J', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (949, 'https://www.toynamishop.com/product_images/x/226/macross_gbp-1_vf-1s-valkyrie__10152__88897.jpg', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (949, 'https://www.toynamishop.com/product_images/e/284/macross_gbp-1_vf-1s-battroid__71213__75039.jpg', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (949, 'https://www.toynamishop.com/product_images/m/516/macross_gbp-1_vf-1s-battroid3__51349__89989.jpg', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (949, 'https://www.toynamishop.com/product_images/h/270/macross_gbp-1_vf-1s-fighter__21265__70212.jpg', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (949, 'https://www.toynamishop.com/product_images/c/683/macross_gbp-1_vf-1s-gerwalk__54998__35200.jpg', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (949, 'https://www.toynamishop.com/product_images/x/667/Macross_VF-1S_Armored_Valkyrie_GBP-1S__34065__22314.jpg', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (949, 'https://www.toynamishop.com/product_images/d/091/macross_gbp-1_vf-1s-package__58280__86608.jpg', '1/100 Scale Transformable Macross VF-1S Armored Valkyrie GBP-1S - 2019 Convention Exclusive', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (950, 'https://www.toynamishop.com/product_images/n/378/BW1_01__29431__05249.jpg', 'B2Five R711 Speeder MK1R', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (950, 'https://www.toynamishop.com/product_images/i/851/DSC_0015__04259__87656.jpg', 'B2Five R711 Speeder MK1R', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (950, 'https://www.toynamishop.com/product_images/r/749/DSC_0021__57144__05505.jpg', 'B2Five R711 Speeder MK1R', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (951, 'https://www.toynamishop.com/product_images/d/478/283112892_171314148665159_7613725488676118031_n__73766__71069.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K07B Monster Child', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (951, 'https://www.toynamishop.com/product_images/d/852/282383999_171314108665163_1624826331944760417_n__07603__90201.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K07B Monster Child', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (951, 'https://www.toynamishop.com/product_images/q/143/281854233_171314118665162_864120373636970174_n__25425__37214.jpg', 'Toy''''s Alliance MILLINILLIONS MI-K07B Monster Child', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (952, 'https://www.toynamishop.com/product_images/v/865/product_235__32289__13309.jpg', 'Tulipop Vinyl Keychain - Bubble', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (952, 'https://www.toynamishop.com/product_images/c/242/product_236__27359__86434.jpg', 'Tulipop Vinyl Keychain - Bubble', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (953, 'https://www.toynamishop.com/product_images/d/208/DSC_0759_final__25466__41490.jpg', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (953, 'https://www.toynamishop.com/product_images/y/932/Aviator_Flight_Jacket__98258__09488.jpg', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (953, 'https://www.toynamishop.com/product_images/e/325/DSC_0822_final__61931__72513.jpg', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (953, 'https://www.toynamishop.com/product_images/y/750/DSC_0814_final__32580__91258.jpg', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (953, 'https://www.toynamishop.com/product_images/f/959/DSC_0762_final__95311__94304.jpg', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (953, 'https://www.toynamishop.com/product_images/r/870/DSC_0765_final__77151__79359.jpg', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (953, 'https://www.toynamishop.com/product_images/j/016/DSC_0766_final__97093__98062.jpg', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (953, 'https://www.toynamishop.com/product_images/t/739/DSC_0827_final__20513__65002.jpg', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (953, 'https://www.toynamishop.com/product_images/h/043/DSC_0768_final__70510__31314.jpg', 'Robotech X eepmon - VF-1S Skull Leader Aviator Flight Jacket', false, 10);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (954, 'https://www.toynamishop.com/product_images/j/505/DSC_0035__81377__70165.jpg', 'B2Five K6 Jungle Soldiers', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (954, 'https://www.toynamishop.com/product_images/i/190/DSC_0030__83901__61356.jpg', 'B2Five K6 Jungle Soldiers', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (954, 'https://www.toynamishop.com/product_images/m/058/DSC_0040__80468__95574.jpg', 'B2Five K6 Jungle Soldiers', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (954, 'https://www.toynamishop.com/product_images/n/193/DSC_0045__08048__39135.jpg', 'B2Five K6 Jungle Soldiers', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (954, 'https://www.toynamishop.com/product_images/m/327/DSC_0042__85766__69366.jpg', 'B2Five K6 Jungle Soldiers', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (955, 'https://www.toynamishop.com/product_images/q/380/kakashi-4-inch_03__02365__12416.jpg', 'Naruto Shippuden Poseable Action Figure - Kakashi', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (955, 'https://www.toynamishop.com/product_images/v/305/kakashi-4-inch_12__34252__90403.jpg', 'Naruto Shippuden Poseable Action Figure - Kakashi', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (955, 'https://www.toynamishop.com/product_images/z/867/kakashi-4-inch_08__42658__98216.jpg', 'Naruto Shippuden Poseable Action Figure - Kakashi', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (955, 'https://www.toynamishop.com/product_images/w/851/kakashi-4-inch_09__05321__79432.jpg', 'Naruto Shippuden Poseable Action Figure - Kakashi', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (955, 'https://www.toynamishop.com/product_images/y/329/shippuden_4-inch-figures_series1_0050__75115__28213.jpg', 'Naruto Shippuden Poseable Action Figure - Kakashi', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (955, 'https://www.toynamishop.com/product_images/t/782/shippuden_4-inch-figures_series1_0053__79113__02975.jpg', 'Naruto Shippuden Poseable Action Figure - Kakashi', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (955, 'https://www.toynamishop.com/product_images/k/553/shippuden_4-inch-figures_series1_0052__95803__89158.jpg', 'Naruto Shippuden Poseable Action Figure - Kakashi', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (956, 'https://www.toynamishop.com/product_images/z/063/naruto_six_paths_bust_01__57158__29259.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (956, 'https://www.toynamishop.com/product_images/r/596/naruto_six_paths_bust_07__51787__99831.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (956, 'https://www.toynamishop.com/product_images/h/723/naruto_six_paths_bust_09__28356__90260.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (956, 'https://www.toynamishop.com/product_images/m/964/naruto_six_paths_bust_05__52367__26866.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (956, 'https://www.toynamishop.com/product_images/o/057/naruto_six_paths_bust_08__99373__22779.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (956, 'https://www.toynamishop.com/product_images/t/396/naruto_six_paths_bust_04__99540__77143.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (956, 'https://www.toynamishop.com/product_images/z/484/naruto_six_paths_bust_02__21963__99471.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (956, 'https://www.toynamishop.com/product_images/q/462/naruto_six_paths_bust_06__79368__95587.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (956, 'https://www.toynamishop.com/product_images/i/130/naruto_six_paths_bust_03__41125__28559.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', false, 10);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (956, 'https://www.toynamishop.com/product_images/x/340/naruto_six_paths_bust_02_pq__99257__98161.jpg', 'Naruto Six Paths Sage Mode 1:1 Bust (FINAL PAYMENT ONLY)', false, 11);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (957, 'https://www.toynamishop.com/product_images/j/591/Bleach_series_2_Toshiro_1__58469__79294.jpg', 'Deluxe 6" PVC Statue: Toshiro', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (957, 'https://www.toynamishop.com/product_images/s/075/Bleach_series_2_Toshiro_2__80912__53042.jpg', 'Deluxe 6" PVC Statue: Toshiro', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (957, 'https://www.toynamishop.com/product_images/l/261/BLEACH_collection-2_renji-and-toshiro__04930__13020.jpg', 'Deluxe 6" PVC Statue: Toshiro', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (958, 'https://www.toynamishop.com/product_images/w/955/SDCC2025_robotech_skull_cyclone_01__36218.jpg', 'Admiral Hunter''''s Exclusive VR-052F Cyclone', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (958, 'https://www.toynamishop.com/product_images/g/963/SDCC2025_robotech_skull_cyclone_02__91192.jpg', 'Admiral Hunter''''s Exclusive VR-052F Cyclone', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (959, 'https://www.toynamishop.com/product_images/z/258/SDCC2025_robotech_vf1j_morpher_01__25005.jpg', '40th Anniversary Super Veritech Morpher - Rick Hunter VF1J Edition', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (959, 'https://www.toynamishop.com/product_images/a/415/SDCC2025_robotech_vf1j_morpher_02__59435.jpg', '40th Anniversary Super Veritech Morpher - Rick Hunter VF1J Edition', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (960, 'https://www.toynamishop.com/product_images/w/153/SDCC2025_robotech_CYCLONE_40TH__t-shirt__65750.jpg', 'Robotech Skull Cyclone Shirt 2025 SDCC Exclusive', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (960, 'https://www.toynamishop.com/product_images/k/091/Screenshot_62__61127__20264.1750464106.1280.1280__34677.png', 'Robotech Skull Cyclone Shirt 2025 SDCC Exclusive', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (960, 'https://www.toynamishop.com/product_images/a/262/Screenshot_63__68468__55352.1750464106.1280.1280__05366.png', 'Robotech Skull Cyclone Shirt 2025 SDCC Exclusive', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (961, 'https://www.toynamishop.com/product_images/y/865/ALPHA_FIGHTER_official_photo_US_A1__62980.jpg', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', false, 2);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (961, 'https://www.toynamishop.com/product_images/z/015/10_ALPHA_FIGHTER_official_photo_US_I1__83069.jpg', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', false, 3);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (961, 'https://www.toynamishop.com/product_images/w/036/ALPHA_FIGHTER_official_photo_US_A2__01200.jpg', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', false, 4);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (961, 'https://www.toynamishop.com/product_images/i/563/ALPHA_FIGHTER_official_photo_US_A3__59087.jpg', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', false, 5);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (961, 'https://www.toynamishop.com/product_images/h/673/ALPHA_FIGHTER_official_photo_US_D1__27471.jpg', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', false, 6);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (961, 'https://www.toynamishop.com/product_images/y/541/ALPHA_FIGHTER_official_photo_US_F2__35152.jpg', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', false, 7);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (961, 'https://www.toynamishop.com/product_images/e/933/ALPHA_FIGHTER_official_photo_US_D5__38922.jpg', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', false, 8);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (961, 'https://www.toynamishop.com/product_images/y/535/09_ALPHA_FIGHTER_official_photo_US_F3__90775.jpg', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', false, 9);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (961, 'https://www.toynamishop.com/product_images/t/575/01_ALPHA_FIGHTER_official_photo_US_G1__89442.jpg', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', false, 10);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (961, 'https://www.toynamishop.com/product_images/n/523/08_ALPHA_FIGHTER_official_photo_US_F1__29964.jpg', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', false, 11);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (961, 'https://www.toynamishop.com/product_images/b/564/02_ALPHA_FIGHTER_official_photo_US_G2__29856.jpg', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', false, 12);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (961, 'https://www.toynamishop.com/product_images/m/281/03_ALPHA_FIGHTER_official_photo_US_G3__24029.jpg', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', false, 13);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (961, 'https://www.toynamishop.com/product_images/n/227/05_ALPHA_FIGHTER_official_photo_US_G5__38408.jpg', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', false, 14);
-INSERT INTO product_images (product_id, image_filename, alt_text, is_primary, position)
-VALUES (961, 'https://www.toynamishop.com/product_images/r/673/04_ALPHA_FIGHTER_official_photo_US_G4__63131.jpg', 'PRE-ORDER DEPOSIT: Robotech The New Generation Combat Alpha Fighter', false, 15);
-
+-- 🎠 Carousel Slides
 -- ======================================
--- 🔗 Link Brand IDs
+-- 📝 Blog Posts / Announcements
 -- ======================================
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 705;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 706;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 707;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 708;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 709;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 712;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 713;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 717;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Miyo''s Mystic Musings')))
-WHERE id = 721;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 722;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 723;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 724;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 725;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 728;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 730;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 731;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 733;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Miyo''s Mystic Musings')))
-WHERE id = 736;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Miyo''s Mystic Musings')))
-WHERE id = 737;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 739;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 740;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 742;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 744;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 745;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 746;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 747;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 749;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 750;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 752;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 754;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 755;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Miyo''s Mystic Musings')))
-WHERE id = 757;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 758;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 765;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 766;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 768;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Emily the Strange')))
-WHERE id = 769;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 770;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 772;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 773;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Miyo''s Mystic Musings')))
-WHERE id = 774;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 775;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 779;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 780;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 781;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 782;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Voltron')))
-WHERE id = 783;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 785;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Voltron')))
-WHERE id = 786;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 787;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 788;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 789;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 791;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 794;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 796;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 797;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 798;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 799;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 803;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 808;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 810;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 812;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 813;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 818;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Voltron')))
-WHERE id = 819;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 822;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Miyo''s Mystic Musings')))
-WHERE id = 823;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 824;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 826;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 827;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 828;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 829;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 832;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 833;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Miyo''s Mystic Musings')))
-WHERE id = 835;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Voltron')))
-WHERE id = 836;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 837;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 838;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 842;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 843;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 844;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 846;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 847;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 849;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 850;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 851;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 852;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Voltron')))
-WHERE id = 854;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Voltron')))
-WHERE id = 858;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 859;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 861;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 862;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 863;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 865;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 867;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 869;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 873;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 874;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Miyo''s Mystic Musings')))
-WHERE id = 877;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 878;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 880;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Voltron')))
-WHERE id = 883;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 885;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 886;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 888;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Miyo''s Mystic Musings')))
-WHERE id = 893;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 894;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 895;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 897;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 899;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Miyo''s Mystic Musings')))
-WHERE id = 902;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 905;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 906;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 907;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World B2FIVE')))
-WHERE id = 908;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Futurama')))
-WHERE id = 909;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Skelanimals')))
-WHERE id = 910;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Miyo''s Mystic Musings')))
-WHERE id = 911;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 912;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Miyo''s Mystic Musings')))
-WHERE id = 913;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('MILLINILLIONS')))
-WHERE id = 914;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Sanrio')))
-WHERE id = 915;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Miyo''s Mystic Musings')))
-WHERE id = 916;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Skelanimals')))
-WHERE id = 917;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 918;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Miyo''s Mystic Musings')))
-WHERE id = 919;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 920;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World B2FIVE')))
-WHERE id = 921;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 922;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Skelanimals')))
-WHERE id = 923;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 924;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Voltron')))
-WHERE id = 925;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('MILLINILLIONS')))
-WHERE id = 926;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 927;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Sanrio')))
-WHERE id = 928;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 929;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World B2FIVE')))
-WHERE id = 930;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 931;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Skelanimals')))
-WHERE id = 932;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Miyo''s Mystic Musings')))
-WHERE id = 933;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Skelanimals')))
-WHERE id = 934;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 935;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Skelanimals')))
-WHERE id = 936;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Sanrio')))
-WHERE id = 937;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Skelanimals')))
-WHERE id = 938;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('MILLINILLIONS')))
-WHERE id = 939;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World B2FIVE')))
-WHERE id = 940;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Emily the Strange')))
-WHERE id = 941;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World')))
-WHERE id = 942;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Skelanimals')))
-WHERE id = 943;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Sanrio')))
-WHERE id = 944;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 945;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('MILLINILLIONS')))
-WHERE id = 946;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Mospeada')))
-WHERE id = 947;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 948;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Macross')))
-WHERE id = 949;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World B2FIVE')))
-WHERE id = 950;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('MILLINILLIONS')))
-WHERE id = 951;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Tulipop')))
-WHERE id = 952;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 953;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Acid Rain World B2FIVE')))
-WHERE id = 954;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 955;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 956;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Naruto')))
-WHERE id = 957;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 958;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 959;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 960;
-UPDATE products 
-SET brand_id = (SELECT id FROM brands WHERE LOWER(TRIM(name)) = LOWER(TRIM('Robotech')))
-WHERE id = 961;
-
--- ======================================
--- 📄 Pages (CMS Content)
--- ======================================
-INSERT INTO pages (slug, title, content, meta_description, is_active, show_in_footer, sort_order) VALUES
-    ('about', 'About Us', '<h2>About Toynami</h2><p>Toynami is a leading designer, manufacturer, and distributor of collectibles and toys based on popular licenses from film, television, animation, and video games.</p><p>Since 2000, we have been creating premium collectibles that celebrate the characters and stories fans love.</p>', 'Learn about Toynami - premium collectibles and toys since 2000', true, true, 1),
-    ('contact', 'Contact Us', '<h2>Contact Information</h2><p>Have questions? We''re here to help\!</p><ul><li>Email: support@toynami.com</li><li>Phone: 1-800-TOYNAMI</li><li>Hours: Monday-Friday 9AM-5PM PST</li></ul>', 'Contact Toynami for customer support and inquiries', true, true, 2),
-    ('shipping', 'Shipping & Returns', '<h2>Shipping Information</h2><p>We offer worldwide shipping on all products.</p><h3>Domestic Shipping</h3><ul><li>Standard (5-7 business days): $5.99</li><li>Express (2-3 business days): $12.99</li><li>Free shipping on orders over $75</li></ul><h3>Returns</h3><p>30-day return policy on unopened items.</p>', 'Shipping and return policy for Toynami products', true, true, 3),
-    ('privacy', 'Privacy Policy', '<h2>Privacy Policy</h2><p>Your privacy is important to us. This policy describes how we collect and use your information.</p>', 'Privacy policy for Toynami online store', true, true, 4),
-    ('terms', 'Terms of Service', '<h2>Terms of Service</h2><p>By using our website, you agree to these terms.</p>', 'Terms of service for Toynami online store', true, true, 5);
-
--- ======================================
--- 🗂️ Menus
--- ======================================
-INSERT INTO menus (name, location, is_active) VALUES
-    ('Main Navigation', 'header', true),
-    ('Footer Links', 'footer', true),
-    ('Mobile Menu', 'mobile', true);
-
--- ======================================
--- 🔗 Menu Items - Header Navigation
--- ======================================
--- Get menu IDs
-DO $$
-DECLARE
-    header_menu_id UUID;
-    footer_menu_id UUID;
-    mobile_menu_id UUID;
-    all_products_cat_id UUID;
-    brands_cat_id UUID;
-    on_sale_cat_id UUID;
-    convention_cat_id UUID;
-    new_products_cat_id UUID;
-    archive_cat_id UUID;
-    announcements_cat_id UUID;
-    about_page_id UUID;
-    contact_page_id UUID;
-    shipping_page_id UUID;
-    privacy_page_id UUID;
-    terms_page_id UUID;
-BEGIN
-    -- Get menu IDs
-    SELECT id INTO header_menu_id FROM menus WHERE location = 'header';
-    SELECT id INTO footer_menu_id FROM menus WHERE location = 'footer';
-    SELECT id INTO mobile_menu_id FROM menus WHERE location = 'mobile';
-    
-    -- Get category IDs
-    SELECT id INTO all_products_cat_id FROM categories WHERE slug = 'products';
-    SELECT id INTO brands_cat_id FROM categories WHERE slug = 'brands';
-    SELECT id INTO on_sale_cat_id FROM categories WHERE slug = 'on-sale';
-    SELECT id INTO convention_cat_id FROM categories WHERE slug = 'convention-exclusives';
-    SELECT id INTO new_products_cat_id FROM categories WHERE slug = 'new-products';
-    SELECT id INTO archive_cat_id FROM categories WHERE slug = 'the-archive';
-    SELECT id INTO announcements_cat_id FROM categories WHERE slug = 'announcements';
-    
-    -- Get page IDs
-    SELECT id INTO about_page_id FROM pages WHERE slug = 'about';
-    SELECT id INTO contact_page_id FROM pages WHERE slug = 'contact';
-    SELECT id INTO shipping_page_id FROM pages WHERE slug = 'shipping';
-    SELECT id INTO privacy_page_id FROM pages WHERE slug = 'privacy';
-    SELECT id INTO terms_page_id FROM pages WHERE slug = 'terms';
-    
-    -- Header Menu Items (matching the navigation we created)
-    INSERT INTO menu_items (menu_id, title, url, type, target_id, target_slug, sort_order, is_active) VALUES
-        (header_menu_id, 'ALL PRODUCTS', '/products', 'custom', NULL, NULL, 1, true),
-        (header_menu_id, 'BRANDS', '/brands', 'category', brands_cat_id, 'brands', 2, true),
-        (header_menu_id, 'ON SALE', '/on-sale', 'category', on_sale_cat_id, 'on-sale', 3, true),
-        (header_menu_id, 'CONVENTION EXCLUSIVES', '/convention-exclusives', 'category', convention_cat_id, 'convention-exclusives', 4, true),
-        (header_menu_id, 'NEW PRODUCTS', '/new-products', 'category', new_products_cat_id, 'new-products', 5, true),
-        (header_menu_id, 'THE ARCHIVE', '/the-archive', 'category', archive_cat_id, 'the-archive', 6, true),
-        (header_menu_id, 'ANNOUNCEMENTS', '/announcements', 'category', announcements_cat_id, 'announcements', 7, true);
-    
-    -- Footer Menu Items
-    INSERT INTO menu_items (menu_id, title, url, type, target_id, target_slug, sort_order, is_active) VALUES
-        (footer_menu_id, 'About Us', '/about', 'page', about_page_id, 'about', 1, true),
-        (footer_menu_id, 'Contact Us', '/contact', 'page', contact_page_id, 'contact', 2, true),
-        (footer_menu_id, 'Shipping & Returns', '/shipping', 'page', shipping_page_id, 'shipping', 3, true),
-        (footer_menu_id, 'Privacy Policy', '/privacy', 'page', privacy_page_id, 'privacy', 4, true),
-        (footer_menu_id, 'Terms of Service', '/terms', 'page', terms_page_id, 'terms', 5, true);
-    
-    -- Mobile Menu Items (same as header)
-    INSERT INTO menu_items (menu_id, title, url, type, target_id, target_slug, sort_order, is_active) VALUES
-        (mobile_menu_id, 'ALL PRODUCTS', '/products', 'custom', NULL, NULL, 1, true),
-        (mobile_menu_id, 'BRANDS', '/brands', 'category', brands_cat_id, 'brands', 2, true),
-        (mobile_menu_id, 'ON SALE', '/on-sale', 'category', on_sale_cat_id, 'on-sale', 3, true),
-        (mobile_menu_id, 'CONVENTION EXCLUSIVES', '/convention-exclusives', 'category', convention_cat_id, 'convention-exclusives', 4, true),
-        (mobile_menu_id, 'NEW PRODUCTS', '/new-products', 'category', new_products_cat_id, 'new-products', 5, true),
-        (mobile_menu_id, 'THE ARCHIVE', '/the-archive', 'category', archive_cat_id, 'the-archive', 6, true),
-        (mobile_menu_id, 'ANNOUNCEMENTS', '/announcements', 'category', announcements_cat_id, 'announcements', 7, true);
-END $$;
--- ======================================
--- 📰 Blog Posts / Announcements
--- ======================================
-
 INSERT INTO blog_posts (slug, title, excerpt, content, featured_image, status, published_at, featured, meta_title, meta_description, tags) VALUES
 (
     'rick-hunters-vf-1j-shogun-warriors-24-inch',
@@ -22757,8 +22194,6 @@ INSERT INTO blog_posts (slug, title, excerpt, content, featured_image, status, p
     ARRAY['voltron', '40th-anniversary', 'limited-edition', 'defender-of-the-universe', 'collectible']
 );
 
--- ======================================
--- 🎠 Carousel Slides
 -- ======================================
 
 -- Default carousel slide with the Robotech combo pack banner (just image with link, no overlay text)

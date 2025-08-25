@@ -5,7 +5,7 @@ import { ProductEditForm } from "./product-edit-form";
 export default async function ProductEditPage({
   params: p,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const params = await p;
   const supabase = await createClient();
@@ -37,7 +37,6 @@ export default async function ProductEditPage({
       `
       *,
       variants:product_variants(*),
-      images:product_images(*),
       categories:product_categories(
         category:categories(*)
       ),
@@ -55,6 +54,35 @@ export default async function ProductEditPage({
     )
     .eq("id", productId)
     .single();
+    
+  // Get images via media_usage
+  if (product) {
+    const { data: mediaUsageData } = await supabase
+      .from('media_usage')
+      .select(`
+        field_name,
+        media:media_library (
+          id,
+          file_url,
+          alt_text,
+          title,
+          filename
+        )
+      `)
+      .eq('entity_type', 'product')
+      .eq('entity_id', productId.toString())
+      .order('field_name');
+    
+    // Transform media usage data to images array
+    product.images = (mediaUsageData || []).map((usage, index) => ({
+      id: usage.media?.id,
+      media_id: usage.media?.id,
+      image_filename: usage.media?.file_url || '',
+      alt_text: usage.media?.alt_text || '',
+      is_primary: usage.field_name === 'primary_image',
+      position: index
+    }));
+  }
 
   if (!product) {
     redirect("/admin/products");

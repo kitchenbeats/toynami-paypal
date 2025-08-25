@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useTransition, useEffect } from 'react'
+import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -59,17 +59,12 @@ import {
   Eye,
   EyeOff,
   Package,
-  Image as ImageIcon,
   DollarSign,
-  Tag,
   Copy,
   RefreshCw,
   AlertCircle,
   CheckCircle,
-  ShoppingCart,
-  BarChart,
-  Calendar,
-  Hash
+  Calendar
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
@@ -86,7 +81,7 @@ interface EnhancedProductsManagerProps {
   initialProducts: Product[]
   categories: Category[]
   brands: Brand[]
-  globalOptions: GlobalOption[]
+  globalOptions?: GlobalOption[]
   totalCount: number
   currentPage: number
   pageSize: number
@@ -96,7 +91,7 @@ export function EnhancedProductsManager({
   initialProducts,
   categories,
   brands,
-  globalOptions,
+  // globalOptions not currently used
   totalCount,
   currentPage = 1,
   pageSize = 20
@@ -109,7 +104,7 @@ export function EnhancedProductsManager({
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
-  const [isVariantDialogOpen, setIsVariantDialogOpen] = useState(false)
+  // Variant dialog state removed - not currently used
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [selectedProducts, setSelectedProducts] = useState<Set<string>>(new Set())
   const [formData, setFormData] = useState<ProductFormData>({
@@ -143,7 +138,7 @@ export function EnhancedProductsManager({
   const [variants, setVariants] = useState<ProductVariantFormData[]>([])
   const [uploadedImages, setUploadedImages] = useState<string[]>([])
   const [errors, setErrors] = useState<Record<string, string>>({})
-  const [isPending, startTransition] = useTransition()
+  // Transition state removed - not currently used
   const [isLoading, setIsLoading] = useState(false)
   const [isSyncing, setIsSyncing] = useState(false)
   const router = useRouter()
@@ -313,18 +308,40 @@ export function EnhancedProductsManager({
             )
         }
         
-        // Add images
+        // Add images to media library and link to product
         if (uploadedImages.length > 0) {
-          await supabase
-            .from('product_images')
-            .insert(
-              uploadedImages.map((url, idx) => ({
-                product_id: product.id,
-                image_filename: url,
-                is_primary: idx === 0,
-                position: idx
-              }))
-            )
+          const { data: { user } } = await supabase.auth.getUser();
+          
+          for (let idx = 0; idx < uploadedImages.length; idx++) {
+            const url = uploadedImages[idx];
+            const fileName = url.split('/').pop() || `product-${product.id}-${idx}`;
+            
+            // Insert into media library
+            const { data: mediaData } = await supabase
+              .from('media_library')
+              .insert({
+                filename: fileName,
+                original_name: fileName,
+                file_path: url,
+                file_url: url,
+                folder: 'products',
+                uploaded_by: user?.id
+              })
+              .select()
+              .single();
+            
+            if (mediaData) {
+              // Create media usage link
+              await supabase
+                .from('media_usage')
+                .insert({
+                  media_id: mediaData.id,
+                  entity_type: 'product',
+                  entity_id: product.id.toString(),
+                  field_name: idx === 0 ? 'primary_image' : `gallery_image_${idx}`
+                });
+            }
+          }
         }
         
         // Add variants
@@ -384,7 +401,7 @@ export function EnhancedProductsManager({
       }
       
       router.refresh()
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error saving product:', error)
       toast.error(error.message || 'Failed to save product')
     } finally {
@@ -409,7 +426,7 @@ export function EnhancedProductsManager({
       toast.success('Product deleted successfully')
       setIsDeleteDialogOpen(false)
       router.refresh()
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error deleting product:', error)
       toast.error(error.message || 'Failed to delete product')
     } finally {
@@ -431,7 +448,7 @@ export function EnhancedProductsManager({
         p.id === product.id ? { ...p, is_featured: !p.is_featured } : p
       ))
       toast.success(`Product ${product.is_featured ? 'unfeatured' : 'featured'}`)
-    } catch (error: any) {
+    } catch {
       toast.error('Failed to update featured status')
     }
   }
@@ -450,7 +467,7 @@ export function EnhancedProductsManager({
         p.id === product.id ? { ...p, is_visible: !p.is_visible } : p
       ))
       toast.success(`Product ${product.is_visible ? 'hidden' : 'shown'}`)
-    } catch (error: any) {
+    } catch {
       toast.error('Failed to update visibility')
     }
   }
@@ -477,7 +494,8 @@ export function EnhancedProductsManager({
       setSelectedProducts(new Set())
       toast.success(`${selectedProducts.size} products deleted`)
       router.refresh()
-    } catch (error: any) {
+    } catch (error: unknown) {
+      console.error('Error deleting products:', error)
       toast.error('Failed to delete products')
     } finally {
       setIsLoading(false)
@@ -499,7 +517,7 @@ export function EnhancedProductsManager({
       const result = await response.json()
       toast.success(result.message || 'Products synced with PayPal')
       router.refresh()
-    } catch (error: any) {
+    } catch {
       toast.error('Failed to sync with PayPal')
     } finally {
       setIsSyncing(false)
@@ -510,7 +528,7 @@ export function EnhancedProductsManager({
   const handleImageUpload = async (files: FileList) => {
     const uploadPromises = Array.from(files).map(async (file) => {
       const fileName = `${Date.now()}-${file.name}`
-      const { data, error } = await supabase.storage
+      const { error } = await supabase.storage
         .from('product-images')
         .upload(fileName, file)
       
@@ -527,7 +545,7 @@ export function EnhancedProductsManager({
       const urls = await Promise.all(uploadPromises)
       setUploadedImages([...uploadedImages, ...urls])
       toast.success(`${files.length} images uploaded`)
-    } catch (error) {
+    } catch {
       toast.error('Failed to upload images')
     }
   }
@@ -975,7 +993,7 @@ export function EnhancedProductsManager({
                   <Label htmlFor="status">Status</Label>
                   <Select 
                     value={formData.status} 
-                    onValueChange={(value: any) => setFormData({ ...formData, status: value })}
+                    onValueChange={(value: unknown) => setFormData({ ...formData, status: value })}
                   >
                     <SelectTrigger>
                       <SelectValue />
@@ -1160,13 +1178,13 @@ export function EnhancedProductsManager({
                 <Label htmlFor="track_inventory">Track Inventory</Label>
                 <Select 
                   value={formData.track_inventory} 
-                  onValueChange={(value: any) => setFormData({ ...formData, track_inventory: value })}
+                  onValueChange={(value: unknown) => setFormData({ ...formData, track_inventory: value })}
                 >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="none">Don't Track</SelectItem>
+                    <SelectItem value="none">Don&apos;t Track</SelectItem>
                     <SelectItem value="by product">Track by Product</SelectItem>
                     <SelectItem value="by variant">Track by Variant</SelectItem>
                   </SelectContent>
@@ -1418,7 +1436,7 @@ export function EnhancedProductsManager({
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete the product "{selectedProduct?.name}". 
+              This will permanently delete the product &quot;{selectedProduct?.name}&quot;. 
               This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>

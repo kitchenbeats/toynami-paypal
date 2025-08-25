@@ -1,5 +1,4 @@
 import { createClient } from '@/lib/supabase/server'
-import { redirect } from 'next/navigation'
 import CheckoutForm from '@/components/checkout-form'
 
 export default async function CheckoutPage() {

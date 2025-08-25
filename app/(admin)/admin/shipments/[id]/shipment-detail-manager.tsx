@@ -10,11 +10,9 @@ import {
   ArrowLeft, 
   Package, 
   MapPin, 
-  Calendar, 
   DollarSign, 
   Truck, 
   User, 
-  Mail, 
   Hash,
   Printer,
   RefreshCw,
@@ -23,8 +21,69 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 
+interface ShipmentItem {
+  name: string;
+  quantity: number;
+  unitPrice: number;
+  sku?: string;
+  lineItemKey?: string;
+}
+
+interface ShipmentAddress {
+  name: string;
+  street1: string;
+  street2?: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  country: string;
+  phone?: string;
+}
+
+interface Shipment {
+  shipmentId: string;
+  orderId: string;
+  orderNumber: string;
+  createDate: string;
+  shipDate: string;
+  shipmentCost: number;
+  insuranceCost: number;
+  trackingNumber: string;
+  isReturnLabel: boolean;
+  batchNumber?: string;
+  carrierCode: string;
+  serviceCode: string;
+  packageCode: string;
+  confirmation?: string;
+  warehouseId?: string;
+  voided: boolean;
+  voidDate?: string;
+  marketplaceNotified: boolean;
+  notifyErrorMessage?: string;
+  shipTo: ShipmentAddress;
+  weight: {
+    value: number;
+    units: string;
+  };
+  dimensions?: {
+    length: number;
+    width: number;
+    height: number;
+    units: string;
+  };
+  insuranceOptions?: {
+    provider: string;
+    insureShipment: boolean;
+    insuredValue: number;
+  };
+  advancedOptions?: Record<string, unknown>;
+  items: ShipmentItem[];
+  labelData?: string;
+  formData?: string;
+}
+
 interface ShipmentDetailManagerProps {
-  shipment: any
+  shipment: Shipment
 }
 
 export function ShipmentDetailManager({ shipment }: ShipmentDetailManagerProps) {
@@ -81,6 +140,7 @@ export function ShipmentDetailManager({ shipment }: ShipmentDetailManagerProps) 
       toast.success('Order cancelled successfully')
       router.refresh()
     } catch (error) {
+        console.error('API request failed:', error)
       toast.error('Failed to cancel order')
     } finally {
       setLoading(false)
@@ -333,7 +393,7 @@ export function ShipmentDetailManager({ shipment }: ShipmentDetailManagerProps) 
                   </tr>
                 </thead>
                 <tbody>
-                  {shipment.items.map((item: any, index: number) => (
+                  {shipment.items.map((item, index) => (
                     <tr key={item.orderItemId || index} className="border-b">
                       <td className="p-3 font-mono text-xs">{item.sku || 'N/A'}</td>
                       <td className="p-3">
@@ -356,7 +416,7 @@ export function ShipmentDetailManager({ shipment }: ShipmentDetailManagerProps) 
                   <tr>
                     <td colSpan={4} className="p-3 text-right font-medium">Subtotal:</td>
                     <td className="p-3 text-right font-medium">
-                      ${shipment.items.reduce((sum: number, item: any) => 
+                      ${shipment.items.reduce((sum: number, item) => 
                         sum + (item.unitPrice || 0) * item.quantity, 0).toFixed(2)}
                     </td>
                   </tr>

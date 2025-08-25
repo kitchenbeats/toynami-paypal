@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { getShipStationV1Client } from '@/lib/shipstation/v1-client'
 
-export async function POST(request: NextRequest) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function POST(_request: NextRequest) {
   try {
     const supabase = await createClient()
     
@@ -43,7 +44,7 @@ export async function POST(request: NextRequest) {
     }
 
     let syncedCount = 0
-    const errors: any[] = []
+    const errors: string[] = []
 
     // Sync each order to ShipStation
     for (const order of ordersToSync) {

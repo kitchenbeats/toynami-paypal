@@ -3,6 +3,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { getImageSrc } from '@/lib/utils/image-utils'
+import { useCart } from '@/lib/hooks/use-cart'
+import { toast } from 'sonner'
 
 interface ProductCardProps {
   product: {
@@ -32,6 +34,8 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { addItem } = useCart()
+  
   // Get price
   const getPrice = () => {
     if (product.base_price_cents && product.base_price_cents > 0) {
@@ -172,7 +176,25 @@ export function ProductCard({ product }: ProductCardProps) {
                     onClick={(e) => {
                       e.preventDefault()
                       if (isInStock) {
-                        // TODO: Implement add to cart functionality
+                        // Add to cart functionality
+                        const primaryImage = product.images?.find(img => img.is_primary) || product.images?.[0]
+                        
+                        addItem({
+                          productId: product.id,
+                          productName: product.name,
+                          price: Math.round(displayPrice * 100), // Convert to cents
+                          quantity: 1,
+                          image: primaryImage?.image_filename || null,
+                          variantId: undefined, // No variant selection in card view
+                          max_purchase_quantity: product.max_purchase_quantity,
+                          min_purchase_quantity: product.min_purchase_quantity || 1,
+                          stock_level: stockLevel,
+                          track_inventory: product.track_inventory
+                        })
+                        
+                        toast.success(`${product.name} added to cart!`)
+                      } else {
+                        toast.error('This product is out of stock')
                       }
                     }}
                   >
@@ -198,7 +220,8 @@ export function ProductCard({ product }: ProductCardProps) {
                   className="figma-add-to-wishlist-parent"
                   onClick={(e) => {
                     e.preventDefault()
-                    // TODO: Implement wishlist functionality
+                    // Wishlist functionality - for future implementation
+                    toast.info('Wishlist feature coming soon!')
                   }}
                 >
                   <b className="figma-add-to-wishlist">ADD TO WISHLIST</b>

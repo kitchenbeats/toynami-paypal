@@ -58,15 +58,16 @@ CREATE TABLE IF NOT EXISTS product_variants (
     deleted_at TIMESTAMPTZ
 );
 
-CREATE TABLE IF NOT EXISTS product_images (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
-    image_filename TEXT NOT NULL,
-    alt_text TEXT,
-    position INTEGER,
-    is_primary BOOLEAN DEFAULT FALSE,
-    deleted_at TIMESTAMPTZ
-);
+-- REMOVED: product_images table - now using unified media_library
+-- CREATE TABLE IF NOT EXISTS product_images (
+--     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+--     product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+--     image_filename TEXT NOT NULL,
+--     alt_text TEXT,
+--     position INTEGER,
+--     is_primary BOOLEAN DEFAULT FALSE,
+--     deleted_at TIMESTAMPTZ
+-- );
 
 CREATE TABLE IF NOT EXISTS categories (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -296,7 +297,7 @@ CREATE TABLE IF NOT EXISTS webhook_events (
 ALTER TABLE users            ENABLE ROW LEVEL SECURITY;
 ALTER TABLE products         ENABLE ROW LEVEL SECURITY;
 ALTER TABLE product_variants ENABLE ROW LEVEL SECURITY;
-ALTER TABLE product_images   ENABLE ROW LEVEL SECURITY;
+-- ALTER TABLE product_images   ENABLE ROW LEVEL SECURITY; -- REMOVED: using media_library
 ALTER TABLE categories       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE product_categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE carts            ENABLE ROW LEVEL SECURITY;
@@ -345,19 +346,20 @@ FOR ALL USING (
 );
 
 -- Images: public read for visible products
-CREATE POLICY "Public read images" ON product_images
-FOR SELECT USING (
-  deleted_at IS NULL AND
-  EXISTS (
-    SELECT 1 FROM products p
-    WHERE p.id = product_images.product_id
-      AND p.deleted_at IS NULL AND p.is_visible = TRUE AND p.status = 'active'
-  )
-);
-CREATE POLICY "Admin manage images" ON product_images
-FOR ALL USING (
-  EXISTS (SELECT 1 FROM users u WHERE u.id = auth.uid() AND u.is_admin)
-);
+-- REMOVED: product_images policies - now using media_library
+-- CREATE POLICY "Public read images" ON product_images
+-- FOR SELECT USING (
+--   deleted_at IS NULL AND
+--   EXISTS (
+--     SELECT 1 FROM products p
+--     WHERE p.id = product_images.product_id
+--       AND p.deleted_at IS NULL AND p.is_visible = TRUE AND p.status = 'active'
+--   )
+-- );
+-- CREATE POLICY "Admin manage images" ON product_images
+-- FOR ALL USING (
+--   EXISTS (SELECT 1 FROM users u WHERE u.id = auth.uid() AND u.is_admin)
+-- );
 
 -- Categories & pivots: public read
 CREATE POLICY "Public read categories" ON categories
@@ -460,7 +462,7 @@ FOR ALL USING (
 );
 
 -- Block hard DELETEs on soft-deleted entities for non-service roles
-REVOKE DELETE ON products, product_variants, product_images, categories, discounts, wishlists, loyalty_tiers, raffles FROM PUBLIC;
+REVOKE DELETE ON products, product_variants, categories, discounts, wishlists, loyalty_tiers, raffles FROM PUBLIC;
 
 -- ======================================
 -- ✅ Initial setup complete

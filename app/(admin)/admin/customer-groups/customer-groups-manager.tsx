@@ -11,8 +11,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { 
-  Pencil, Trash2, Plus, Save, X, Users, Shield, 
-  DollarSign, Percent, Package, Eye, ShoppingCart 
+  Pencil, Trash2, Plus, Save, X, Users, 
+  DollarSign, Percent, Eye, ShoppingCart 
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
@@ -29,7 +29,7 @@ interface CustomerGroup {
   discount_percentage: number
   tax_exempt: boolean
   requires_approval: boolean
-  auto_assign_rules?: any
+  auto_assign_rules?: Record<string, unknown> | null
 }
 
 interface CustomerGroupsManagerProps {

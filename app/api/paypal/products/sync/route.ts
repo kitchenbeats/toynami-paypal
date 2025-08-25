@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/utils/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 
 /**
  * PayPal Catalog Products API Integration
@@ -36,7 +36,15 @@ async function getPayPalAccessToken() {
 }
 
 // Create product in PayPal
-export async function createPayPalProduct(product: any) {
+export async function createPayPalProduct(product: {
+  id?: string;
+  sku?: string;
+  slug: string;
+  name: string;
+  description?: string;
+  brand?: { name: string };
+  images?: Array<{ image_filename: string }>;
+}) {
   const accessToken = await getPayPalAccessToken()
 
   const paypalProduct = {
@@ -68,7 +76,13 @@ export async function createPayPalProduct(product: any) {
 }
 
 // Update product in PayPal
-export async function updatePayPalProduct(paypalProductId: string, updates: any) {
+export async function updatePayPalProduct(paypalProductId: string, updates: {
+  name?: string;
+  description?: string;
+  category?: string;
+  image_url?: string;
+  home_url?: string;
+}) {
   const accessToken = await getPayPalAccessToken()
 
   const patchOperations = []
@@ -118,7 +132,8 @@ export async function updatePayPalProduct(paypalProductId: string, updates: any)
 }
 
 // Sync all products from PayPal to database
-export async function GET(request: NextRequest) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function GET(_request: NextRequest) {
   try {
     const supabase = await createClient()
     
@@ -202,7 +217,8 @@ export async function GET(request: NextRequest) {
           
           syncResults.created++
         }
-      } catch (error: any) {
+      } catch (error) {
+          console.error('Database operation failed:', error)
         syncResults.errors.push({
           product: ppProduct.id,
           error: error.message,
@@ -215,7 +231,8 @@ export async function GET(request: NextRequest) {
       results: syncResults,
       total: paypalProducts.length,
     })
-  } catch (error: any) {
+  } catch (error) {
+      console.error('Database operation failed:', error)
     console.error('PayPal sync error:', error)
     return NextResponse.json(
       { error: error.message },
@@ -272,7 +289,7 @@ export async function POST(request: NextRequest) {
         product,
         paypal: paypalProduct,
       })
-    } catch (paypalError: any) {
+    } catch (paypalError) {
       // If PayPal fails, mark product as needs_sync
       await supabase
         .from('products')
@@ -286,7 +303,8 @@ export async function POST(request: NextRequest) {
         error: paypalError.message,
       })
     }
-  } catch (error: any) {
+  } catch (error) {
+      console.error('Database operation failed:', error)
     console.error('Product creation error:', error)
     return NextResponse.json(
       { error: error.message },

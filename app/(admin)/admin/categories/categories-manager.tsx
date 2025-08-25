@@ -12,9 +12,11 @@ import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { 
   Pencil, Trash2, Plus, Save, X, Folder, 
-  Eye, EyeOff, Star, Menu, Image
+  EyeOff, Star
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { MediaSelector } from '@/components/ui/media-selector'
+import { MediaItem } from '@/lib/types/media'
 
 interface Category {
   id?: string
@@ -293,12 +295,17 @@ export function CategoriesManager({ initialCategories }: CategoriesManagerProps)
             </div>
 
             <div>
-              <Label htmlFor="image">Image URL</Label>
-              <Input
-                id="image"
-                value={formData.image_url || ''}
-                onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                placeholder="https://example.com/category-image.jpg"
+              <Label>Category Image</Label>
+              <MediaSelector
+                value={formData.image_url}
+                onChange={(media: MediaItem | null) => {
+                  setFormData({ ...formData, image_url: media?.file_url || '' })
+                }}
+                mimeTypeFilter="image/"
+                folderFilter="categories"
+                buttonText="Select Category Image"
+                buttonVariant="outline"
+                className="w-full"
               />
             </div>
 

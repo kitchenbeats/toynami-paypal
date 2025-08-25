@@ -8,7 +8,8 @@ import { getShipStationV1Client } from '@/lib/shipstation/v1-client'
  * GET /api/shipstation/test - Test connection and get account info
  */
 
-export async function GET(request: NextRequest) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function GET(_request: NextRequest) {
   try {
     // Get ShipStation V1 client
     const client = getShipStationV1Client()
@@ -26,7 +27,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get available carriers
-    const carriers = carriersResponse.data?.map((carrier: any) => ({
+    const carriers = carriersResponse.data?.map((carrier) => ({
       code: carrier.code,
       name: carrier.name,
       accountNumber: carrier.accountNumber ? '***' + carrier.accountNumber.slice(-4) : null,
@@ -63,7 +64,7 @@ export async function POST(request: NextRequest) {
 
     if (!createTestOrder) {
       return NextResponse.json({
-        message: 'Set createTestOrder: true in request body to create a test order'
+        message: 'Set createTestOrder: true inbody to create a test order'
       })
     }
 

@@ -14,7 +14,7 @@ interface MenuItem {
 
 export function MainNavigation() {
   const [navigationItems, setNavigationItems] = useState<MenuItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadMenu() {

@@ -2,7 +2,14 @@ import { AuthForm } from "@/components/auth-form";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Page() {
+interface PageProps {
+  searchParams: Promise<{ redirectTo?: string }>
+}
+
+export default async function Page({ searchParams }: PageProps) {
+  const params = await searchParams
+  const redirectTo = params.redirectTo || "/account"
+  
   return (
     <div className="flex min-h-svh w-full flex-col items-center justify-center p-6 md:p-10">
       <Link href="/" className="mb-8">
@@ -16,7 +23,7 @@ export default function Page() {
         />
       </Link>
       <div className="w-full max-w-sm">
-        <AuthForm view="sign_in" redirectTo="/protected" />
+        <AuthForm view="sign_in" redirectTo={redirectTo} />
       </div>
     </div>
   );

@@ -1,17 +1,14 @@
 'use client'
 
-import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { 
-  Plus, Mail, Send, Users, BarChart3, Calendar,
+  Plus, Mail, Send, Users, BarChart3,
   Target, Zap, Heart, ShoppingCart, Gift
 } from 'lucide-react'
 
 export function EmailManager() {
-  const [campaigns] = useState([])
-
   return (
     <div className="space-y-6">
       {/* Header */}

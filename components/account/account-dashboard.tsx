@@ -4,13 +4,13 @@ import { useState, useEffect } from 'react'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import { User } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/client'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Tabs, TabsContent } from '@/components/ui/tabs'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
-import { Package, Heart, MapPin, CreditCard, Trophy, Settings, ShoppingBag, Clock } from 'lucide-react'
+import { Package, Heart, MapPin, CreditCard, Trophy, ShoppingBag } from 'lucide-react'
 
 interface AccountDashboardProps {
   user: User | null
@@ -21,10 +21,10 @@ export function AccountDashboard({ user }: AccountDashboardProps) {
   const router = useRouter()
   const pathname = usePathname()
   const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'overview')
-  const [orders, setOrders] = useState<any[]>([])
-  const [addresses, setAddresses] = useState<any[]>([])
-  const [wishlistItems, setWishlistItems] = useState<any[]>([])
-  const [userProfile, setUserProfile] = useState<any>(null)
+  const [orders, setOrders] = useState<unknown[]>([])
+  const [addresses, setAddresses] = useState<unknown[]>([])
+  const [wishlistItems, setWishlistItems] = useState<unknown[]>([])
+  // User profile state removed - not currently used
   const [loading, setLoading] = useState(true)
   const [editableProfile, setEditableProfile] = useState({
     full_name: '',
@@ -76,7 +76,18 @@ export function AccountDashboard({ user }: AccountDashboardProps) {
         .eq('user_id', user.id)
         .is('deleted_at', null)
       
-      let wishlistData: any[] = []
+      let wishlistData: Array<{
+        id: string;
+        added_at: string;
+        product_id: string;
+        products: {
+          id: string;
+          name: string;
+          slug: string;
+          base_price_cents: number;
+          images: Array<{ image_filename: string; is_primary: boolean }>;
+        };
+      }> = []
       if (userWishlists && userWishlists.length > 0) {
         const wishlistIds = userWishlists.map(w => w.id)
         const { data: items } = await supabase
@@ -330,7 +341,7 @@ export function AccountDashboard({ user }: AccountDashboardProps) {
         <Card>
           <CardHeader>
             <CardTitle>My Wishlist</CardTitle>
-            <CardDescription>Items you've saved for later</CardDescription>
+            <CardDescription>Items you&apos;ve saved for later</CardDescription>
           </CardHeader>
           <CardContent>
             {loading ? (

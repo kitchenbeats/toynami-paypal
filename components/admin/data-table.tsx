@@ -18,30 +18,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+// Dropdown components available if needed for actions
+// import { 
+//   DropdownMenu,
+//   DropdownMenuContent,
+//   DropdownMenuItem,
+//   DropdownMenuLabel,
+//   DropdownMenuSeparator,
+//   DropdownMenuTrigger 
+// } from '@/components/ui/dropdown-menu'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
-import {
-  ChevronLeft,
+import { ChevronLeft,
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
-  Search,
-  Filter,
-  Download,
-  MoreHorizontal,
+  Search, 
+  Download, 
   ArrowUp,
   ArrowDown,
   ArrowUpDown,
-  Loader2
-} from 'lucide-react'
+  Loader2 } from 'lucide-react'
 
 export interface Column<T> {
   key: string
@@ -95,13 +92,13 @@ export function DataTable<T extends { id: string | number }>({
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(pagination.pageSize || 10)
 
-  // Filter data based on search term
+  //data based on search term
   const filteredData = useMemo(() => {
     if (!searchTerm) return data
 
     return data.filter((item) => {
       return columns.some((column) => {
-        const value = (item as any)[column.key]
+        const value = (item as unknown)[column.key]
         if (value === null || value === undefined) return false
         return value.toString().toLowerCase().includes(searchTerm.toLowerCase())
       })
@@ -113,8 +110,8 @@ export function DataTable<T extends { id: string | number }>({
     if (!sortConfig.key) return filteredData
 
     return [...filteredData].sort((a, b) => {
-      const aValue = (a as any)[sortConfig.key!]
-      const bValue = (b as any)[sortConfig.key!]
+      const aValue = (a as unknown)[sortConfig.key!]
+      const bValue = (b as unknown)[sortConfig.key!]
 
       if (aValue === null || aValue === undefined) return 1
       if (bValue === null || bValue === undefined) return -1
@@ -185,7 +182,7 @@ export function DataTable<T extends { id: string | number }>({
     const headers = columns.map(col => col.label).join(',')
     const rows = sortedData.map(item => 
       columns.map(col => {
-        const value = (item as any)[col.key]
+        const value = (item as unknown)[col.key]
         return typeof value === 'string' && value.includes(',') 
           ? `"${value}"` 
           : value
@@ -337,7 +334,7 @@ export function DataTable<T extends { id: string | number }>({
                     >
                       {column.render 
                         ? column.render(item)
-                        : (item as any)[column.key]
+                        : (item as unknown)[column.key]
                       }
                     </TableCell>
                   ))}

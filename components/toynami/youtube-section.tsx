@@ -2,12 +2,37 @@
 
 import React, { useEffect, useState, useRef } from 'react'
 
+interface YouTubePlayer {
+  cuePlaylist: (params: { list: string; index: number }) => void
+  destroy: () => void
+}
+
+interface YouTubeEvent {
+  target: YouTubePlayer
+}
+
+declare global {
+  interface Window {
+    YT?: {
+      Player: new (elementId: string, config: {
+        height: string
+        width: string
+        playerVars: Record<string, number>
+        events: {
+          onReady: (event: YouTubeEvent) => void
+        }
+      }) => YouTubePlayer
+    }
+    onYouTubeIframeAPIReady?: () => void
+  }
+}
+
 export function YouTubeSection() {
   const PLAYLIST_ID = "PLlBZs1tmA78eFI-cPYS-WCOqP7PUfNNf2"
   const [isLoaded, setIsLoaded] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
-  const playersRef = useRef<any[]>([])
+  const playersRef = useRef<YouTubePlayer[]>([])
   
   useEffect(() => {
     // Set up Intersection Observer for lazy loading
@@ -34,7 +59,7 @@ export function YouTubeSection() {
     if (!isVisible) return
     
     // Check if YouTube API is already loaded
-    if ((window as any).YT && (window as any).YT.Player) {
+    if (window.YT && window.YT.Player) {
       initializePlayers()
       return
     }
@@ -47,12 +72,12 @@ export function YouTubeSection() {
     firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag)
     
     // Setup YouTube players when API is ready
-    ;(window as any).onYouTubeIframeAPIReady = function() {
+    window.onYouTubeIframeAPIReady = function() {
       initializePlayers()
     }
     
     function initializePlayers() {
-      const YT = (window as any).YT
+      const YT = window.YT
       if (!YT || !YT.Player) return
       
       // Create 3 players
@@ -65,7 +90,7 @@ export function YouTubeSection() {
             modestbranding: 1,
           },
           events: {
-            onReady: function(event: any) {
+            onReady: function(event: YouTubeEvent) {
               event.target.cuePlaylist({
                 list: PLAYLIST_ID,
                 index: 0,
@@ -83,7 +108,7 @@ export function YouTubeSection() {
             modestbranding: 1,
           },
           events: {
-            onReady: function(event: any) {
+            onReady: function(event: YouTubeEvent) {
               event.target.cuePlaylist({
                 list: PLAYLIST_ID,
                 index: 1,
@@ -100,7 +125,7 @@ export function YouTubeSection() {
             modestbranding: 1,
           },
           events: {
-            onReady: function(event: any) {
+            onReady: function(event: YouTubeEvent) {
               event.target.cuePlaylist({
                 list: PLAYLIST_ID,
                 index: 2,
@@ -120,7 +145,7 @@ export function YouTubeSection() {
           if (player && player.destroy) {
             player.destroy()
           }
-        } catch (e) {
+        } catch {
           // Ignore cleanup errors
         }
       })

@@ -9,6 +9,21 @@
  * - Timezone: PST/PDT for datetime values
  */
 
+import type {
+  ShipStationOrder,
+  ShipStationApiResponse,
+  ShipStationCarrier,
+  ShipStationService,
+  ShipStationStore,
+  ShipStationTag,
+  ShipStationWarehouse,
+  ShipStationShipment,
+  ShipStationLabel,
+  ShipStationPackage,
+  ShipStationAddress,
+  ShipStationOrderItem,
+} from '@/lib/types/shipstation'
+
 export interface ShipStationCredentials {
   apiKey: string
   apiSecret: string
@@ -159,7 +174,7 @@ export class ShipStationV1Client {
   private async makeRequest<T>(
     endpoint: string,
     method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET',
-    body?: any
+    body?: Record<string, unknown>
   ): Promise<ShipStationApiResponse<T>> {
     // Check rate limiting
     if (this.rateLimitRemaining <= 0 && Date.now() < this.rateLimitResetTime) {
@@ -221,6 +236,7 @@ export class ShipStationV1Client {
         rateLimitReset: this.rateLimitResetTime
       }
     } catch (error) {
+        console.error('Error in catch block:', error)
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Unknown error occurred',
@@ -233,7 +249,7 @@ export class ShipStationV1Client {
   /**
    * Create or update an order in ShipStation
    */
-  async createOrder(order: ShipStationOrder): Promise<ShipStationApiResponse<any>> {
+  async createOrder(order: ShipStationOrder): Promise<ShipStationApiResponse<ShipStationOrder>> {
     // ENFORCE only allowed store
     const allowedStoreId = process.env.SHIPSTATION_STORE_ID
     const blockedStores = process.env.SHIPSTATION_BLOCKED_STORES?.split(',').map(id => id.trim()) || []
@@ -273,7 +289,7 @@ export class ShipStationV1Client {
   /**
    * Get an order by order number
    */
-  async getOrder(orderNumber: string): Promise<ShipStationApiResponse<any>> {
+  async getOrder(orderNumber: string): Promise<ShipStationApiResponse<{orders: ShipStationOrder[], total: number, page: number, pages: number}>> {
     return this.makeRequest(`/orders?orderNumber=${encodeURIComponent(orderNumber)}`)
   }
 
@@ -298,7 +314,7 @@ export class ShipStationV1Client {
     sortDir?: 'ASC' | 'DESC'
     page?: number
     pageSize?: number
-  }): Promise<ShipStationApiResponse<any>> {
+  }): Promise<ShipStationApiResponse<{orders: ShipStationOrder[], total: number, page: number, pages: number}>> {
     const queryParams = new URLSearchParams()
     
     if (params) {
@@ -316,7 +332,7 @@ export class ShipStationV1Client {
   /**
    * Mark an order as shipped
    */
-  async markOrderShipped(orderId: number, shipDate: string, carrier: string, service: string, trackingNumber: string, notifyCustomer = true, notifySalesChannel = true): Promise<ShipStationApiResponse<any>> {
+  async markOrderShipped(orderId: number, shipDate: string, carrier: string, service: string, trackingNumber: string, notifyCustomer = true, notifySalesChannel = true): Promise<ShipStationApiResponse<ShipStationShipment>> {
     const shipmentData = {
       orderId,
       carrierCode: carrier,
@@ -332,35 +348,35 @@ export class ShipStationV1Client {
   /**
    * Get list of carriers configured in ShipStation
    */
-  async getCarriers(): Promise<ShipStationApiResponse<any>> {
+  async getCarriers(): Promise<ShipStationApiResponse<ShipStationCarrier[]>> {
     return this.makeRequest('/carriers')
   }
 
   /**
    * Get list of stores configured in ShipStation
    */
-  async listStores(): Promise<ShipStationApiResponse<any>> {
+  async listStores(): Promise<ShipStationApiResponse<ShipStationStore[]>> {
     return this.makeRequest('/stores')
   }
 
   /**
    * Get list of services for a specific carrier
    */
-  async getCarrierServices(carrierCode: string): Promise<ShipStationApiResponse<any>> {
+  async getCarrierServices(carrierCode: string): Promise<ShipStationApiResponse<ShipStationService[]>> {
     return this.makeRequest(`/carriers/listservices?carrierCode=${encodeURIComponent(carrierCode)}`)
   }
 
   /**
    * Test the API connection
    */
-  async testConnection(): Promise<ShipStationApiResponse<any>> {
+  async testConnection(): Promise<ShipStationApiResponse<{connection: boolean, message?: string}>> {
     return this.makeRequest('/carriers')
   }
 
   /**
    * Update an existing order
    */
-  async updateOrder(orderId: string, updates: Partial<ShipStationOrder>): Promise<ShipStationApiResponse<any>> {
+  async updateOrder(orderId: string, updates: Partial<ShipStationOrder>): Promise<ShipStationApiResponse<ShipStationOrder>> {
     const existingOrder = await this.getOrderById(orderId)
     if (!existingOrder.success || !existingOrder.data) {
       return existingOrder
@@ -378,21 +394,21 @@ export class ShipStationV1Client {
   /**
    * Get an order by ID
    */
-  async getOrderById(orderId: string): Promise<ShipStationApiResponse<any>> {
+  async getOrderById(orderId: string): Promise<ShipStationApiResponse<ShipStationOrder>> {
     return this.makeRequest(`/orders/${orderId}`)
   }
 
   /**
    * Delete an order
    */
-  async deleteOrder(orderId: string): Promise<ShipStationApiResponse<any>> {
+  async deleteOrder(orderId: string): Promise<ShipStationApiResponse<{success: boolean, message?: string}>> {
     return this.makeRequest(`/orders/${orderId}`, 'DELETE')
   }
 
   /**
    * Add a tag to an order
    */
-  async addOrderTag(orderId: string, tagId: number): Promise<ShipStationApiResponse<any>> {
+  async addOrderTag(orderId: string, tagId: number): Promise<ShipStationApiResponse<{success: boolean, message?: string}>> {
     return this.makeRequest('/orders/addtag', 'POST', {
       orderId,
       tagId
@@ -402,7 +418,7 @@ export class ShipStationV1Client {
   /**
    * Remove a tag from an order
    */
-  async removeOrderTag(orderId: string, tagId: number): Promise<ShipStationApiResponse<any>> {
+  async removeOrderTag(orderId: string, tagId: number): Promise<ShipStationApiResponse<{success: boolean, message?: string}>> {
     return this.makeRequest('/orders/removetag', 'POST', {
       orderId,
       tagId
@@ -412,7 +428,7 @@ export class ShipStationV1Client {
   /**
    * Hold an order until a specific date
    */
-  async holdOrder(orderId: string, holdUntilDate: string): Promise<ShipStationApiResponse<any>> {
+  async holdOrder(orderId: string, holdUntilDate: string): Promise<ShipStationApiResponse<{success: boolean, message?: string}>> {
     return this.makeRequest('/orders/holduntil', 'POST', {
       orderId,
       holdUntilDate
@@ -422,7 +438,7 @@ export class ShipStationV1Client {
   /**
    * Remove hold from an order
    */
-  async unholdOrder(orderId: string): Promise<ShipStationApiResponse<any>> {
+  async unholdOrder(orderId: string): Promise<ShipStationApiResponse<{success: boolean, message?: string}>> {
     return this.makeRequest('/orders/restorefromhold', 'POST', {
       orderId
     })
@@ -431,7 +447,7 @@ export class ShipStationV1Client {
   /**
    * Assign order to a different warehouse
    */
-  async assignToWarehouse(orderId: string, warehouseId: number): Promise<ShipStationApiResponse<any>> {
+  async assignToWarehouse(orderId: string, warehouseId: number): Promise<ShipStationApiResponse<{success: boolean, message?: string}>> {
     return this.makeRequest('/orders/assignuser', 'POST', {
       orderId,
       warehouseId
@@ -485,14 +501,14 @@ export class ShipStationV1Client {
       customField3?: string
     }
     testLabel?: boolean
-  }): Promise<ShipStationApiResponse<any>> {
+  }): Promise<ShipStationApiResponse<ShipStationLabel>> {
     return this.makeRequest('/orders/createlabelfororder', 'POST', params)
   }
 
   /**
    * Void a shipping label
    */
-  async voidLabel(shipmentId: string): Promise<ShipStationApiResponse<any>> {
+  async voidLabel(shipmentId: string): Promise<ShipStationApiResponse<{success: boolean, message?: string}>> {
     return this.makeRequest('/shipments/voidlabel', 'POST', {
       shipmentId
     })
@@ -520,7 +536,7 @@ export class ShipStationV1Client {
     }
     confirmation?: string
     residential?: boolean
-  }): Promise<ShipStationApiResponse<any>> {
+  }): Promise<ShipStationApiResponse<ShipStationRate[]>> {
     return this.makeRequest('/shipments/getrates', 'POST', params)
   }
 
@@ -546,7 +562,7 @@ export class ShipStationV1Client {
     sortDir?: 'ASC' | 'DESC'
     page?: number
     pageSize?: number
-  }): Promise<ShipStationApiResponse<any>> {
+  }): Promise<ShipStationApiResponse<{shipments: ShipStationShipment[], total: number, page: number, pages: number}>> {
     const queryParams = new URLSearchParams()
     
     if (params) {
@@ -564,28 +580,28 @@ export class ShipStationV1Client {
   /**
    * Get a specific shipment
    */
-  async getShipment(shipmentId: string): Promise<ShipStationApiResponse<any>> {
+  async getShipment(shipmentId: string): Promise<ShipStationApiResponse<ShipStationShipment>> {
     return this.makeRequest(`/shipments/${shipmentId}`)
   }
 
   /**
    * List available tags
    */
-  async listTags(): Promise<ShipStationApiResponse<any>> {
+  async listTags(): Promise<ShipStationApiResponse<ShipStationTag[]>> {
     return this.makeRequest('/accounts/listtags')
   }
 
   /**
    * List warehouses
    */
-  async listWarehouses(): Promise<ShipStationApiResponse<any>> {
+  async listWarehouses(): Promise<ShipStationApiResponse<ShipStationWarehouse[]>> {
     return this.makeRequest('/warehouses')
   }
 
   /**
    * Get a specific warehouse
    */
-  async getWarehouse(warehouseId: string): Promise<ShipStationApiResponse<any>> {
+  async getWarehouse(warehouseId: string): Promise<ShipStationApiResponse<ShipStationWarehouse>> {
     return this.makeRequest(`/warehouses/${warehouseId}`)
   }
 
@@ -616,14 +632,14 @@ export class ShipStationV1Client {
       insuredValue: number
     }
     testLabel?: boolean
-  }): Promise<ShipStationApiResponse<any>> {
+  }): Promise<ShipStationApiResponse<ShipStationLabel>> {
     return this.makeRequest('/shipments/createlabel', 'POST', params)
   }
 
   /**
    * Get carrier packages
    */
-  async getCarrierPackages(carrierCode: string): Promise<ShipStationApiResponse<any>> {
+  async getCarrierPackages(carrierCode: string): Promise<ShipStationApiResponse<ShipStationPackage[]>> {
     return this.makeRequest(`/carriers/listpackages?carrierCode=${carrierCode}`)
   }
 
@@ -635,7 +651,7 @@ export class ShipStationV1Client {
     orderStatus?: string
     page?: number
     pageSize?: number
-  }): Promise<ShipStationApiResponse<any>> {
+  }): Promise<ShipStationApiResponse<{orders: ShipStationOrder[], total: number, page: number, pages: number}>> {
     const queryParams = new URLSearchParams()
     
     Object.entries(params).forEach(([key, value]) => {
@@ -650,7 +666,7 @@ export class ShipStationV1Client {
   /**
    * Create or update multiple orders at once
    */
-  async createMultipleOrders(orders: ShipStationOrder[]): Promise<ShipStationApiResponse<any>> {
+  async createMultipleOrders(orders: ShipStationOrder[]): Promise<ShipStationApiResponse<{results: ShipStationOrder[], hasErrors: boolean, message?: string}>> {
     return this.makeRequest('/orders/createorders', 'POST', orders)
   }
 
@@ -664,9 +680,9 @@ export class ShipStationV1Client {
     orderStatus?: string
     customerEmail?: string
     customerName?: string
-    billTo?: any
-    shipTo?: any
-    items?: any[]
+    billTo?: ShipStationAddress
+    shipTo?: ShipStationAddress
+    items?: ShipStationOrderItem[]
     orderTotal: number
     amountPaid: number
     shippingAmount: number
@@ -674,44 +690,49 @@ export class ShipStationV1Client {
     paymentMethod?: string
     internalNotes?: string
     customerNotes?: string
-    shippingMethod?: any
+    shippingMethod?: { carrier?: string; service?: string; serviceCode?: string }
   }): ShipStationOrder {
     // Convert addresses to ShipStation format
-    const formatAddress = (address: any, name?: string): ShipStationAddress => {
+    const formatAddress = (address: ShipStationAddress | Record<string, unknown>, name?: string): ShipStationAddress => {
       if (!address) {
         throw new Error('Address is required')
       }
 
+      const addr = address as Record<string, unknown>
+
       return {
-        name: address.name || name || 'Unknown',
-        company: address.company || '',
-        street1: address.address || address.address_line_1 || address.street1 || '',
-        street2: address.address2 || address.address_line_2 || address.street2 || '',
-        city: address.city || address.city_locality || address.admin_area_2 || '',
-        state: address.state || address.state_province || address.admin_area_1 || '',
-        postalCode: address.zipCode || address.postal_code || '',
-        country: address.country || address.country_code || 'US',
-        phone: address.phone || '',
-        residential: address.residential !== false // Default to residential unless explicitly set
+        name: (addr.name as string) || name || 'Unknown',
+        company: (addr.company as string) || '',
+        street1: (addr.address as string) || (addr.address_line_1 as string) || (addr.street1 as string) || '',
+        street2: (addr.address2 as string) || (addr.address_line_2 as string) || (addr.street2 as string) || '',
+        city: (addr.city as string) || (addr.city_locality as string) || (addr.admin_area_2 as string) || '',
+        state: (addr.state as string) || (addr.state_province as string) || (addr.admin_area_1 as string) || '',
+        postalCode: (addr.zipCode as string) || (addr.postal_code as string) || (addr.postalCode as string) || '',
+        country: (addr.country as string) || (addr.country_code as string) || 'US',
+        phone: (addr.phone as string) || '',
+        residential: (addr.residential as boolean) !== false // Default to residential unless explicitly set
       }
     }
 
     // Format order items
-    const formatItems = (items: any[] = []): ShipStationOrderItem[] => {
-      return items.map((item, index) => ({
-        lineItemKey: `item_${index}`,
-        sku: item.sku || item.productId?.toString() || '',
-        name: item.productName || item.name || 'Unknown Product',
-        quantity: item.quantity || 1,
-        unitPrice: (item.price || 0) / 100, // Convert cents to dollars
-        taxAmount: (item.taxAmount || 0) / 100,
-        weight: item.weight ? {
-          value: item.weight,
-          units: 'pounds' as const
-        } : undefined,
-        productId: item.productId,
-        options: item.options || []
-      }))
+    const formatItems = (items: ShipStationOrderItem[] = []): ShipStationOrderItem[] => {
+      return items.map((item, index) => {
+        const itemData = item as Record<string, unknown>
+        return {
+          lineItemKey: `item_${index}`,
+          sku: item.sku || (itemData.productId as number)?.toString() || '',
+          name: (itemData.productName as string) || item.name || 'Unknown Product',
+          quantity: item.quantity || 1,
+          unitPrice: ((itemData.price as number) || 0) / 100, // Convert cents to dollars
+          taxAmount: (item.taxAmount || 0) / 100,
+          weight: (itemData.weight as number) ? {
+            value: itemData.weight as number,
+            units: 'pounds' as const
+          } : undefined,
+          productId: itemData.productId as number,
+          options: item.options || []
+        }
+      })
     }
 
     // Convert PST/PDT timezone (ShipStation requirement)
@@ -728,10 +749,10 @@ export class ShipStationV1Client {
       orderNumber: orderData.orderNumber,
       orderKey: `toynami_${orderData.orderId}`,
       orderDate: formatDate(orderData.orderDate),
-      orderStatus: (orderData.orderStatus as any) || 'awaiting_shipment',
+      orderStatus: (orderData.orderStatus as 'awaiting_payment' | 'awaiting_shipment' | 'shipped' | 'on_hold' | 'cancelled') || 'awaiting_shipment',
       customerEmail: orderData.customerEmail || '',
-      billTo: formatAddress(orderData.billTo, orderData.customerName),
-      shipTo: formatAddress(orderData.shipTo, orderData.customerName),
+      billTo: formatAddress(orderData.billTo || {} as ShipStationAddress, orderData.customerName),
+      shipTo: formatAddress(orderData.shipTo || {} as ShipStationAddress, orderData.customerName),
       items: formatItems(orderData.items),
       orderTotal: orderData.orderTotal / 100, // Convert cents to dollars
       amountPaid: orderData.amountPaid / 100,
@@ -745,7 +766,7 @@ export class ShipStationV1Client {
         customField1: 'Toynami PayPal Shop', // Custom identifier
         customField2: orderData.orderNumber, // Our order number
       },
-      requestedShippingService: orderData.shippingMethod?.service || orderData.shippingMethod?.serviceName,
+      requestedShippingService: orderData.shippingMethod?.service || (orderData.shippingMethod as Record<string, unknown>)?.serviceName as string,
       carrierCode: this.mapCarrierCode(orderData.shippingMethod?.carrier),
       serviceCode: orderData.shippingMethod?.serviceCode
     }

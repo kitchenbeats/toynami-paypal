@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { 
   Pencil, Trash2, Plus, Save, X, Settings, 
-  Eye, EyeOff, Star, Palette, Hash
+  Palette, Hash
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
@@ -181,7 +181,7 @@ export function GlobalOptionsManager({ initialOptionTypes }: GlobalOptionsManage
     })
   }
 
-  const handleEditValue = (value: GlobalOptionValue, typeId: string) => {
+  const handleEditValue = (value: GlobalOptionValue) => {
     setEditingValueId(value.id || null)
     setValueFormData(value)
     setIsCreatingValue(null)
@@ -335,7 +335,7 @@ export function GlobalOptionsManager({ initialOptionTypes }: GlobalOptionsManage
                   <Label htmlFor="input_type">Input Type</Label>
                   <Select
                     value={typeFormData.input_type}
-                    onValueChange={(value: any) => 
+                    onValueChange={(value) => 
                       setTypeFormData({ ...typeFormData, input_type: value })
                     }
                   >
@@ -620,7 +620,7 @@ export function GlobalOptionsManager({ initialOptionTypes }: GlobalOptionsManage
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => handleEditValue(value, optionType.id!)}
+                        onClick={() => handleEditValue(value)}
                       >
                         <Pencil className="h-4 w-4" />
                       </Button>
@@ -638,7 +638,7 @@ export function GlobalOptionsManager({ initialOptionTypes }: GlobalOptionsManage
                 
                 {(!optionType.values || optionType.values.length === 0) && (
                   <div className="text-center py-8 text-muted-foreground">
-                    No values created yet. Click "Add Value" to get started.
+                    No values created yet. Click &quot;Add Value&quot; to get started.
                   </div>
                 )}
               </div>

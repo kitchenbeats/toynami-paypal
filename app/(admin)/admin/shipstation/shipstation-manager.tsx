@@ -11,7 +11,6 @@ import {
   AlertCircle, 
   CheckCircle, 
   XCircle, 
-  Store,
   Plus,
   Settings,
   Ban,
@@ -20,7 +19,13 @@ import {
 import { toast } from 'sonner'
 
 interface ShipStationManagerProps {
-  stores: any[]
+  stores: Array<{
+    storeId: number
+    storeName: string
+    marketplaceName: string
+    active: boolean
+    createDate: string
+  }>
   blockedStores: string[]
   currentStoreId: string | null
   connected: boolean
@@ -63,6 +68,7 @@ export function ShipStationManager({
       
       toast.success('Store selection saved')
     } catch (error) {
+        console.error('API request failed:', error)
       toast.error('Failed to save store selection')
       console.error(error)
     } finally {
@@ -145,9 +151,9 @@ export function ShipStationManager({
             <ol className="list-decimal list-inside space-y-1 text-sm text-muted-foreground">
               <li>Go to ShipStation dashboard</li>
               <li>Navigate to Settings → Stores & Orders → Store Setup</li>
-              <li>Click "Connect a Store or Marketplace"</li>
-              <li>Select "ShipStation" as the selling channel</li>
-              <li>Name it "Toynami PayPal Integration" or similar</li>
+              <li>Click &quot;Connect a Store or Marketplace&quot;</li>
+              <li>Select &quot;ShipStation&quot; as the selling channel</li>
+              <li>Name it &quot;Toynami PayPal Integration&quot; or similar</li>
               <li>Complete setup and note the new Store ID</li>
               <li>Return here and refresh to see the new store</li>
             </ol>
@@ -267,7 +273,7 @@ export function ShipStationManager({
         <CardHeader>
           <CardTitle>Manual Configuration</CardTitle>
           <CardDescription>
-            If you've created a new store, enter its ID here
+            If you&apos;ve created a new store, enter its ID here
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

@@ -10,7 +10,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Pencil, Trash2, Plus, GripVertical, Save, X, Image as ImageIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { BrandImageUpload } from '@/components/admin/brand-image-upload'
+import { MediaSelector } from '@/components/ui/media-selector'
+import { MediaItem } from '@/lib/types/media'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 interface Brand {
@@ -18,8 +19,11 @@ interface Brand {
   slug: string
   name: string
   logo_url?: string
+  logo_media_id?: string
   banner_url_1?: string
+  banner_media_id_1?: string
   banner_url_2?: string
+  banner_media_id_2?: string
   description?: string
   featured: boolean
   display_order: number
@@ -141,34 +145,35 @@ export function BrandsManager({ initialBrands }: BrandsManagerProps) {
     }
   }
 
-  const handleReorder = async (fromIndex: number, toIndex: number) => {
-    const newBrands = [...brands]
-    const [removed] = newBrands.splice(fromIndex, 1)
-    newBrands.splice(toIndex, 0, removed)
-    
-    // Update display_order for all affected brands
-    const updates = newBrands.map((brand, index) => ({
-      ...brand,
-      display_order: index
-    }))
-    
-    setBrands(updates)
-    
-    // Update in database
-    try {
-      for (const brand of updates) {
-        if (brand.id) {
-          await supabase
-            .from('brands')
-            .update({ display_order: brand.display_order })
-            .eq('id', brand.id)
-        }
-      }
-      router.refresh()
-    } catch (error) {
-      console.error('Error reordering brands:', error)
-    }
-  }
+  // Keeping for future drag-and-drop implementation
+  // const handleReorder = async (fromIndex: number, toIndex: number) => {
+  //   const newBrands = [...brands]
+  //   const [removed] = newBrands.splice(fromIndex, 1)
+  //   newBrands.splice(toIndex, 0, removed)
+  //   
+  //   // Update display_order for all affected brands
+  //   const updates = newBrands.map((brand, index) => ({
+  //     ...brand,
+  //     display_order: index
+  //   }))
+  //   
+  //   setBrands(updates)
+  //   
+  //   // Update in database
+  //   try {
+  //     for (const brand of updates) {
+  //       if (brand.id) {
+  //         await supabase
+  //           .from('brands')
+  //           .update({ display_order: brand.display_order })
+  //           .eq('id', brand.id)
+  //       }
+  //     }
+  //     router.refresh()
+  //   } catch (error) {
+  //     console.error('Error reordering brands:', error)
+  //   }
+  // }
 
   return (
     <div className="space-y-6">
@@ -190,7 +195,7 @@ export function BrandsManager({ initialBrands }: BrandsManagerProps) {
             <Tabs defaultValue="general" className="space-y-4">
               <TabsList>
                 <TabsTrigger value="general">General</TabsTrigger>
-                <TabsTrigger value="images">Images</TabsTrigger>
+                {editingId && <TabsTrigger value="images">Images</TabsTrigger>}
               </TabsList>
               
               <TabsContent value="general" className="space-y-4">
@@ -260,39 +265,63 @@ export function BrandsManager({ initialBrands }: BrandsManagerProps) {
               <TabsContent value="images" className="space-y-4">
                 {editingId ? (
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <BrandImageUpload
-                      brandId={editingId}
-                      imageType="logo"
-                      currentImageUrl={formData.logo_url}
-                      label="Logo"
-                      description="Brand logo image"
-                      onImageChange={(url) => setFormData({ ...formData, logo_url: url || '' })}
-                      aspectRatio="aspect-square"
-                    />
+                    <div className="space-y-2">
+                      <Label>Logo</Label>
+                      <p className="text-xs text-muted-foreground">Brand logo image</p>
+                      <MediaSelector
+                        value={formData.logo_url || formData.logo_media_id}
+                        onChange={(media: MediaItem | null) => {
+                          setFormData({ 
+                            ...formData, 
+                            logo_url: media?.file_url || '',
+                            logo_media_id: media?.id || undefined
+                          })
+                        }}
+                        mimeTypeFilter="image/"
+                        folderFilter="brands"
+                        buttonText="Select Logo"
+                      />
+                    </div>
                     
-                    <BrandImageUpload
-                      brandId={editingId}
-                      imageType="banner_1"
-                      currentImageUrl={formData.banner_url_1}
-                      label="Home Banner"
-                      description="Displayed on home page"
-                      onImageChange={(url) => setFormData({ ...formData, banner_url_1: url || '' })}
-                      aspectRatio="aspect-[16/9]"
-                    />
+                    <div className="space-y-2">
+                      <Label>Home Banner</Label>
+                      <p className="text-xs text-muted-foreground">Displayed on home page</p>
+                      <MediaSelector
+                        value={formData.banner_url_1 || formData.banner_media_id_1}
+                        onChange={(media: MediaItem | null) => {
+                          setFormData({ 
+                            ...formData, 
+                            banner_url_1: media?.file_url || '',
+                            banner_media_id_1: media?.id || undefined
+                          })
+                        }}
+                        mimeTypeFilter="image/"
+                        folderFilter="banners"
+                        buttonText="Select Home Banner"
+                      />
+                    </div>
                     
-                    <BrandImageUpload
-                      brandId={editingId}
-                      imageType="banner_2"
-                      currentImageUrl={formData.banner_url_2}
-                      label="Brand Page Banner"
-                      description="Displayed on brand page"
-                      onImageChange={(url) => setFormData({ ...formData, banner_url_2: url || '' })}
-                      aspectRatio="aspect-[16/9]"
-                    />
+                    <div className="space-y-2">
+                      <Label>Brand Page Banner</Label>
+                      <p className="text-xs text-muted-foreground">Displayed on brand page</p>
+                      <MediaSelector
+                        value={formData.banner_url_2 || formData.banner_media_id_2}
+                        onChange={(media: MediaItem | null) => {
+                          setFormData({ 
+                            ...formData, 
+                            banner_url_2: media?.file_url || '',
+                            banner_media_id_2: media?.id || undefined
+                          })
+                        }}
+                        mimeTypeFilter="image/"
+                        folderFilter="banners"
+                        buttonText="Select Brand Banner"
+                      />
+                    </div>
                   </div>
                 ) : (
                   <div className="text-center py-8 text-muted-foreground">
-                    Save the brand first to upload images
+                    Save the brand first, then you can add images
                   </div>
                 )}
               </TabsContent>
@@ -314,7 +343,7 @@ export function BrandsManager({ initialBrands }: BrandsManagerProps) {
 
       {/* Brands List */}
       <div className="space-y-4">
-        {brands.map((brand, index) => (
+        {brands.map((brand) => (
           <Card key={brand.id}>
             <CardContent className="flex items-center justify-between p-4">
               <div className="flex items-center space-x-4">

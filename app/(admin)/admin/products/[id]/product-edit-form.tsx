@@ -18,30 +18,56 @@ import { Separator } from '@/components/ui/separator'
 import { toast } from 'sonner'
 import { 
   Save, ArrowLeft, Package, DollarSign, Truck, Search, 
-  Image as ImageIcon, Tag, Users, Settings, Globe, Star,
-  Plus, Trash2, GripVertical, Upload, X, Layers
+  Image as ImageIcon, Settings,
+  Plus, Layers
 } from 'lucide-react'
 import { ProductImagesManager } from '@/components/admin/product-images-manager'
 
+interface Product {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
+  sku?: string;
+  base_price_cents?: number;
+  compare_at_price_cents?: number;
+  stock_level?: number;
+  track_inventory?: string;
+  allow_purchases?: boolean;
+  status: string;
+  is_featured: boolean;
+  is_visible: boolean;
+  categories?: Array<{ category: { id: string; name: string } }>;
+  variants?: Array<{ id: string; sku: string; price_cents: number; stock: number }>;
+  images?: Array<{ id: string; image_filename: string; alt_text?: string; is_primary: boolean }>;
+  brand_id?: string;
+  weight?: number;
+  min_purchase_quantity?: number;
+  max_purchase_quantity?: number;
+  preorder_message?: string;
+  preorder_release_date?: string;
+  meta_title?: string;
+  meta_description?: string;
+  meta_keywords?: string;
+}
+
 interface ProductEditFormProps {
-  product: any
-  categories: any[]
-  brands: any[]
-  customerGroups: any[]
-  optionTypes: any[]
+  product: Product
+  categories: Array<{ id: string; name: string; slug: string }>
+  brands: Array<{ id: string; name: string; slug: string }>
+  customerGroups?: Array<{ id: string; name: string; tier: number }>
+  optionTypes: Array<{ id: string; name: string; type: string }>
 }
 
 export function ProductEditForm({ 
   product, 
   categories, 
-  brands, 
-  customerGroups,
+  brands,
   optionTypes 
 }: ProductEditFormProps) {
   const router = useRouter()
   const supabase = createClient()
   const [saving, setSaving] = useState(false)
-  const [activeTab, setActiveTab] = useState('basic')
   
   // Form state - initialize with product data
   const [formData, setFormData] = useState({
@@ -106,10 +132,10 @@ export function ProductEditForm({
   })
   
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
-    product.categories?.map((pc: any) => pc.category.id) || []
+    product.categories?.map((pc) => pc.category.id) || []
   )
   
-  const [variants, setVariants] = useState(product.variants || [])
+  const [variants] = useState(product.variants || [])
   const [images, setImages] = useState(product.images || [])
   
   const handleSave = async () => {
@@ -154,7 +180,7 @@ export function ProductEditForm({
     }
   }
   
-  const updateField = (field: string, value: any) => {
+  const updateField = (field: string, value: unknown) => {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
   
@@ -185,37 +211,37 @@ export function ProductEditForm({
       </div>
       
       {/* Main Content Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-8">
-          <TabsTrigger value="basic">
+      <Tabs defaultValue="basic" className="space-y-4">
+        <TabsList variant="buttons">
+          <TabsTrigger value="basic" variant="buttons">
             <Package className="h-4 w-4 mr-2" />
             Basic
           </TabsTrigger>
-          <TabsTrigger value="pricing">
+          <TabsTrigger value="pricing" variant="buttons">
             <DollarSign className="h-4 w-4 mr-2" />
             Pricing
           </TabsTrigger>
-          <TabsTrigger value="inventory">
+          <TabsTrigger value="inventory" variant="buttons">
             <Package className="h-4 w-4 mr-2" />
             Inventory
           </TabsTrigger>
-          <TabsTrigger value="shipping">
+          <TabsTrigger value="shipping" variant="buttons">
             <Truck className="h-4 w-4 mr-2" />
             Shipping
           </TabsTrigger>
-          <TabsTrigger value="media">
+          <TabsTrigger value="media" variant="buttons">
             <ImageIcon className="h-4 w-4 mr-2" />
             Media
           </TabsTrigger>
-          <TabsTrigger value="options">
+          <TabsTrigger value="options" variant="buttons">
             <Settings className="h-4 w-4 mr-2" />
             Options
           </TabsTrigger>
-          <TabsTrigger value="seo">
+          <TabsTrigger value="seo" variant="buttons">
             <Search className="h-4 w-4 mr-2" />
             SEO
           </TabsTrigger>
-          <TabsTrigger value="variants">
+          <TabsTrigger value="variants" variant="buttons">
             <Layers className="h-4 w-4 mr-2" />
             Variants
           </TabsTrigger>
@@ -520,7 +546,7 @@ export function ProductEditForm({
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="none">Don't track inventory</SelectItem>
+                      <SelectItem value="none">Don&apos;t track inventory</SelectItem>
                       <SelectItem value="by product">Track by product</SelectItem>
                       <SelectItem value="by variant">Track by variant</SelectItem>
                     </SelectContent>
@@ -823,7 +849,7 @@ export function ProductEditForm({
                         </tr>
                       </thead>
                       <tbody>
-                        {variants.map((variant: any) => (
+                        {variants.map((variant) => (
                           <tr key={variant.id} className="border-t">
                             <td className="p-3">{variant.sku}</td>
                             <td className="p-3">

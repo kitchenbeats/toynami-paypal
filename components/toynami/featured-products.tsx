@@ -46,7 +46,7 @@ interface FeaturedProductsProps {
 
 export function FeaturedProducts({ products }: FeaturedProductsProps) {
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set())
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<{ id: string } | null>(null)
   const [addingToCart, setAddingToCart] = useState<Set<string>>(new Set())
   const supabase = createClient()
   const { addItem } = useCart()
@@ -112,7 +112,7 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
     // Check if product is in "Pre Orders" category
     if (product.categories && product.categories.length > 0) {
       const hasPreOrderCategory = product.categories.some(
-        (pc: any) => pc.category && pc.category.slug === 'pre-orders'
+        (pc) => pc.category && pc.category.slug === 'pre-orders'
       )
       if (hasPreOrderCategory) {
         return true
@@ -129,7 +129,7 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
       
       for (const special of specialCategories) {
         const hasSpecial = product.categories.some(
-          (pc: any) => pc.category && pc.category.slug === special
+          (pc) => pc.category && pc.category.slug === special
         )
         if (hasSpecial) {
           return `/${special}/${product.slug}`
@@ -190,6 +190,7 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
         description: `${product.name} added to your cart`
       })
     } catch (error) {
+      console.error('Failed to add item to cart:', error)
       toast.error('Failed to add item to cart')
     } finally {
       setAddingToCart(prev => {
@@ -305,8 +306,8 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
                   type="button"
                   className="add-to-wishlist-parent"
                   onClick={() => {
-                    // TODO: Add to wishlist functionality
-                    window.location.href = getProductUrl(featuredProduct)
+                    // Wishlist functionality - for future implementation
+                    alert('Wishlist feature coming soon!')
                   }}
                 >
                   <b className="add-to-cart">ADD TO WISHLIST</b>

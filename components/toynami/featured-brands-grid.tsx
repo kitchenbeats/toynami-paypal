@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { getFeaturedBrands, type Brand } from '@/lib/data/brands'
+import { getFeaturedBrands } from '@/lib/data/brands'
 import { getImageSrc } from '@/lib/utils/image-utils'
 import { IMAGE_CONFIG } from '@/lib/config/images'
 
@@ -15,7 +15,7 @@ export async function FeaturedBrandsGrid() {
   return (
     <div className="featured-brands-section">
       <div className="container mx-auto px-4">
-        <h2 className="homepage-section-heading text-center mb-8">
+        <h2 className="figma-brands homepage-section-heading">
           FEATURED BRANDS
         </h2>
         

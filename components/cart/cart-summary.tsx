@@ -20,17 +20,39 @@ export function CartSummary() {
   
   // Calculate totals
   const subtotal = totalPrice / 100
-  const tax = 0 // Will be calculated at checkout
-  const shipping = 0 // Will be calculated at checkout
+  // Tax and shipping will be calculated at checkout
   const discount = appliedCoupon ? subtotal * 0.1 : 0 // 10% discount if coupon applied
   const total = subtotal - discount // Final total calculated at checkout
   
-  const handleApplyCoupon = () => {
-    if (couponCode.trim()) {
-      // TODO: Validate coupon with backend
-      setAppliedCoupon(couponCode)
-      setCouponCode('')
-      toast.success(`Coupon "${couponCode}" applied - 10% discount!`)
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) return
+    
+    try {
+      // Validate coupon with backend
+      const response = await fetch('/api/coupons/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          couponCode: couponCode.trim(),
+          orderTotalCents: totalPrice,
+          productIds: items.map(item => item.productId),
+          categoryIds: [] // Will be determined by the API from product IDs
+        })
+      })
+      
+      const data = await response.json()
+      
+      if (data.valid) {
+        setAppliedCoupon(couponCode)
+        setCouponCode('')
+        toast.success(`Coupon "${couponCode}" applied!`)
+      } else {
+        toast.error(data.error || 'Invalid coupon code')
+      }
+    } catch (error) {
+        console.error('Error in catch block:', error)
+      toast.error('Failed to validate coupon')
+      console.error('Coupon validation error:', error)
     }
   }
   
@@ -48,15 +70,28 @@ export function CartSummary() {
     setIsProcessing(true)
     
     try {
-      // TODO: Create order in database
-      // TODO: Initialize PayPal checkout
+      // Prepare cart data for checkout
+      const checkoutData = {
+        items: items.map(item => ({
+          productId: item.productId,
+          productName: item.productName,
+          quantity: item.quantity,
+          price: item.price,
+          variantId: item.variantId,
+          image: item.image
+        })),
+        couponCode: appliedCoupon,
+        subtotal: subtotal.toFixed(2),
+        total: total.toFixed(2)
+      }
       
-      // For now, just redirect to a checkout page
-      toast.info('Redirecting to checkout...')
-      setTimeout(() => {
-        router.push('/checkout')
-      }, 1000)
+      // Store checkout data in sessionStorage for the checkout page
+      sessionStorage.setItem('checkoutData', JSON.stringify(checkoutData))
+      
+      // Redirect to checkout page where PayPal will be initialized
+      router.push('/checkout')
     } catch (error) {
+        console.error('Error in catch block:', error)
       toast.error('Failed to process checkout. Please try again.')
       console.error('Checkout error:', error)
     } finally {

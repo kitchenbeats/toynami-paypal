@@ -12,8 +12,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Pencil, Trash2, Plus, Save, X, Image, Type, Palette } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { SimpleImageUpload } from '@/components/admin/simple-image-upload'
-import { toast } from 'sonner'
+import { MediaSelector } from '@/components/ui/media-selector'
+import { MediaItem } from '@/lib/types/media'
 
 interface Banner {
   id?: string
@@ -21,6 +21,7 @@ interface Banner {
   position: 'upper' | 'middle' | 'lower' | 'hero'
   slot_number: number
   image_url?: string
+  media_id?: string
   image_alt?: string
   title?: string
   subtitle?: string
@@ -63,10 +64,6 @@ export function BannersManager({ initialBanners }: BannersManagerProps) {
   const [selectedPosition, setSelectedPosition] = useState<typeof POSITIONS[number]>('upper')
   const router = useRouter()
   const supabase = createClient()
-
-  const getBannersByPosition = (position: typeof POSITIONS[number]) => {
-    return banners.filter(b => b.position === position).sort((a, b) => a.slot_number - b.slot_number)
-  }
 
   const handleEdit = (banner: Banner) => {
     setEditingId(banner.id || null)
@@ -256,13 +253,22 @@ export function BannersManager({ initialBanners }: BannersManagerProps) {
                   </div>
                 </div>
 
-                <SimpleImageUpload
-                  value={formData.image_url}
-                  onChange={(url) => setFormData({ ...formData, image_url: url || undefined })}
-                  label="Banner Image"
-                  aspectRatio="aspect-[16/9]"
-                  folder="banners"
-                />
+                <div className="space-y-2">
+                  <Label>Banner Image</Label>
+                  <MediaSelector
+                    value={formData.image_url || formData.media_id}
+                    onChange={(media: MediaItem | null) => {
+                      setFormData({ 
+                        ...formData, 
+                        image_url: media?.file_url || undefined,
+                        media_id: media?.id || undefined
+                      })
+                    }}
+                    mimeTypeFilter="image/"
+                    folderFilter="banners"
+                    buttonText="Select Banner Image"
+                  />
+                </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>

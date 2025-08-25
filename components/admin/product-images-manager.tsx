@@ -25,11 +25,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
+import { MediaSelector } from '@/components/ui/media-selector'
+import { MediaItem } from '@/lib/types/media'
 import { toast } from 'sonner'
-import { 
-  Upload, Trash2, GripVertical, Star, 
-  ImagePlus, X, Loader2, Check 
-} from 'lucide-react'
+import { Trash2, GripVertical, Star, 
+  ImagePlus, Loader2, Check } from 'lucide-react'
 import {
   uploadProductImage,
   deleteProductImage,
@@ -42,6 +42,7 @@ interface ProductImage {
   id: string
   product_id: number
   image_filename: string
+  media_id?: string | null
   alt_text: string | null
   position: number
   is_primary: boolean
@@ -162,7 +163,7 @@ export function ProductImagesManager({
   const [selectedImage, setSelectedImage] = useState<ProductImage | null>(
     initialImages.length > 0 ? initialImages[0] : null
   )
-  const [uploading, setUploading] = useState(false)
+  const [uploading, seting] = useState(false)
   const [draggedId, setDraggedId] = useState<string | null>(null)
   const [altText, setAltText] = useState('')
 
@@ -211,11 +212,11 @@ export function ProductImagesManager({
     }
   }
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFile= async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
     if (!files || files.length === 0) return
 
-    setUploading(true)
+    seting(true)
     const newImages: ProductImage[] = []
 
     try {
@@ -239,9 +240,9 @@ export function ProductImagesManager({
         try {
           const imageData = await uploadProductImage(productId, formData)
           newImages.push(imageData)
-          toast.success(`Uploaded ${file.name}`)
+          toast.success(`ed ${file.name}`)
         } catch (error) {
-          console.error('Upload error:', error)
+          console.error('error:', error)
           toast.error(`Failed to upload ${file.name}`)
         }
       }
@@ -257,7 +258,7 @@ export function ProductImagesManager({
       console.error('Error uploading images:', error)
       toast.error('Failed to upload images')
     } finally {
-      setUploading(false)
+      seting(false)
       // Reset file input
       event.target.value = ''
     }
@@ -404,54 +405,86 @@ export function ProductImagesManager({
             <div className="text-center">
               <ImagePlus className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
               <p className="text-lg font-medium mb-2">No images yet</p>
-              <p className="text-sm text-muted-foreground">
-                Upload images using the panel on the right
+              <p className="text-sm text-muted-foreground">images using the panel on the right
               </p>
             </div>
           </Card>
         )}
       </div>
 
-      {/* Right: Upload & Details Panel */}
+      {/* Right:& Details Panel */}
       <div className="space-y-4">
-        {/* Upload Section */}
+        {/*Section */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Upload Images</CardTitle>
+            <CardTitle className="text-base">Images</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="border-2 border-dashed rounded-lg p-6 text-center">
-              <input
-                type="file"
-                id="image-upload"
-                multiple
-                accept="image/*"
-                onChange={handleFileUpload}
-                className="hidden"
-                disabled={uploading}
-              />
-              <label
-                htmlFor="image-upload"
-                className="cursor-pointer flex flex-col items-center"
-              >
-                {uploading ? (
-                  <>
-                    <Loader2 className="h-8 w-8 animate-spin text-muted-foreground mb-2" />
-                    <p className="text-sm font-medium">Uploading...</p>
-                  </>
-                ) : (
-                  <>
-                    <Upload className="h-8 w-8 text-muted-foreground mb-2" />
-                    <p className="text-sm font-medium">Click to upload</p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      or drag and drop
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      PNG, JPG, GIF (max 5MB)
-                    </p>
-                  </>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="image-upload">Direct</Label>
+              <div className="flex items-center gap-2">
+                <Input
+                  id="image-upload"
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={handleFile}
+                  disabled={uploading}
+                  className="flex-1"
+                />
+                {uploading && (
+                  <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
                 )}
-              </label>
+              </div>
+              <p className="text-xs text-muted-foreground">images directly from your computer
+              </p>
+            </div>
+
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">Or</span>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Media Library</Label>
+              <MediaSelector
+                value={null}
+                onChange={async (media: MediaItem | null) => {
+                  if (media) {
+                    seting(true)
+                    try {
+                      // Add the image to the product via server action
+                      
+                      // Call the server action to save
+                      const result = await uploadProductImage(productId, media.file_url, media.id)
+                      if (result.success && result.image) {
+                        setImages([...images, result.image])
+                        toast.success('Image added successfully')
+                      } else {
+                        toast.error(result.error || 'Failed to add image')
+                      }
+                    } catch (error) {
+                      console.error('Error adding image:', error)
+                      toast.error('Failed to add image')
+                    } finally {
+                      seting(false)
+                    }
+                  }
+                }}
+                mimeTypeFilter="image/"
+                folderFilter="products"
+                buttonText="Choose from Media Library"
+                buttonVariant="outline"
+                buttonSize="default"
+                className="w-full"
+              />
+              <p className="text-xs text-muted-foreground">
+                Select from previously uploaded images
+              </p>
             </div>
           </CardContent>
         </Card>

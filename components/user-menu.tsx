@@ -2,11 +2,11 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { User, ChevronDown, LogOut, Shield, Settings, Heart, Package } from "lucide-react";
+import { User, ChevronDown, Shield, Heart, Package } from "lucide-react";
 import { LogoutButton } from "@/components/logout-button";
 
 interface UserMenuProps {
-  user: any;
+  user: { id: string; email?: string } | null;
   profile: { is_admin?: boolean } | null;
 }
 

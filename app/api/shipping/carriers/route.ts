@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET(request: NextRequest) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function GET(_request: NextRequest) {
   const apiKey = process.env.SHIPSTATION_API_KEY
   
   if (!apiKey) {
@@ -30,6 +31,7 @@ export async function GET(request: NextRequest) {
     })
 
   } catch (error) {
+      console.error('Error in catch block:', error)
     return NextResponse.json(
       { 
         error: error instanceof Error ? error.message : 'Failed to fetch carriers',

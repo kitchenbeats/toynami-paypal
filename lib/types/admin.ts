@@ -15,7 +15,7 @@ export interface SyncLog {
   message?: string
   items_synced?: number
   items_failed?: number
-  error_details?: any
+  error_details?: Record<string, unknown> | string | null
   created_at: string
 }
 
@@ -96,7 +96,7 @@ export interface Setting {
 }
 
 // Admin action types
-export interface AdminAction<T = any> {
+export interface AdminAction<T = unknown> {
   type: 'create' | 'update' | 'delete' | 'bulk_update' | 'bulk_delete'
   entity: string
   data?: T
@@ -251,7 +251,7 @@ export interface GlobalOptionFormData {
 }
 
 // Response types
-export interface AdminApiResponse<T = any> {
+export interface AdminApiResponse<T = unknown> {
   success: boolean
   data?: T
   error?: string
@@ -275,7 +275,5 @@ import type {
   ProductImage,
   Category,
   Brand,
-  Banner,
-  BlogPost,
   CustomerGroup,
 } from '@/lib/data'

@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Facebook, Twitter, Instagram, Linkedin, Youtube, Globe, Mail, Search, FileText, Settings } from 'lucide-react'
+import { Facebook, Twitter, Instagram, Linkedin, Youtube, Globe, Mail, Search, Settings } from 'lucide-react'
 
 interface Setting {
   id: string
@@ -24,26 +24,26 @@ interface SettingsFormProps {
   groupedSettings: Record<string, Setting[]>
 }
 
-const categoryIcons: Record<string, any> = {
+const categoryIcons: Record<string, string | boolean> = {
   social: Globe,
   general: Settings,
   seo: Search,
-  email: Mail,
+  email: Mail
 }
 
 const categoryTitles: Record<string, string> = {
   social: 'Social Media',
   general: 'General',
   seo: 'SEO',
-  email: 'Email & Newsletter',
+  email: 'Email & Newsletter'
 }
 
-const socialIcons: Record<string, any> = {
+const socialIcons: Record<string, string | boolean> = {
   social_facebook: Facebook,
   social_twitter: Twitter,
   social_instagram: Instagram,
   social_linkedin: Linkedin,
-  social_youtube: Youtube,
+  social_youtube: Youtube
 }
 
 export function SettingsForm({ groupedSettings }: SettingsFormProps) {
@@ -75,6 +75,10 @@ export function SettingsForm({ groupedSettings }: SettingsFormProps) {
           .from('settings')
           .update({ value: setting.value || '' })
           .eq('id', setting.id)
+        
+        if (error) {
+          console.error(`Failed to update setting ${setting.id}:`, error)
+        }
       }
 
       setMessage({ type: 'success', text: 'Settings saved successfully!' })

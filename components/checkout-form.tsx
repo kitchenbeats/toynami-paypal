@@ -2,36 +2,28 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import {
-  PayPalScriptProvider,
+import { PayPalScriptProvider,
   PayPalButtons,
-  PayPalCardFieldsProvider,
-  PayPalCardFieldsForm,
+  PayPalFieldsProvider, 
   PayPalNumberField,
   PayPalExpiryField,
   PayPalCVVField,
-  usePayPalCardFields,
-} from "@paypal/react-paypal-js";
+  usePayPalFields } from "@paypal/react-paypal-js";
 import { useCart } from "@/lib/hooks/use-cart";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  ArrowLeft,
-  CreditCard,
-  Lock,
-  ShieldCheck,
-  MapPin,
-  Truck,
-  Package,
+// import { Button } from "@/components/ui/button";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
+// import { Separator } from "@/components/ui/separator";
+// import { Checkbox } from "@/components/ui/checkbox";
+import { 
+  CreditCard, 
+  Lock 
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
-import { createClient } from "@/lib/supabase/client";
+// import { createClient } from "@/lib/supabase/client";
 import { getImageSrc } from "@/lib/utils/image-utils";
 
 // PayPal configuration - latest 2025 best practices
@@ -45,7 +37,7 @@ const paypalOptions = {
   "integration-date": "2025-01-11", // Today's date for latest features
   "buyer-country": "US",
   locale: "en_US",
-  // Card fields styling
+  //fields styling
   dataAttributes: {
     "data-card-fields-style": JSON.stringify({
       input: {
@@ -70,8 +62,13 @@ const paypalOptions = {
 };
 
 // Custom submit button component that uses the card fields
-function CardFieldsSubmitButton({ isProcessing, disabled, total, billingName }) {
-  const { cardFieldsForm } = usePayPalCardFields()
+function FieldsSubmit({ isProcessing, disabled, total, billingName }: {
+  isProcessing: boolean
+  disabled: boolean
+  total: number
+  billingName: string
+}) {
+  const { cardFieldsForm } = usePayPalFields()
   
   const handleSubmit = async () => {
     if (!cardFieldsForm) return
@@ -85,7 +82,7 @@ function CardFieldsSubmitButton({ isProcessing, disabled, total, billingName }) 
         }
       })
     } catch (err) {
-      console.error('Card submit error:', err)
+      console.error('submit error:', err)
     }
   }
   
@@ -107,7 +104,7 @@ export default function CheckoutForm({ user }) {
   
   // Multi-step state  
   const [currentStep, setCurrentStep] = useState(1)
-  const totalSteps = 4 // Contact -> Shipping -> Rate -> Payment
+  // const _totalSteps = 4 // Contact -> Shipping -> Rate -> Payment
   
   // Form states
   const [email, setEmail] = useState('')
@@ -124,10 +121,10 @@ export default function CheckoutForm({ user }) {
     country: 'US'
   })
   
-  const [sameAsBilling, setSameAsBilling] = useState(true)
+  // const [_sameAsBilling, setSameAsBilling] = useState(true)
   
   // Shipping states
-  const [shippingRates, setShippingRates] = useState<any[]>([])
+  const [shippingRates, setShippingRates] = useState<unknown[]>([])
   const [selectedShippingRate, setSelectedShippingRate] = useState<string | null>(null)
   const [loadingRates, setLoadingRates] = useState(false)
   
@@ -322,7 +319,7 @@ export default function CheckoutForm({ user }) {
     }
   }, [items, user, email, shippingAddress, clearCart, router, shippingRates, selectedShippingRate])
 
-  const handleInputChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target
     setShippingAddress(prev => ({ ...prev, [name]: value }))
   }
@@ -439,6 +436,7 @@ export default function CheckoutForm({ user }) {
                     if (data.id) return data.id
                     throw new Error('Failed to create order')
                   } catch (error) {
+                      console.error('Failed to create:', error)
                     toast.error('Failed to create order')
                     throw error
                   }
@@ -472,6 +470,7 @@ export default function CheckoutForm({ user }) {
                       return
                     }
                   } catch (error) {
+                      console.error('Failed to create:', error)
                     console.error('Express checkout error:', error)
                     toast.error('Something went wrong. Please try again.')
                   }
@@ -510,6 +509,7 @@ export default function CheckoutForm({ user }) {
                       if (data.id) return data.id
                       throw new Error('Failed to create order')
                     } catch (error) {
+                        console.error('Failed to create:', error)
                       toast.error('Failed to create order')
                       throw error
                     }
@@ -543,6 +543,7 @@ export default function CheckoutForm({ user }) {
                         return
                       }
                     } catch (error) {
+                        console.error('Failed to create:', error)
                       console.error('Express checkout error:', error)
                       toast.error('Something went wrong. Please try again.')
                     }
@@ -647,7 +648,7 @@ export default function CheckoutForm({ user }) {
                               type="text"
                               autoComplete="given-name"
                               value={shippingAddress.firstName}
-                              onChange={handleInputChange}
+                              onChange={handleChange}
                               className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                             />
                           </div>
@@ -663,7 +664,7 @@ export default function CheckoutForm({ user }) {
                               type="text"
                               autoComplete="family-name"
                               value={shippingAddress.lastName}
-                              onChange={handleInputChange}
+                              onChange={handleChange}
                               className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                             />
                           </div>
@@ -680,7 +681,7 @@ export default function CheckoutForm({ user }) {
                             name="company"
                             type="text"
                             value={shippingAddress.company}
-                            onChange={handleInputChange}
+                            onChange={handleChange}
                             className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                           />
                         </div>
@@ -697,7 +698,7 @@ export default function CheckoutForm({ user }) {
                             type="text"
                             autoComplete="street-address"
                             value={shippingAddress.address}
-                            onChange={handleInputChange}
+                            onChange={handleChange}
                             className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                           />
                         </div>
@@ -713,7 +714,7 @@ export default function CheckoutForm({ user }) {
                             name="apartment"
                             type="text"
                             value={shippingAddress.apartment}
-                            onChange={handleInputChange}
+                            onChange={handleChange}
                             className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                           />
                         </div>
@@ -730,7 +731,7 @@ export default function CheckoutForm({ user }) {
                             type="text"
                             autoComplete="address-level2"
                             value={shippingAddress.city}
-                            onChange={handleInputChange}
+                            onChange={handleChange}
                             className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                           />
                         </div>
@@ -747,7 +748,7 @@ export default function CheckoutForm({ user }) {
                             type="text"
                             autoComplete="address-level1"
                             value={shippingAddress.state}
-                            onChange={handleInputChange}
+                            onChange={handleChange}
                             maxLength={2}
                             className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                           />
@@ -765,7 +766,7 @@ export default function CheckoutForm({ user }) {
                             type="text"
                             autoComplete="postal-code"
                             value={shippingAddress.zipCode}
-                            onChange={handleInputChange}
+                            onChange={handleChange}
                             className="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                           />
                         </div>
@@ -881,18 +882,17 @@ export default function CheckoutForm({ user }) {
 
                   <div className="mt-6">
                     <PayPalScriptProvider options={paypalOptions}>
-                      <PayPalCardFieldsProvider
+                      <PayPalFieldsProvider
                         createOrder={createOrder}
                         onApprove={onApprove}
                         onError={(err) => {
-                          console.error('Card payment error:', err)
+                          console.error('payment error:', err)
                           toast.error('Payment failed. Please try again.')
                         }}
                       >
                         <div className="space-y-4">
                           <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                              Card number
+                            <label className="block text-sm font-medium text-gray-700 mb-2">number
                             </label>
                             <PayPalNumberField />
                           </div>
@@ -925,13 +925,12 @@ export default function CheckoutForm({ user }) {
                           </div>
                         </div>
                         
-                        <CardFieldsSubmitButton 
-                          isProcessing={isProcessing}
+                        <FieldsSubmit isProcessing={isProcessing}
                           disabled={!selectedShippingRate}
                           total={total}
                           billingName={`${shippingAddress.firstName} ${shippingAddress.lastName}`}
                         />
-                      </PayPalCardFieldsProvider>
+                      </PayPalFieldsProvider>
                     </PayPalScriptProvider>
                   </div>
 

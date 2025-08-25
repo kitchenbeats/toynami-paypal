@@ -1,24 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { z } from 'zod'
+import { apiHandler, validateRequest } from '@/lib/api/utils'
 
-interface TaxCalculationRequest {
-  items: Array<{
-    id: string
-    name: string
-    price: number // in dollars
-    quantity: number
-    taxCode?: string // TIC (Taxability Information Code) for TaxCloud
-  }>
-  shippingAddress: {
-    address: string
-    city: string
-    state: string
-    zipCode: string
-    country?: string
-  }
-  shippingAmount?: number
-  customerId?: string // For tax exemption handling
-}
+// Define validation schema for tax calculation
+const taxCalculationSchema = z.object({
+  items: z.array(z.object({
+    id: z.string(),
+    name: z.string(),
+    price: z.number().positive(), // in dollars
+    quantity: z.number().int().positive(),
+    taxCode: z.string().optional(), // TIC (Taxability Information Code) for TaxCloud
+  })).min(1, 'At least one item is required'),
+  shippingAddress: z.object({
+    address: z.string().min(1),
+    city: z.string().min(1),
+    state: z.string().length(2, 'State must be 2-letter code'),
+    zipCode: z.string().min(5),
+    country: z.string().default('US'),
+  }),
+  shippingAmount: z.number().nonnegative().optional(),
+  customerId: z.string().optional(), // For tax exemption handling
+})
+
+type TaxCalculationRequest = z.infer<typeof taxCalculationSchema>
 
 interface TaxSettings {
   enabled: boolean
@@ -36,8 +41,7 @@ interface TaxSettings {
  * Calculate tax using TaxCloud v3 API
  * TaxCloud is free in SST member states and provides accurate, compliant tax calculations
  */
-async function calculateWithTaxCloud(
-  request: TaxCalculationRequest,
+async function calculateWithTaxCloud(request: TaxCalculationRequest,
   settings: TaxSettings
 ): Promise<{
   totalTax: number
@@ -102,8 +106,8 @@ async function calculateWithTaxCloud(
     zip: request.shippingAddress.zipCode.substring(0, 5)
   }
 
-  // Create cart request for TaxCloud v3 API
-  // Based on the error, the API expects an "items" array with nested structure
+  // Create cartfor TaxCloud v3 API
+  // Based on the,  the API expects an "items" array with nested structure
   const cartRequest = {
     items: [{
       cartId: cartId,
@@ -139,10 +143,10 @@ async function calculateWithTaxCloud(
         throw new Error('Invalid TaxCloud API credentials. Check TAXCLOUD_CONNECTION_ID and TAXCLOUD_API_KEY')
       }
       if (response.status === 400) {
-        throw new Error(`Invalid request: ${errorText}`)
+        throw new Error(`Invalid: ${Text}`)
       }
       
-      throw new Error(`TaxCloud API returned ${response.status}: ${errorText}`)
+      throw new Error(`TaxCloud API returned ${response.status}: ${Text}`)
     }
 
     const data = await response.json()
@@ -160,7 +164,7 @@ async function calculateWithTaxCloud(
     const breakdown = []
 
     // Process each line item's tax
-    cartResponse.lineItems.forEach((lineItem: any) => {
+    cartResponse.lineItems.forEach((lineItem) => {
       const itemTax = lineItem.tax?.amount || 0
       const itemRate = lineItem.tax?.rate || 0
       const itemTotal = lineItem.price * lineItem.quantity
@@ -216,28 +220,13 @@ async function calculateWithTaxCloud(
   }
 }
 
-export async function POST(request: NextRequest) {
-  try {
-    const body: TaxCalculationRequest = await request.json()
-    
-    // Validate request
-    if (!body.items || body.items.length === 0) {
-      return NextResponse.json(
-        { error: 'Items are required for tax calculation' },
-        { status: 400 }
-      )
-    }
-    
-    if (!body.shippingAddress?.state || !body.shippingAddress?.zipCode) {
-      return NextResponse.json(
-        { error: 'Valid shipping address with state and zip code is required' },
-        { status: 400 }
-      )
-    }
-
-    // Get tax settings from database (only non-sensitive settings)
-    const supabase = await createClient()
-    const { data: dbSettings } = await supabase
+export const POST = apiHandler(async (request: NextRequest) => {
+  // Validate request body
+  const { data: body } = await validateRequest(request, taxCalculationSchema)
+  
+  // Get tax settings from database (only non-sensitive settings)
+  const supabase = await createClient()
+  const { data: dbSettings } = await supabase
       .from('tax_settings')
       .select('enabled, tax_shipping, tax_enabled_states, origin_address, origin_city, origin_state, origin_zip')
       .single()
@@ -308,36 +297,22 @@ export async function POST(request: NextRequest) {
       breakdown: result.breakdown,
       cartId: result.cartId,
       calculatedAt: new Date().toISOString()
-    })
-
-  } catch (error) {
-    console.error('Tax calculation error:', error)
-    
-    // Return error but don't break checkout
-    return NextResponse.json({
-      success: false,
-      enabled: true,
-      totalTax: 0,
-      taxRate: 0,
-      error: error instanceof Error ? error.message : 'Tax calculation failed',
-      message: 'Tax could not be calculated. You may proceed with checkout.',
-      calculatedAt: new Date().toISOString()
-    })
-  }
-}
+  })
+})
 
 // GET endpoint to check tax configuration status
-export async function GET(request: NextRequest) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function GET(_request: NextRequest) {
   try {
     const supabase = await createClient()
-    const { data: settings, error } = await supabase
+    const { data: settings} = await supabase
       .from('tax_settings')
       .select('enabled, provider, tax_enabled_states')
       .single()
 
     const hasApiConfig = !!(process.env.TAXCLOUD_CONNECTION_ID && process.env.TAXCLOUD_API_KEY)
 
-    if (error || !settings || !hasApiConfig) {
+    if (!settings || !hasApiConfig) {
       return NextResponse.json({
         configured: false,
         enabled: false,
@@ -353,6 +328,7 @@ export async function GET(request: NextRequest) {
     })
 
   } catch (error) {
+    console.error('Tax configuration check error:', error)
     return NextResponse.json(
       { error: 'Failed to check tax configuration' },
       { status: 500 }

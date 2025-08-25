@@ -1,6 +1,7 @@
 import mailchimp from '@mailchimp/mailchimp_marketing'
 import crypto from 'crypto'
 import { createClient } from '@/lib/supabase/server'
+import type { MailchimpMemberData, MailchimpCustomerData } from '@/lib/types/mailchimp'
 
 interface MailchimpConfig {
   apiKey: string
@@ -107,7 +108,7 @@ class MailchimpClient {
       const emailHash = this.getEmailHash(customer.email)
       
       // Add/update list member
-      const memberData: any = {
+      const memberData: MailchimpMemberData = {
         email_address: customer.email,
         status_if_new: 'subscribed',
         merge_fields: {
@@ -132,7 +133,7 @@ class MailchimpClient {
       if (this.config!.storeId) {
         try {
           // Add/update customer in store
-          const customerData: any = {
+          const customerData: MailchimpCustomerData = {
             id: customer.id,
             email_address: customer.email,
             opt_in_status: true,
@@ -157,9 +158,9 @@ class MailchimpClient {
             this.config!.storeId,
             customerData
           )
-        } catch (ecomError: any) {
+        } catch (ecomError) {
           // Try updating if add fails
-          if (ecomError.status === 400) {
+          if (ecomError && typeof ecomError === 'object' && 'status' in ecomError && (ecomError as { status: number }).status === 400) {
             await mailchimp.ecommerce.updateStoreCustomer(
               this.config!.storeId,
               customer.id,
@@ -178,10 +179,10 @@ class MailchimpClient {
       await this.logSync('customer_synced', 'customer', customer.id, true)
 
       return { success: true }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Mailchimp sync error:', error)
-      await this.logSync('customer_synced', 'customer', customer.id, false, error.message)
-      return { success: false, error: error.message }
+      await this.logSync('customer_synced', 'customer', customer.id, false, (error as Error).message)
+      return { success: false, error: (error as Error).message }
     }
   }
 
@@ -226,10 +227,10 @@ class MailchimpClient {
 
       await this.logSync('order_recorded', 'order', order.id, true)
       return { success: true }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Mailchimp order sync error:', error)
-      await this.logSync('order_recorded', 'order', order.id, false, error.message)
-      return { success: false, error: error.message }
+      await this.logSync('order_recorded', 'order', order.id, false, (error as Error).message)
+      return { success: false, error: (error as Error).message }
     }
   }
 
@@ -281,7 +282,7 @@ class MailchimpClient {
       // Try to update first, create if doesn't exist
       try {
         await mailchimp.ecommerce.updateCart(this.config!.storeId, cartData.id, cart)
-      } catch (updateError: any) {
+      } catch (updateError) {
         if (updateError.status === 404) {
           await mailchimp.ecommerce.addCart(this.config!.storeId, cart)
         } else {
@@ -291,10 +292,10 @@ class MailchimpClient {
 
       await this.logSync('cart_synced', 'cart', cartData.id, true)
       return { success: true }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Mailchimp cart sync error:', error)
-      await this.logSync('cart_synced', 'cart', cartData.id, false, error.message)
-      return { success: false, error: error.message }
+      await this.logSync('cart_synced', 'cart', cartData.id, false, (error as Error).message)
+      return { success: false, error: (error as Error).message }
     }
   }
 
@@ -314,13 +315,13 @@ class MailchimpClient {
     try {
       await mailchimp.ecommerce.deleteCart(this.config!.storeId, cartId)
       return { success: true }
-    } catch (error: any) {
+    } catch (error) {
       // Ignore 404 errors (cart already deleted)
       if (error.status === 404) {
         return { success: true }
       }
       console.error('Mailchimp cart delete error:', error)
-      return { success: false, error: error.message }
+      return { success: false, error: (error as Error).message }
     }
   }
 
@@ -348,9 +349,9 @@ class MailchimpClient {
       )
 
       return { success: true }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Mailchimp tag update error:', error)
-      return { success: false, error: error.message }
+      return { success: false, error: (error as Error).message }
     }
   }
 
@@ -383,17 +384,17 @@ class MailchimpClient {
 
       await this.logSync('batch_customers_synced', 'batch', response.id, true)
       return { success: true }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Mailchimp batch sync error:', error)
-      await this.logSync('batch_customers_synced', 'batch', '', false, error.message)
-      return { success: false, error: error.message }
+      await this.logSync('batch_customers_synced', 'batch', '', false, (error as Error).message)
+      return { success: false, error: (error as Error).message }
     }
   }
 
   /**
    * Test connection to Mailchimp
    */
-  async testConnection(): Promise<{ success: boolean; error?: string; data?: any }> {
+  async testConnection(): Promise<{ success: boolean; error?: string; data?: unknown }> {
     if (!this.initialized) {
       const initialized = await this.initialize()
       if (!initialized) return { success: false, error: 'Mailchimp not configured' }
@@ -413,9 +414,9 @@ class MailchimpClient {
           memberCount: listInfo.stats.member_count
         }
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Mailchimp connection test failed:', error)
-      return { success: false, error: error.message }
+      return { success: false, error: (error as Error).message }
     }
   }
 

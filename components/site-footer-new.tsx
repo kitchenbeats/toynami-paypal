@@ -47,7 +47,7 @@ async function getFooterData() {
 }
 
 export async function SiteFooterNew() {
-  const { settings, menuItems } = await getFooterData();
+  const { settings } = await getFooterData();
   
   return (
     <footer className="footer relative mt-12" style={{ backgroundColor: 'var(--toynami-dark)', marginTop: '46px' }}>

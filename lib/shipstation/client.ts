@@ -62,6 +62,21 @@ export interface RateRequest {
   }
 }
 
+export interface Carrier {
+  carrier_id: string
+  carrier_name?: string
+  services?: Service[]
+}
+
+export interface Service {
+  service_id: string
+  service_name?: string
+}
+
+export interface CarriersResponse {
+  carriers: Carrier[]
+}
+
 export interface RateResponse {
   rate_response: {
     rates: ShippingRate[]
@@ -83,7 +98,8 @@ class ShipStationClient {
   private apiKey: string
   private baseUrl: string
   
-  constructor(apiKey: string, sandbox: boolean = false) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  constructor(apiKey: string, _sandbox: boolean = false) {
     this.apiKey = apiKey
     // ShipStation V2 API base URL (no sandbox available yet)
     this.baseUrl = 'https://api.shipstation.com/v2'
@@ -117,8 +133,8 @@ class ShipStationClient {
         })
         
         if (carriersResponse.ok) {
-          const carriersData = await carriersResponse.json()
-          const carrierIds = carriersData.carriers?.map((c: any) => c.carrier_id) || []
+          const carriersData: CarriersResponse = await carriersResponse.json()
+          const carrierIds = carriersData.carriers?.map((c: Carrier) => c.carrier_id) || []
           
           if (carrierIds.length > 0) {
             request.rate_options.carrier_ids = carrierIds
@@ -149,6 +165,7 @@ class ShipStationClient {
       const data = await response.json()
       return data
     } catch (error) {
+        console.error('Error in catch block:', error)
       throw error
     }
   }
@@ -176,6 +193,7 @@ class ShipStationClient {
       const data = await response.json()
       return data
     } catch (error) {
+        console.error('Error in catch block:', error)
       throw error
     }
   }
@@ -201,6 +219,7 @@ class ShipStationClient {
       const data = await response.json()
       return data
     } catch (error) {
+        console.error('Error in catch block:', error)
       throw error
     }
   }

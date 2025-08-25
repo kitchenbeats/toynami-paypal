@@ -8,6 +8,7 @@ import { IMAGE_CONFIG } from '@/lib/config/images'
 import { unstable_cache } from 'next/cache'
 import { Metadata } from 'next'
 import { StructuredData } from '@/components/seo/structured-data'
+import { generateBrandSEO, generateMetadata as generateSEOMetadata } from '@/lib/seo/utils'
 
 interface PageProps {
   params: Promise<{
@@ -40,22 +41,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { brand: brandSlug } = await params
   const supabase = await createClient()
 
-  const defaultUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000"
-
-  // Get comprehensive brand data for SEO
+  // Get brand data for SEO
   const { data: brand } = await supabase
     .from('brands')
-    .select(`
-      id,
-      name,
-      description,
-      search_keywords,
-      logo_url,
-      banner_url,
-      banner_url_2
-    `)
+    .select('id, name, description, slug')
     .eq('slug', brandSlug)
     .eq('is_active', true)
     .single()
@@ -67,89 +56,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
   }
 
-  // Get product count and sample products for this brand
-  const [{ count }, { data: sampleProducts }] = await Promise.all([
-    supabase
-      .from('products')
-      .select('*', { count: 'exact', head: true })
-      .eq('brand_id', brand.id)
-      .eq('status', 'active')
-      .eq('is_visible', true),
-    supabase
-      .from('products')
-      .select('name, base_price_cents')
-      .eq('brand_id', brand.id)
-      .eq('status', 'active')
-      .eq('is_visible', true)
-      .limit(3)
-  ])
+  // Get product count for this brand
+  const { count } = await supabase
+    .from('products')
+    .select('*', { count: 'exact', head: true })
+    .eq('brand_id', brand.id)
+    .eq('status', 'active')
+    .eq('is_visible', true)
 
-  // Build SEO content
-  const title = `${brand.name} Collectibles & Toys - Premium Merchandise`
-  const description = brand.description ||
-    `Shop ${brand.name} collectibles and toys at Toynami Store. ${count ? `Browse ${count} premium ${brand.name} products` : `Discover ${brand.name} merchandise`} including figures, toys, and exclusive items.`
-
-  // Build keywords
-  const keywords: string[] = [
-    brand.name.toLowerCase(),
-    `${brand.name.toLowerCase()} collectibles`,
-    `${brand.name.toLowerCase()} toys`,
-    `${brand.name.toLowerCase()} figures`,
-    `${brand.name.toLowerCase()} merchandise`,
-    'collectibles', 'toys', 'figures', 'premium', 'authentic'
-  ]
-
-  if (brand.search_keywords) {
-    keywords.push(...brand.search_keywords.split(',').map((k: string) => k.trim()))
-  }
-
-  // Add product names as keywords
-  if (sampleProducts) {
-    sampleProducts.forEach(product => {
-      keywords.push(product.name.toLowerCase())
-    })
-  }
-
-  const brandUrl = `${defaultUrl}/brands/${brandSlug}`
-  const imageUrl = brand.banner_url_2 || brand.banner_url || brand.logo_url || '/opengraph-image.png'
-  const fullImageUrl = imageUrl.startsWith('http') 
-    ? getImageSrc(imageUrl)
-    : imageUrl.startsWith('/') 
-      ? `${defaultUrl}${imageUrl}`
-      : `${IMAGE_CONFIG.baseUrl}/${imageUrl}`
-
-  return {
-    title,
-    description,
-    keywords: [...new Set(keywords)], // Remove duplicates
-    openGraph: {
-      title: `${brand.name} Collectibles & Toys | Toynami Store`,
-      description,
-      type: 'website',
-      url: brandUrl,
-      siteName: 'Toynami Store',
-      images: [{
-        url: fullImageUrl,
-        width: 1200,
-        height: 630,
-        alt: `${brand.name} - Toynami Store`
-      }]
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${brand.name} Collectibles & Toys | Toynami Store`,
-      description,
-      images: [fullImageUrl]
-    },
-    alternates: {
-      canonical: brandUrl
-    },
-    other: {
-      'brand:name': brand.name,
-      'product:count': count?.toString() || '0',
-      'brand:category': 'collectibles'
-    }
-  }
+  // Use our SEO utility for consistent metadata generation
+  const brandWithCount = { ...brand, productCount: count || 0 }
+  const seoData = generateBrandSEO(brandWithCount)
+  seoData.url = `/brands/${brandSlug}`
+  
+  return generateSEOMetadata(seoData)
 }
 
 export default async function BrandProductsPage({ params, searchParams }: PageProps) {
@@ -168,6 +88,13 @@ export default async function BrandProductsPage({ params, searchParams }: PagePr
   
   return (
     <>
+      {/* Brand Structured Data */}
+      <StructuredData 
+        type="brand" 
+        data={brand} 
+        url={`/brands/${brandSlug}`}
+      />
+      
       {/* Brand Header Banner - 9:2 aspect ratio */}
       <div className="brand-series-header" style={{ width: '100%', aspectRatio: '9/2', backgroundColor: 'var(--toynami-dark, #231f20)', position: 'relative', overflow: 'hidden' }}>
         {brand.banner_url_2 && (

@@ -4,14 +4,11 @@ import { useState, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
-import { 
-  Upload, 
+import { Upload, 
   X, 
   Image as ImageIcon, 
   Loader2,
-  CheckCircle,
-  AlertCircle
-} from 'lucide-react'
+  CheckCircle } from 'lucide-react'
 import { toast } from 'sonner'
 
 interface ImageUploadProps {
@@ -63,7 +60,7 @@ export function ImageUpload({
   const uploadFile = async (file: File): Promise<string> => {
     const fileName = `${folder ? folder + '/' : ''}${Date.now()}-${file.name.replace(/\s+/g, '-')}`
     
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from(bucket)
       .upload(fileName, file, {
         cacheControl: '3600',
@@ -95,7 +92,7 @@ export function ImageUpload({
     
     // Validate each file
     const validationErrors: string[] = []
-    fileArray.forEach((file, index) => {
+    fileArray.forEach((file) => {
       const error = validateFile(file)
       if (error) {
         validationErrors.push(`${file.name}: ${error}`)
@@ -111,9 +108,9 @@ export function ImageUpload({
     setUploadProgress(0)
     
     try {
-      const uploadPromises = fileArray.map(async (file, index) => {
+      const uploadPromises = fileArray.map(async (file) => {
         const url = await uploadFile(file)
-        setUploadProgress(((index + 1) / fileArray.length) * 100)
+        setUploadProgress(((+ 1) / fileArray.length) * 100)
         return {
           url,
           name: file.name,
@@ -126,9 +123,9 @@ export function ImageUpload({
       setUploadedFiles([...uploadedFiles, ...uploaded])
       onUpload(uploaded.map(f => f.url))
       toast.success(`${uploaded.length} file(s) uploaded successfully`)
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Upload error:', error)
-      toast.error(error.message || 'Failed to upload files')
+      toast.error(error instanceof Error ? error.message : 'Failed to upload files')
     } finally {
       setUploading(false)
       setUploadProgress(0)
@@ -230,9 +227,9 @@ export function ImageUpload({
           </p>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {uploadedFiles.map((file, index) => (
+            {uploadedFiles.map((file) => (
               <div
-                key={index}
+                key={}
                 className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
               >
                 {file.type.startsWith('image/') ? (
@@ -260,7 +257,7 @@ export function ImageUpload({
                   type="button"
                   variant="ghost"
                   size="sm"
-                  onClick={() => removeFile(index)}
+                  onClick={() => removeFile()}
                   className="text-red-600 hover:text-red-700"
                 >
                   <X className="h-4 w-4" />

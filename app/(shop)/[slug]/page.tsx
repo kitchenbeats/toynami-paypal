@@ -12,6 +12,8 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 import { Metadata } from 'next'
+import { StructuredData } from '@/components/seo/structured-data'
+import { generateCategorySEO, generateMetadata as generateSEOMetadata } from '@/lib/seo/utils'
 
 interface PageProps {
   params: Promise<{
@@ -52,69 +54,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       .select('product_id', { count: 'exact', head: true })
       .eq('category_id', category.id)
 
-    // Get product IDs for this category to find brands
-    const { data: productIds } = await supabase
-      .from('product_categories')
-      .select('product_id')
-      .eq('category_id', category.id)
-      .limit(100)
-
-    let brandNames: string[] = []
-    if (productIds && productIds.length > 0) {
-      const { data: topBrands } = await supabase
-        .from('products')
-        .select('brand:brands(name)')
-        .eq('status', 'active')
-        .eq('is_visible', true)
-        .in('id', productIds.map(p => p.product_id))
-        .limit(5)
-      
-      brandNames = topBrands?.map(p => p.brand?.name).filter(Boolean) || []
-    }
+    // Use our SEO utility for consistent metadata generation
+    const categoryWithCount = { ...category, productCount: count || 0 }
+    const seoData = generateCategorySEO(categoryWithCount)
+    seoData.url = `/${slug}`
     
-    // Build SEO content
-    const title = category.meta_title || `${category.name} - Collectibles & Toys`
-    const description = category.meta_description || 
-      `Shop ${category.name.toLowerCase()} collectibles and toys at Toynami Store. ${category.description || `Discover premium ${category.name.toLowerCase()} merchandise, figures, and exclusive items.`}`
-    
-    // Build keywords
-    const keywords = category.meta_keywords?.split(',').map((k: string) => k.trim()) || []
-    keywords.push(category.name.toLowerCase(), 'collectibles', 'toys', 'figures', ...brandNames.map(b => b.toLowerCase()))
-
-    const categoryUrl = `${defaultUrl}/${slug}`
-    const imageUrl = category.banner_url || category.image_url || '/opengraph-image.png'
-
-    return {
-      title,
-      description,
-      keywords,
-      openGraph: {
-        title,
-        description,
-        type: 'website',
-        url: categoryUrl,
-        siteName: 'Toynami Store',
-        images: [{
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: `${category.name} - Toynami Store`
-        }]
-      },
-      twitter: {
-        card: 'summary_large_image',
-        title,
-        description,
-        images: [imageUrl]
-      },
-      alternates: {
-        canonical: categoryUrl
-      },
-      other: {
-        'product:count': count?.toString() || '0',
-        'category:name': category.name
-      }
-    }
+    return generateSEOMetadata(seoData)
   }
 
   // Check if it's a CMS page
@@ -256,11 +201,6 @@ async function getProducts(categorySlug: string, searchParams: Awaited<PageProps
         stock,
         is_active
       ),
-      images:product_images(
-        image_filename,
-        alt_text,
-        is_primary
-      ),
       brand:brands!brand_id(name, slug),
       categories:product_categories(
         category:categories(slug, name)
@@ -368,8 +308,58 @@ async function getProducts(categorySlug: string, searchParams: Awaited<PageProps
   
   const { data: products } = await query
   
+  // Get images for all products via media_usage
+  let productsWithImages = products || []
+  
+  if (productsWithImages.length > 0) {
+    const productIds = productsWithImages.map(p => p.id.toString())
+    
+    // Query media_usage to get images for these products
+    const { data: mediaUsageData } = await supabase
+      .from('media_usage')
+      .select(`
+        entity_id,
+        field_name,
+        media:media_library (
+          id,
+          filename,
+          file_url,
+          alt_text,
+          title,
+          sort_order
+        )
+      `)
+      .eq('entity_type', 'product')
+      .in('entity_id', productIds)
+      .order('field_name', { ascending: true })
+    
+    // Group images by product
+    const imagesByProduct: Record<string, any[]> = {}
+    
+    ;(mediaUsageData || []).forEach(usage => {
+      if (!usage.media) return
+      
+      const productId = usage.entity_id
+      if (!imagesByProduct[productId]) {
+        imagesByProduct[productId] = []
+      }
+      
+      imagesByProduct[productId].push({
+        image_filename: usage.media.file_url,
+        alt_text: usage.media.alt_text,
+        is_primary: usage.field_name === 'primary_image'
+      })
+    })
+    
+    // Attach images to products
+    productsWithImages = productsWithImages.map(product => ({
+      ...product,
+      images: imagesByProduct[product.id] || []
+    }))
+  }
+  
   return {
-    products,
+    products: productsWithImages,
     totalCount: count || 0,
     currentPage: page,
     perPage
@@ -468,6 +458,13 @@ export default async function DynamicPage({ params, searchParams }: PageProps) {
   
   return (
     <>
+      {/* Category Structured Data */}
+      <StructuredData 
+        type="category" 
+        data={category} 
+        url={`/${slug}`}
+      />
+      
       <div className="hero-section">
           <div className="container mx-auto px-4 relative z-10 text-white py-12">
             <Breadcrumb className="mb-6">

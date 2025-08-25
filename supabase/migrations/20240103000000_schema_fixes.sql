@@ -62,13 +62,14 @@ ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT now();
 -- ======================================
 -- 📷 Product Images Enhancements
 -- ======================================
-ALTER TABLE product_images
-ADD COLUMN IF NOT EXISTS image_url TEXT, -- For external images
-ADD COLUMN IF NOT EXISTS thumbnail_url TEXT,
-ADD COLUMN IF NOT EXISTS large_url TEXT,
-ADD COLUMN IF NOT EXISTS zoom_url TEXT,
-ADD COLUMN IF NOT EXISTS video_url TEXT,
-ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT now();
+-- REMOVED: product_images table no longer exists - using media_library instead
+-- ALTER TABLE product_images
+-- ADD COLUMN IF NOT EXISTS image_url TEXT, -- For external images
+-- ADD COLUMN IF NOT EXISTS thumbnail_url TEXT,
+-- ADD COLUMN IF NOT EXISTS large_url TEXT,
+-- ADD COLUMN IF NOT EXISTS zoom_url TEXT,
+-- ADD COLUMN IF NOT EXISTS video_url TEXT,
+-- ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT now();
 
 -- ======================================
 -- 📂 Categories Enhancements

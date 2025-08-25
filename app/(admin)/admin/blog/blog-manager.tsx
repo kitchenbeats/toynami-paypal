@@ -11,12 +11,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { 
-  Pencil, Trash2, Plus, Save, X, FileText, 
-  Calendar, Eye, Star, Clock
+  Pencil, Trash2, Plus, Save, X, 
+  Calendar, Eye, Star
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { BlogImageUpload } from '@/components/admin/blog-image-upload'
-import { toast } from 'sonner'
+import { MediaSelector } from '@/components/ui/media-selector'
+import Image from 'next/image'
 
 interface BlogPost {
   id?: string
@@ -24,8 +24,8 @@ interface BlogPost {
   title: string
   excerpt?: string
   content?: string
-  featured_image?: string
-  thumbnail_url?: string
+  featured_image?: string | null
+  thumbnail_url?: string | null
   author_id?: string
   status: 'draft' | 'published' | 'archived'
   published_at?: string
@@ -48,8 +48,8 @@ export function BlogManager({ initialPosts }: BlogManagerProps) {
     title: '',
     excerpt: '',
     content: '',
-    featured_image: '',
-    thumbnail_url: '',
+    featured_image: null,
+    thumbnail_url: null,
     status: 'draft',
     featured: false,
     tags: [],
@@ -62,7 +62,11 @@ export function BlogManager({ initialPosts }: BlogManagerProps) {
 
   const handleEdit = (post: BlogPost) => {
     setEditingId(post.id || null)
-    setFormData(post)
+    setFormData({
+      ...post,
+      featured_image: post.featured_image || null,
+      thumbnail_url: post.thumbnail_url || null
+    })
     setTagInput(post.tags?.join(', ') || '')
     setIsCreating(false)
   }
@@ -75,8 +79,8 @@ export function BlogManager({ initialPosts }: BlogManagerProps) {
       title: '',
       excerpt: '',
       content: '',
-      featured_image: '',
-      thumbnail_url: '',
+      featured_image: null,
+      thumbnail_url: null,
       status: 'draft',
       featured: false,
       tags: [],
@@ -93,8 +97,8 @@ export function BlogManager({ initialPosts }: BlogManagerProps) {
       title: '',
       excerpt: '',
       content: '',
-      featured_image: '',
-      thumbnail_url: '',
+      featured_image: null,
+      thumbnail_url: null,
       status: 'draft',
       featured: false,
       tags: [],
@@ -243,23 +247,27 @@ export function BlogManager({ initialPosts }: BlogManagerProps) {
             </div>
 
             {/* Image Uploads */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              <div className="lg:col-span-2">
-                <BlogImageUpload
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div>
+                <Label>Featured Image (Hero Banner)</Label>
+                <MediaSelector
                   value={formData.featured_image}
-                  onChange={(url) => setFormData({ ...formData, featured_image: url || '' })}
-                  label="Featured Image (Hero Banner)"
-                  aspectRatio="aspect-[16/9]"
-                  imageType="featured_image"
+                  onChange={(media) => setFormData({ 
+                    ...formData, 
+                    featured_image: media?.file_url || null 
+                  })}
+                  buttonText="Select Featured Image"
                 />
               </div>
-              <div className="lg:col-span-1">
-                <BlogImageUpload
+              <div>
+                <Label>Thumbnail Image</Label>
+                <MediaSelector
                   value={formData.thumbnail_url}
-                  onChange={(url) => setFormData({ ...formData, thumbnail_url: url || '' })}
-                  label="Thumbnail Image"
-                  aspectRatio="aspect-square"
-                  imageType="thumbnail_url"
+                  onChange={(media) => setFormData({ 
+                    ...formData, 
+                    thumbnail_url: media?.file_url || null 
+                  })}
+                  buttonText="Select Thumbnail"
                 />
               </div>
             </div>
@@ -345,9 +353,22 @@ export function BlogManager({ initialPosts }: BlogManagerProps) {
           <Card key={post.id}>
             <CardContent className="p-6">
               <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="font-semibold text-lg">{post.title}</h3>
+                <div className="flex items-start gap-4 flex-1">
+                  {/* Thumbnail Preview */}
+                  {post.thumbnail_url && (
+                    <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-muted flex-shrink-0">
+                      <Image
+                        src={post.thumbnail_url}
+                        alt={post.title}
+                        fill
+                        className="object-cover"
+                        sizes="96px"
+                      />
+                    </div>
+                  )}
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="font-semibold text-lg">{post.title}</h3>
                     {getStatusBadge(post.status)}
                     {post.featured && (
                       <Badge variant="default" className="bg-yellow-500">
@@ -383,6 +404,7 @@ export function BlogManager({ initialPosts }: BlogManagerProps) {
                         ))}
                       </div>
                     )}
+                  </div>
                   </div>
                 </div>
                 

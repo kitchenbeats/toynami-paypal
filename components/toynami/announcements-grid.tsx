@@ -6,7 +6,6 @@ import Image from 'next/image'
 import { getImageSrc } from '@/lib/utils/image-utils'
 import { IMAGE_CONFIG } from '@/lib/config/images'
 import { format } from 'date-fns'
-import { ChevronRight, ArrowRight } from 'lucide-react'
 
 interface BlogPost {
   id: string

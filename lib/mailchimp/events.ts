@@ -172,7 +172,14 @@ export async function onCustomerUpdated(customer: {
   email: string
   full_name?: string
   phone?: string
-  shipping_address?: any
+  shipping_address?: {
+    address_line_1?: string
+    address_line_2?: string
+    city?: string
+    state?: string
+    postal_code?: string
+    country?: string
+  }
 }) {
   try {
     // Check if Mailchimp is enabled

@@ -11,9 +11,8 @@ import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { 
-  Pencil, Trash2, Plus, Save, X, Settings, Package,
-  DollarSign, BarChart3, Palette, Hash, ChevronRight,
-  ShoppingBag, Layers, Grid3x3, List, ToggleLeft
+  Pencil, Plus, Save, Settings,
+  Palette, Layers, Grid3x3, List, ToggleLeft
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
@@ -158,7 +157,7 @@ export function EnhancedOptionsManager({ initialOptionTypes, products = [], assi
         if (error) throw error
       } else {
         // Create new
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from('global_option_values')
           .insert({
             option_type_id: selectedOptionType.id,
@@ -291,7 +290,7 @@ export function EnhancedOptionsManager({ initialOptionTypes, products = [], assi
                         <Label>Display Type</Label>
                         <Select
                           value={editingType.input_type}
-                          onValueChange={(value: any) => setEditingType({
+                          onValueChange={(value) => setEditingType({
                             ...editingType,
                             input_type: value
                           })}

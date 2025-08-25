@@ -8,7 +8,7 @@ import { Switch } from '@/components/ui/switch'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { 
-  Plus, X, DollarSign, Package, Check
+  Plus, Check
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { toast } from 'sonner'
@@ -100,7 +100,7 @@ export function ProductOptionsTab({ productId, optionTypes, currentAssignments }
         toast.success('Option removed')
       } else {
         // Add assignment
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from('product_option_assignments')
           .insert({
             product_id: productId,
@@ -156,7 +156,7 @@ export function ProductOptionsTab({ productId, optionTypes, currentAssignments }
   const updatePricing = async (
     optionValueId: string, 
     field: 'price' | 'stock' | 'available',
-    value: any
+    value: string | number | boolean
   ) => {
     try {
       const currentPricing = pricing[optionValueId] || {
@@ -166,7 +166,7 @@ export function ProductOptionsTab({ productId, optionTypes, currentAssignments }
         is_available: true
       }
       
-      const updateData: any = {
+      const updateData: Record<string, unknown> = {
         product_id: productId,
         option_value_id: optionValueId,
         price_adjustment_cents: currentPricing.price_adjustment_cents,

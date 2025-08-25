@@ -21,12 +21,6 @@ async function getProduct(slug: string) {
         sku,
         is_active
       ),
-      images:product_images(
-        image_filename,
-        alt_text,
-        is_primary,
-        position
-      ),
       categories:product_categories(
         category:categories(name, slug)
       ),
@@ -62,6 +56,35 @@ async function getProduct(slug: string) {
     .is('deleted_at', null)
     .single()
 
+  if (!product) {
+    return null
+  }
+
+  // Get images via media_usage
+  const { data: mediaUsageData } = await supabase
+    .from('media_usage')
+    .select(`
+      field_name,
+      media:media_library (
+        id,
+        file_url,
+        alt_text,
+        title
+      )
+    `)
+    .eq('entity_type', 'product')
+    .eq('entity_id', product.id.toString())
+    .order('field_name')
+
+  // Transform media usage data to images array
+  product.images = (mediaUsageData || []).map((usage, index) => ({
+    id: usage.media?.id,
+    image_filename: usage.media?.file_url || '',
+    alt_text: usage.media?.alt_text || '',
+    is_primary: usage.field_name === 'primary_image',
+    position: index
+  }))
+
   return product
 }
 
@@ -92,13 +115,8 @@ export async function ProductDetailServer({ slug }: ProductDetailServerProps) {
     // Variants
     variants: product.variants || [],
     images: (product.images || [])
-      .sort((a: any, b: any) => (a.position || 0) - (b.position || 0))
-      .map((img: any) => ({
-        filename: img.image_filename,
-        alt: img.alt_text || product.name,
-        isPrimary: img.is_primary
-      })),
-    categories: (product.categories || []).map((pc: any) => pc.category),
+      .sort((a, b) => (a.position || 0) - (b.position || 0)),
+    categories: (product.categories || []).map((pc) => pc.category),
     warranty: product.warranty,
     condition: product.condition,
     weight: product.weight,
@@ -112,7 +130,7 @@ export async function ProductDetailServer({ slug }: ProductDetailServerProps) {
     min_purchase_quantity: product.min_purchase_quantity || 1,
     max_purchase_quantity: product.max_purchase_quantity || null,
     // Options
-    options: product.option_assignments?.map((assignment: any) => ({
+    options: product.option_assignments?.map((assignment) => ({
       id: assignment.option_type?.id,
       name: assignment.option_type?.name,
       display_name: assignment.option_type?.display_name,

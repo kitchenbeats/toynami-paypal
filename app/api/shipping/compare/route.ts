@@ -1,5 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { shipStationClient, type ShippingAddress, type ShippingPackage } from '@/lib/shipstation/client'
+import { shipStationClient, type ShippingAddress, type ShippingPackage, type RateResponse } from '@/lib/shipstation/client'
+
+interface V1Rate {
+  serviceName: string
+  serviceCode: string  
+  shipmentCost: number
+  otherCost: number
+}
+
+// interface ErrorResponse {
+//   message: string
+//   [key: string]: unknown
+// }
 
 export async function POST(request: NextRequest) {
   try {
@@ -60,8 +72,8 @@ export async function POST(request: NextRequest) {
     // Test V2 API
     console.log('Testing V2 API...')
     const v2Start = Date.now()
-    let v2Response: any = null
-    let v2Error: any = null
+    let v2Response: RateResponse | null = null
+    let v2Error: string | null = null
 
     try {
       v2Response = await shipStationClient.calculateRates({
@@ -78,6 +90,7 @@ export async function POST(request: NextRequest) {
         }
       })
     } catch (error) {
+        console.error('Error in catch block:', error)
       v2Error = error instanceof Error ? error.message : 'Unknown error'
     }
 
@@ -86,8 +99,8 @@ export async function POST(request: NextRequest) {
     // Test V1 API - Get USPS and UPS rates
     console.log('Testing V1 API for USPS and UPS...')
     const v1Start = Date.now()
-    let v1Response: any = []
-    let v1Error: any = null
+    let v1Response: V1Rate[] = []
+    let v1Error: string | null = null
 
     try {
       if (!v1ApiKey || !v1ApiSecret) {
@@ -148,6 +161,7 @@ export async function POST(request: NextRequest) {
         v1Response = results.flat()
       }
     } catch (error) {
+        console.error('Error in catch block:', error)
       v1Error = error instanceof Error ? error.message : 'Unknown error'
     }
 
@@ -156,8 +170,8 @@ export async function POST(request: NextRequest) {
     // Test V1 API with a specific service to show filtering
     console.log('Testing V1 API with single service filter...')
     const v1FilteredStart = Date.now()
-    let v1FilteredRates: any[] = []
-    let v1FilteredError: any = null
+    let v1FilteredRates: V1Rate[] = []
+    let v1FilteredError: string | null = null
 
     if (!v1ApiKey || !v1ApiSecret) {
       v1FilteredError = 'V1 API credentials not configured'
@@ -204,6 +218,7 @@ export async function POST(request: NextRequest) {
         v1FilteredError = `HTTP ${response.status}: ${errorText}`
       }
     } catch (error) {
+        console.error('Error in catch block:', error)
       v1FilteredError = error instanceof Error ? error.message : 'Unknown error'
     }
     }
@@ -216,7 +231,7 @@ export async function POST(request: NextRequest) {
     // v1FilteredRates is already defined above
 
     // Group V2 rates by carrier
-    const v2ByCarrier = v2Rates.reduce((acc: any, rate: any) => {
+    const v2ByCarrier = v2Rates.reduce((acc: Record<string, number>, rate) => {
       const carrier = rate.carrier_friendly_name || rate.carrier_name || rate.carrier || 'Unknown'
       if (!acc[carrier]) acc[carrier] = []
       acc[carrier].push({
@@ -229,7 +244,7 @@ export async function POST(request: NextRequest) {
     }, {})
 
     // Group V1 rates by carrier
-    const v1ByCarrier = v1Rates.reduce((acc: any, rate: any) => {
+    const v1ByCarrier = v1Rates.reduce((acc: Record<string, number>, rate: V1Rate) => {
       const carrier = rate.carrierFriendlyName || rate.carrierName || 'Unknown'
       if (!acc[carrier]) acc[carrier] = []
       acc[carrier].push({
@@ -242,7 +257,7 @@ export async function POST(request: NextRequest) {
     }, {})
 
     // Group V1 filtered rates
-    const v1FilteredByCarrier = v1FilteredRates.reduce((acc: any, rate: any) => {
+    const v1FilteredByCarrier = v1FilteredRates.reduce((acc: Record<string, number>, rate: V1Rate) => {
       const carrier = rate.carrierFriendlyName || rate.carrierName || 'Unknown'
       if (!acc[carrier]) acc[carrier] = []
       acc[carrier].push({
@@ -306,6 +321,7 @@ export async function POST(request: NextRequest) {
     })
 
   } catch (error) {
+      console.error('Error in catch block:', error)
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }

@@ -11,20 +11,53 @@ interface Product {
   images?: Array<{ image_filename: string; alt_text?: string; is_primary: boolean }>
   categories?: Array<{ category: { name: string; slug: string } }>
   variants?: Array<{ price_cents: number; stock: number; is_active: boolean; sku?: string }>
+  created_at?: string
+  updated_at?: string
+}
+
+interface BlogPost {
+  id: string
+  title: string
+  excerpt?: string
+  content?: string
+  slug: string
+  featured_image?: string
+  author_id?: string
+  published_at?: string
+  updated_at?: string
+  tags?: string[]
+}
+
+interface Category {
+  id: string
+  name: string
+  description?: string
+  slug: string
+  parent?: { name: string }
+}
+
+interface Brand {
+  id: string
+  name: string
+  description?: string
+  slug: string
+}
+
+interface BreadcrumbData {
+  breadcrumbs: Array<{ name: string; url: string }>
 }
 
 interface StructuredDataProps {
-  type: 'product' | 'organization' | 'breadcrumb'
-  data?: Product | any
+  type: 'product' | 'organization' | 'breadcrumb' | 'blog' | 'category' | 'brand' | 'website'
+  data?: Product | BlogPost | Category | Brand | BreadcrumbData
   url?: string
 }
 
 export function StructuredData({ type, data, url }: StructuredDataProps) {
-  let structuredData: any = {}
+  let structuredData: Record<string, unknown> = {}
 
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000"
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000")
 
   switch (type) {
     case 'organization':
@@ -122,17 +155,133 @@ export function StructuredData({ type, data, url }: StructuredDataProps) {
       break
 
     case 'breadcrumb':
-      if (!data?.breadcrumbs) break
+      if (!data || !('breadcrumbs' in data)) break
       
+      const breadcrumbData = data as BreadcrumbData
       structuredData = {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
-        "itemListElement": data.breadcrumbs.map((crumb: any, index: number) => ({
+        "itemListElement": breadcrumbData.breadcrumbs.map((crumb, index: number) => ({
           "@type": "ListItem",
           "position": index + 1,
           "name": crumb.name,
           "item": `${baseUrl}${crumb.url}`
         }))
+      }
+      break
+
+    case 'blog':
+      if (!data) break
+      
+      const blogPost = data as BlogPost
+      structuredData = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": blogPost.title,
+        "description": blogPost.excerpt || `${blogPost.title} - Read the latest from Toynami Store`,
+        "image": blogPost.featured_image || `${baseUrl}/opengraph-image.png`,
+        "url": url || `${baseUrl}/blog/${blogPost.slug}`,
+        "author": {
+          "@type": "Organization",
+          "name": "Toynami Store"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Toynami Store",
+          "logo": {
+            "@type": "ImageObject",
+            "url": `${baseUrl}/logo.png`
+          }
+        },
+        "datePublished": blogPost.published_at,
+        "dateModified": blogPost.updated_at || blogPost.published_at,
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": url || `${baseUrl}/blog/${blogPost.slug}`
+        },
+        ...(blogPost.tags && {
+          "keywords": blogPost.tags.join(", ")
+        })
+      }
+      break
+
+    case 'category':
+      if (!data) break
+      
+      const category = data as Category
+      structuredData = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": `${category.name} Collectibles`,
+        "description": category.description || `Browse ${category.name.toLowerCase()} collectibles and toys at Toynami Store`,
+        "url": url || `${baseUrl}/categories/${category.slug}`,
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "Toynami Store",
+          "url": baseUrl
+        },
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": baseUrl
+            },
+            {
+              "@type": "ListItem", 
+              "position": 2,
+              "name": "Categories",
+              "item": `${baseUrl}/categories`
+            },
+            ...(category.parent ? [{
+              "@type": "ListItem",
+              "position": 3,
+              "name": category.parent.name,
+              "item": `${baseUrl}/categories/${category.parent.name.toLowerCase()}`
+            }] : []),
+            {
+              "@type": "ListItem",
+              "position": category.parent ? 4 : 3,
+              "name": category.name
+            }
+          ]
+        }
+      }
+      break
+
+    case 'brand':
+      if (!data) break
+      
+      const brand = data as Brand
+      structuredData = {
+        "@context": "https://schema.org",
+        "@type": "Brand",
+        "name": brand.name,
+        "description": brand.description || `Official ${brand.name} collectibles and merchandise`,
+        "url": url || `${baseUrl}/brands/${brand.slug}`,
+        "sameAs": [
+          `${baseUrl}/brands/${brand.slug}`
+        ]
+      }
+      break
+
+    case 'website':
+      structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Toynami Store",
+        "description": "Premium collectibles, toys, and exclusive merchandise",
+        "url": baseUrl,
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": `${baseUrl}/search?q={search_term_string}`
+          },
+          "query-input": "required name=search_term_string"
+        }
       }
       break
   }

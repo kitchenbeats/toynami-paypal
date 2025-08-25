@@ -6,7 +6,8 @@ import { createClient } from '@/lib/supabase/server'
  * Get all ShipStation stores to identify the correct one
  * GET /api/shipstation/stores
  */
-export async function GET(request: NextRequest) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function GET(_request: NextRequest) {
   try {
     // Check admin access
     const supabase = await createClient()
@@ -41,7 +42,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Format store data for display
-    const stores = response.data?.map((store: any) => ({
+    const stores = response.data?.map((store) => ({
       storeId: store.storeId,
       storeName: store.storeName,
       marketplaceId: store.marketplaceId,

@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { 
   LayoutDashboard, ShoppingCart, Package, Truck, Users, 
   Megaphone, Settings, AlertCircle, Search, ChevronRight,
@@ -15,7 +15,7 @@ import {
 import { adminDocs, type DocCategory, type DocSection } from '@/lib/docs/admin-docs'
 import ReactMarkdown from 'react-markdown'
 
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, React.ComponentType> = {
   LayoutDashboard,
   ShoppingCart,
   Package,

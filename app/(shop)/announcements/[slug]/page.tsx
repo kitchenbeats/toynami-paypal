@@ -8,11 +8,13 @@ import { getBlogPostBySlug, getRelatedBlogPosts } from "@/lib/data/blog";
 import { AnnouncementsGrid } from "@/components/toynami/announcements-grid";
 import { getImageSrc } from "@/lib/utils/image-utils";
 import { IMAGE_CONFIG } from "@/lib/config/images";
+import { StructuredData } from "@/components/seo/structured-data";
+import { generateBlogSEO, generateMetadata as generateSEOMetadata } from "@/lib/seo/utils";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({
@@ -24,18 +26,15 @@ export async function generateMetadata({
   if (!post) {
     return {
       title: "Post Not Found | Toynami",
+      robots: { index: false, follow: false }
     };
   }
 
-  return {
-    title: post.meta_title || `${post.title} | Toynami`,
-    description: post.meta_description || post.excerpt,
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      images: post.featured_image ? [getImageSrc(post.featured_image)] : [],
-    },
-  };
+  // Use our SEO utility for consistent metadata generation
+  const seoData = generateBlogSEO(post)
+  seoData.url = `/announcements/${params.slug}`
+  
+  return generateSEOMetadata(seoData);
 }
 
 export default async function BlogPostPage({ params: p }: PageProps) {
@@ -65,8 +64,16 @@ export default async function BlogPostPage({ params: p }: PageProps) {
   const imageUrl = getPostImage();
 
   return (
-    <article className="container mx-auto px-4 py-8 max-w-4xl">
-      {/* Back to Announcements */}
+    <>
+      {/* Blog Post Structured Data */}
+      <StructuredData 
+        type="blog" 
+        data={post} 
+        url={`/announcements/${params.slug}`}
+      />
+      
+      <article className="container mx-auto px-4 py-8 max-w-4xl">
+        {/* Back to Announcements */}
       <Link
         href="/announcements"
         className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-6"
@@ -149,6 +156,7 @@ export default async function BlogPostPage({ params: p }: PageProps) {
           />
         </section>
       )}
-    </article>
+      </article>
+    </>
   );
 }
