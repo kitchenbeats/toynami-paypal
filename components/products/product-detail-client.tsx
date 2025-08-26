@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {} from '@/components/ui/card'
-import { ShoppingCart, Heart, Share2, Shield, Truck, Package,  ChevronLeft, ChevronRight } from 'lucide-react'
+import { ShoppingCart, Heart, Share2, Shield, Truck, Package, ChevronLeft, ChevronRight, Trophy } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useCart } from '@/lib/hooks/use-cart'
 import { toast } from 'sonner'
@@ -68,6 +68,14 @@ interface Product {
   preorder_message?: string
   min_purchase_quantity?: number
   max_purchase_quantity?: number | null
+  is_raffle_only?: boolean
+  active_raffle?: {
+    id: number
+    name: string
+    slug: string
+    status: string
+    registration_ends_at: string
+  }
   options?: Array<{
     id: string
     name: string
@@ -437,9 +445,16 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           </div>
 
           <div className="flex items-center gap-2 mb-4">
-            <Badge variant={productIsPreOrder ? 'outline' : inStock ? 'default' : 'secondary'} className={productIsPreOrder ? 'border-blue-500 text-blue-600' : ''}>
-              {productIsPreOrder ? 'Pre-Order' : inStock ? `${stock} in stock` : 'Out of Stock'}
-            </Badge>
+            {product.is_raffle_only && product.active_raffle ? (
+              <Badge variant="warning" className="bg-yellow-100 text-yellow-800 border-yellow-300">
+                <Trophy className="h-3 w-3 mr-1" />
+                Raffle Only
+              </Badge>
+            ) : (
+              <Badge variant={productIsPreOrder ? 'outline' : inStock ? 'default' : 'secondary'} className={productIsPreOrder ? 'border-blue-500 text-blue-600' : ''}>
+                {productIsPreOrder ? 'Pre-Order' : inStock ? `${stock} in stock` : 'Out of Stock'}
+              </Badge>
+            )}
             <span className="text-sm text-muted-foreground">SKU: {sku}</span>
           </div>
         </div>
@@ -475,6 +490,26 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
               pricing={product.option_pricing || []}
               onSelectionChange={handleOptionSelectionChange}
             />
+          </div>
+        )}
+
+        {/* Raffle Info */}
+        {product.is_raffle_only && product.active_raffle && (
+          <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <div className="flex items-start gap-3">
+              <Trophy className="h-5 w-5 text-yellow-600 mt-1" />
+              <div className="flex-1">
+                <h3 className="font-semibold text-yellow-900 mb-1">Raffle Exclusive Item</h3>
+                <p className="text-sm text-yellow-800 mb-2">
+                  This item is only available through our raffle system. Winners get the exclusive opportunity to purchase.
+                </p>
+                {product.active_raffle.status === 'open' && (
+                  <p className="text-sm text-yellow-700">
+                    Raffle ends: {new Date(product.active_raffle.registration_ends_at).toLocaleDateString()}
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
         )}
 
@@ -522,33 +557,50 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           </div>
 
           <div className="flex gap-4">
-            <Button
-              size="lg"
-              className="flex-1 cursor-pointer disabled:cursor-not-allowed"
-              disabled={(!productIsPreOrder && !inStock) || isAddingToCart}
-              onClick={() => {
-                if (productIsPreOrder && !user) {
-                  // Redirect to login with return URL to product page
-                  const returnUrl = encodeURIComponent(window.location.pathname + window.location.search)
-                  window.location.href = `/auth/login?redirectTo=${returnUrl}`
-                } else {
-                  handleAddToCart()
-                }
-              }}
-            >
-              {isAddingToCart ? (
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
-              ) : (
-                <ShoppingCart className="h-4 w-4 mr-2" />
-              )}
-              {isAddingToCart ? 'Adding...' : productIsPreOrder
-                ? user 
-                  ? 'Pre-Order Now'
-                  : 'Login to Pre-Order'
-                : inStock 
-                ? 'Add to Cart' 
-                : 'Out of Stock'}
-            </Button>
+            {product.is_raffle_only && product.active_raffle ? (
+              <Button
+                size="lg"
+                className="flex-1"
+                onClick={() => {
+                  router.push(`/contests/raffles/${product.active_raffle.slug}`)
+                }}
+              >
+                <Trophy className="h-4 w-4 mr-2" />
+                {product.active_raffle.status === 'open' 
+                  ? 'Enter Raffle to Purchase' 
+                  : product.active_raffle.status === 'upcoming'
+                  ? 'View Upcoming Raffle'
+                  : 'Raffle Closed'}
+              </Button>
+            ) : (
+              <Button
+                size="lg"
+                className="flex-1 cursor-pointer disabled:cursor-not-allowed"
+                disabled={(!productIsPreOrder && !inStock) || isAddingToCart}
+                onClick={() => {
+                  if (productIsPreOrder && !user) {
+                    // Redirect to login with return URL to product page
+                    const returnUrl = encodeURIComponent(window.location.pathname + window.location.search)
+                    window.location.href = `/auth/login?redirectTo=${returnUrl}`
+                  } else {
+                    handleAddToCart()
+                  }
+                }}
+              >
+                {isAddingToCart ? (
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                ) : (
+                  <ShoppingCart className="h-4 w-4 mr-2" />
+                )}
+                {isAddingToCart ? 'Adding...' : productIsPreOrder
+                  ? user 
+                    ? 'Pre-Order Now'
+                    : 'Login to Pre-Order'
+                  : inStock 
+                  ? 'Add to Cart' 
+                  : 'Out of Stock'}
+              </Button>
+            )}
             <Button size="lg" variant="outline" className="px-6 cursor-pointer hover:bg-gray-50">
               <Heart className="h-4 w-4" />
             </Button>

@@ -22209,6 +22209,27 @@ INSERT INTO carousel_slides (heading, text, button_text, link, image_url, displa
 );
 
 -- ======================================
+-- 🎠 Carousel Settings
+-- ======================================
+
+-- Insert default carousel settings
+INSERT INTO carousel_settings (swap_interval, is_autoplay)
+VALUES (5000, true)
+ON CONFLICT DO NOTHING;
+
+-- ======================================
+-- 🖼️ Site Settings (Banner Config, etc)
+-- ======================================
+
+INSERT INTO site_settings (key, value, category, description, is_public) VALUES
+    ('banner_config', '{"upper_columns": 2, "middle_columns": 3, "lower_columns": 1}', 'layout', 'Banner column configuration', true),
+    ('homepage_sections', '{"show_featured": true, "show_brands": true, "show_announcements": true}', 'homepage', 'Homepage section visibility', true),
+    ('social_links', '{"facebook": "", "twitter": "", "instagram": "", "youtube": ""}', 'social', 'Social media links', true),
+    ('maintenance_mode', '{"enabled": false, "message": ""}', 'system', 'Maintenance mode settings', false),
+    ('featured_brands', '["Robotech", "Voltron", "Naruto", "Macross"]', 'brands', 'Featured brand list', true)
+ON CONFLICT (key) DO NOTHING;
+
+-- ======================================
 -- ⚙️ Settings
 -- ======================================
 

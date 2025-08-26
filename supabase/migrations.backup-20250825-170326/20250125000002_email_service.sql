@@ -78,13 +78,13 @@ CREATE TABLE IF NOT EXISTS email_log (
     -- Metadata
     sent_at TIMESTAMPTZ DEFAULT NOW(),
     user_id UUID REFERENCES users(id),
-    order_id INTEGER REFERENCES orders(id),
-    
-    -- Indexes for queries
-    INDEX idx_email_log_recipient (recipient),
-    INDEX idx_email_log_status (status),
-    INDEX idx_email_log_sent_at (sent_at DESC)
+    order_id UUID REFERENCES orders(id)
 );
+
+-- Create indexes separately
+CREATE INDEX IF NOT EXISTS idx_email_log_recipient ON email_log(recipient);
+CREATE INDEX IF NOT EXISTS idx_email_log_status ON email_log(status);
+CREATE INDEX IF NOT EXISTS idx_email_log_sent_at ON email_log(sent_at DESC);
 
 -- Email queue (for retry logic)
 CREATE TABLE IF NOT EXISTS email_queue (
@@ -109,11 +109,12 @@ CREATE TABLE IF NOT EXISTS email_queue (
     last_error TEXT,
     
     -- Metadata
-    created_at TIMESTAMPTZ DEFAULT NOW(),
-    
-    INDEX idx_email_queue_status (status),
-    INDEX idx_email_queue_send_at (send_at)
+    created_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Create indexes separately  
+CREATE INDEX IF NOT EXISTS idx_email_queue_status ON email_queue(status);
+CREATE INDEX IF NOT EXISTS idx_email_queue_send_at ON email_queue(send_at);
 
 -- ======================================
 -- 🔒 RLS Policies

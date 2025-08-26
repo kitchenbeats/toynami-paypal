@@ -13,7 +13,8 @@ import { LayoutDashboard,
   Menu,
   X,
   ChevronDown,
-  BookOpen } from 'lucide-react'
+  BookOpen,
+  Trophy } from 'lucide-react'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 
@@ -69,6 +70,7 @@ const navigation = [
     children: [
       { name: 'Promotions', href: '/admin/promotions' },
       { name: 'Coupons', href: '/admin/coupons' },
+      { name: 'Raffles', href: '/admin/raffles' },
       { name: 'Email Campaigns', href: '/admin/email' },
     ]
   },

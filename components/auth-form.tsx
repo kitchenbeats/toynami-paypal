@@ -64,7 +64,7 @@ export function AuthForm({ view = "sign_in", redirectTo = "/" }: AuthFormProps) 
             input: 'auth-input',
           },
         }}
-        providers={["github", "google"]}
+        providers={["google"]}
         redirectTo={`${window.location.origin}/auth/callback?next=${encodeURIComponent(redirectTo)}`}
         showLinks={true}
         localization={{
