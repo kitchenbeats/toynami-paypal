@@ -9,20 +9,6 @@ interface RaffleEmailData {
   purchaseDeadline?: Date
 }
 
-interface RaffleDetails {
-  name: string
-  description?: string
-  draw_date: string
-  product: {
-    name: string
-    base_price_cents: number
-  }
-}
-
-interface UserDetails {
-  email: string
-  full_name?: string
-}
 
 export class RaffleEmailService {
   private emailService: EmailService

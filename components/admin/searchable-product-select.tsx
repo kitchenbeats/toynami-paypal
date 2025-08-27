@@ -8,9 +8,7 @@ import { getImageSrc } from '@/lib/utils/image-utils'
 import { Button } from '@/components/ui/button'
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from '@/components/ui/command'
@@ -41,8 +39,7 @@ export function SearchableProductSelect({
   products,
   value,
   onValueChange,
-  placeholder = "Select a product...",
-  required = false
+  placeholder = "Select a product..."
 }: SearchableProductSelectProps) {
   const [open, setOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")

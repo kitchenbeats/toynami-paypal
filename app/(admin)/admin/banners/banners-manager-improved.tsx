@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -416,10 +417,11 @@ export function BannersManagerImproved({ initialBanners }: BannersManagerProps) 
                             </div>
                             {banner.image_url && (
                               <div className="aspect-[16/9] relative rounded overflow-hidden bg-muted">
-                                <img 
+                                <Image
                                   src={banner.image_url.startsWith('http') ? banner.image_url : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/products/${banner.image_url}`}
                                   alt={banner.image_alt || banner.name}
-                                  className="object-cover w-full h-full"
+                                  fill
+                                  className="object-cover"
                                 />
                               </div>
                             )}

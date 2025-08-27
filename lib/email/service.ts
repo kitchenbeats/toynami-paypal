@@ -49,10 +49,10 @@ interface MailchimpMessage {
   subaccount?: string
   google_analytics_domains?: string[]
   google_analytics_campaign?: string
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
   recipient_metadata?: Array<{
     rcpt: string
-    values: Record<string, any>
+    values: Record<string, unknown>
   }>
   attachments?: Array<{
     type: string
@@ -66,13 +66,6 @@ interface MailchimpMessage {
   }>
 }
 
-interface MailchimpResponse {
-  email: string
-  status: 'sent' | 'queued' | 'rejected' | 'invalid'
-  reject_reason?: string
-  _id: string
-  queued_reason?: string
-}
 
 // Types for email templates
 export type EmailTemplate = 
@@ -91,9 +84,9 @@ interface EmailData {
   to: string
   subject?: string
   template: EmailTemplate
-  data: Record<string, any>
+  data: Record<string, unknown>
   tags?: string[]
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
 }
 
 interface TransactionalConfig {
@@ -106,7 +99,7 @@ interface TransactionalConfig {
 class EmailService {
   private transactionalConfig: TransactionalConfig | null = null
   private initialized = false
-  private mandrillClient: any = null
+  private mandrillClient: unknown = null
 
   /**
    * Initialize the email service with Mailchimp Transactional (Mandrill)
@@ -136,7 +129,8 @@ class EmailService {
       }
 
       // Initialize Mailchimp Transactional client (latest pattern)
-      this.mandrillClient = require('@mailchimp/mailchimp_transactional')(this.transactionalConfig.apiKey)
+      const mailchimpTransactional = await import('@mailchimp/mailchimp_transactional')
+      this.mandrillClient = mailchimpTransactional.default(this.transactionalConfig.apiKey)
 
       this.initialized = true
       return true
@@ -582,7 +576,7 @@ class EmailService {
   /**
    * Render template with data (simple mustache-style replacement)
    */
-  private async renderTemplate(template: string, data: Record<string, any>): Promise<string> {
+  private async renderTemplate(template: string, data: Record<string, unknown>): Promise<string> {
     let rendered = template
 
     // Simple variable replacement
@@ -598,7 +592,7 @@ class EmailService {
         const arrayName = match.match(/{{#(\w+)}}/)?.[1]
         if (arrayName && Array.isArray(data[arrayName])) {
           const itemTemplate = match.replace(/{{#\w+}}|{{\/\w+}}/g, '')
-          const items = data[arrayName].map((item: any) => {
+          const items = (data[arrayName] as unknown[]).map((item: Record<string, unknown>) => {
             let itemHtml = itemTemplate
             Object.keys(item).forEach(key => {
               itemHtml = itemHtml.replace(new RegExp(`{{${key}}}`, 'g'), item[key])
@@ -650,7 +644,7 @@ class EmailService {
     status: 'sent' | 'failed' | 'bounced' | 'opened' | 'clicked'
     message_id?: string
     error?: string
-    provider_response?: any
+    provider_response?: unknown
   }): Promise<void> {
     try {
       const supabase = await createClient()

@@ -1,14 +1,14 @@
 import { Metadata } from 'next'
-import { notFound, redirect } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase/server'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Separator } from '@/components/ui/separator'
-import { Trophy, Clock, CheckCircle, AlertCircle, ShoppingCart } from 'lucide-react'
-import { format, formatDistanceToNow, isPast } from 'date-fns'
+import { Trophy, Clock, CheckCircle, AlertCircle } from 'lucide-react'
+import { format, isPast } from 'date-fns'
 import { getImageSrc } from '@/lib/utils/image-utils'
 import ClaimPurchaseButton from '@/components/raffles/claim-purchase-button'
 
@@ -94,7 +94,14 @@ async function getWinnerData(slug: string, userId: string): Promise<WinnerData |
       .limit(4)
     
     if (mediaData && mediaData.length > 0) {
-      data.raffle.product.images = mediaData.map((item: any) => ({
+      interface MediaUsageItem {
+        media: {
+          file_url: string
+          alt_text: string | null
+        }
+      }
+      
+      data.raffle.product.images = mediaData.map((item: MediaUsageItem) => ({
         image_filename: item.media.file_url,
         alt_text: item.media.alt_text
       }))
@@ -105,7 +112,7 @@ async function getWinnerData(slug: string, userId: string): Promise<WinnerData |
 }
 
 export async function generateMetadata({ params }: ClaimPageProps): Promise<Metadata> {
-  const resolvedParams = await params
+  await params
   
   return {
     title: 'Claim Your Prize | Toynami',
@@ -200,7 +207,7 @@ export default async function RaffleClaimPage({ params }: ClaimPageProps) {
           <Trophy className="h-20 w-20 text-yellow-500 mx-auto mb-4 animate-bounce" />
           <h1 className="text-4xl font-bold mb-2">Congratulations!</h1>
           <p className="text-xl text-gray-600">
-            You're Winner #{winner_position} of the {raffle.name}
+            You&apos;re Winner #{winner_position} of the {raffle.name}
           </p>
         </div>
       </section>

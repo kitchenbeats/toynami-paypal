@@ -89,7 +89,7 @@ export function MediaGallery({
     } finally {
       setLoading(false)
     }
-  }, [selectedFolder, mimeTypeFilter, searchTerm, supabase])
+  }, [selectedFolder, mimeTypeFilter, searchTerm, supabase, currentFile])
 
   useEffect(() => {
     fetchMedia()

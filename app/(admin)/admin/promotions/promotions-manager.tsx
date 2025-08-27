@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -46,9 +46,9 @@ export function PromotionsManager() {
 
   useEffect(() => {
     fetchPromotions()
-  }, [currentPage])
+  }, [currentPage, fetchPromotions])
 
-  const fetchPromotions = async () => {
+  const fetchPromotions = useCallback(async () => {
     try {
       setLoading(true)
       const response = await fetch(`/api/admin/promotions?page=${currentPage}&limit=20`)
@@ -64,7 +64,7 @@ export function PromotionsManager() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [currentPage])
 
   const handleSavePromotion = async (promotionData: Partial<Promotion>) => {
     try {

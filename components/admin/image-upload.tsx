@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
@@ -45,7 +46,7 @@ export function ImageUpload({
   const [dragActive, setDragActive] = useState(false)
   const supabase = createClient()
 
-  const validateFile = (file: File): string | null => {
+  const validateFile = useCallback((file: File): string | null => {
     if (!acceptedTypes.includes(file.type)) {
       return `File type ${file.type} not accepted. Accepted types: ${acceptedTypes.join(', ')}`
     }
@@ -55,9 +56,9 @@ export function ImageUpload({
     }
     
     return null
-  }
+  }, [acceptedTypes, maxSize])
 
-  const uploadFile = async (file: File): Promise<string> => {
+  const uploadFile = useCallback(async (file: File): Promise<string> => {
     const fileName = `${folder ? folder + '/' : ''}${Date.now()}-${file.name.replace(/\s+/g, '-')}`
     
     const { error } = await supabase.storage
@@ -74,9 +75,9 @@ export function ImageUpload({
       .getPublicUrl(fileName)
     
     return publicUrl
-  }
+  }, [bucket, folder, supabase])
 
-  const handleFiles = async (files: FileList | File[]) => {
+  const handleFiles = useCallback(async (files: FileList | File[]) => {
     const fileArray = Array.from(files)
     
     // Validate file count
@@ -130,7 +131,7 @@ export function ImageUpload({
       setUploading(false)
       setUploadProgress(0)
     }
-  }
+  }, [uploadedFiles, multiple, maxFiles, validateFile, uploadFile, onUpload])
 
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault()
@@ -150,7 +151,7 @@ export function ImageUpload({
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       handleFiles(e.dataTransfer.files)
     }
-  }, [])
+  }, [handleFiles])
 
   const removeFile = (index: number) => {
     const newFiles = uploadedFiles.filter((_, i) => i !== index)
@@ -233,11 +234,14 @@ export function ImageUpload({
                 className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
               >
                 {file.type.startsWith('image/') ? (
-                  <img 
-                    src={file.url} 
-                    alt={file.name}
-                    className="h-12 w-12 object-cover rounded"
-                  />
+                  <div className="relative h-12 w-12">
+                    <Image 
+                      src={file.url} 
+                      alt={file.name}
+                      fill
+                      className="object-cover rounded"
+                    />
+                  </div>
                 ) : (
                   <div className="h-12 w-12 bg-gray-200 rounded flex items-center justify-center">
                     <ImageIcon className="h-6 w-6 text-gray-400" />

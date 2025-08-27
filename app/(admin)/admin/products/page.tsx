@@ -80,7 +80,13 @@ export default async function AdminProductsPage() {
       .order('field_name');
     
     // Group images by product
-    const imagesByProduct: Record<string, any[]> = {};
+    interface ProductImage {
+      image_filename: string
+      alt_text: string | null
+      is_primary: boolean
+    }
+    
+    const imagesByProduct: Record<string, ProductImage[]> = {};
     
     (mediaUsageData || []).forEach(usage => {
       if (!usage.media) return;

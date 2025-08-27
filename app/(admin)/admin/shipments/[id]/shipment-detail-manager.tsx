@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -400,7 +401,14 @@ export function ShipmentDetailManager({ shipment }: ShipmentDetailManagerProps) 
                         <div>
                           <p className="font-medium">{item.name}</p>
                           {item.imageUrl && (
-                            <img src={item.imageUrl} alt={item.name} className="h-12 w-12 object-cover mt-1 rounded" />
+                            <div className="relative h-12 w-12 mt-1">
+                              <Image 
+                                src={item.imageUrl} 
+                                alt={item.name} 
+                                fill
+                                className="object-cover rounded" 
+                              />
+                            </div>
                           )}
                         </div>
                       </td>

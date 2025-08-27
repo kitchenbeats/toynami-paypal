@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import { CustomerGroupsManager } from './customer-groups-manager'
+import { EnhancedGroupsManager } from './enhanced-groups-manager'
 
 export default async function AdminCustomerGroupsPage() {
   const supabase = await createClient()
@@ -30,8 +30,11 @@ export default async function AdminCustomerGroupsPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Customer Groups</h1>
-        <CustomerGroupsManager initialGroups={groups || []} />
+        <h1 className="text-3xl font-bold mb-2">Customer Groups</h1>
+        <p className="text-muted-foreground mb-8">
+          Manage customer tiers with automatic spend-based assignment
+        </p>
+        <EnhancedGroupsManager initialGroups={groups || []} />
       </div>
     </div>
   )

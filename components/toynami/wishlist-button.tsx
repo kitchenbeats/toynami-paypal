@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import type { User } from '@supabase/supabase-js'
 import { Heart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -28,20 +28,20 @@ export function WishlistButton({ productId, className }: WishlistButtonProps) {
 
   useEffect(() => {
     checkUser()
-  }, [])
+  }, [checkUser])
 
   useEffect(() => {
     if (user) {
       checkWishlistStatus()
     }
-  }, [productId, user])
+  }, [productId, user, checkWishlistStatus])
 
-  const checkUser = async () => {
+  const checkUser = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser()
     setUser(user)
-  }
+  }, [supabase])
 
-  const checkWishlistStatus = async () => {
+  const checkWishlistStatus = useCallback(async () => {
     if (!user) return
 
     // First get or create user's default wishlist
@@ -77,7 +77,7 @@ export function WishlistButton({ productId, className }: WishlistButtonProps) {
 
       setIsInWishlist(!!item)
     }
-  }
+  }, [user, supabase, productId])
 
   const handleWishlistToggle = async () => {
     if (!user) {

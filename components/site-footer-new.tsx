@@ -50,7 +50,7 @@ export async function SiteFooterNew() {
   const { settings } = await getFooterData();
   
   return (
-    <footer className="footer relative mt-12" style={{ backgroundColor: 'var(--toynami-dark)', marginTop: '46px' }}>
+    <footer className="footer relative" style={{ backgroundColor: 'var(--toynami-dark)' }}>
       {/* Footer Arch Background */}
       <div className="footer-arch absolute top-0 left-0 w-full overflow-hidden pointer-events-none" style={{ height: '163px' }}>
         {/* Copyright positioned in the arch */}
@@ -132,6 +132,9 @@ export async function SiteFooterNew() {
                     </Link>
                     <Link href="/on-sale" className="block text-sm hover:text-blue-400 transition-colors">
                       On Sale
+                    </Link>
+                    <Link href="/contests/raffles" className="block text-sm hover:text-blue-400 transition-colors">
+                      Raffles
                     </Link>
                   </div>
                 </div>

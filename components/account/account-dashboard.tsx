@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import { User } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/client'
@@ -39,9 +39,9 @@ export function AccountDashboard({ user }: AccountDashboardProps) {
     if (user) {
       fetchUserData()
     }
-  }, [user])
+  }, [user, fetchUserData])
   
-  const fetchUserData = async () => {
+  const fetchUserData = useCallback(async () => {
     if (!user) return
     
     const supabase = createClient()
@@ -122,7 +122,7 @@ export function AccountDashboard({ user }: AccountDashboardProps) {
     } finally {
       setLoading(false)
     }
-  }
+  }, [user])
   
   const handleTabChange = (value: string) => {
     const params = new URLSearchParams(searchParams)

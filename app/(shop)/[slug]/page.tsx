@@ -334,7 +334,13 @@ async function getProducts(categorySlug: string, searchParams: Awaited<PageProps
       .order('field_name', { ascending: true })
     
     // Group images by product
-    const imagesByProduct: Record<string, any[]> = {}
+    interface ProductImage {
+      image_filename: string
+      alt_text: string | null
+      is_primary: boolean
+    }
+    
+    const imagesByProduct: Record<string, ProductImage[]> = {}
     
     ;(mediaUsageData || []).forEach(usage => {
       if (!usage.media) return

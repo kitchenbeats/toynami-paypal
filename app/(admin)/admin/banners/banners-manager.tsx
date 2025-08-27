@@ -10,7 +10,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Pencil, Trash2, Plus, Save, X, Image, Type, Palette } from 'lucide-react'
+import { Pencil, Trash2, Plus, Save, X, Image as ImageIcon, Type, Palette } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { MediaSelector } from '@/components/ui/media-selector'
 import { MediaItem } from '@/lib/types/media'
@@ -181,7 +181,7 @@ export function BannersManager({ initialBanners }: BannersManagerProps) {
               </div>
               {banner.image_url && (
                 <div className="text-xs text-gray-500 truncate">
-                  <Image className="h-3 w-3 inline mr-1" />
+                  <ImageIcon className="h-3 w-3 inline mr-1" />
                   {banner.image_url}
                 </div>
               )}

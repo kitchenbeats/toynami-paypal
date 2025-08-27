@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
@@ -53,9 +53,9 @@ export function ProductOptionsTab({ productId, optionTypes, currentAssignments }
 
   useEffect(() => {
     loadPricing()
-  }, [productId, assignments])
+  }, [productId, assignments, loadPricing])
 
-  const loadPricing = async () => {
+  const loadPricing = useCallback(async () => {
     if (assignments.length === 0) return
     
     const valueIds = assignments.flatMap(a => 
@@ -80,7 +80,7 @@ export function ProductOptionsTab({ productId, optionTypes, currentAssignments }
       })
       setPricing(pricingMap)
     }
-  }
+  }, [productId, assignments, supabase])
 
   const toggleOption = async (optionTypeId: string) => {
     setLoading(true)

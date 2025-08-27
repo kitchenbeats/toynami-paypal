@@ -16,6 +16,453 @@ TRUNCATE TABLE settings CASCADE;
 -- ======================================
 -- 📸 Media Library
 -- ======================================
+-- Pages
+INSERT INTO pages (id, slug, title, content, meta_title, meta_description, meta_keywords, is_active, show_in_footer, sort_order, created_at, updated_at) VALUES
+('a1b2c3d4-e5f6-7890-abcd-ef1234567890', 'about', 'About Toynami', '<div class="min-h-screen">
+  <!-- Hero Section -->
+  <section class="hero-section relative py-24">
+    <div class="container mx-auto px-4 relative z-10 text-white">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-5xl font-bold mb-6">About Toynami</h1>
+        <p class="text-xl opacity-90">Your Premier Destination for Collectibles & Exclusive Merchandise</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Company Story -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="prose prose-lg mx-auto">
+          <h2 class="text-3xl font-bold mb-6">Our Story</h2>
+          <p class="text-gray-600 mb-6">Founded in 2000, Toynami has been at the forefront of creating and distributing high-quality collectibles, toys, and exclusive merchandise for over two decades. What started as a small passion project has grown into one of the most trusted names in the collectibles industry.</p>
+          <p class="text-gray-600 mb-6">We specialize in bringing beloved characters from anime, manga, video games, and pop culture to life through meticulously crafted figures, statues, and collectibles. Our partnerships with major entertainment brands allow us to offer exclusive items you won''t find anywhere else.</p>
+          <p class="text-gray-600">From our headquarters in California, we serve collectors worldwide, ensuring that every product meets our exacting standards for quality, authenticity, and craftsmanship.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Statement -->
+  <section class="py-16 bg-primary text-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-6">Our Mission</h2>
+        <p class="text-xl opacity-90 mb-8">To create and deliver exceptional collectibles that celebrate the characters and stories fans love, while building a global community of collectors united by their passion for pop culture.</p>
+      </div>
+    </div>
+  </section>
+</div>', 'About Us | Toynami', 'Learn about Toynami - your premier destination for collectibles, toys, and exclusive merchandise. Serving collectors since 2000.', 'toynami, about us, collectibles, toys, merchandise, anime figures, pop culture', true, true, 1, NOW(), NOW()),
+
+('b2c3d4e5-f6a7-8901-bcde-f12345678901', 'contact', 'Contact Us', '<div class="min-h-screen">
+  <!-- Hero Section -->
+  <section class="hero-section relative py-24">
+    <div class="container mx-auto px-4 relative z-10 text-white">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-5xl font-bold mb-6">Contact Us</h1>
+        <p class="text-xl opacity-90">We''re here to help with any questions about your orders or our products</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Information -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
+          <div class="text-center">
+            <h3 class="font-semibold text-lg mb-2">Email Support</h3>
+            <p class="text-gray-600 mb-4">Get help via email</p>
+            <a href="mailto:customerservice@toynamishop.com" class="text-primary hover:underline">customerservice@toynamishop.com</a>
+          </div>
+          <div class="text-center">
+            <h3 class="font-semibold text-lg mb-2">Phone Support</h3>
+            <p class="text-gray-600 mb-4">Speak with our team</p>
+            <p class="font-semibold">1-888-TOYNAMI</p>
+            <p class="text-sm text-gray-500 mt-2">Mon-Fri 9AM-5PM PST</p>
+          </div>
+          <div class="text-center">
+            <h3 class="font-semibold text-lg mb-2">Visit Us</h3>
+            <p class="text-gray-600 mb-4">Our headquarters</p>
+            <p class="text-sm">Toynami<br />Los Angeles, CA<br />United States</p>
+          </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div>
+          <h2 class="text-3xl font-bold mb-6">Frequently Asked Questions</h2>
+          <div class="space-y-6">
+            <div class="p-6 border rounded-lg">
+              <h3 class="font-semibold mb-2">How do I track my order?</h3>
+              <p class="text-gray-600 text-sm">Once your order ships, you''ll receive an email with tracking information. You can also log into your account to view order status and tracking details.</p>
+            </div>
+            <div class="p-6 border rounded-lg">
+              <h3 class="font-semibold mb-2">What are your business hours?</h3>
+              <p class="text-gray-600 text-sm">Our customer service team is available Monday through Friday, 9:00 AM to 5:00 PM Pacific Time. We''re closed on weekends and major holidays.</p>
+            </div>
+            <div class="p-6 border rounded-lg">
+              <h3 class="font-semibold mb-2">What is your return policy?</h3>
+              <p class="text-gray-600 text-sm">We accept returns of unopened items within 30 days of delivery. Items must be in original condition with all packaging. Please contact us for a return authorization before sending items back.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>', 'Contact Us | Toynami', 'Get in touch with Toynami customer service. We''re here to help with your orders, products, and collectibles questions.', 'contact, customer service, support, toynami, help', true, true, 2, NOW(), NOW()),
+
+('c3d4e5f6-a7b8-9012-cdef-123456789012', 'faq', 'Frequently Asked Questions', '<div class="min-h-screen">
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-bold mb-8">Frequently Asked Questions (FAQ)</h1>
+        
+        <div class="space-y-8">
+          <!-- About Us -->
+          <div>
+            <h2 class="text-2xl font-semibold mb-4">🏢 About Us</h2>
+            <div class="bg-white p-6 rounded-lg border">
+              <h3 class="font-semibold mb-2">Q: Who is Toynami?</h3>
+              <p class="text-gray-600">We are Toynami, Inc., a Van Nuys, CA-based creator of high-end collectible toys and figures—known for brands like Robotech, Naruto, Voltron, Sanrio, Acid Rain, and more. Founded in 2000 by George Sohn, we cater to collectors and animé fans nationwide.</p>
+            </div>
+          </div>
+
+          <!-- Ordering & Inventory -->
+          <div>
+            <h2 class="text-2xl font-semibold mb-4">🛒 Ordering & Inventory</h2>
+            <div class="space-y-4">
+              <div class="bg-white p-6 rounded-lg border">
+                <h3 class="font-semibold mb-2">Q: How do I know if an item is in stock?</h3>
+                <p class="text-gray-600">Our site shows real-time stock. If it says "Out of Stock," it''s currently unavailable. When available, we can ship it quickly.</p>
+              </div>
+              <div class="bg-white p-6 rounded-lg border">
+                <h3 class="font-semibold mb-2">Q: What are pre-orders and how do they work?</h3>
+                <p class="text-gray-600">Pre-orders let you reserve upcoming or limited-quantity items. We do not charge until your order ships. You''ll get email updates as we get closer to release/shipment.</p>
+              </div>
+              <div class="bg-white p-6 rounded-lg border">
+                <h3 class="font-semibold mb-2">Q: Can I cancel or update an order?</h3>
+                <p class="text-gray-600">Yes—call (818) 787‑8998 or email customerservice@toynamishop.com ASAP. We begin processing in 1–2 business days, so changes after that may not be possible.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shipping & Delivery -->
+          <div>
+            <h2 class="text-2xl font-semibold mb-4">📦 Shipping & Delivery</h2>
+            <div class="space-y-4">
+              <div class="bg-white p-6 rounded-lg border">
+                <h3 class="font-semibold mb-2">Q: When will my card be charged?</h3>
+                <p class="text-gray-600">Charges are processed only when your order ships—not at checkout.</p>
+              </div>
+              <div class="bg-white p-6 rounded-lg border">
+                <h3 class="font-semibold mb-2">Q: How long does shipping take, and who handles it?</h3>
+                <p class="text-gray-600"><strong>Processing:</strong> 1–2 business days (longer during peak seasons)<br />
+                <strong>Carriers & transit:</strong> USPS Priority or FedEx Ground/Home (1–6 days domestic). 2nd Day Air upgrade available. You''ll get a tracking number via email.</p>
+              </div>
+              <div class="bg-white p-6 rounded-lg border">
+                <h3 class="font-semibold mb-2">Q: Do you ship internationally?</h3>
+                <p class="text-gray-600">Yes. Rates are calculated at checkout. International customers are responsible for customs, duties, and taxes.</p>
+              </div>
+              <div class="bg-white p-6 rounded-lg border">
+                <h3 class="font-semibold mb-2">Q: Can you ship to PO Boxes or military addresses?</h3>
+                <p class="text-gray-600">Sorry—we do not ship to PO Boxes, APO/FPO, military bases, hotels, or B&Bs. Shipments must go to street addresses.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Returns & Exchanges -->
+          <div>
+            <h2 class="text-2xl font-semibold mb-4">↩️ Returns & Exchanges</h2>
+            <div class="space-y-4">
+              <div class="bg-white p-6 rounded-lg border">
+                <h3 class="font-semibold mb-2">Q: What is your return policy?</h3>
+                <p class="text-gray-600">• Returns accepted within 30 days of receipt for unused items in original packaging.<br />
+                • Convention exclusives or similar limited items are final sale/no returns.</p>
+              </div>
+              <div class="bg-white p-6 rounded-lg border">
+                <h3 class="font-semibold mb-2">Q: How do I make a return?</h3>
+                <p class="text-gray-600">1. Email customerservice@toynamishop.com to request an RMA.<br />
+                2. Include order number, reason, your name, and return address.<br />
+                3. Ship to:<br />
+                <strong>Toynami, Inc. Returns</strong><br />
+                16625 Arminta Ave.<br />
+                Van Nuys, CA 91406‑1610<br />
+                RMA: [Your RMA #]<br />
+                Return via FedEx (7–10 days) or USPS (10–13 days).</p>
+              </div>
+              <div class="bg-white p-6 rounded-lg border">
+                <h3 class="font-semibold mb-2">Q: Who pays shipping for returns?</h3>
+                <p class="text-gray-600">• For defective, damaged, or incorrect items: we cover return shipping.<br />
+                • For all other returns: buyer pays packing/shipping and refund excludes those costs.</p>
+              </div>
+              <div class="bg-white p-6 rounded-lg border">
+                <h3 class="font-semibold mb-2">Q: When will I get my refund?</h3>
+                <p class="text-gray-600">Once we receive and process the return, refunds go to the original payment method. Please allow up to 21 days and two billing cycles.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tracking & Delivery Issues -->
+          <div>
+            <h2 class="text-2xl font-semibold mb-4">🔍 Tracking & Delivery Issues</h2>
+            <div class="space-y-4">
+              <div class="bg-white p-6 rounded-lg border">
+                <h3 class="font-semibold mb-2">Q: How can I track my order?</h3>
+                <p class="text-gray-600">You''ll receive tracking info via email once we ship. You can also view status in your account or with AfterShip.</p>
+              </div>
+              <div class="bg-white p-6 rounded-lg border">
+                <h3 class="font-semibold mb-2">Q: What if delivery fails?</h3>
+                <p class="text-gray-600">We''ll contact you. Please update your address or arrange re-shipment if needed.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact & Support -->
+          <div>
+            <h2 class="text-2xl font-semibold mb-4">📞 Contact & Support</h2>
+            <div class="bg-white p-6 rounded-lg border">
+              <h3 class="font-semibold mb-2">Q: How can I reach you?</h3>
+              <p class="text-gray-600"><strong>Phone:</strong> (818) 787‑8998, Mon–Fri, 9 AM–6 PM PST<br />
+              <strong>Email:</strong> customerservice@toynamishop.com</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>', 'FAQ | Toynami', 'Frequently asked questions about ordering, shipping, returns, and more at Toynami.', 'faq, frequently asked questions, help, support, shipping, returns', true, true, 3, NOW(), NOW()),
+
+('d4e5f6a7-b8c9-0123-defa-234567890123', 'shipping', 'Shipping & Returns', '<div class="min-h-screen">
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-bold mb-8">Shipping & Returns Policy</h1>
+        
+        <!-- Shipping Policy -->
+        <div class="mb-12">
+          <h2 class="text-3xl font-semibold mb-6">Shipping Policy</h2>
+          
+          <div class="space-y-6">
+            <div class="bg-white p-6 rounded-lg border">
+              <h3 class="text-xl font-semibold mb-4">General Shipping Information</h3>
+              <p class="text-gray-600 mb-4">We won''t charge your credit card until your order is shipped. In-stock orders normally ship within 1-2 business days unless otherwise noted. However, if an item is marked "This item ships separately" or during times of heavy order volume (especially November and December), orders normally ship within 3-5 business days of when they were placed.</p>
+              <p class="text-gray-600">For most domestic orders, all orders ship via USPS Priority or FedEx Ground. You will receive an e-mail with a tracking number when your order ships. You will also be able to view your order status and tracking numbers in your account order history.</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border">
+              <h3 class="text-xl font-semibold mb-4">Detailed Shipping Information</h3>
+              <ul class="space-y-2 text-gray-600">
+                <li><strong>Processing Time:</strong> Orders are subject to a 1-2 business day processing time. Business days are considered Mon-Fri.</li>
+                <li><strong>Transit Time:</strong> The delivery times are in reference to the time spent in transit (once your order has left the warehouse).</li>
+                <li><strong>Tracking:</strong> An email with tracking information will be sent once an order has been shipped.</li>
+              </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border">
+              <h3 class="text-xl font-semibold mb-4">Shipping is not available to:</h3>
+              <ul class="list-disc list-inside space-y-1 text-gray-600">
+                <li>PO Boxes</li>
+                <li>Military Bases (APO, FPO, etc.)</li>
+                <li>Hotels, motels, inns, hostels, B&Bs, and/or timeshares</li>
+              </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border">
+              <h3 class="text-xl font-semibold mb-4">Domestic USA Shipping Methods</h3>
+              <p class="text-gray-600 mb-4">Toynami, Inc. offers multiple shipping methods to most areas in the United States. Merchandise ships from Van Nuys, California.</p>
+              <ul class="space-y-3 text-gray-600">
+                <li><strong>Standard - FedEx Home Delivery:</strong> Available for residential clients. Please allow up to 2-7 business days for your in-stock items to arrive (1-2 business days for processing and 1-6 business days for shipping).</li>
+                <li><strong>Standard - FedEx Ground Commercial:</strong> Offers service to commercial locations during regular business hours. Same timing as Home Delivery.</li>
+                <li><strong>2nd Day Air:</strong> Available for express deliveries. Orders placed after 10:00 AM Pacific Time may not be processed until the following business day.</li>
+              </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border">
+              <h3 class="text-xl font-semibold mb-4">International Shipping</h3>
+              <p class="text-gray-600 mb-4">International Shipping will automatically calculate shipping costs based on your shipping address and methods available, on the Checkout Page.</p>
+              <p class="text-gray-600"><strong>Important:</strong> You are responsible for any and all import duties, taxes, or brokerage fees. Toynami is not responsible for these charges.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Return Policy -->
+        <div>
+          <h2 class="text-3xl font-semibold mb-6">Return & Cancellation Policy</h2>
+          
+          <div class="space-y-6">
+            <div class="bg-white p-6 rounded-lg border">
+              <h3 class="text-xl font-semibold mb-4">30 Day Return/Exchange Policy</h3>
+              <p class="text-gray-600 mb-4">We guarantee that every item we sell directly will give you complete satisfaction, or you may return it for a replacement or for a refund of the purchase price within 30 days of receipt of the item.</p>
+              <p class="text-gray-600 mb-4"><strong>Important:</strong> We strongly suggest that you open all merchandise upon receipt to inspect it in order to take advantage of this policy.</p>
+              <p class="text-gray-600">The product must be returned in its original box/packaging in the same condition as it was sent to you. Limited items, such as convention exclusives, are "all sales final."</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border">
+              <h3 class="text-xl font-semibold mb-4">How to Make a Return</h3>
+              <ol class="list-decimal list-inside space-y-2 text-gray-600">
+                <li>Send an email with the subject "RMA Request – [insert your order # here]" to: customerservice@toynamishop.com</li>
+                <li>Write a brief description explaining your reason for return, and if you want a replacement or refund</li>
+                <li>Be sure to include your Name, Address, Order #, and product name</li>
+                <li>After you get your RMA number, ship your package back to us at:<br />
+                  <div class="mt-2 ml-6">
+                    <strong>Toynami, Inc. Returns</strong><br />
+                    16625 Arminta Ave.<br />
+                    Van Nuys, CA 91406-1610<br />
+                    RMA: [include your RMA# here]
+                  </div>
+                </li>
+              </ol>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border">
+              <h3 class="text-xl font-semibold mb-4">Refund Processing</h3>
+              <p class="text-gray-600 mb-4">Please allow 21 days to process your return. You will receive notification via e-mail confirming that your return has been received and processed.</p>
+              <p class="text-gray-600">Please allow up to two billing cycles for any eligible refund to appear on your credit card statement.</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border">
+              <h3 class="text-xl font-semibold mb-4">Canceling or Changing an Order</h3>
+              <p class="text-gray-600">Once an order has been submitted, you must contact our Customer Service Center at (818) 798-8998 to attempt to cancel or change it. We are unable to honor customer requests to cancel or change orders that have already entered the shipping process.</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border">
+              <h3 class="text-xl font-semibold mb-4">Pre-Orders</h3>
+              <p class="text-gray-600 mb-4">Since many of our collectibles are limited editions, we offer customers the opportunity to reserve or pre-order an item while the item is in production or prior to its arrival into our warehouse.</p>
+              <p class="text-gray-600">Your credit card will be charged to secure the Pre-order item(s). Customers are contacted via e-mail approximately 14-21 days prior to their pre-ordered items arriving at our warehouse.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>', 'Shipping & Returns | Toynami', 'Learn about our shipping methods, delivery times, and return policy for collectibles and merchandise.', 'shipping, returns, delivery, refund, policy', true, true, 4, NOW(), NOW()),
+
+('e5f6a7b8-c9d0-1234-efab-345678901234', 'privacy', 'Privacy Policy', '<div class="min-h-screen">
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-bold mb-8">Privacy Policy</h1>
+        
+        <div class="prose prose-lg max-w-none">
+          <p class="text-gray-600 mb-6">Last Updated: January 2025</p>
+          
+          <div class="space-y-8">
+            <div class="bg-white p-6 rounded-lg border">
+              <h2 class="text-2xl font-semibold mb-4">Personal Data Processing</h2>
+              <p class="text-gray-600 mb-4">Personal data is processed for the following purposes and using the following services:</p>
+              
+              <h3 class="text-xl font-semibold mt-6 mb-3">Analytics</h3>
+              <ul class="list-disc list-inside space-y-1 text-gray-600 mb-4">
+                <li>Google Analytics (Universal Analytics)</li>
+                <li>Personal Data: Tracker; Usage Data</li>
+              </ul>
+
+              <h3 class="text-xl font-semibold mt-6 mb-3">Contacting the User</h3>
+              <ul class="list-disc list-inside space-y-1 text-gray-600 mb-4">
+                <li>Mailing list or newsletter</li>
+                <li>Personal Data: email address; first name; Tracker; Usage Data</li>
+                <li>Contact form</li>
+                <li>Personal Data: email address; first name; last name; various types of Data</li>
+              </ul>
+
+              <h3 class="text-xl font-semibold mt-6 mb-3">Handling Payments</h3>
+              <ul class="list-disc list-inside space-y-1 text-gray-600 mb-4">
+                <li>PayPal</li>
+                <li>Personal Data: billing address; email address; first name; last name; payment info; phone number; Tracker</li>
+              </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border">
+              <h2 class="text-2xl font-semibold mb-4">Interaction with External Platforms</h2>
+              <h3 class="text-xl font-semibold mb-3">Data Collection Platforms</h3>
+              <ul class="list-disc list-inside space-y-1 text-gray-600 mb-4">
+                <li>Mailchimp widget - Personal Data: email address; first name; Tracker</li>
+              </ul>
+
+              <h3 class="text-xl font-semibold mb-3">Social Networks</h3>
+              <ul class="list-disc list-inside space-y-1 text-gray-600 mb-4">
+                <li>PayPal button and widgets</li>
+                <li>Pinterest "Pin it" button and social widgets</li>
+                <li>Twitter Tweet button and social widgets</li>
+                <li>Facebook Like button and social widgets</li>
+                <li>YouTube button and social widgets</li>
+              </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border">
+              <h2 class="text-2xl font-semibold mb-4">Managing Contacts and Sending Messages</h2>
+              <p class="text-gray-600 mb-4">Mailchimp - Personal Data: email address; first name; phone number; physical address; Tracker</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border">
+              <h2 class="text-2xl font-semibold mb-4">Platform Services</h2>
+              <ul class="list-disc list-inside space-y-1 text-gray-600">
+                <li>BigCommerce - Platform services and hosting</li>
+                <li>ShipStation - Selling goods and services online</li>
+                <li>Google reCAPTCHA - SPAM protection</li>
+              </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border">
+              <h2 class="text-2xl font-semibold mb-4">Information for Minors</h2>
+              <p class="text-gray-600 mb-4"><strong>CCPA: Collection of personal information about minors</strong></p>
+              <p class="text-gray-600 mb-4">We do not knowingly collect personal information of consumers who are below the age of 16.</p>
+              <p class="text-gray-600"><strong>The Service is intended for adults</strong></p>
+              <p class="text-gray-600">Users declare themselves to be adult according to their applicable legislation. Minors may not use toynamishop.com.</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border">
+              <h2 class="text-2xl font-semibold mb-4">Cookies</h2>
+              <h3 class="text-xl font-semibold mb-3">Preference Cookies</h3>
+              <p class="text-gray-600 mb-4">Preference Cookies store the User preferences detected on toynamishop.com in the local domain such as, for example, their timezone and region.</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border">
+              <h2 class="text-2xl font-semibold mb-4">Contact Information</h2>
+              <p class="text-gray-600 mb-2"><strong>Owner and Data Controller</strong></p>
+              <p class="text-gray-600 mb-2">Toynami, Inc.</p>
+              <p class="text-gray-600 mb-2">16625 Arminta St., Van Nuys, CA 91406</p>
+              <p class="text-gray-600">Owner contact email: customerservice@toynamishop.com</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg border">
+              <h2 class="text-2xl font-semibold mb-4">Opting Out</h2>
+              <p class="text-gray-600">In addition to any opt-out feature provided by any of the services listed in this document, Users may learn more on how to generally opt out of interest-based advertising within the dedicated section of the Cookie Policy.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>', 'Privacy Policy | Toynami', 'Learn how Toynami collects, uses, and protects your personal information.', 'privacy policy, data protection, cookies, personal information', true, true, 5, NOW(), NOW());
+
+-- ======================================
+-- Customer Groups
+INSERT INTO customer_groups (id, slug, name, description, is_default, is_active, priority, assignment_method, spend_min_cents, spend_max_cents, spend_period, auto_assign_on_first_purchase, auto_assign, auto_remove, allow_manual_override, discount_percentage, free_shipping_threshold_cents, badge_color, badge_icon, benefits) VALUES
+-- General (Default) - Everyone starts here
+('11111111-1111-1111-1111-111111111111', 'general', 'General', 'Default customer group for all users', true, true, 0, 'automatic', NULL, NULL, 'lifetime', true, true, false, true, 0, NULL, NULL, NULL, '{}'::jsonb),
+
+-- Valued Customer - Any purchase
+('22222222-2222-2222-2222-222222222222', 'valued', 'Valued Customer', 'Customers who have made at least one purchase', false, true, 10, 'automatic', 1, NULL, 'lifetime', true, true, false, true, 5, NULL, '#10B981', 'star', '{"early_access": false, "exclusive_products": false, "priority_support": false, "custom_benefits": ["5% discount on all orders", "Exclusive newsletter"]}'::jsonb),
+
+-- Bronze Tier - $500-$999
+('33333333-3333-3333-3333-333333333333', 'bronze', 'Bronze', 'Bronze tier members ($500-$999 lifetime spend)', false, true, 20, 'automatic', 50000, 99999, 'lifetime', false, true, false, true, 7, 10000, '#CD7F32', 'award', '{"early_access": true, "exclusive_products": false, "priority_support": false, "custom_benefits": ["7% discount on all orders", "Free shipping over $100", "Early access to new releases"]}'::jsonb),
+
+-- Silver Tier - $1,000-$2,499
+('44444444-4444-4444-4444-444444444444', 'silver', 'Silver', 'Silver tier members ($1,000-$2,499 lifetime spend)', false, true, 30, 'automatic', 100000, 249999, 'lifetime', false, true, false, true, 10, 5000, '#C0C0C0', 'medal', '{"early_access": true, "exclusive_products": true, "priority_support": false, "custom_benefits": ["10% discount on all orders", "Free shipping over $50", "Access to Silver-exclusive products", "Birthday bonus"]}'::jsonb),
+
+-- Gold Tier - $2,500-$4,999  
+('55555555-5555-5555-5555-555555555555', 'gold', 'Gold', 'Gold tier members ($2,500-$4,999 lifetime spend)', false, true, 40, 'automatic', 250000, 499999, 'lifetime', false, true, false, true, 15, 0, '#FFD700', 'crown', '{"early_access": true, "exclusive_products": true, "priority_support": true, "custom_benefits": ["15% discount on all orders", "Free shipping on all orders", "Early convention exclusive access", "Priority customer support", "Exclusive Gold products"]}'::jsonb),
+
+-- VIP/Platinum - $5,000+ or Manual
+('66666666-6666-6666-6666-666666666666', 'vip', 'VIP', 'VIP members - exclusive access and benefits', false, true, 50, 'hybrid', 500000, NULL, 'lifetime', false, true, false, true, 20, 0, '#E5E4E2', 'gem', '{"early_access": true, "exclusive_products": true, "priority_support": true, "custom_benefits": ["20% discount on all orders", "Free expedited shipping", "First access to limited editions", "VIP-only products", "Personal account manager", "Event invitations", "Early bird pre-orders"]}'::jsonb),
+
+-- Special Groups (Manual Assignment)
+('77777777-7777-7777-7777-777777777777', 'influencer', 'Influencer', 'Social media influencers and brand ambassadors', false, true, 60, 'manual', NULL, NULL, 'lifetime', false, false, false, true, 25, 0, '#FF1493', 'users', '{"early_access": true, "exclusive_products": true, "priority_support": true, "custom_benefits": ["25% discount", "Free products for review", "Exclusive access"]}'::jsonb),
+
+('88888888-8888-8888-8888-888888888888', 'wholesale', 'Wholesale', 'Wholesale and B2B customers', false, true, 70, 'manual', NULL, NULL, 'lifetime', false, false, false, true, 30, 0, '#4B0082', 'building', '{"early_access": false, "exclusive_products": false, "priority_support": true, "custom_benefits": ["30% wholesale discount", "Net payment terms", "Bulk order access"]}'::jsonb);
+
+-- ======================================
 -- Brand Logos
 INSERT INTO media_library (id, filename, original_name, file_path, file_url, folder, title, alt_text, mime_type, file_extension, tags) VALUES 
 ('11111111-1111-1111-1111-111111111111', 'acid-rain-logo.png', 'acid-rain-logo.png', 'brand_images/logos/acid-rain-logo.png', 'brand_images/logos/acid-rain-logo.png', 'brands', 'Acid Rain Logo', 'Acid Rain World brand logo', 'image/png', 'png', ARRAY['brand', 'logo', 'acid-rain']),

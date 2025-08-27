@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useCallback, useEffect } from 'react'
 import { Plus, Heart } from 'lucide-react'
 import { getImageSrc } from '@/lib/utils/image-utils'
@@ -227,10 +228,11 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
                 
                 if (image && !hasError) {
                   return (
-                    <img
+                    <Image
                       src={getImageSrc(image.image_filename)}
                       alt={image.alt_text || featuredProduct.name}
                       title={featuredProduct.name}
+                      fill
                       className="main-featured-product-image"
                       onError={() => handleImageError(featuredProduct.id)}
                     />
@@ -338,9 +340,10 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
                       <div className="figma-image-parent">
                         <Link href={getProductUrl(product)}>
                           {image && !hasError ? (
-                            <img
+                            <Image
                               src={getImageSrc(image.image_filename)}
                               alt={image.alt_text || product.name}
+                              fill
                               className="figma-card-image"
                               onError={() => handleImageError(product.id)}
                             />

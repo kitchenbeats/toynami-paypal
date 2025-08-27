@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -775,11 +776,14 @@ export function EnhancedProductsManager({
                   <TableCell>
                     <div className="flex items-center gap-3">
                       {product.images?.[0] && (
-                        <img 
-                          src={product.images[0].image_filename} 
-                          alt={product.name}
-                          className="h-10 w-10 object-cover rounded"
-                        />
+                        <div className="relative h-10 w-10">
+                          <Image 
+                            src={product.images[0].image_filename} 
+                            alt={product.name}
+                            fill
+                            className="object-cover rounded"
+                          />
+                        </div>
                       )}
                       <div>
                         <div className="font-medium">{product.name}</div>
@@ -1259,11 +1263,12 @@ export function EnhancedProductsManager({
                 {uploadedImages.length > 0 && (
                   <div className="grid grid-cols-4 gap-4 mt-4">
                     {uploadedImages.map((url, idx) => (
-                      <div key={idx} className="relative">
-                        <img 
+                      <div key={idx} className="relative h-32">
+                        <Image 
                           src={url} 
                           alt={`Product ${idx + 1}`}
-                          className="w-full h-32 object-cover rounded"
+                          fill
+                          className="object-cover rounded"
                         />
                         <button
                           type="button"

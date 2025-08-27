@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { headers } from 'next/headers'
 import { getBannersByPosition, getBannerConfig, type Banner } from '@/lib/data/banners'
 
@@ -45,11 +46,12 @@ export async function FeaturedBanners({ position }: FeaturedBannersProps) {
                 target={isExternal ? '_blank' : '_self'}
               >
                 {banner.image_url && (
-                  <img
+                  <Image
                     className="category-image"
                     src={banner.image_url}
                     alt={banner.image_alt || banner.title || ''}
                     title={banner.name}
+                    fill
                   />
                 )}
                 <div className={`text-wrapper ${getAlignmentClass(banner.text_alignment)}`}>
@@ -73,11 +75,12 @@ export async function FeaturedBanners({ position }: FeaturedBannersProps) {
             ) : (
               <div className="category-static">
                 {banner.image_url && (
-                  <img
+                  <Image
                     className="category-image"
                     src={banner.image_url}
                     alt={banner.image_alt || banner.title || ''}
                     title={banner.name}
+                    fill
                   />
                 )}
                 <div className={`text-wrapper ${getAlignmentClass(banner.text_alignment)}`}>

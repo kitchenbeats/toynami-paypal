@@ -76,14 +76,14 @@ export function HeroCarouselClient({
               >
                 <div className="heroCarousel-image-wrapper">
                   {slide.image_url ? (
-                    <div className="heroCarousel-image">
+                    <div className="heroCarousel-image relative w-full h-[300px] md:h-[490px]">
                       {slide.image_url.startsWith("http") ? (
                         // External image
                         <Image
                           src={slide.image_url}
                           alt={slide.heading || ""}
-                          width={1700}
-                          height={490}
+                          fill
+                          className="object-contain"
                           priority
                         />
                       ) : (
@@ -91,8 +91,8 @@ export function HeroCarouselClient({
                         <Image
                           src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/products${slide.image_url}`}
                           alt={slide.heading || ""}
-                          width={1700}
-                          height={490}
+                          fill
+                          className="object-contain"
                           priority
                         />
                       )}

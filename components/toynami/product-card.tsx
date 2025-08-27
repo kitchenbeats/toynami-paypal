@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useCallback } from "react";
 import { AddToCartButton } from "./add-to-cart-button";
 import { WishlistButton } from "./wishlist-button";
@@ -71,10 +72,11 @@ export function ProductCard({ product, featured = false }: ProductCardProps) {
         <div className="main-featured-product-image-parent">
           <Link href={`/products/${product.slug}`}>
             {primaryImage && !imageError ? (
-              <img
+              <Image
                 src={getImageSrc(primaryImage.image_filename)}
                 alt={primaryImage.alt_text || product.name}
                 title={product.name}
+                fill
                 className="main-featured-product-image"
                 onError={handleImageError}
               />
@@ -135,9 +137,10 @@ export function ProductCard({ product, featured = false }: ProductCardProps) {
           <div className="figma-image-parent">
             <Link href={`/products/${product.slug}`}>
               {primaryImage && !imageError ? (
-                <img
+                <Image
                   src={getImageSrc(primaryImage.image_filename)}
                   alt={primaryImage.alt_text || product.name}
+                  fill
                   className="figma-card-image"
                   onError={handleImageError}
                 />

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -84,7 +84,7 @@ export default function TaxSettingsPage() {
 
   useEffect(() => {
     loadSettings()
-  }, [])
+  }, [loadSettings])
 
   useEffect(() => {
     // Check if all states are selected
@@ -93,7 +93,7 @@ export default function TaxSettingsPage() {
     setSelectAllStates(allSelected)
   }, [settings.tax_enabled_states])
 
-  const loadSettings = async () => {
+  const loadSettings = useCallback(async () => {
     try {
       // Check if API keys are configured in environment
       const response = await fetch('/api/tax/calculate', { method: 'GET' })
@@ -118,7 +118,7 @@ export default function TaxSettingsPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [supabase])
 
   const saveSettings = async () => {
     setSaving(true)

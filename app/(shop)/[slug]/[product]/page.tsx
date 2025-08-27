@@ -1,7 +1,10 @@
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { ProductDetailServer } from '@/components/products/product-detail-server'
 import { RelatedProducts } from '@/components/products/related-products'
+import { Button } from '@/components/ui/button'
+import { Shield } from 'lucide-react'
 import { Metadata } from 'next'
 import { StructuredData } from '@/components/seo/structured-data'
 import { generateProductSEO, generateMetadata as generateSEOMetadata } from '@/lib/seo/utils'
@@ -111,6 +114,15 @@ async function getProduct(productSlug: string) {
         price_adjustment_cents,
         stock_override,
         is_available
+      ),
+      customer_groups:product_customer_groups(
+        group:customer_groups(
+          id,
+          name,
+          slug,
+          badge_color,
+          badge_icon
+        )
       )
     `)
     .eq('slug', productSlug)
@@ -311,7 +323,13 @@ async function getRelatedProducts(productId: string, categoryId?: string, brandI
     .order('field_name')
   
   // Attach images to products
-  const imagesByProduct: Record<string, any[]> = {}
+  interface ProductImage {
+    image_filename: string
+    alt_text: string | null
+    is_primary: boolean
+  }
+  
+  const imagesByProduct: Record<string, ProductImage[]> = {}
   ;(mediaUsageData || []).forEach(usage => {
     if (usage.media) {
       const productId = usage.entity_id
@@ -345,12 +363,71 @@ async function getRelatedProducts(productId: string, categoryId?: string, brandI
 
 export default async function ProductPage({ params }: PageProps) {
   const { slug: categorySlug, product: productSlug } = await params
+  const supabase = await createClient()
   
   // Get the product
   const product = await getProduct(productSlug)
   
   if (!product) {
     notFound()
+  }
+  
+  // Check if product has customer group restrictions
+  const hasRestrictions = product.customer_groups && product.customer_groups.length > 0
+  
+  if (hasRestrictions) {
+    // Get current user
+    const { data: { user } } = await supabase.auth.getUser()
+    
+    // If product is restricted and user is not logged in, redirect to login
+    if (!user) {
+      const { redirect } = await import('next/navigation')
+      redirect(`/auth/login?redirect=/${categorySlug}/${productSlug}&message=This product requires membership access`)
+    }
+    
+    // Check if user has access to any of the required groups
+    const requiredGroupIds = product.customer_groups.map(g => g.group?.id).filter(Boolean)
+    
+    const { data: userGroups } = await supabase
+      .from('user_customer_groups')
+      .select('group_id')
+      .eq('user_id', user.id)
+      .in('group_id', requiredGroupIds)
+      .not('approved_at', 'is', null)
+      
+    const hasAccess = userGroups && userGroups.length > 0
+    
+    // If user doesn't have access, show restricted page
+    if (!hasAccess) {
+      const restrictedGroup = product.customer_groups[0]?.group
+      return (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center max-w-md">
+            <div className="mb-6">
+              <div className="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center">
+                <Shield className="w-12 h-12 text-gray-400" />
+              </div>
+            </div>
+            <h1 className="text-3xl font-bold mb-4">Members Only Product</h1>
+            <p className="text-gray-600 mb-6">
+              This product is exclusively available to {restrictedGroup?.name || 'VIP'} members.
+            </p>
+            <div className="space-y-3">
+              <Link href="/vip">
+                <Button size="lg" className="w-full">
+                  Learn About Membership
+                </Button>
+              </Link>
+              <Link href="/products">
+                <Button size="lg" variant="outline" className="w-full">
+                  Browse All Products
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )
+    }
   }
   
   // Get category info for breadcrumb

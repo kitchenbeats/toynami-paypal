@@ -197,7 +197,12 @@ export function ProductsList({
         .eq('field_name', 'primary_image'); // Only get primary images for list view
       
       // Create a map of images by product ID
-      const imagesByProduct: Record<string, any> = {};
+      interface ProductImage {
+        image_filename: string
+        alt_text: string | null
+      }
+      
+      const imagesByProduct: Record<string, ProductImage> = {};
       (mediaUsageData || []).forEach(usage => {
         if (usage.media) {
           imagesByProduct[usage.entity_id] = {

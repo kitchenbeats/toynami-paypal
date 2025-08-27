@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -358,11 +359,14 @@ export function EnhancedBrandsManager({
                   <TableCell>
                     <div className="flex items-center gap-3">
                       {brand.logo_url && (
-                        <img 
-                          src={brand.logo_url} 
-                          alt={brand.name}
-                          className="h-8 w-8 object-contain"
-                        />
+                        <div className="relative h-8 w-8">
+                          <Image 
+                            src={brand.logo_url} 
+                            alt={brand.name}
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
                       )}
                       <div>
                         <div className="font-medium">{brand.name}</div>
