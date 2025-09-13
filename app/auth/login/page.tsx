@@ -23,6 +23,7 @@ export default async function Page({ searchParams }: PageProps) {
         />
       </Link>
       <div className="w-full max-w-sm">
+        <h1 className="text-2xl font-bold text-center mb-6">Sign In</h1>
         <AuthForm view="sign_in" redirectTo={redirectTo} />
       </div>
     </div>

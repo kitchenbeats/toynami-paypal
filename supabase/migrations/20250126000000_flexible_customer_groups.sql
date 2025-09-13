@@ -3,32 +3,52 @@
 -- ============================================
 
 -- Add flexible assignment columns to customer_groups
-ALTER TABLE customer_groups ADD COLUMN IF NOT EXISTS
-  assignment_method TEXT DEFAULT 'manual' CHECK (assignment_method IN ('manual', 'automatic', 'hybrid')),
-  spend_min_cents INTEGER DEFAULT NULL CHECK (spend_min_cents IS NULL OR spend_min_cents >= 0),
-  spend_max_cents INTEGER DEFAULT NULL CHECK (spend_max_cents IS NULL OR spend_max_cents >= 0),
-  spend_period TEXT DEFAULT 'lifetime' CHECK (spend_period IN ('lifetime', 'annual', 'quarterly', 'monthly')),
-  auto_assign_on_first_purchase BOOLEAN DEFAULT false,
-  auto_assign BOOLEAN DEFAULT false,
-  auto_remove BOOLEAN DEFAULT false,
-  allow_manual_override BOOLEAN DEFAULT true,
-  benefits JSONB DEFAULT '{}'::jsonb,
-  discount_percentage DECIMAL(5,2) DEFAULT 0 CHECK (discount_percentage >= 0 AND discount_percentage <= 100),
-  free_shipping_threshold_cents INTEGER DEFAULT NULL CHECK (free_shipping_threshold_cents IS NULL OR free_shipping_threshold_cents >= 0),
-  requires_approval BOOLEAN DEFAULT false,
-  badge_color TEXT DEFAULT NULL,
-  badge_icon TEXT DEFAULT NULL;
+ALTER TABLE customer_groups 
+  ADD COLUMN IF NOT EXISTS assignment_method TEXT DEFAULT 'manual' CHECK (assignment_method IN ('manual', 'automatic', 'hybrid'));
+ALTER TABLE customer_groups 
+  ADD COLUMN IF NOT EXISTS spend_min_cents INTEGER DEFAULT NULL CHECK (spend_min_cents IS NULL OR spend_min_cents >= 0);
+ALTER TABLE customer_groups 
+  ADD COLUMN IF NOT EXISTS spend_max_cents INTEGER DEFAULT NULL CHECK (spend_max_cents IS NULL OR spend_max_cents >= 0);
+ALTER TABLE customer_groups 
+  ADD COLUMN IF NOT EXISTS spend_period TEXT DEFAULT 'lifetime' CHECK (spend_period IN ('lifetime', 'annual', 'quarterly', 'monthly'));
+ALTER TABLE customer_groups 
+  ADD COLUMN IF NOT EXISTS auto_assign_on_first_purchase BOOLEAN DEFAULT false;
+ALTER TABLE customer_groups 
+  ADD COLUMN IF NOT EXISTS auto_assign BOOLEAN DEFAULT false;
+ALTER TABLE customer_groups 
+  ADD COLUMN IF NOT EXISTS auto_remove BOOLEAN DEFAULT false;
+ALTER TABLE customer_groups 
+  ADD COLUMN IF NOT EXISTS allow_manual_override BOOLEAN DEFAULT true;
+ALTER TABLE customer_groups 
+  ADD COLUMN IF NOT EXISTS benefits JSONB DEFAULT '{}'::jsonb;
+ALTER TABLE customer_groups 
+  ADD COLUMN IF NOT EXISTS discount_percentage DECIMAL(5,2) DEFAULT 0 CHECK (discount_percentage >= 0 AND discount_percentage <= 100);
+ALTER TABLE customer_groups 
+  ADD COLUMN IF NOT EXISTS free_shipping_threshold_cents INTEGER DEFAULT NULL CHECK (free_shipping_threshold_cents IS NULL OR free_shipping_threshold_cents >= 0);
+ALTER TABLE customer_groups 
+  ADD COLUMN IF NOT EXISTS requires_approval BOOLEAN DEFAULT false;
+ALTER TABLE customer_groups 
+  ADD COLUMN IF NOT EXISTS badge_color TEXT DEFAULT NULL;
+ALTER TABLE customer_groups 
+  ADD COLUMN IF NOT EXISTS badge_icon TEXT DEFAULT NULL;
 
 -- Add spending tracking to users
-ALTER TABLE users ADD COLUMN IF NOT EXISTS
-  lifetime_spend_cents INTEGER DEFAULT 0,
-  current_year_spend_cents INTEGER DEFAULT 0,
-  current_quarter_spend_cents INTEGER DEFAULT 0,
-  current_month_spend_cents INTEGER DEFAULT 0,
-  first_purchase_date TIMESTAMPTZ DEFAULT NULL,
-  last_purchase_date TIMESTAMPTZ DEFAULT NULL,
-  total_orders_count INTEGER DEFAULT 0,
-  last_spend_calculation_at TIMESTAMPTZ DEFAULT NOW();
+ALTER TABLE users 
+  ADD COLUMN IF NOT EXISTS lifetime_spend_cents INTEGER DEFAULT 0;
+ALTER TABLE users 
+  ADD COLUMN IF NOT EXISTS current_year_spend_cents INTEGER DEFAULT 0;
+ALTER TABLE users 
+  ADD COLUMN IF NOT EXISTS current_quarter_spend_cents INTEGER DEFAULT 0;
+ALTER TABLE users 
+  ADD COLUMN IF NOT EXISTS current_month_spend_cents INTEGER DEFAULT 0;
+ALTER TABLE users 
+  ADD COLUMN IF NOT EXISTS first_purchase_date TIMESTAMPTZ DEFAULT NULL;
+ALTER TABLE users 
+  ADD COLUMN IF NOT EXISTS last_purchase_date TIMESTAMPTZ DEFAULT NULL;
+ALTER TABLE users 
+  ADD COLUMN IF NOT EXISTS total_orders_count INTEGER DEFAULT 0;
+ALTER TABLE users 
+  ADD COLUMN IF NOT EXISTS last_spend_calculation_at TIMESTAMPTZ DEFAULT NOW();
 
 -- Create spend history tracking table
 CREATE TABLE IF NOT EXISTS customer_spend_history (

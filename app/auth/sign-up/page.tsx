@@ -16,6 +16,10 @@ export default function Page() {
         />
       </Link>
       <div className="w-full max-w-sm">
+        <h1 className="text-2xl font-bold text-center mb-6">Create Account</h1>
+        <p className="text-sm text-muted-foreground text-center mb-6">
+          Join Toynami to start shopping and save your favorites
+        </p>
         <AuthForm view="sign_up" redirectTo="/protected" />
       </div>
     </div>

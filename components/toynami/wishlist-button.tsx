@@ -26,16 +26,6 @@ export function WishlistButton({ productId, className }: WishlistButtonProps) {
   const router = useRouter()
   const supabase = createClient()
 
-  useEffect(() => {
-    checkUser()
-  }, [checkUser])
-
-  useEffect(() => {
-    if (user) {
-      checkWishlistStatus()
-    }
-  }, [productId, user, checkWishlistStatus])
-
   const checkUser = useCallback(async () => {
     const { data: { user } } = await supabase.auth.getUser()
     setUser(user)
@@ -78,6 +68,16 @@ export function WishlistButton({ productId, className }: WishlistButtonProps) {
       setIsInWishlist(!!item)
     }
   }, [user, supabase, productId])
+
+  useEffect(() => {
+    checkUser()
+  }, [checkUser])
+
+  useEffect(() => {
+    if (user) {
+      checkWishlistStatus()
+    }
+  }, [productId, user, checkWishlistStatus])
 
   const handleWishlistToggle = async () => {
     if (!user) {

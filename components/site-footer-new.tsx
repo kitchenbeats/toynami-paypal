@@ -161,6 +161,9 @@ export async function SiteFooterNew() {
                     <Link href="/wholesale" className="block text-sm hover:text-blue-400 transition-colors">
                       Wholesale
                     </Link>
+                    <Link href="/archive" className="block text-sm hover:text-blue-400 transition-colors">
+                      Product Archive
+                    </Link>
                   </div>
                 </div>
 

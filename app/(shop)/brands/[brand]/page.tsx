@@ -5,7 +5,6 @@ import { AnnouncementsSection } from '@/components/toynami/announcements-section
 import Image from 'next/image'
 import { getImageSrc } from '@/lib/utils/image-utils'
 import { IMAGE_CONFIG } from '@/lib/config/images'
-import { unstable_cache } from 'next/cache'
 import { Metadata } from 'next'
 import { StructuredData } from '@/components/seo/structured-data'
 import { generateBrandSEO, generateMetadata as generateSEOMetadata } from '@/lib/seo/utils'
@@ -17,25 +16,19 @@ interface PageProps {
   searchParams: Promise<{ page?: string }>
 }
 
-const getBrandInfo = unstable_cache(
-  async (slug: string) => {
-    const supabase = await createClient()
-    
-    const { data: brand } = await supabase
-      .from('brands')
-      .select('*')
-      .eq('slug', slug)
-      .eq('is_active', true)
-      .single()
-    
-    return brand
-  },
-  ['brand-info'],
-  {
-    revalidate: 3600, // Cache for 1 hour
-    tags: (slug: string) => [`brand-slug-${slug}`]
-  }
-)
+// Simple function to get brand info - Next.js will cache this at the request level
+async function getBrandInfo(slug: string) {
+  const supabase = await createClient()
+  
+  const { data: brand } = await supabase
+    .from('brands')
+    .select('*')
+    .eq('slug', slug)
+    .eq('is_active', true)
+    .single()
+  
+  return brand
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { brand: brandSlug } = await params
